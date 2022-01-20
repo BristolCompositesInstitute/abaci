@@ -76,11 +76,9 @@ class AbaqusJob:
             try:
                 p = subprocess.Popen(abq_cmd,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
 
-                for line in p.stdout:
-                    print(line)
-
-                for line in p.stderr:
-                    print(line)
+                o,e = p.communicate()
+                print o
+                print e
 
             except KeyboardInterrupt:
                 p.kill()

@@ -126,13 +126,11 @@ def run_abq_make(compile_file, compile_dir):
         log.debug('Running command "%s"',' '.join(abqmake_cmd))
 
         try:
-            p = subprocess.Popen(abqmake_cmd,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+            p = subprocess.Popen(abqmake_cmd,bufsize=1,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
 
-            for line in p.stdout:
-                print(line)
-
-            for line in p.stderr:
-                print(line)
+            o,e = p.communicate()
+            print o
+            print e
 
         except KeyboardInterrupt:
             p.kill()
