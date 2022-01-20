@@ -3,6 +3,7 @@ import os
 from utils import cwd, mkdir, copyfile
 import subprocess
 from shutil import rmtree
+from getpass import getuser
 
 def compile_user_subroutine(args,config):
     """Perform pre-compilation step using abaqus make"""
@@ -93,8 +94,8 @@ def get_flags(compile_dir,fortran_flags, debug_symbols, runtime_checks, compilet
 
     if codecov:
         set_flag(flags,unix='-prof-gen=srcpos',win='/Qcov-gen')
-        set_flag(flags,unix='-prof-dir={dir}'.format(dir=self.compile_dir),
-                        win=['/Qcov-dir',self.compile_dir])
+        set_flag(flags,unix='-prof-dir={dir}'.format(dir=compile_dir),
+                        win=['/Qcov-dir',compile_dir])
 
     return flags
 
@@ -126,7 +127,7 @@ def run_abq_make(compile_file, compile_dir):
         log.debug('Running command "%s"',' '.join(abqmake_cmd))
 
         try:
-            p = subprocess.Popen(abqmake_cmd,bufsize=1,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+            p = subprocess.Popen(abqmake_cmd,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
 
             o,e = p.communicate()
             print o
@@ -134,3 +135,53 @@ def run_abq_make(compile_file, compile_dir):
 
         except KeyboardInterrupt:
             p.kill()
+
+
+def collect_cov_report(config,compile_dir):
+    """Run profmerge to get coverage report"""
+
+    # Need to restage original compilation source file
+
+    user_file = config['user-sub-file']
+
+    abq_temp = "/tmp/{user}_abaqus_make".format(user=getuser())
+
+    mkdir(abq_temp)
+
+    dest = os.path.join(abq_temp,os.path.basename(user_file))
+    
+    copyfile(user_file,dest)
+
+    with cwd(compile_dir):
+
+        try:
+            p = subprocess.Popen(['profmerge'],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+
+            o,e = p.communicate()
+            print o
+            print e
+
+        except KeyboardInterrupt:
+            p.kill()
+
+
+        try:
+            p = subprocess.Popen(['codecov','-prj','abaci','-spi','pgopti.spi'],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+
+            o,e = p.communicate()
+            print o
+            print e
+
+        except KeyboardInterrupt:
+            p.kill()
+
+        try:
+            p = subprocess.Popen(['codecov','-prj','abaci','-spi','pgopti.spi','-txtbcvrg','coverage.txt'],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+
+            o,e = p.communicate()
+            print o
+            print e
+
+        except KeyboardInterrupt:
+            p.kill()
+

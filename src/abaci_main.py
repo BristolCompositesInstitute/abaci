@@ -3,7 +3,7 @@ import os
 from abaci.cli import parse_cli, init_logger
 from abaci.config import load_config
 from abaci.AbaqusJob import AbaqusJob
-from abaci.compile import compile_user_subroutine
+from abaci.compile import compile_user_subroutine, collect_cov_report
 from abaci.utils import mkdir
 
 def main():
@@ -19,11 +19,14 @@ def main():
 
     mkdir(config['output'])
 
-    lib_dir = compile_user_subroutine(args,config)
+    compile_dir = compile_user_subroutine(args,config)
 
     for job in jobs:
 
-        job.run_job(lib_dir)
+        job.run_job(compile_dir)
+
+    if args.codecov or config['compile']['code-coverage']:
+        collect_cov_report(config,compile_dir)
 
 
 def get_jobs(args,config):
