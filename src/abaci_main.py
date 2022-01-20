@@ -21,6 +21,9 @@ def main():
 
     compile_dir = compile_user_subroutine(args,config)
 
+    if args.compile:
+        return
+
     for job in jobs:
 
         job.run_job(compile_dir)
