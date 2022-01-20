@@ -23,6 +23,9 @@ def abaci_cli():
     verbose_group.add_argument('-q','--quiet',help='don\'t output anything from abaqi',
                         dest='verbose',action='store_const',const=-1)
 
+    parser.add_argument('-e','--echo',help='parse and display the config file, then stop.',
+                        dest='echo',action='store_true',default=False)
+
     parser.add_argument('-t','--codecov',help='compile subroutines for code coverage analysis',
                         dest='codecov',action='store_true')
 

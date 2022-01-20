@@ -22,11 +22,14 @@ class AbaqusJob:
             else:
                 self.name = splitext(basename(job_file))[0]
             
+            self.checks = job['check']
+
         else:
 
             self.name = basename(job_file)
             self.include =[]
             self.job_file = job_file
+            self.checks = None
 
         self.job_dir = self.get_new_job_dir(output_dir)
 
@@ -91,3 +94,8 @@ class AbaqusJob:
     def __repr__(self):
 
         return "AbaqusJob({name}:{file}".format(name=self.name,file=self.job_file)
+
+
+    def run_checks(self):
+        """Run reference checks"""
+        pass

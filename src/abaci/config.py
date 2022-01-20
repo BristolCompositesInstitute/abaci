@@ -16,6 +16,10 @@ def load_config(args):
 
     config = sanitize_config(config, config_dir)
 
+    if args.echo:
+        print toml.dumps(config)
+        exit()
+
     check_config(config)
 
     return config
@@ -53,11 +57,16 @@ def read_config_file(config_file):
 def config_schema():
     """Defines the schema for the abaci.toml config files"""
     
+    check_schema = Schema({'fields': [unicode],
+                           'reference': unicode,
+                           Optional('frames', default='last'): Or(unicode,[int]),
+                           Optional('elements',default='all'): Or(unicode,[int])})
 
     job_schema = Schema([{'job-file': unicode,
                          Optional('include',default=[]): Or(unicode,[unicode]), 
                          Optional('tags',default=[]): Or(unicode,[unicode]),
-                         Optional('name',default=None): unicode}])
+                         Optional('name',default=None): unicode,
+                         Optional('check',default=None): check_schema}])
 
     compile_schema = Schema({Optional('fflags',default=[]): Or(unicode,[unicode]),
                             Optional('lflags',default=''): unicode,
@@ -135,6 +144,10 @@ def sanitize_config(config, config_dir):
 
         if not isinstance(j['tags'],list):
             j['tags'] = [j['tags']]
+
+        if j['check']:
+            j['check']['reference'] = os.path.realpath(os.path.join(
+                                config_dir,j['check']['reference']))
 
     log.debug('Cleaned config = %s',config)
 
