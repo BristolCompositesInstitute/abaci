@@ -1,8 +1,7 @@
 import logging
 from os import mkdir
 from os.path import basename, join, splitext, isdir
-from shutil import copyfile
-from abaci.utils import cwd
+from abaci.utils import cwd, copyfile
 
 class AbaqusJob:
 

@@ -3,6 +3,8 @@ import os
 from abaci.cli import parse_cli, init_logger
 from abaci.config import load_config
 from abaci.AbaqusJob import AbaqusJob
+from abaci.compile import compile_user_subroutine
+from abaci.utils import mkdir
 
 def main():
     """Main entry point for abaci program"""
@@ -14,6 +16,10 @@ def main():
     config = load_config(args)
 
     jobs = get_jobs(args,config)
+
+    mkdir(config['output'])
+
+    compile_user_subroutine(args,config)
 
 
 def get_jobs(args,config):
