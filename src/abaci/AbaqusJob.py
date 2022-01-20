@@ -15,7 +15,8 @@ class AbaqusJob:
         if job:
 
             self.job_file = job['job-file']
-            
+            self.include = job['include']
+
             if job['name']:
                 self.name = job['name']
             else:
@@ -24,7 +25,7 @@ class AbaqusJob:
         else:
 
             self.name = basename(job_file)
-
+            self.include =[]
             self.job_file = job_file
 
         self.job_dir = self.get_new_job_dir(output_dir)
@@ -55,6 +56,10 @@ class AbaqusJob:
         local_job_file = join(self.job_dir,basename(self.job_file))
 
         copyfile(self.job_file,local_job_file)
+
+        for inc in self.include:
+            dest = join(self.job_dir,basename(inc))
+            copyfile(inc,dest)
 
         job_name = splitext(basename(local_job_file))[0]
 

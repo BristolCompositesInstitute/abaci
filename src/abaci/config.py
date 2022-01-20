@@ -55,6 +55,7 @@ def config_schema():
     
 
     job_schema = Schema([{'job-file': unicode,
+                         Optional('include',default=[]): Or(unicode,[unicode]), 
                          Optional('tags',default=[]): Or(unicode,[unicode]),
                          Optional('name',default=None): unicode}])
 
@@ -117,9 +118,20 @@ def sanitize_config(config, config_dir):
     config['user-sub-file'] = os.path.realpath(os.path.join(
                                 config_dir,config['user-sub-file']))
 
+    for i,ifile in enumerate(config['compile']['include']):
+        config['compile']['include'][i] = os.path.realpath(os.path.join(
+                                config_dir,ifile))
+
     for j in config['job']:
         j['job-file'] = os.path.realpath(os.path.join(
                                 config_dir,j['job-file']))
+
+        if not isinstance(j['include'],list):
+            j['include'] = [j['include']]
+
+        for i,ifile in enumerate(j['include']):
+            j['include'][i] = os.path.realpath(os.path.join(
+                                config_dir,ifile))
 
         if not isinstance(j['tags'],list):
             j['tags'] = [j['tags']]
