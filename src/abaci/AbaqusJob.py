@@ -1,8 +1,7 @@
 import logging
 from os import mkdir
 from os.path import basename, join, splitext, isdir
-from abaci.utils import cwd, copyfile
-import subprocess
+from utils import cwd, copyfile, system_cmd
 
 class AbaqusJob:
 
@@ -44,7 +43,7 @@ class AbaqusJob:
         return stem.format(counter=counter)
 
 
-    def run_job(self,lib_dir):
+    def run_job(self,lib_dir,verbosity):
         """Launch job"""
 
         import os
@@ -71,17 +70,7 @@ class AbaqusJob:
 
         with cwd(self.job_dir):
 
-            log.debug('Running command "%s"',' '.join(abq_cmd))
-
-            try:
-                p = subprocess.Popen(abq_cmd,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
-
-                o,e = p.communicate()
-                print o
-                print e
-
-            except KeyboardInterrupt:
-                p.kill()
+            system_cmd(abq_cmd,verbosity)
 
 
     def spool_env_file(self,lib_dir):

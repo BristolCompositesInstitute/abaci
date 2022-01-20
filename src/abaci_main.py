@@ -26,10 +26,11 @@ def main():
 
     for job in jobs:
 
-        job.run_job(compile_dir)
+        job.run_job(compile_dir,args.verbose)
 
     if args.codecov or config['compile']['code-coverage']:
-        collect_cov_report(config,compile_dir)
+        
+        collect_cov_report(config,compile_dir,args.verbose)
 
 
 def get_jobs(args,config):

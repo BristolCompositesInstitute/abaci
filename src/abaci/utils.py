@@ -1,6 +1,7 @@
 import logging
 import os
 from contextlib import contextmanager
+import subprocess
 
 @contextmanager
 def cwd(path):
@@ -42,3 +43,28 @@ def copyfile(source,dest):
     
     log.debug('Copying "%s" to "%s"',source, dest)
     copyfile(source,dest)
+
+
+def system_cmd(cmd,verbosity):
+    """Helper to launch system commands"""
+
+    log = logging.getLogger('abaci')
+
+    log.debug('Running command "%s"',' '.join(cmd))
+
+    try:
+        p = subprocess.Popen(cmd,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+
+        o,e = p.communicate()
+
+        # Print outputs if (non-zero status and not in quiet mode) or
+        #  if in very verbose mode
+        if (p.returncode != 0 and verbosity > -1) or verbosity > 1:
+            print e
+            print o
+
+        elif verbosity > 0:
+            print e
+
+    except KeyboardInterrupt:
+        p.kill()
