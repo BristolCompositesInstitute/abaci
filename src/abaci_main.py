@@ -19,7 +19,11 @@ def main():
 
     mkdir(config['output'])
 
-    compile_user_subroutine(args,config)
+    lib_dir = compile_user_subroutine(args,config)
+
+    for job in jobs:
+
+        job.run_job(lib_dir)
 
 
 def get_jobs(args,config):

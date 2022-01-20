@@ -2,6 +2,7 @@ import logging
 from os import mkdir
 from os.path import basename, join, splitext, isdir
 from abaci.utils import cwd, copyfile
+import subprocess
 
 class AbaqusJob:
 
@@ -46,19 +47,21 @@ class AbaqusJob:
     def run_job(self,lib_dir):
         """Launch job"""
 
+        import os
+
         log = logging.getLogger('abaci')
 
         mkdir(self.job_dir)
 
-        local_job_file = join(self.job_dir,basename(job_file))
+        local_job_file = join(self.job_dir,basename(self.job_file))
 
         copyfile(self.job_file,local_job_file)
 
-        job_name = splitext(local_job_file)[0]
+        job_name = splitext(basename(local_job_file))[0]
 
         self.spool_env_file(lib_dir)
 
-        abq_cmd = ['abaqus','job={name}'.format(job_name),
+        abq_cmd = ['abaqus','job={name}'.format(name=job_name),
                        'double','interactive']
 
         if os.name == 'nt':
@@ -86,7 +89,7 @@ class AbaqusJob:
     def spool_env_file(self,lib_dir):
         """Generate the abaqus_v6.env file"""
 
-        env_file = os.path.join(self.job_dir,'abaqus_v6.env')
+        env_file = join(self.job_dir,'abaqus_v6.env')
 
         with open(env_file,'w') as f:
 
