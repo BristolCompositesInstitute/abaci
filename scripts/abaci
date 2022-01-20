@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+#
+# Launcher for abaci
+#
+
+root=$(dirname "$(readlink -f "$0")")/..
+
+abaqus python $root/src/abaci_main.py $@
