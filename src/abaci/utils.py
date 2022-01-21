@@ -66,5 +66,8 @@ def system_cmd(cmd,verbosity):
         elif verbosity > 0:
             print e
 
+        if p.returncode != 0:
+            log.warn('Command exited with status %s (%s)',p.returncode,' '.join(cmd))
+
     except KeyboardInterrupt:
         p.kill()
