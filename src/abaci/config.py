@@ -59,6 +59,7 @@ def config_schema():
     
     check_schema = Schema({'fields': [unicode],
                            'reference': unicode,
+                           'steps': [unicode],
                            Optional('frames', default='last'): Or(unicode,[int]),
                            Optional('elements',default='all'): Or(unicode,[int])})
 

@@ -2,6 +2,7 @@ import logging
 import os
 from contextlib import contextmanager
 import subprocess
+from unicodedata import normalize
 
 @contextmanager
 def cwd(path):
@@ -71,3 +72,7 @@ def system_cmd(cmd,verbosity):
 
     except KeyboardInterrupt:
         p.kill()
+
+def to_ascii(ustring):
+
+    return normalize('NFKD',ustring).encode('ascii','ignore')

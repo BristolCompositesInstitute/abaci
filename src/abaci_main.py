@@ -28,6 +28,10 @@ def main():
 
         job.run_job(compile_dir,args.verbose)
 
+    for job in jobs:
+        
+        job.run_checks()
+
     if args.codecov or config['compile']['code-coverage']:
         
         collect_cov_report(config,compile_dir,args.verbose)

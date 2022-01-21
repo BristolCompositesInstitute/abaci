@@ -1,7 +1,8 @@
 import logging
 from os import mkdir
-from os.path import basename, join, splitext, isdir
+from os.path import basename, join, splitext, isdir, exists
 from utils import cwd, copyfile, system_cmd
+from odb_check import compare_odb
 
 class AbaqusJob:
 
@@ -33,6 +34,8 @@ class AbaqusJob:
 
         self.job_dir = self.get_new_job_dir(output_dir)
 
+        self.local_job_file = join(self.job_dir,basename(self.job_file))
+        self.local_job_name = splitext(basename(self.local_job_file))[0]
         
     def get_new_job_dir(self,output_dir):
         """Find a new job directory to run job in"""
@@ -56,19 +59,15 @@ class AbaqusJob:
 
         mkdir(self.job_dir)
 
-        local_job_file = join(self.job_dir,basename(self.job_file))
-
-        copyfile(self.job_file,local_job_file)
+        copyfile(self.job_file,self.local_job_file)
 
         for inc in self.include:
             dest = join(self.job_dir,basename(inc))
             copyfile(inc,dest)
 
-        job_name = splitext(basename(local_job_file))[0]
-
         self.spool_env_file(lib_dir)
 
-        abq_cmd = ['abaqus','job={name}'.format(name=job_name),
+        abq_cmd = ['abaqus','job={name}'.format(name=self.local_job_name),
                        'double','interactive']
 
         if os.name == 'nt':
@@ -98,4 +97,28 @@ class AbaqusJob:
 
     def run_checks(self):
         """Run reference checks"""
-        pass
+        
+        log = logging.getLogger('abaci')
+
+        if not self.checks:
+            return
+
+        odb_out_file = join(self.job_dir,self.local_job_name+'.odb')
+        odb_ref_file = self.checks['reference']
+
+        if not exists(odb_out_file):
+            
+            log.warn('Unable to find odb file (%s) for job "%s"',odb_out_file,self.name)
+
+            return
+
+        if not exists(odb_ref_file):
+
+            log.info('Reference file (%s) for job "%s" not found: creating from this run',
+                      odb_ref_file, self.name)
+
+            copyfile(odb_out_file,odb_ref_file)
+
+            return
+
+        compare_odb(odb_ref_file,odb_out_file,self.name,self.checks)
