@@ -26,7 +26,7 @@ def main():
 
     for job in jobs:
 
-        job.run_job(compile_dir,args.verbose)
+        job.run_job(args,compile_dir)
 
     for job in jobs:
         

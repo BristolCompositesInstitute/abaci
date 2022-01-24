@@ -50,7 +50,7 @@ class AbaqusJob:
         return stem.format(counter=counter)
 
 
-    def run_job(self,lib_dir,verbosity):
+    def run_job(self,args,lib_dir):
         """Launch job"""
 
         import os
@@ -67,8 +67,13 @@ class AbaqusJob:
 
         self.spool_env_file(lib_dir)
 
-        abq_cmd = ['abaqus','job={name}'.format(name=self.local_job_name),
-                       'double','interactive']
+        abq_cmd = ['abaqus','job={name}'.format(name=self.local_job_name)]
+
+        if args.jobs > 1:
+            abq_cmd.append('mp_mode=mpi')
+            abq_cmd.append('cpus={n}'.format(n=args.jobs))
+
+        abq_cmd.extend(['double','interactive'])
 
         if os.name == 'nt':
             abq_cmd[0] = 'c:\\SIMULIA\\Commands\\abaqus.bat'
@@ -77,7 +82,7 @@ class AbaqusJob:
 
         with cwd(self.job_dir):
 
-            system_cmd(abq_cmd,verbosity)
+            system_cmd(abq_cmd,args.verbose)
 
 
     def spool_env_file(self,lib_dir):
