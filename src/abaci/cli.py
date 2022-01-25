@@ -17,10 +17,10 @@ def abaci_cli():
 
     verbose_group = parser.add_mutually_exclusive_group()
 
-    verbose_group.add_argument('-v','--verbose',help='output more information from abaqi',
+    verbose_group.add_argument('-v','--verbose',help='output more information from abaci',
                         dest='verbose',action='count',default=0)
     
-    verbose_group.add_argument('-q','--quiet',help='don\'t output anything from abaqi',
+    verbose_group.add_argument('-q','--quiet',help='output less information from abaci',
                         dest='verbose',action='store_const',const=-1)
 
     parser.add_argument('-e','--echo',help='parse and display the config file, then stop.',
