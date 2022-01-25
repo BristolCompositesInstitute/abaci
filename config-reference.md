@@ -9,7 +9,7 @@ In particular it allows you to define multiple abaqus jobs and group them by tag
 __Example:__
 
 ```toml
-user-sub-file = 'usersub.f90
+user-sub-file = 'usersub.f90'
 output = 'scratch'
 ```
 ### `user-sub-file` (*string*, mandatory)
@@ -59,6 +59,47 @@ An optional list of non-unique tags to reference groups of jobs in the *job-spec
 An optional list of additional files to copy to the job folder before launching the job.
 
 - Include file path is specified relative to the folder containing the configuration file ('abaci.toml')
+
+### `check` options (optional)
+
+An optional group for detailing regression checks.
+
+__Example:__
+
+```toml
+[[job]]
+job-file = 'job.inp'
+check.reference = 'reference-output.odb'
+check.steps = ['Step-1']
+check.fields = ['SDV1','SDV2']
+check.frames = 'last'
+check.elements = 'all'
+```
+
+#### `check.reference` (*string*)
+
+Specifies the reference `odb` file to compare output against.
+If the file does not exist, then it is created using the current run.
+
+#### `check.steps` (*[string]*)
+
+List of abaqus job steps for which to check output.
+
+#### `check.fields` (*[string]*)
+
+List of abaqus field variables to check.
+
+#### `check.frames` (*string* or *[int]*, optional)
+
+Either a list of frame indices for which to perform checks or `'all'` or `'last'`.
+
+If not specified, then `'last'` is the default.
+
+#### `check.elements` (*string* or *[int]*, optional)
+
+Either a list of element indices for which to perform checks or `'all'`.
+
+If not specified, then `'all'` is the default.
 
 
 ## Compile section (optional)
