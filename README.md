@@ -10,7 +10,19 @@ __Key Features:__
   - Perform code coverage to identify executed lines of code
 - Prescribe and run benchmark problems as test cases
 
-__Usage:__
+## Getting Started
+
+### Windows
+After downloading or cloning the repository, use the `install-windows.cmd` script in the `scripts` folder
+to install _abaci_ into your existing Abaqus installation.
+The script assumes your Abaqus commands folder is `C:\SIMULIA\Commands` and this is where the _abaci_ launcher is placed.
+
+After running the `install-windows.cmd` script, you can check your installation by opening a new command window
+and running the command `abaci --version` or `abaci --help`.
+
+An `uninstall-windows.cmd` script is also provided in the `scripts` folder to remove an existing _abaci_ installation.
+
+## Usage
 
 Information about the user subroutine file(s) and benchmark problems are stored in a configuration file, `abaci.toml`.
 See the [configuration reference documentation](config-reference.md) for more information on what goes in the config file.
