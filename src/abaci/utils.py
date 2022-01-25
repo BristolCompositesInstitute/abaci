@@ -61,8 +61,8 @@ def system_cmd(cmd,verbosity):
         # Print outputs if (non-zero status and not in quiet mode) or
         #  if in very verbose mode
         if (p.returncode != 0 and verbosity > -1) or verbosity > 1:
-            print e
             print o
+            print e
 
         elif verbosity > 0:
             print e

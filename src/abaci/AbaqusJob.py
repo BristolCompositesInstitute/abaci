@@ -82,7 +82,9 @@ class AbaqusJob:
 
         with cwd(self.job_dir):
 
-            system_cmd(abq_cmd,args.verbose)
+            stat = system_cmd(abq_cmd,args.verbose)
+
+        return stat
 
 
     def spool_env_file(self,lib_dir):

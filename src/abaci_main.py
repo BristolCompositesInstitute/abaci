@@ -26,7 +26,10 @@ def main():
 
     for job in jobs:
 
-        job.run_job(args,compile_dir)
+        stat = job.run_job(args,compile_dir)
+
+        if stat != 0:
+            return
 
     for job in jobs:
         
