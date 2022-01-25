@@ -33,7 +33,7 @@ def mkdir(dir):
 
     else:
 
-        log.info('Making directory "%s"',dir)
+        log.debug('Making directory "%s"',dir)
         os.mkdir(dir)
 
 def copyfile(source,dest):

@@ -73,8 +73,8 @@ def init_logger(args):
     logging.basicConfig(format='%(levelname)8s: %(message)s')
     log = logging.getLogger('abaci')
 
-    log.setLevel(10*(3-args.verbose))
+    log.setLevel(10*(2-args.verbose))
     
     log.debug('cli args=%s',args)
 
-    log.info('Verbosity is %s',args.verbose)
+    log.debug('Verbosity is %s',args.verbose)

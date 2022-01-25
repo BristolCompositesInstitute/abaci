@@ -46,7 +46,7 @@ def get_jobs(args,config):
 
     job_spec = args.job_spec
 
-    log.info('Job_spec = %s',job_spec)
+    log.debug('Job_spec = %s',job_spec)
     
     jobs = []
 

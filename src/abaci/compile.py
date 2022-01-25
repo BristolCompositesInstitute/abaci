@@ -45,7 +45,7 @@ def stage_files(compile_dir, user_file, compile_file, include_files):
     log = logging.getLogger('abaci')
 
     if os.path.exists(compile_dir):
-        log.info('Removing existing compile directory (%s)',compile_dir)
+        log.debug('Removing existing compile directory (%s)',compile_dir)
         rmtree(compile_dir)
 
     mkdir(compile_dir)
