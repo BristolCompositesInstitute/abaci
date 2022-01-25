@@ -35,9 +35,9 @@ def compile_user_subroutine(args,config):
 
     spool_env_file(compile_dir,flags)
 
-    run_abq_make(compile_file, compile_dir,args.verbose)
+    stat = run_abq_make(compile_file, compile_dir,args.verbose)
     
-    return compile_dir
+    return stat, compile_dir
 
 def stage_files(compile_dir, user_file, compile_file, include_files):
     """Create output compilation directory and move files there"""
@@ -123,7 +123,9 @@ def run_abq_make(compile_file, compile_dir, verbosity):
 
     with cwd(compile_dir):
 
-        system_cmd(abqmake_cmd, verbosity)
+        stat = system_cmd(abqmake_cmd, verbosity)
+
+    return stat
 
 
 def collect_cov_report(config,compile_dir,verbosity):

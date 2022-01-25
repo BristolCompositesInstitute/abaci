@@ -78,7 +78,7 @@ class AbaqusJob:
         if os.name == 'nt':
             abq_cmd[0] = 'c:\\SIMULIA\\Commands\\abaqus.bat'
         
-        log.info('Running abaqus')
+        log.info('Running abaqus for job "%s"',self.name)
 
         with cwd(self.job_dir):
 

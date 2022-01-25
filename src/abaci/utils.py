@@ -73,6 +73,8 @@ def system_cmd(cmd,verbosity):
     except KeyboardInterrupt:
         p.kill()
 
+    return p.returncode
+
 def to_ascii(ustring):
 
     return normalize('NFKD',ustring).encode('ascii','ignore')

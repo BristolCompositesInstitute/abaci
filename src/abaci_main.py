@@ -19,9 +19,9 @@ def main():
 
     mkdir(config['output'])
 
-    compile_dir = compile_user_subroutine(args,config)
+    stat, compile_dir = compile_user_subroutine(args,config)
 
-    if args.compile:
+    if args.compile or stat != 0:
         return
 
     for job in jobs:
