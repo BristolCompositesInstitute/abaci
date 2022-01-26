@@ -123,7 +123,7 @@ def run_abq_make(compile_file, compile_dir, verbosity):
 
     with cwd(compile_dir):
 
-        stat = system_cmd(abqmake_cmd, verbosity)
+        stat = system_cmd(abqmake_cmd, verbosity, output=os.path.join(compile_dir,'abaqus-make'))
 
     return stat
 

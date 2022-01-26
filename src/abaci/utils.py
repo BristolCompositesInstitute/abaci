@@ -46,7 +46,7 @@ def copyfile(source,dest):
     copyfile(source,dest)
 
 
-def system_cmd(cmd,verbosity):
+def system_cmd(cmd,verbosity,output=None):
     """Helper to launch system commands"""
 
     log = logging.getLogger('abaci')
@@ -69,6 +69,15 @@ def system_cmd(cmd,verbosity):
 
         if p.returncode != 0:
             log.warn('Command exited with status %s (%s)',p.returncode,' '.join(cmd))
+
+        if output:
+
+            with open('{stem}.stdout'.format(stem=output), "w") as f:
+                f.write(o)
+
+            with open('{stem}.stderr'.format(stem=output), "w") as f:
+                f.write(e)
+
 
     except KeyboardInterrupt:
         p.kill()

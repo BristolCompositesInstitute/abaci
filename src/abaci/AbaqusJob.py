@@ -82,7 +82,7 @@ class AbaqusJob:
 
         with cwd(self.job_dir):
 
-            stat = system_cmd(abq_cmd,args.verbose)
+            stat = system_cmd(abq_cmd,args.verbose,output=join(self.job_dir,'abaqus'))
 
         return stat
 
