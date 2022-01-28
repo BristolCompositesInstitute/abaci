@@ -62,13 +62,13 @@ def compare_steps(odb_ref,odb_out,step):
     else:
 
         print 'Step "{step}": frame number mismatch'.format(step=step)
-        print '               n1 = {n}'.format(nref)
-        print '               n2 = {n}'.format(nout)
+        print '               n1 = {n}'.format(n=nref)
+        print '               n2 = {n}'.format(n=nout)
         
         if min(nref,nout) > 0:
-            print '   (Comparing first frame only)'
+            print '   (Comparing last frame only)'
 
-            frames = [0]
+            frames = [-1]
 
         else:
             print 'Step "{step}": skipping frame comparison'.format(step=step)
