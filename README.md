@@ -2,13 +2,18 @@
 
 __A helper utility for compiling, running and testing abaqus user subroutines and jobs.__
 
-__Key Features:__
+| Author | Maintainer contact | Status |
+|--------|--------------------|--------|
+| Laurence Kedward | laurence.kedward@bristol.ac.uk | Alpha, under development |
+
+### Key Features:
 
 - Pre-compile user subroutines (using abaqus make)
 - Customise compilation procedure with compiler flags
   - Enable 'debug' mode for catching common errors
   - Perform code coverage to identify executed lines of code
 - Prescribe and run benchmark problems as test cases
+  - Perform regression checks on output database results
 
 ## Getting Started
 
@@ -21,6 +26,10 @@ After running the `install-windows.cmd` script, you can check your installation 
 and running the command `abaci --version` or `abaci --help`.
 
 An `uninstall-windows.cmd` script is also provided in the `scripts` folder to remove an existing _abaci_ installation.
+
+### Linux
+
+On linux, add the `./scripts` folder to your path to start using _abaci_.
 
 ## Usage
 
@@ -42,14 +51,22 @@ positional arguments:
 optional arguments:
   -h, --help            show this help message and exit
   -V, --version         show abaci version
-  -v, --verbose         output more information from abaqi
-  -q, --quiet           don't output anything from abaqi
-  -e, --echo            parse and display the config file, then stop.
+  -v, --verbose         output more information from abaci
+  -q, --quiet           output less information from abaci
+  -e, --echo            parse and display the config file, then stop
   -t, --codecov         compile subroutines for code coverage analysis
   -d, --debug           compile with debug flags
   -c, --compile         compile only, don't run abaqus
   -j JOBS, --jobs JOBS  specify number of mpi jobs to run with Abaqus
   --config CONFIG       specify a different config file to default
                         ("abaci.toml")
+
+On execution, abaci will look for and parse an 'abaci.toml' configuration file
+in the current working directory, unless an alternative path has been
+specified via the '--config' option. Abaci will then compile the user
+subroutine and launch one or more abaqus jobs as specified by the 'job-spec'
+argument. If no job-spec is given, then all jobs with the 'default' tag are
+run. Regression checks are performed at the end for those jobs with checks
+specified.
 
 ```
