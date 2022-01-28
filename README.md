@@ -54,6 +54,7 @@ optional arguments:
   -v, --verbose         output more information from abaci
   -q, --quiet           output less information from abaci
   -e, --echo            parse and display the config file, then stop
+  -l, --list            list jobs specified in config file, then stop
   -t, --codecov         compile subroutines for code coverage analysis
   -d, --debug           compile with debug flags
   -c, --compile         compile only, don't run abaqus

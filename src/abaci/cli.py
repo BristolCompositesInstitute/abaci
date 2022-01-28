@@ -33,6 +33,9 @@ def abaci_cli():
     parser.add_argument('-e','--echo',help='parse and display the config file, then stop',
                         dest='echo',action='store_true',default=False)
 
+    parser.add_argument('-l','--list',help='list jobs specified in config file, then stop',
+                        dest='list',action='store_true',default=False)
+
     parser.add_argument('-t','--codecov',help='compile subroutines for code coverage analysis',
                         dest='codecov',action='store_true')
 
