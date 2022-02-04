@@ -29,7 +29,8 @@ def compile_user_subroutine(args,config):
                       debug_symbols = args.debug or compile_conf['debug-symbols'],
                       runtime_checks = args.debug or compile_conf['runtime-checks'],
                       compiletime_checks = compile_conf['compiletime-checks'],
-                      codecov = args.codecov or compile_conf['code-coverage'])
+                      codecov = args.codecov or compile_conf['code-coverage'],
+                      opt_host = compile_conf['opt-host'])
 
     log.debug('Flags = %s',flags)
 
@@ -57,7 +58,8 @@ def stage_files(compile_dir, user_file, compile_file, include_files):
         copyfile(inc,dest)
 
 
-def get_flags(compile_dir,fortran_flags, debug_symbols, runtime_checks, compiletime_checks, codecov):
+def get_flags(compile_dir,fortran_flags, debug_symbols, runtime_checks, compiletime_checks, codecov,
+               opt_host):
     """Set platform specific flags based on attributes"""
 
     def set_flag(flags,unix,win):
@@ -95,6 +97,9 @@ def get_flags(compile_dir,fortran_flags, debug_symbols, runtime_checks, compilet
         set_flag(flags,unix='-prof-gen=srcpos',win='/Qcov-gen')
         set_flag(flags,unix='-prof-dir={dir}'.format(dir=compile_dir),
                         win=['/Qcov-dir',compile_dir])
+
+    if opt_host:
+        set_flag(flags,unix='-xHOST',win='/QxHOST')
 
     return flags
 

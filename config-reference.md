@@ -126,6 +126,12 @@ Extra compilation flags to pass to the fortran compiler.
 
 Whether to compile with debug symbols.
 
+### `opt-host` (*bool*, optional)
+
+Whether to compile with host-specific optimisations (**default: `true`**). Disable if distributable binaries are required.
+
+See [Intel Compiler Developer Guide: xHost](https://www.intel.com/content/www/us/en/develop/documentation/cpp-compiler-developer-guide-and-reference/top/compiler-reference/compiler-options/compiler-option-details/code-generation-options/xhost-qxhost.html) for more information.
+
 ### `runtime-checks` (*bool*, optional)
 
 Whether to compile with runtime checks enabled.

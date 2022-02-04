@@ -71,6 +71,7 @@ def config_schema():
 
     compile_schema = Schema({Optional('fflags',default=[]): Or(unicode,[unicode]),
                             Optional('lflags',default=''): unicode,
+                            Optional('opt-host',default=True): bool,
                             Optional('debug-symbols',default=False): bool,
                             Optional('runtime-checks',default=False): bool,
                             Optional('compiletime-checks',default=False): bool,
