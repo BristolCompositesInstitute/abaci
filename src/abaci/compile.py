@@ -30,7 +30,8 @@ def compile_user_subroutine(args,config):
                       runtime_checks = args.debug or compile_conf['runtime-checks'],
                       compiletime_checks = compile_conf['compiletime-checks'],
                       codecov = args.codecov or compile_conf['code-coverage'],
-                      opt_host = compile_conf['opt-host'])
+                      opt_host = compile_conf['opt-host'],
+                      noopt = args.noopt)
 
     log.debug('Flags = %s',flags)
 
@@ -59,7 +60,7 @@ def stage_files(compile_dir, user_file, compile_file, include_files):
 
 
 def get_flags(compile_dir,fortran_flags, debug_symbols, runtime_checks, compiletime_checks, codecov,
-               opt_host):
+               opt_host, noopt):
     """Set platform specific flags based on attributes"""
 
     def set_flag(flags,unix,win):
@@ -98,8 +99,11 @@ def get_flags(compile_dir,fortran_flags, debug_symbols, runtime_checks, compilet
         set_flag(flags,unix='-prof-dir={dir}'.format(dir=compile_dir),
                         win=['/Qcov-dir',compile_dir])
 
-    if opt_host:
+    if opt_host and not noopt:
         set_flag(flags,unix='-xHOST',win='/QxHOST')
+
+    if noopt:
+        set_flag(flags,unix='-O0',win='/Od')
 
     return flags
 

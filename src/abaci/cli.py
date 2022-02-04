@@ -42,6 +42,9 @@ def abaci_cli():
     parser.add_argument('-d','--debug',help='compile with debug flags',
                         dest='debug',action='store_true')
 
+    parser.add_argument('-0','--noopt',help='compile without any optimisations',
+                        dest='noopt',action='store_true')
+
     parser.add_argument('-c','--compile',help='compile only, don\'t run abaqus',
                         dest='compile',action='store_true')
 

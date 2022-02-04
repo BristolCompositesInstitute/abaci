@@ -56,7 +56,7 @@ optional arguments:
   -e, --echo            parse and display the config file, then stop
   -l, --list            list jobs specified in config file, then stop
   -t, --codecov         compile subroutines for code coverage analysis
-  -d, --debug           compile with debug flags
+  -0, --noopt           compile without any optimisations
   -c, --compile         compile only, don't run abaqus
   -j JOBS, --jobs JOBS  specify number of mpi jobs to run with Abaqus
   --config CONFIG       specify a different config file to default
