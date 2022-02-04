@@ -4,7 +4,7 @@ from abaci.cli import parse_cli, init_logger
 from abaci.config import load_config, list_config_jobs
 from abaci.AbaqusJob import AbaqusJob
 from abaci.compile import compile_user_subroutine, collect_cov_report
-from abaci.utils import mkdir
+from abaci.utils import mkdir, daemonize
 
 def main():
     """Main entry point for abaci program"""
@@ -27,6 +27,9 @@ def main():
 
     if args.compile or stat != 0:
         return
+
+    if args.background:
+        daemonize()
 
     for job in jobs:
 

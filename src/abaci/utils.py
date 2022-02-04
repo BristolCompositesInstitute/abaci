@@ -96,3 +96,38 @@ def system_cmd(cmd,verbosity,output=None):
 def to_ascii(ustring):
 
     return normalize('NFKD',ustring).encode('ascii','ignore')
+
+
+def daemonize():
+   """Use 'double-fork magic' to detach from the controlling terminal and run in the
+   background as a daemon.
+   
+   Source: https://stackoverflow.com/a/5976352 (CC BY-SA 3.0.)
+   """
+
+   try:
+      # Fork a child process so the parent can exit.
+      pid = os.fork()
+   except OSError as e:
+      raise Exception("%s [%d]".format(e.strerror, e.errno))
+
+   if (pid == 0):   # The first child.
+      # To become the session leader of this new session and the process group
+      # leader of the new process group, we call os.setsid().  The process is
+      # also guaranteed not to have a controlling terminal.
+      os.setsid()
+
+      try:
+         # Fork a second child and exit immediately to prevent zombies.  This
+         # causes the second child process to be orphaned, making the init
+         # process responsible for its cleanup. 
+         pid = os.fork()    # Fork a second child.
+      except OSError as e:
+         raise Exception("%s [%d]".format(e.strerror, e.errno))
+
+      if (pid == 0):    # The second child continues
+        pass
+      else:
+         os._exit(0)    # Exit the first child
+   else:
+      os._exit(0)   # Exit parent of the first child.

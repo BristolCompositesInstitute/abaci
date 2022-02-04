@@ -56,11 +56,15 @@ optional arguments:
   -e, --echo            parse and display the config file, then stop
   -l, --list            list jobs specified in config file, then stop
   -t, --codecov         compile subroutines for code coverage analysis
+  -d, --debug           compile with debug flags
   -0, --noopt           compile without any optimisations
   -c, --compile         compile only, don't run abaqus
-  -j JOBS, --jobs JOBS  specify number of mpi jobs to run with Abaqus
+  -b, --background      run abaci in the background after compilation and
+                        write output to log file (default abaci.log)
+  --log LOGFILE         specify log file to which to redirect abaci output
   --config CONFIG       specify a different config file to default
                         ("abaci.toml")
+  -j JOBS, --jobs JOBS  specify number of mpi jobs to run with Abaqus
 
 On execution, abaci will look for and parse an 'abaci.toml' configuration file
 in the current working directory, unless an alternative path has been

@@ -48,11 +48,17 @@ def abaci_cli():
     parser.add_argument('-c','--compile',help='compile only, don\'t run abaqus',
                         dest='compile',action='store_true')
 
-    parser.add_argument('-j','--jobs',type=int,help='specify number of mpi jobs to run with Abaqus',
-                        dest='jobs',default=1)
+    parser.add_argument('-b','--background',help='run abaci in the background after compilation and write output to log file (default abaci.log)',
+                        dest='background',action='store_true')
+
+    parser.add_argument('--log',type=str,help='specify log file to which to redirect abaci output',
+                        dest='logfile',default=None)
 
     parser.add_argument('--config',type=str,help='specify a different config file to default ("abaci.toml")',
                         dest='config',default='abaci.toml')
+
+    parser.add_argument('-j','--jobs',type=int,help='specify number of mpi jobs to run with Abaqus',
+                        dest='jobs',default=1)
 
     return parser
 
@@ -71,6 +77,10 @@ def parse_cli():
 
     args.verbose = min(args.verbose,2)
 
+    # No screen output if going into the background
+    if args.background:
+        args.verbose = -1
+
     # Normalise the job-spec into a list
     if ',' in args.job_spec:
         args.job_spec = args.job_spec.split(',')
@@ -83,10 +93,16 @@ def parse_cli():
 def init_logger(args):
     """Initialise the abaci global logger"""
 
-    logging.basicConfig(format='%(levelname)8s: %(message)s')
-    log = logging.getLogger('abaci')
+    log_fmt = '%(levelname)8s: %(message)s'
 
-    log.setLevel(10*(2-args.verbose))
+    # Log to file if specified or if going into the background
+    if args.background or args.logfile:
+        logging.basicConfig(format=log_fmt,filename=(args.logfile or 'abaci.log'),level=logging.DEBUG)
+
+    else:
+        logging.basicConfig(format=log_fmt, level = 10*(2-args.verbose))
+
+    log = logging.getLogger('abaci')
     
     log.debug('cli args=%s',args)
 
