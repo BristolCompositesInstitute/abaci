@@ -82,7 +82,18 @@ class AbaqusJob:
 
         with cwd(self.job_dir):
 
-            stat = system_cmd(abq_cmd,args.verbose,output=join(self.job_dir,'abaqus'))
+            try:
+                stat = system_cmd(abq_cmd,args.verbose,output=join(self.job_dir,'abaqus'))
+
+            except:
+
+                log.info('Cancelling abaqus job "%s"',self.name)
+
+                kill_cmd = [abq_cmd[0], 'terminate','job={name}'.format(name=self.local_job_name)]
+
+                system_cmd(kill_cmd,args.verbose)
+
+                stat = -1
 
         return stat
 

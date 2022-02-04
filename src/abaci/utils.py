@@ -1,5 +1,6 @@
 import logging
 import os
+import signal
 from contextlib import contextmanager
 import subprocess
 from unicodedata import normalize
@@ -53,36 +54,44 @@ def system_cmd(cmd,verbosity,output=None):
 
     log.debug('Running command "%s"',' '.join(cmd))
 
-    try:
-        p = subprocess.Popen(cmd,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+    p = subprocess.Popen(cmd,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
 
-        o,e = p.communicate()
+    def handle_interrupt(signle, frame):
+        p.terminate()
+        raise Exception('Command interrupted')
 
-        # Print outputs if (non-zero status and not in quiet mode) or
-        #  if in very verbose mode
-        if (p.returncode != 0 and verbosity > -1) or verbosity > 1:
-            print o
-            print e
+    signal.signal(signal.SIGINT, handle_interrupt)
 
-        elif verbosity > 0:
-            print e
+    o,e = p.communicate()
 
-        if p.returncode != 0:
-            log.warn('Command exited with status %s (%s)',p.returncode,' '.join(cmd))
+    # Print outputs if (non-zero status and not in quiet mode) or
+    #  if in very verbose mode
+    if (p.returncode != 0 and verbosity > -1) or verbosity > 1:
 
-        if output:
+        print o
 
-            with open('{stem}.stdout'.format(stem=output), "w") as f:
-                f.write(o)
+        print e
 
-            with open('{stem}.stderr'.format(stem=output), "w") as f:
-                f.write(e)
+    elif verbosity > 0:
 
+        print e
 
-    except KeyboardInterrupt:
-        p.kill()
+    if p.returncode != 0:
+
+        log.warn('Command exited with status %s (%s)',p.returncode,' '.join(cmd))
+
+    if output:
+
+        with open('{stem}.stdout'.format(stem=output), "w") as f:
+
+            f.write(o)
+
+        with open('{stem}.stderr'.format(stem=output), "w") as f:
+
+            f.write(e)
 
     return p.returncode
+    
 
 def to_ascii(ustring):
 
