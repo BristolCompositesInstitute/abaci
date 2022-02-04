@@ -83,7 +83,7 @@ def get_flags(compile_dir,fortran_flags, debug_symbols, runtime_checks, compilet
                     win='/Qopt-report-file:{dir}\optrpt'.format(dir=compile_dir))
 
     if debug_symbols:
-        set_flag(flags,unix='-g',win=['/debug','/Z7'])
+        set_flag(flags,unix=['-g','-debug'],win=['/debug','/Z7'])
 
     if runtime_checks:
         set_flag(flags,unix=['-check', 'all'],win='/check:all')
