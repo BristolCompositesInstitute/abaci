@@ -57,7 +57,7 @@ def compare_steps(odb_ref,odb_out,step):
         print 'Step "{step}": number of frames ({n}) matches'.format(
                step=step, n=nref)
 
-        frames = range(0,nref-1)
+        frames = range(0,nref)
 
     else:
 

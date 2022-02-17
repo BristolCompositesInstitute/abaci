@@ -35,7 +35,7 @@ def compare_odb(odb_ref_file,odb_out_file,job_name,checks):
 
         elif checks['frames'] == 'all':
 
-            frames = range(0,len(odb_ref.steps[step].frames)-1)
+            frames = range(0,len(odb_ref.steps[step].frames))
 
         elif isinstance(checks['frames'],list):
 
@@ -51,7 +51,7 @@ def compare_odb(odb_ref_file,odb_out_file,job_name,checks):
         if checks['elements'] == 'all':
 
             field = to_ascii(checks['fields'][0])
-            elements = range(0,len(odb_ref.steps[step].frames[0].fieldOutputs[field].values)-1)
+            elements = range(0,len(odb_ref.steps[step].frames[0].fieldOutputs[field].values))
 
         elif isinstance(checks['elements'],list):
 
