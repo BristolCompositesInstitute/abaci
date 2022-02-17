@@ -84,7 +84,8 @@ check.elements = 'all'
 
 #### `check.reference` (*string*)
 
-Specifies the reference `odb` file to compare output against.
+Specifies the reference file to compare output against. This is a binary Python pickle file
+that contains data from a previous reference run.
 If the file does not exist, then it is created using the current run.
 
 #### `check.steps` (*[string]*)

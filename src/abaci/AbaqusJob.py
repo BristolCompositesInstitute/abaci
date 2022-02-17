@@ -2,7 +2,7 @@ import logging
 from os import mkdir
 from os.path import basename, join, splitext, isdir, exists
 from utils import cwd, copyfile, system_cmd
-from odb_check import compare_odb
+from odb_check import compare_odb, dump_ref
 
 class AbaqusJob:
 
@@ -137,7 +137,7 @@ class AbaqusJob:
             log.info('Reference file (%s) for job "%s" not found: creating from this run',
                       odb_ref_file, self.name)
 
-            copyfile(odb_out_file,odb_ref_file)
+            dump_ref(odb_ref_file,odb_out_file,self.name,self.checks)
 
             return
 
