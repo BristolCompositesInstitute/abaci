@@ -3,9 +3,9 @@ from odbAccess import openOdb
 import numpy as np
 from utils import to_ascii
 
-def compare_odb(odb_ref_file,odb_out_file,job_name,checks):
-    """Run comparison checks on two odb files"""
-    
+def check_odb_structure(odb_ref_file,odb_out_file,job_name,checks):
+    """Check if the structure of each odb matches that expected by checks config"""
+
     log = logging.getLogger('abaci')
 
     odb_out = openOdb(to_ascii(odb_out_file))
@@ -20,14 +20,14 @@ def compare_odb(odb_ref_file,odb_out_file,job_name,checks):
             log.fatal('Error while checking job "%s", unable to find step "%s" in reference odb (%s)',
                         job_name, step, odb_ref_file)
 
-            return
+            raise Exception('ODB content mismatch')
 
         if step not in odb_out.steps.keys():
 
             log.fatal('Error while checking job "%s", unable to find step "%s" in output odb (%s)',
                         job_name, step, odb_out_file)
 
-            return
+            raise Exception('ODB content mismatch')
 
         if checks['frames'] == 'last':
 
@@ -46,7 +46,7 @@ def compare_odb(odb_ref_file,odb_out_file,job_name,checks):
             log.fatal('Error while checking job "%s", unknown frames specified in config: %s',
                 job_name, checks['frames'])
 
-            return
+            raise Exception('ODB content mismatch')
 
         if checks['elements'] == 'all':
 
@@ -62,7 +62,7 @@ def compare_odb(odb_ref_file,odb_out_file,job_name,checks):
             log.fatal('Error while checking job "%s", unknown elements specified in config: %s',
                 job_name, checks['frames'])
 
-            return
+            raise Exception('ODB content mismatch')
 
         for i in frames:
             
@@ -71,16 +71,14 @@ def compare_odb(odb_ref_file,odb_out_file,job_name,checks):
                 log.fatal('Error while checking job "%s", frame "%s" not found at step %s in reference odb (%s)',
                         job_name, i, step, odb_ref_file)
 
-                return
+                raise Exception('ODB content mismatch')
 
             if i >= len(odb_out.steps[step].frames):
 
                 log.fatal('Error while checking job "%s", frame "%s" not found at step %s in output odb (%s)',
                         job_name, i, step, odb_out_file)
 
-                return
-
-            frame_delta = 0
+                raise Exception('ODB content mismatch')
 
             for field in checks['fields']:
 
@@ -91,20 +89,48 @@ def compare_odb(odb_ref_file,odb_out_file,job_name,checks):
                     log.fatal('Error while checking job "%s", field "%s" not found in reference odb (%s)',
                         job_name, field, odb_ref_file)
 
-                    return
+                    raise Exception('ODB content mismatch')
 
                 if field not in odb_out.steps[step].frames[i].fieldOutputs.keys():
 
                     log.fatal('Error while checking job "%s", field "%s" not found in reference odb (%s)',
                         job_name, field, odb_ref_file)
 
-                    return
+                    raise Exception('ODB content mismatch')
 
-                ref_data = np.array([v.data for v in odb_ref.steps[step].frames[i].fieldOutputs[field].values])
-                out_data = np.array([v.data for v in odb_out.steps[step].frames[i].fieldOutputs[field].values])
+    return frames, elements
+
+
+
+def compare_odb(odb_ref_file,odb_out_file,job_name,checks):
+    """Run comparison checks on two odb files"""
+    
+    log = logging.getLogger('abaci')
+
+    odb_out = openOdb(to_ascii(odb_out_file))
+    odb_ref = openOdb(to_ascii(odb_ref_file))
+
+    frames, elements = check_odb_structure(odb_ref_file,odb_out_file,job_name,checks)
+
+    for step in checks['steps']:
+            
+        step = to_ascii(step)   # Abaqus python doesn't like unicode keys?
+
+        for i in frames:
+
+            frame_delta = 0
+
+            for field in checks['fields']:
+
+                field = to_ascii(field)
+
+                ref_data = np.array([v.data for ii, v in enumerate(odb_ref.steps[step].frames[i].fieldOutputs[field].values)
+                                      if ii in elements])
+                out_data = np.array([v.data for ii, v in enumerate(odb_out.steps[step].frames[i].fieldOutputs[field].values)
+                                      if ii in elements])
 
                 field_rms = np.sqrt( np.square(ref_data - out_data).mean() )
-
+                
                 log.debug('Job "%s", Step "%s", Frame %s, Field %s, RMS Delta = %s',
                         job_name, step, i, field, field_rms)
 

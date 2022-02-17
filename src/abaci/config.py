@@ -60,8 +60,8 @@ def config_schema():
     check_schema = Schema({'fields': [unicode],
                            'reference': unicode,
                            'steps': [unicode],
-                           Optional('frames', default='last'): Or(unicode,[int]),
-                           Optional('elements',default='all'): Or(unicode,[int])})
+                           Optional('frames', default='last'): Or(u'all',u'last',[int]),
+                           Optional('elements',default='all'): Or(u'all',[int])})
 
     job_schema = Schema([{'job-file': unicode,
                          Optional('include',default=[]): Or(unicode,[unicode]), 
