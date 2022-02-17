@@ -24,6 +24,7 @@ class AbaqusJob:
                 self.name = splitext(basename(job_file))[0]
             
             self.checks = job['check']
+            self.mp_mode = job['mp-mode']
 
         else:
 
@@ -31,6 +32,7 @@ class AbaqusJob:
             self.include =[]
             self.job_file = job_file
             self.checks = None
+            self.mp_mode = 'threads'
 
         self.job_dir = self.get_new_job_dir(output_dir)
 
@@ -69,9 +71,9 @@ class AbaqusJob:
 
         abq_cmd = ['abaqus','job={name}'.format(name=self.local_job_name)]
 
-        if args.jobs > 1:
-            abq_cmd.append('mp_mode=mpi')
-            abq_cmd.append('cpus={n}'.format(n=args.jobs))
+        if args.nproc > 1:
+            abq_cmd.append('mp_mode={mode}'.format(mode=self.mp_mode))
+            abq_cmd.append('cpus={n}'.format(n=args.nproc))
 
         abq_cmd.extend(['double','interactive'])
 

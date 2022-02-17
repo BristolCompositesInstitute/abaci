@@ -64,7 +64,7 @@ optional arguments:
   --log LOGFILE         specify log file to which to redirect abaci output
   --config CONFIG       specify a different config file to default
                         ("abaci.toml")
-  -j JOBS, --jobs JOBS  specify number of mpi jobs to run with Abaqus
+  -n N, --nproc N       specify number of threads/processes to run with Abaqus
 
 On execution, abaci will look for and parse an 'abaci.toml' configuration file
 in the current working directory, unless an alternative path has been

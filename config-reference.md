@@ -38,6 +38,7 @@ job-file = 'my-abaqus-job.inp'
 name = 'job1'
 tags = ['test','three_elem']
 include = ['job1_extra_inputs.inp']
+mp-mode = 'threads'
 ```
 
 ### `job-file` (*string*, mandatory)
@@ -59,6 +60,11 @@ An optional list of non-unique tags to reference groups of jobs in the *job-spec
 An optional list of additional files to copy to the job folder before launching the job.
 
 - Include file path is specified relative to the folder containing the configuration file ('abaci.toml')
+
+### `mp-mode` (*[string]*, optional)
+
+An optional field taking the value of either `'threads'` (default) or `'mpi'` to indicate the
+parallel mode to execute in abaqus (corresponds to the `-mp_mode` command line flag).
 
 ### `check` options (optional)
 

@@ -57,8 +57,8 @@ def abaci_cli():
     parser.add_argument('--config',type=str,help='specify a different config file to default ("abaci.toml")',
                         dest='config',default='abaci.toml')
 
-    parser.add_argument('-j','--jobs',type=int,help='specify number of mpi jobs to run with Abaqus',
-                        dest='jobs',default=1)
+    parser.add_argument('-n','--nproc',type=int,help='specify number of threads/processes to run with Abaqus',
+                        dest='nproc',default=1)
 
     return parser
 

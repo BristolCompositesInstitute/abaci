@@ -67,6 +67,7 @@ def config_schema():
                          Optional('include',default=[]): Or(unicode,[unicode]), 
                          Optional('tags',default=[]): Or(unicode,[unicode]),
                          Optional('name',default=None): unicode,
+                         Optional('mp-mode',default='threads'): Or(u'threads',u'mpi'),
                          Optional('check',default=None): check_schema}])
 
     compile_schema = Schema({Optional('fflags',default=[]): Or(unicode,[unicode]),
