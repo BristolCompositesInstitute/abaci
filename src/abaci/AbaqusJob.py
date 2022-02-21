@@ -107,7 +107,7 @@ class AbaqusJob:
 
         with open(env_file,'w') as f:
 
-            f.write('usub_lib_dir = "{dir}"'.format(dir=lib_dir))
+            f.write('usub_lib_dir = r"{dir}"'.format(dir=lib_dir))
 
 
     def __repr__(self):
