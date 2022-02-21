@@ -92,7 +92,7 @@ def dump_ref(ref_file,odb_file,job_name,checks):
     log.info('Job "%s" saving reference dict to file "%s"',
                     job_name, ref_file)
 
-    with open(ref_file,'w') as f:
+    with open(ref_file,'wb') as f:
         cPickle.dump(odb_ref_dict,f,cPickle.HIGHEST_PROTOCOL)
 
 
@@ -170,7 +170,7 @@ def compare_odb(ref_file,odb_out_file,job_name,checks):
 
     odb_out = openOdb(to_ascii(odb_out_file))
     
-    with open(ref_file,'r') as f:
+    with open(ref_file,'rb') as f:
         ref_dict = cPickle.load(f)
 
     for step in checks['steps']:
