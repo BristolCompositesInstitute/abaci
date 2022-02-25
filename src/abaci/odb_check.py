@@ -103,7 +103,7 @@ def check_odb_structure(ref_file,odb_out_file,job_name,checks):
 
     odb_out = openOdb(to_ascii(odb_out_file))
 
-    with open(ref_file,'r') as f:
+    with open(ref_file,'rb') as f:
         ref_dict = cPickle.load(f)
 
     for step in checks['steps']:
