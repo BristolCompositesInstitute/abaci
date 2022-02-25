@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+#
+#
+
+root=$(dirname "$(readlink -f "$0")")/..
+
+PYTHONPATH=$root/src abaqus python
