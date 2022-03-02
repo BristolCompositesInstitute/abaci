@@ -37,6 +37,7 @@ def mkdir(dir):
         log.debug('Making directory "%s"',dir)
         os.mkdir(dir)
 
+
 def copyfile(source,dest):
     """Helper to copyfile"""
     from shutil import copyfile
@@ -45,6 +46,16 @@ def copyfile(source,dest):
     
     log.debug('Copying "%s" to "%s"',source, dest)
     copyfile(source,dest)
+
+
+def copydir(source,dest):
+    """Helper to copy directory"""
+    from distutils.dir_util import copy_tree
+
+    log = logging.getLogger('abaci')
+    
+    log.debug('Copying directory "%s" to "%s"',source, dest)
+    copy_tree(source,dest)
 
 
 def system_cmd(cmd,verbosity,output=None):

@@ -1,7 +1,7 @@
 import logging
 from os import mkdir
 from os.path import basename, join, splitext, isdir, exists
-from utils import cwd, copyfile, system_cmd
+from utils import cwd, copyfile, system_cmd, copydir
 from odb_check import compare_odb, dump_ref
 
 class AbaqusJob:
@@ -67,7 +67,11 @@ class AbaqusJob:
             dest = join(self.job_dir,basename(inc))
             copyfile(inc,dest)
 
-        self.spool_env_file(lib_dir)
+        local_lib_dir = join(self.job_dir,'lib')
+
+        copydir(lib_dir,local_lib_dir)
+
+        self.spool_env_file(local_lib_dir)
 
         abq_cmd = ['abaqus','job={name}'.format(name=self.local_job_name)]
 
