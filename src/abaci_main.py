@@ -67,7 +67,7 @@ def get_jobs(args,config):
 
             job_path = os.path.realpath(spec)
 
-            if os.exists(job_path):
+            if os.path.exists(job_path):
 
                 jobs.append(AbaqusJob(output_dir,job_file=job_path))
 
