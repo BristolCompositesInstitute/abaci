@@ -15,6 +15,8 @@ def main():
 
     config = load_config(args)
 
+    mkdir(config['output'])
+
     init_logger_file(log_dir=config['output'])
 
     if args.list:
@@ -22,8 +24,6 @@ def main():
         exit()
 
     jobs = get_jobs(args,config)
-
-    mkdir(config['output'])
 
     stat, compile_dir = compile_user_subroutine(args,config)
 
