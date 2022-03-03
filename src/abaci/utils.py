@@ -1,5 +1,6 @@
 import logging
 import os
+import sys
 import signal
 from contextlib import contextmanager
 import subprocess
@@ -65,7 +66,22 @@ def system_cmd(cmd,verbosity,output=None):
 
     log.debug('Running command "%s"',' '.join(cmd))
 
-    p = subprocess.Popen(cmd,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+    if output:
+
+        ofile = '{stem}.stdout'.format(stem=output)
+        fo = open(ofile,'w')
+        log.debug('Command stdout redirected to "%s"',os.path.relpath(ofile))
+
+        efile = '{stem}.stderr'.format(stem=output)
+        fe = open(efile,'w')
+        log.debug('Command stderr redirected to "%s"',os.path.relpath(efile))
+
+    else:
+
+        fo = sys.stdout
+        fe = sys.stderr
+
+    p = subprocess.Popen(cmd,stdout=fo,stderr=fe)
 
     def handle_interrupt(signle, frame):
         p.terminate()
@@ -73,32 +89,35 @@ def system_cmd(cmd,verbosity,output=None):
 
     signal.signal(signal.SIGINT, handle_interrupt)
 
-    o,e = p.communicate()
+    p.communicate()
 
-    # Print outputs if (non-zero status and not in quiet mode) or
-    #  if in very verbose mode
-    if (p.returncode != 0 and verbosity > -1) or verbosity > 1:
-
-        print o
-
-        print e
+    if output:
+        fo.close()
+        fe.close()
 
     if p.returncode != 0:
 
         log.warn('Command exited with status %s (%s)',p.returncode,' '.join(cmd))
 
-    if output:
+    # Print outputs if (non-zero status and not in quiet mode) or
+    #  if in very verbose mode
+    if (p.returncode != 0 and verbosity > -1) or verbosity > 1:
 
-        with open('{stem}.stdout'.format(stem=output), "w") as f:
+        if output:
 
-            f.write(o)
+            with open(ofile, "r") as fo:
 
-        with open('{stem}.stderr'.format(stem=output), "w") as f:
+                o = fo.readlines()
 
-            f.write(e)
+            with open(efile, "r") as fe:
+
+                e = fe.readlines()
+
+            print ''.join(o)
+
+            print ''.join(e)
 
     return p.returncode
-    
 
 def to_ascii(ustring):
 
