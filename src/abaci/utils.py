@@ -13,7 +13,7 @@ def cwd(path):
 
     oldpwd=os.getcwd()
 
-    log.debug('Changing into directory "%s"',path)
+    log.debug('Changing into directory "%s"',os.path.relpath(path))
     os.chdir(path)
 
     try:
@@ -30,11 +30,11 @@ def mkdir(dir):
 
     if os.path.isdir(dir):
         
-        log.debug('Directory already exists ("%s")',dir)
+        log.debug('Directory already exists ("%s")',os.path.relpath(dir))
 
     else:
 
-        log.debug('Making directory "%s"',dir)
+        log.debug('Making directory "%s"',os.path.relpath(dir))
         os.mkdir(dir)
 
 
@@ -44,7 +44,7 @@ def copyfile(source,dest):
 
     log = logging.getLogger('abaci')
     
-    log.debug('Copying "%s" to "%s"',source, dest)
+    log.debug('Copying "%s" to "%s"',os.path.relpath(source), os.path.relpath(dest))
     copyfile(source,dest)
 
 
@@ -54,7 +54,7 @@ def copydir(source,dest):
 
     log = logging.getLogger('abaci')
     
-    log.debug('Copying directory "%s" to "%s"',source, dest)
+    log.debug('Copying directory "%s" to "%s"',os.path.relpath(source), os.path.relpath(dest))
     copy_tree(source,dest)
 
 
@@ -80,10 +80,6 @@ def system_cmd(cmd,verbosity,output=None):
     if (p.returncode != 0 and verbosity > -1) or verbosity > 1:
 
         print o
-
-        print e
-
-    elif verbosity > 0:
 
         print e
 

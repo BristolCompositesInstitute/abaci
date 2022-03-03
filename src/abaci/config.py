@@ -1,6 +1,6 @@
 import os
 import logging
-from os.path import exists
+from os.path import exists, relpath
 
 from redist import toml
 from redist.schema import Schema, And, Optional, Use, Or#
@@ -33,7 +33,7 @@ def get_config_path(args):
     config_file = os.path.realpath(args.config)
     config_dir = os.path.dirname(config_file)
 
-    log.info('Config file is "%s"',config_file)
+    log.info('Config file is "%s"',relpath(config_file))
     log.debug('Config directory is "%s"',config_dir)
 
     return config_file, config_dir
@@ -41,10 +41,6 @@ def get_config_path(args):
 
 def read_config_file(config_file):
     """Open the config file and read contents into a string"""
-
-    log = logging.getLogger('abaci')
-    
-    log.debug('Opening config file "%s"',config_file)
 
     with open(config_file, "r") as f:
         config_lines = f.readlines()
@@ -101,8 +97,6 @@ def parse_config(config_str):
 
     config = schema.validate(config_str)
 
-    log.debug('Parsed config = %s',config)
-
     return config
 
 
@@ -151,8 +145,6 @@ def sanitize_config(config, config_dir):
         if j['check']:
             j['check']['reference'] = os.path.realpath(os.path.join(
                                 config_dir,j['check']['reference']))
-
-    log.debug('Cleaned config = %s',config)
 
     return config
 

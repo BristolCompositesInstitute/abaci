@@ -116,7 +116,7 @@ class AbaqusJob:
 
     def __repr__(self):
 
-        return "AbaqusJob({name}:{file}".format(name=self.name,file=self.job_file)
+        return "AbaqusJob({name})".format(name=self.name)
 
 
     def run_checks(self):
