@@ -1,6 +1,6 @@
 import logging
 import os
-from abaci.cli import parse_cli, init_logger
+from abaci.cli import parse_cli, init_logger, init_logger_file
 from abaci.config import load_config, list_config_jobs
 from abaci.AbaqusJob import AbaqusJob
 from abaci.compile import compile_user_subroutine, collect_cov_report
@@ -14,6 +14,8 @@ def main():
     init_logger(args)
 
     config = load_config(args)
+
+    init_logger_file(log_dir=config['output'])
 
     if args.list:
         list_config_jobs(config,args.verbose)

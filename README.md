@@ -61,7 +61,6 @@ optional arguments:
   -c, --compile         compile only, don't run abaqus
   -b, --background      run abaci in the background after compilation and
                         write output to log file (default abaci.log)
-  --log LOGFILE         specify log file to which to redirect abaci output
   --config CONFIG       specify a different config file to default
                         ("abaci.toml")
   -n N, --nproc N       specify number of threads/processes to run with Abaqus

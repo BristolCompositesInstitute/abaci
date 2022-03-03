@@ -1,5 +1,6 @@
 import argparse
 import logging
+from os.path import exists, join, relpath
 
 def abaci_cli():
     """Defines the command line interface parser"""
@@ -51,9 +52,6 @@ def abaci_cli():
     parser.add_argument('-b','--background',help='run abaci in the background after compilation and write output to log file (default abaci.log)',
                         dest='background',action='store_true')
 
-    parser.add_argument('--log',type=str,help='specify log file to which to redirect abaci output',
-                        dest='logfile',default=None)
-
     parser.add_argument('--config',type=str,help='specify a different config file to default ("abaci.toml")',
                         dest='config',default='abaci.toml')
 
@@ -93,17 +91,53 @@ def parse_cli():
 def init_logger(args):
     """Initialise the abaci global logger"""
 
-    log_fmt = '%(levelname)8s: %(message)s'
-
-    # Log to file if specified or if going into the background
-    if args.background or args.logfile:
-        logging.basicConfig(format=log_fmt,filename=(args.logfile or 'abaci.log'),level=logging.DEBUG)
-
+    if args.verbose > 0:
+        log_fmt = '%(levelname)8s: %(message)s'
     else:
-        logging.basicConfig(format=log_fmt, level = 10*(2-args.verbose))
+        log_fmt = ' %(message)s'
 
     log = logging.getLogger('abaci')
-    
+    log.setLevel(logging.DEBUG)
+
+    stream_handler = logging.StreamHandler()
+    stream_handler.setLevel(10*(2-args.verbose))
+    stream_handler.setFormatter(logging.Formatter(log_fmt))
+
+    log.addHandler(stream_handler)
+
     log.debug('cli args=%s',args)
 
     log.debug('Verbosity is %s',args.verbose)
+
+
+def new_log_filename(log_dir):
+    """Get a new unused file name for log"""
+
+    stem = join(log_dir, "abaci-{counter}.log")
+
+    counter = 0
+
+    while exists(stem.format(counter=counter)):
+
+        counter = counter + 1
+
+    return stem.format(counter=counter)
+
+
+def init_logger_file(log_dir):
+    """Add a file handler to global logger"""
+
+    log = logging.getLogger('abaci')
+
+    log_file = new_log_filename(log_dir)
+
+    fmt = ' %(asctime)s %(levelname)8s: %(message)s'
+
+    handler = logging.FileHandler(log_file)
+    handler.setLevel(logging.DEBUG)
+    handler.setFormatter(logging.Formatter(fmt))
+
+    log.addHandler(handler)
+
+    log.debug('Starting file log')
+    log.info('Log file for this session is "%s"',relpath(log_file))
