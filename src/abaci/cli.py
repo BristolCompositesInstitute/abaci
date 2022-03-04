@@ -1,6 +1,7 @@
 import argparse
 import logging
 from os.path import exists, join, relpath
+import multiprocessing
 
 def abaci_cli():
     """Defines the command line interface parser"""
@@ -49,7 +50,7 @@ def abaci_cli():
     parser.add_argument('-c','--compile',help='compile only, don\'t run abaqus',
                         dest='compile',action='store_true')
 
-    parser.add_argument('-b','--background',help='run abaci in the background after compilation and write output to log file (default abaci.log)',
+    parser.add_argument('-b','--background',help='run abaci in the background after compilation',
                         dest='background',action='store_true')
 
     parser.add_argument('--config',type=str,help='specify a different config file to default ("abaci.toml")',
@@ -58,8 +59,10 @@ def abaci_cli():
     parser.add_argument('-n','--nproc',type=int,help='specify number of threads/processes to run with Abaqus',
                         dest='nproc',default=1)
 
-    return parser
+    parser.add_argument('-j','--jobs',type=int,help='run jobs concurrently, optionally specify a maximum number of concurrently running jobs',
+                        nargs='?',dest='njob',action='store',const=None,default=1)
 
+    return parser
 
 
 def parse_cli():
@@ -84,6 +87,10 @@ def parse_cli():
         args.job_spec = args.job_spec.split(',')
     else:
         args.job_spec = [args.job_spec]
+
+    # Use number of CPUs if value not given for jobs
+    if not args.njob:
+        args.njob = multiprocessing.cpu_count()
 
     return args
 

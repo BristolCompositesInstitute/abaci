@@ -59,11 +59,14 @@ optional arguments:
   -d, --debug           compile with debug flags
   -0, --noopt           compile without any optimisations
   -c, --compile         compile only, don't run abaqus
-  -b, --background      run abaci in the background after compilation and
-                        write output to log file (default abaci.log)
+  -b, --background      run abaci in the background after compilation
   --config CONFIG       specify a different config file to default
                         ("abaci.toml")
-  -n N, --nproc N       specify number of threads/processes to run with Abaqus
+  -n NPROC, --nproc NPROC
+                        specify number of threads/processes to run with Abaqus
+  -j [NJOB], --jobs [NJOB]
+                        run jobs concurrently, optionally specify a maximum
+                        number of concurrently running jobs
 
 On execution, abaci will look for and parse an 'abaci.toml' configuration file
 in the current working directory, unless an alternative path has been

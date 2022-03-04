@@ -86,6 +86,12 @@ def system_cmd(cmd,output=None):
 
     p = subprocess.Popen(cmd,stdout=fo,stderr=fe)
 
+    def handle_interrupt(signal, frame):
+        p.terminate()
+        raise Exception('Command interrupted')
+
+    signal.signal(signal.SIGINT, handle_interrupt)
+
     return p, ofile, efile
 
 
@@ -93,12 +99,6 @@ def system_cmd_wait(p,verbosity,ofile=None,efile=None):
     """Wait for system command to finish and check output"""
 
     log = logging.getLogger('abaci')
-
-    def handle_interrupt(signle, frame):
-        p.terminate()
-        raise Exception('Command interrupted')
-
-    signal.signal(signal.SIGINT, handle_interrupt)
 
     p.communicate()
 

@@ -52,7 +52,7 @@ class AbaqusJob:
         return stem.format(counter=counter)
 
 
-    def run_job(self,args,lib_dir):
+    def launch_job(self,args,lib_dir):
         """Launch job"""
 
         import os
@@ -84,21 +84,30 @@ class AbaqusJob:
         if os.name == 'nt':
             abq_cmd[0] = 'c:\\SIMULIA\\Commands\\abaqus.bat'
         
-        log.info('Running abaqus for job "%s"',self.name)
+        log.info('Launching abaqus for job "%s"',self.name)
 
         with cwd(self.job_dir):
 
-            self.p, ofile, efile = system_cmd(abq_cmd,output=join(self.job_dir,'abaqus'))
+            self.p, self.ofile, self.efile = system_cmd(abq_cmd,output=join(self.job_dir,'abaqus'))
 
-            try:
-                
-                stat = system_cmd_wait(self.p,args.verbose,ofile,efile)
 
-            except:
+    def is_running(self):
+        """Check if job is currently running"""
 
-                self.terminate_job(args.verbose)
+        return not isinstance(self.p.poll(),int)
 
-                stat = -1
+
+    def wait(self,verbose):
+        """Wait for the running Abaqus job to finish"""
+
+        log = logging.getLogger('abaci')
+
+        if self.is_running():
+
+            # Job not finished yet
+            log.info('Waiting for job "%s" to complete...', self.name)
+
+        stat = system_cmd_wait(self.p,verbose,self.ofile,self.efile)
 
         return stat
 
@@ -107,6 +116,11 @@ class AbaqusJob:
         """Terminate the running Abaqus job"""
 
         log = logging.getLogger('abaci')
+
+        if isinstance(self.p.poll(),int):
+
+            # Job already completed
+            return
 
         self.p.terminate()
 
@@ -143,6 +157,8 @@ class AbaqusJob:
 
         if not self.checks:
             return
+
+        log.debug('Running regression checks for job "%s"', self.name)
 
         odb_out_file = join(self.job_dir,self.local_job_name+'.odb')
         odb_ref_file = self.checks['reference']

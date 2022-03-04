@@ -1,9 +1,7 @@
-import logging
-import os
 from abaci.cli import parse_cli, init_logger, init_logger_file
 from abaci.config import load_config, list_config_jobs
-from abaci.AbaqusJob import AbaqusJob
 from abaci.compile import compile_user_subroutine, collect_cov_report
+from abaci.jobs import get_jobs, run_jobs
 from abaci.utils import mkdir, daemonize
 
 def main():
@@ -33,66 +31,17 @@ def main():
     if args.background:
         daemonize()
 
-    for job in jobs:
+    stats = run_jobs(args,compile_dir,jobs)
 
-        stat = job.run_job(args,compile_dir)
+    for job, stat in zip(jobs,stats):
 
-        if stat != 0:
-            return
+        if stat == 0:
 
-    for job in jobs:
-        
-        job.run_checks()
+            job.run_checks()
 
     if args.codecov or config['compile']['code-coverage']:
         
         collect_cov_report(config,compile_dir,args.verbose)
-
-
-def get_jobs(args,config):
-    """Get list of jobs to run"""
-
-    log = logging.getLogger('abaci')
-
-    output_dir = config['output']
-
-    job_spec = args.job_spec
-
-    log.debug('Job_spec = %s',job_spec)
-    
-    jobs = []
-
-    # Add any job files specifided in job-spec
-    for spec in job_spec:
-
-        if '.inp' in spec:
-
-            job_path = os.path.realpath(spec)
-
-            if os.path.exists(job_path):
-
-                jobs.append(AbaqusJob(output_dir,job_file=job_path))
-
-
-    # Add any config jobs matching job-spec
-    for j in config['job']:
-
-        for spec in job_spec:
-
-            if (spec in j['tags']) or (spec == j['name']):
-
-                jobs.append(AbaqusJob(output_dir,job=j))
-                break
-
-    if not jobs:
-
-        log.warning('No jobs were found matching the job-spec "%s"',job_spec)
-
-    else:
-
-        log.debug('Jobs to run = %s',jobs)
-
-    return jobs
 
 
 if __name__ == "__main__":
