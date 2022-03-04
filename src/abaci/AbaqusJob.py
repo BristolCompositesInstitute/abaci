@@ -1,7 +1,7 @@
 import logging
 from os import mkdir
 from os.path import basename, join, splitext, isdir, exists
-from utils import cwd, copyfile, system_cmd, copydir
+from utils import cwd, copyfile, system_cmd, system_cmd_wait, copydir
 from odb_check import compare_odb, dump_ref
 
 class AbaqusJob:
@@ -88,20 +88,37 @@ class AbaqusJob:
 
         with cwd(self.job_dir):
 
+            self.p, ofile, efile = system_cmd(abq_cmd,output=join(self.job_dir,'abaqus'))
+
             try:
-                stat = system_cmd(abq_cmd,args.verbose,output=join(self.job_dir,'abaqus'))
+                
+                stat = system_cmd_wait(self.p,args.verbose,ofile,efile)
 
             except:
 
-                log.info('Cancelling abaqus job "%s"',self.name)
-
-                kill_cmd = [abq_cmd[0], 'terminate','job={name}'.format(name=self.local_job_name)]
-
-                system_cmd(kill_cmd,args.verbose)
+                self.terminate_job(args.verbose)
 
                 stat = -1
 
         return stat
+
+
+    def terminate_job(self,verbose):
+        """Terminate the running Abaqus job"""
+
+        log = logging.getLogger('abaci')
+
+        self.p.terminate()
+
+        with cwd(self.job_dir):
+
+            log.info('Cancelling abaqus job "%s"',self.name)
+
+            kill_cmd = ['abaqus', 'terminate','job={name}'.format(name=self.local_job_name)]
+
+            p, ofile, efile = system_cmd(kill_cmd)
+
+            system_cmd_wait(p,verbose)
 
 
     def spool_env_file(self,lib_dir):

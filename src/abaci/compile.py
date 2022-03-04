@@ -1,6 +1,6 @@
 import logging
 import os
-from utils import cwd, mkdir, copyfile, system_cmd
+from utils import cwd, mkdir, copyfile, system_cmd, system_cmd_wait
 from shutil import rmtree
 from getpass import getuser
 
@@ -132,7 +132,9 @@ def run_abq_make(compile_file, compile_dir, verbosity):
 
     with cwd(compile_dir):
 
-        stat = system_cmd(abqmake_cmd, verbosity, output=os.path.join(compile_dir,'abaqus-make'))
+        p,ofile,efile = system_cmd(abqmake_cmd, output=os.path.join(compile_dir,'abaqus-make'))
+
+        stat = system_cmd_wait(p,verbosity,ofile,efile)
 
     return stat
 

@@ -59,7 +59,7 @@ def copydir(source,dest):
     copy_tree(source,dest)
 
 
-def system_cmd(cmd,verbosity,output=None):
+def system_cmd(cmd,output=None):
     """Helper to launch system commands"""
 
     log = logging.getLogger('abaci')
@@ -78,10 +78,21 @@ def system_cmd(cmd,verbosity,output=None):
 
     else:
 
+        ofile = None
+        efile = None
+        
         fo = sys.stdout
         fe = sys.stderr
 
     p = subprocess.Popen(cmd,stdout=fo,stderr=fe)
+
+    return p, ofile, efile
+
+
+def system_cmd_wait(p,verbosity,ofile=None,efile=None):
+    """Wait for system command to finish and check output"""
+
+    log = logging.getLogger('abaci')
 
     def handle_interrupt(signle, frame):
         p.terminate()
@@ -91,33 +102,32 @@ def system_cmd(cmd,verbosity,output=None):
 
     p.communicate()
 
-    if output:
-        fo.close()
-        fe.close()
-
     if p.returncode != 0:
 
-        log.warn('Command exited with status %s (%s)',p.returncode,' '.join(cmd))
+        log.warn('Command exited with status %s (%s)',p.returncode,' '.join(p.args))
 
     # Print outputs if (non-zero status and not in quiet mode) or
     #  if in very verbose mode
     if (p.returncode != 0 and verbosity > -1) or verbosity > 1:
 
-        if output:
+        if ofile:
 
             with open(ofile, "r") as fo:
 
                 o = fo.readlines()
 
+            print ''.join(o)
+        
+        if efile:
+
             with open(efile, "r") as fe:
 
                 e = fe.readlines()
 
-            print ''.join(o)
-
             print ''.join(e)
 
     return p.returncode
+
 
 def to_ascii(ustring):
 
