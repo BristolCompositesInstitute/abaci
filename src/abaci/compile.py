@@ -127,7 +127,9 @@ def run_abq_make(compile_file, compile_dir, verbosity):
 
     if os.name == 'nt':
         abqmake_cmd[0] = 'c:\\SIMULIA\\Commands\\abaqus.bat'
-    
+        abqmake_cmd.append('&')
+        abqmake_cmd.append('exit')
+		
     log.info('Running abaqus make')
 
     with cwd(compile_dir):

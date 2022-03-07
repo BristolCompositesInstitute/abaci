@@ -83,6 +83,8 @@ class AbaqusJob:
 
         if os.name == 'nt':
             abq_cmd[0] = 'c:\\SIMULIA\\Commands\\abaqus.bat'
+    	    abq_cmd.append('&')
+    	    abq_cmd.append('exit')
         
         log.info('Launching abaqus for job "%s"',self.name)
 
