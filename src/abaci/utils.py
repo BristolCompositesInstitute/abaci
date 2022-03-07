@@ -104,7 +104,7 @@ def system_cmd_wait(p,verbosity,ofile=None,efile=None):
 
     if p.returncode != 0:
 
-        log.warn('Command exited with status %s (%s)',p.returncode,' '.join(p.args))
+        log.warn('Command exited with status %s',p.returncode)
 
     # Print outputs if (non-zero status and not in quiet mode) or
     #  if in very verbose mode
