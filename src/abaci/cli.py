@@ -1,5 +1,6 @@
 import argparse
 import logging
+import os
 from os.path import exists, join, relpath
 import multiprocessing
 
@@ -78,8 +79,15 @@ def parse_cli():
 
     args.verbose = min(args.verbose,2)
 
-    # No screen output if going into the background
+    
     if args.background:
+
+        # Background not support on Windows
+        if os.name == 'nt':
+            print(' (!) Background execution (-b/--background) is not supported on Windows.')
+            exit(1)
+
+        # No screen output if going into the background
         args.verbose = -1
 
     # Normalise the job-spec into a list
