@@ -15,28 +15,37 @@ __A helper utility for compiling, running and testing abaqus user subroutines an
 - Prescribe and run benchmark problems as test cases
   - Perform regression checks on output database results
 
-## Getting Started
+## 1. Getting Started
 
-### Windows
+### 1.1 Requirements
+
+- Abaqus
+- Intel Fortran Compiler
+
+__Note:__ To use abaci, the Intel Fortran compiler needs to be available within your command line environment.
+On Windows you can use the *'Abaqus Command + iFort'* link from the start menu to ensure this.
+On Linux, you can add the appropriate environment module or source the `setvars` script from your Intel compiler installation. 
+
+### 1.2 Windows
 After downloading or cloning the repository, use the `install-windows.cmd` script in the `scripts` folder
-to install _abaci_ into your existing Abaqus installation.
-The script assumes your Abaqus commands folder is `C:\SIMULIA\Commands` and this is where the _abaci_ launcher is placed.
+to install abaci into your existing Abaqus installation.
+The script assumes your Abaqus commands folder is `C:\SIMULIA\Commands` and this is where the abaci launcher is placed.
 
 After running the `install-windows.cmd` script, you can check your installation by opening a new command window
 and running the command `abaci --version` or `abaci --help`.
 
-An `uninstall-windows.cmd` script is also provided in the `scripts` folder to remove an existing _abaci_ installation.
+An `uninstall-windows.cmd` script is also provided in the `scripts` folder to remove an existing abaci installation.
 
-### Linux
+### 1.3 Linux
 
-On linux, add the `./scripts` folder to your path to start using _abaci_.
+On linux, add the `./scripts` folder to your path to start using abaci.
 
-## Usage
+## 2.0 Usage
 
 Information about the user subroutine file(s) and benchmark problems are stored in a configuration file, `abaci.toml`.
 See the [configuration reference documentation](config-reference.md) for more information on what goes in the config file.
 
-Given a configuration file `abaci.toml` in the current directory, _abaci_ is invoked at the command line and accepts a number of optional arguments:
+Given a configuration file `abaci.toml` in the current directory, abaci is invoked at the command line and accepts a number of optional arguments:
 
 ```
 usage: abaci [job-spec] [optional arguments]
