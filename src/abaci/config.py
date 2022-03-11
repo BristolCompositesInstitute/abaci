@@ -1,5 +1,6 @@
 import os
 import logging
+import glob
 from os.path import exists, relpath
 
 from redist import toml
@@ -120,13 +121,21 @@ def sanitize_config(config, config_dir):
     # Output is relative to cwd
     config['output'] = os.path.realpath(config['output'])
 
-    # Other file paths are relative to the config file
+    # User subroutine path is relative to the config file
     config['user-sub-file'] = os.path.realpath(os.path.join(
                                 config_dir,config['user-sub-file']))
 
-    for i,ifile in enumerate(config['compile']['include']):
-        config['compile']['include'][i] = os.path.realpath(os.path.join(
+    # User subroutine include paths are relative to the config file
+    #  and expand globbing
+    compile_includes = []
+    for ifile in config['compile']['include']:
+
+        full_path = os.path.realpath(os.path.join(
                                 config_dir,ifile))
+
+        compile_includes.extend(glob.glob(full_path))
+
+    config['compile']['include'] = compile_includes
 
     for j in config['job']:
         j['job-file'] = os.path.realpath(os.path.join(

@@ -161,5 +161,6 @@ Whether to instrument code for coverage analysis and generate a coverage report.
 String or list of strings specifying additional files that are included in the user subroutine file.
 
 - Included file paths are specified relative to the folder containing the configuration file ('abaci.toml')
+- File globbing is supported, _e.g._: `include = 'src/*.f'`
 
 
