@@ -63,8 +63,9 @@ An optional list of additional files to copy to the job folder before launching 
 
 ### `mp-mode` (*[string]*, optional)
 
-An optional field taking the value of either `'threads'` (default) or `'mpi'` to indicate the
-parallel mode to execute in abaqus (corresponds to the `-mp_mode` command line flag).
+An optional field taking the value of either `'threads'` (default), `'mpi'` or `'disable'` to indicate the parallel mode to execute in abaqus (corresponds to the `-mp_mode` command line flag).
+
+If `mp-mode` is `'disable'`, then the abaci command line option for multiple processors will be ignored for this job, it will always run in serial.
 
 ### `check` options (optional)
 

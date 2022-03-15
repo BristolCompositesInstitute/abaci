@@ -79,7 +79,7 @@ class AbaqusJob:
 
         abq_cmd = ['abaqus','job={name}'.format(name=self.local_job_name)]
 
-        if args.nproc > 1:
+        if self.mp_mode != 'disable' and args.nproc > 1:
             abq_cmd.append('mp_mode={mode}'.format(mode=self.mp_mode))
             abq_cmd.append('cpus={n}'.format(n=args.nproc))
 
