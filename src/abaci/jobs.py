@@ -73,7 +73,7 @@ def run_jobs(args,compile_dir,jobs):
             if n_running < args.njob:
                 break
 
-            time.sleep(1)
+            time.sleep(0.1)
 
         job.launch_job(args,compile_dir)
 
@@ -83,7 +83,18 @@ def run_jobs(args,compile_dir,jobs):
 
     stats = []
 
-    # Wait for jobs
+
+    # Wait for all jobs to complete
+    while True:
+
+        n_running = sum([j.is_running() for j in launched])
+
+        if n_running == 0:
+            break
+
+        time.sleep(0.1)
+
+    # Get job stats
     for job in launched:
 
         stats.append( job.wait(args.verbose) )

@@ -3,6 +3,7 @@ from os import mkdir
 from os.path import basename, join, splitext, isdir, exists
 from utils import cwd, copyfile, system_cmd, system_cmd_wait, copydir
 from odb_check import compare_odb, dump_ref
+from datetime import datetime
 
 class AbaqusJob:
 
@@ -38,7 +39,10 @@ class AbaqusJob:
 
         self.local_job_file = join(self.job_dir,basename(self.job_file))
         self.local_job_name = splitext(basename(self.local_job_file))[0]
+        self.start_time = None
+        self.end_time = None
         
+
     def get_new_job_dir(self,output_dir):
         """Find a new job directory to run job in"""
         stem = join(output_dir,self.name) + "_{counter}"
@@ -90,13 +94,34 @@ class AbaqusJob:
 
         with cwd(self.job_dir):
 
+            self.start_time = datetime.now()
+
             self.p, self.ofile, self.efile = system_cmd(abq_cmd,output=join(self.job_dir,'abaqus'))
 
 
     def is_running(self):
-        """Check if job is currently running"""
+        """
+        Check if job is currently running and record end time if not
+        (The resolution of recorded end time is how frequently you poll this function)
+        """
 
-        return not isinstance(self.p.poll(),int)
+        log = logging.getLogger('abaci')
+
+        is_running = not isinstance(self.p.poll(),int)
+
+        has_started = self.start_time
+
+        if has_started and (not is_running) and \
+            (not self.end_time):
+
+            self.end_time = datetime.now()
+
+            self.duration = self.end_time - self.start_time
+            
+            log.info('Job "%s" completed. Execution duration: %s', 
+                 self.name, self.duration)
+
+        return is_running
 
 
     def wait(self,verbose):
@@ -119,8 +144,8 @@ class AbaqusJob:
 
         log = logging.getLogger('abaci')
 
-        if isinstance(self.p.poll(),int):
-
+        if not self.is_running():
+            
             # Job already completed
             return
 
