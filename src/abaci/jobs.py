@@ -75,7 +75,7 @@ def run_jobs(args,compile_dir,jobs):
 
             time.sleep(0.1)
 
-        job.launch_job(args,compile_dir)
+        job.launch_job(args.nproc,compile_dir)
 
         launched.append(job)
 

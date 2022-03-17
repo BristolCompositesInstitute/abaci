@@ -1,7 +1,7 @@
 import logging
-from os import mkdir
+import os
 from os.path import basename, join, splitext, isdir, exists
-from utils import cwd, copyfile, system_cmd, system_cmd_wait, copydir
+from utils import cwd, copyfile, system_cmd, system_cmd_wait, copydir, mkdir
 from odb_check import compare_odb, dump_ref
 from datetime import datetime
 
@@ -56,39 +56,14 @@ class AbaqusJob:
         return stem.format(counter=counter)
 
 
-    def launch_job(self,args,lib_dir):
+    def launch_job(self,nproc,lib_dir):
         """Launch job"""
-
-        import os
 
         log = logging.getLogger('abaci')
 
-        mkdir(self.job_dir)
+        self.prepare_job(lib_dir)
 
-        copyfile(self.job_file,self.local_job_file)
-
-        for inc in self.include:
-            dest = join(self.job_dir,basename(inc))
-            copyfile(inc,dest)
-
-        local_lib_dir = join(self.job_dir,'lib')
-
-        copydir(lib_dir,local_lib_dir)
-
-        self.spool_env_file(local_lib_dir)
-
-        abq_cmd = ['abaqus','job={name}'.format(name=self.local_job_name)]
-
-        if self.mp_mode != 'disable' and args.nproc > 1:
-            abq_cmd.append('mp_mode={mode}'.format(mode=self.mp_mode))
-            abq_cmd.append('cpus={n}'.format(n=args.nproc))
-
-        abq_cmd.extend(['double','interactive'])
-
-        if os.name == 'nt':
-            abq_cmd[0] = 'c:\\SIMULIA\\Commands\\abaqus.bat'
-    	    abq_cmd.append('&')
-    	    abq_cmd.append('exit')
+        abq_cmd = self.get_abaqus_cmd(nproc)
         
         log.info('Launching abaqus for job "%s"',self.name)
 
@@ -160,6 +135,43 @@ class AbaqusJob:
             p, ofile, efile = system_cmd(kill_cmd)
 
             system_cmd_wait(p,verbose)
+
+
+    def get_abaqus_cmd(self,nproc):
+        """Returns the system command to launch abaqus"""
+
+        abq_cmd = ['abaqus','job={name}'.format(name=self.local_job_name)]
+
+        if self.mp_mode != 'disable' and nproc > 1:
+            abq_cmd.append('mp_mode={mode}'.format(mode=self.mp_mode))
+            abq_cmd.append('cpus={n}'.format(n=nproc))
+
+        abq_cmd.extend(['double','interactive'])
+
+        if os.name == 'nt':
+            abq_cmd[0] = 'c:\\SIMULIA\\Commands\\abaqus.bat'
+    	    abq_cmd.append('&')
+    	    abq_cmd.append('exit')
+
+        return abq_cmd
+
+
+    def prepare_job(self,lib_dir):
+        """Create job directory and copy job files into it"""
+
+        mkdir(self.job_dir)
+
+        copyfile(self.job_file,self.local_job_file)
+
+        for inc in self.include:
+            dest = join(self.job_dir,basename(inc))
+            copyfile(inc,dest)
+
+        local_lib_dir = join(self.job_dir,'lib')
+
+        copydir(lib_dir,local_lib_dir)
+
+        self.spool_env_file(local_lib_dir)
 
 
     def spool_env_file(self,lib_dir):
