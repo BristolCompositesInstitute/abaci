@@ -9,7 +9,7 @@ def main():
 
     args = parse_cli()
 
-    init_logger(args)
+    init_logger(args.verbose)
 
     config = load_config(args)
 

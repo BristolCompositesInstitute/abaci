@@ -2,8 +2,8 @@ import logging
 import os
 from os.path import basename, join, splitext, isdir, exists
 from utils import cwd, copyfile, system_cmd, system_cmd_wait, copydir, mkdir
-from odb_check import compare_odb, dump_ref
 from datetime import datetime
+from exceptions import ValueError
 
 class AbaqusJob:
 
@@ -12,7 +12,7 @@ class AbaqusJob:
 
         if bool(job) is bool(job_file):
 
-            raise Exception('AbaqusJob needs one of job or job_file to instantiate')
+            raise ValueError('AbaqusJob needs one of job or job_file to instantiate')
 
         if job:
 
@@ -127,12 +127,12 @@ class AbaqusJob:
         self.p.terminate()
 
         with cwd(self.job_dir):
-
+            
             log.info('Cancelling abaqus job "%s"',self.name)
 
             kill_cmd = ['abaqus', 'terminate','job={name}'.format(name=self.local_job_name)]
 
-            p, ofile, efile = system_cmd(kill_cmd)
+            p, ofile, efile = system_cmd(kill_cmd,output=join(self.job_dir,'abaqus-terminate'))
 
             system_cmd_wait(p,verbose)
 
@@ -150,8 +150,8 @@ class AbaqusJob:
 
         if os.name == 'nt':
             abq_cmd[0] = 'c:\\SIMULIA\\Commands\\abaqus.bat'
-    	    abq_cmd.append('&')
-    	    abq_cmd.append('exit')
+            abq_cmd.append('&')
+            abq_cmd.append('exit')
 
         return abq_cmd
 
@@ -192,6 +192,8 @@ class AbaqusJob:
     def run_checks(self):
         """Run reference checks"""
         
+        from odb_check import compare_odb, dump_ref
+
         log = logging.getLogger('abaci')
 
         if not self.checks:

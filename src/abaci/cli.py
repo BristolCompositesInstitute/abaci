@@ -1,8 +1,9 @@
 import argparse
 import logging
 import os
-from os.path import exists, join, relpath
+from os.path import exists, join
 import multiprocessing
+from abaci.utils import relpathshort
 
 def abaci_cli():
     """Defines the command line interface parser"""
@@ -103,10 +104,10 @@ def parse_cli():
     return args
 
 
-def init_logger(args):
+def init_logger(verbose):
     """Initialise the abaci global logger"""
 
-    if args.verbose > 0:
+    if verbose > 0:
         log_fmt = '%(levelname)8s: %(message)s'
     else:
         log_fmt = ' %(message)s'
@@ -115,14 +116,12 @@ def init_logger(args):
     log.setLevel(logging.DEBUG)
 
     stream_handler = logging.StreamHandler()
-    stream_handler.setLevel(10*(2-args.verbose))
+    stream_handler.setLevel(10*(2-verbose))
     stream_handler.setFormatter(logging.Formatter(log_fmt))
 
     log.addHandler(stream_handler)
 
-    log.debug('cli args=%s',args)
-
-    log.debug('Verbosity is %s',args.verbose)
+    log.debug('Verbosity is %s',verbose)
 
 
 def new_log_filename(log_dir):
@@ -155,4 +154,4 @@ def init_logger_file(log_dir):
     log.addHandler(handler)
 
     log.debug('Starting file log')
-    log.info('Log file for this session is "%s"',relpath(log_file))
+    log.info('Log file for this session is "%s"',relpathshort(log_file))

@@ -1,6 +1,6 @@
 import logging
 import os
-from utils import cwd, mkdir, copyfile, system_cmd, system_cmd_wait
+from utils import cwd, mkdir, copyfile, system_cmd, system_cmd_wait, relpathshort
 from shutil import rmtree
 from getpass import getuser
 
@@ -47,7 +47,7 @@ def stage_files(compile_dir, user_file, compile_file, include_files):
     log = logging.getLogger('abaci')
 
     if os.path.exists(compile_dir):
-        log.debug('Removing existing compile directory (%s)',os.path.relpath(compile_dir))
+        log.debug('Removing existing compile directory (%s)',relpathshort(compile_dir))
         rmtree(compile_dir)
 
     mkdir(compile_dir)

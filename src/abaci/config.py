@@ -1,10 +1,11 @@
 import os
 import logging
 import glob
-from os.path import exists, relpath
+from os.path import exists
 
 from redist import toml
 from redist.schema import Schema, And, Optional, Use, Or#
+from abaci.utils import relpathshort
 
 def load_config(args):
     """Top-level routine to read, parse, validate and sanitize config file"""
@@ -34,7 +35,7 @@ def get_config_path(args):
     config_file = os.path.realpath(args.config)
     config_dir = os.path.dirname(config_file)
 
-    log.info('Config file is "%s"',relpath(config_file))
+    log.info('Config file is "%s"',relpathshort(config_file))
     log.debug('Config directory is "%s"',config_dir)
 
     return config_file, config_dir
@@ -178,10 +179,10 @@ def list_config_jobs(config,verbose):
 
         print "    {i}: {name}  [{tags}]".format(
                i=i, name=job_name, tags=', '.join(j['tags']),
-               file=os.path.relpath(j['job-file'],os.getcwd())
+               file=relpathshort(j['job-file'],os.getcwd())
         )
 
         if verbose > 0:
              print "     ({file})".format(
-               file=os.path.relpath(j['job-file'],os.getcwd())
+               file=relpathshort(j['job-file'],os.getcwd())
         )

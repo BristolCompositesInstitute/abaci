@@ -6,6 +6,20 @@ from contextlib import contextmanager
 import subprocess
 from unicodedata import normalize
 
+def relpathshort(path):
+    """
+        Returns the shorter of path and relpath
+        Avoids issue on Windows for different drive letters
+    """
+
+    try:
+        rpath = os.path.relpath(path)
+    except:
+        rpath = path
+
+    return min(path, rpath, key=len)
+
+
 @contextmanager
 def cwd(path):
     """Helper to change directory temporarily"""
@@ -14,7 +28,7 @@ def cwd(path):
 
     oldpwd=os.getcwd()
 
-    log.debug('Changing into directory "%s"',os.path.relpath(path))
+    log.debug('Changing into directory "%s"',relpathshort(path))
     os.chdir(path)
 
     try:
@@ -31,11 +45,11 @@ def mkdir(dir):
 
     if os.path.isdir(dir):
         
-        log.debug('Directory already exists ("%s")',os.path.relpath(dir))
+        log.debug('Directory already exists ("%s")',relpathshort(dir))
 
     else:
 
-        log.debug('Making directory "%s"',os.path.relpath(dir))
+        log.debug('Making directory "%s"',relpathshort(dir))
         os.mkdir(dir)
 
 
@@ -45,7 +59,7 @@ def copyfile(source,dest):
 
     log = logging.getLogger('abaci')
     
-    log.debug('Copying "%s" to "%s"',os.path.relpath(source), os.path.relpath(dest))
+    log.debug('Copying "%s" to "%s"',relpathshort(source), relpathshort(dest))
     copyfile(source,dest)
 
 
@@ -55,7 +69,7 @@ def copydir(source,dest):
 
     log = logging.getLogger('abaci')
     
-    log.debug('Copying directory "%s" to "%s"',os.path.relpath(source), os.path.relpath(dest))
+    log.debug('Copying directory "%s" to "%s"',relpathshort(source), relpathshort(dest))
     copy_tree(source,dest)
 
 
@@ -70,11 +84,11 @@ def system_cmd(cmd,output=None):
 
         ofile = '{stem}.stdout'.format(stem=output)
         fo = open(ofile,'w')
-        log.debug('Command stdout redirected to "%s"',os.path.relpath(ofile))
+        log.debug('Command stdout redirected to "%s"',relpathshort(ofile))
 
         efile = '{stem}.stderr'.format(stem=output)
         fe = open(efile,'w')
-        log.debug('Command stderr redirected to "%s"',os.path.relpath(efile))
+        log.debug('Command stderr redirected to "%s"',relpathshort(efile))
 
     else:
 
