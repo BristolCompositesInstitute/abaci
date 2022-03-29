@@ -40,8 +40,6 @@ def fetch_dependency(deps_dir,dep_name,dep_git,dep_version,verbosity):
 
     dep_path = os.path.join(deps_dir,dep_name)
 
-    git.log_file = os.path.join(deps_dir,'git')
-
     if not os.path.isdir(dep_path):
 
         log.info('Fetching dependency "{dep}" ({ver})'.format(dep=dep_name,ver=dep_version))
@@ -55,10 +53,33 @@ def fetch_dependency(deps_dir,dep_name,dep_git,dep_version,verbosity):
 
         log.warning('(!) Warning, dependency {dep} is not pinned to a specific commit/tag - the current configuration is not reproducible.'.format(dep=dep_name))
 
-    if git.is_dirty(dep_path):
+    is_dirty = git.is_dirty(dep_path)
+    if is_dirty:
 
         log.warning("(!) Warning, dependency {dep} has modified code - the current configuration is not reproducible.\n\t"
                         "To ensure others to use your changes, commit them to the upstream repository at:\n\t {upstream}".format(dep=dep_name,upstream=dep_git))
+
+    commit = git.current_commit(dep_path)
+
+    needs_update = False
+    if commit != dep_version:
+
+        dep_version_commit = git.show_ref(dep_path,dep_version)
+
+        if commit != dep_version_commit:
+
+            needs_update = True
+
+    if needs_update and is_dirty:
+
+        log.warning("(!) Warning, dependency {dep} cannot be updated to {ver} because it contains modified code.\n\t".format(
+                     dep=dep_name,ver=dep_version))
+
+    elif needs_update:
+
+        log.info('Updating dependency "{dep}" to {ver}'.format(dep=dep_name,ver=dep_version))
+
+        git.checkout(dep_path,dep_version,verbosity)
 
     return dep_path
 

@@ -1,5 +1,6 @@
 import os
 import tempfile
+import subprocess
 from abaci.utils import cwd, system_cmd, system_cmd_wait
 
 def clone(git_path,working_dir,target_dir,verbosity):
@@ -66,3 +67,23 @@ def is_dirty(git_path):
         stat = system_cmd_wait(p, verbosity=-1)
 
     return stat != 0
+
+
+def current_commit(git_path):
+    """Get the current commit of HEAD"""
+
+    with cwd(git_path):
+
+        git_cmd = ['git', 'show', '--format=%H', '-s']
+        
+        return subprocess.check_output(git_cmd).strip()
+
+
+def show_ref(git_path,ref):
+    """Return the git commit for reference (tag)"""
+
+    with cwd(git_path):
+
+        git_cmd = ['git', 'show-ref', '-s', ref]
+        
+        return subprocess.check_output(git_cmd).strip()
