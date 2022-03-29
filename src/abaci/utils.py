@@ -83,11 +83,11 @@ def system_cmd(cmd,output=None):
     if output:
 
         ofile = '{stem}.stdout'.format(stem=output)
-        fo = open(ofile,'w')
+        fo = open(ofile,'a')
         log.debug('Command stdout redirected to "%s"',relpathshort(ofile))
 
         efile = '{stem}.stderr'.format(stem=output)
-        fe = open(efile,'w')
+        fe = open(efile,'a')
         log.debug('Command stderr redirected to "%s"',relpathshort(efile))
 
     else:
@@ -95,8 +95,8 @@ def system_cmd(cmd,output=None):
         ofile = None
         efile = None
         
-        fo = sys.stdout
-        fe = sys.stderr
+        fo = None
+        fe = None
 
     p = subprocess.Popen(cmd,stdout=fo,stderr=fe)
 
@@ -115,10 +115,6 @@ def system_cmd_wait(p,verbosity,ofile=None,efile=None):
     log = logging.getLogger('abaci')
 
     p.communicate()
-
-    if p.returncode != 0:
-
-        log.warn('Command exited with status %s',p.returncode)
 
     # Print outputs if (non-zero status and not in quiet mode) or
     #  if in very verbose mode
