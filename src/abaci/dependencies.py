@@ -1,14 +1,11 @@
 import os
 import logging
-import tempfile
 from abaci import git_utils as git
 from abaci.config import load_config
 from abaci.utils import cwd, mkdir, system_cmd, system_cmd_wait
 
 def fetch_dependencies(config, config_dir, verbosity):
     """Breadth-first fetching of project dependencies via git"""
-
-    log = logging.getLogger('abaci')
 
     dependencies = config['dependency']
 
@@ -72,7 +69,7 @@ def fetch_dependency(deps_dir,dep_name,dep_git,dep_version,verbosity):
 
     if needs_update and is_dirty:
 
-        log.warning("(!) Warning, dependency {dep} cannot be updated to {ver} because it contains modified code.\n\t".format(
+        log.warning("(!) Warning, dependency {dep} cannot be updated to version '{ver}' because it contains modified code.\n\t".format(
                      dep=dep_name,ver=dep_version))
 
     elif needs_update:
@@ -80,6 +77,9 @@ def fetch_dependency(deps_dir,dep_name,dep_git,dep_version,verbosity):
         log.info('Updating dependency "{dep}" to {ver}'.format(dep=dep_name,ver=dep_version))
 
         git.checkout(dep_path,dep_version,verbosity)
+
+    commit = git.current_commit(dep_path)
+    log.debug('Dependency {dep} is at commit {h}'.format(dep=dep_name,h=commit))
 
     return dep_path
 

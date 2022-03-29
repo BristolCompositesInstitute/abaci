@@ -18,7 +18,7 @@ def clone(git_path,working_dir,target_dir,verbosity):
 
         if stat:
 
-            raise Exception('Error while cloning repository {repo}'.format(repo=dep_git))
+            raise Exception('Error while cloning repository {repo}'.format(repo=git_path))
 
 
 def checkout(git_path,git_ref,verbosity):
@@ -87,3 +87,45 @@ def show_ref(git_path,ref):
         git_cmd = ['git', 'show-ref', '-s', ref]
         
         return subprocess.check_output(git_cmd).strip()
+
+
+def init_bare(path):
+    """Initialise a bare git repo at the local path"""
+
+    devnull = open(os.devnull,'w')
+
+    with cwd(path):
+
+        git_cmd = ['git', 'init', '--bare']
+        
+        subprocess.check_call(git_cmd,stdout=devnull,stderr=devnull)
+
+
+def add_and_commit(path,message):
+    """Helper to add all and commit"""
+
+    devnull = open(os.devnull,'w')
+
+    with cwd(path):
+        
+        subprocess.check_call(['git', 'add', '-A'],stdout=devnull,stderr=devnull)
+
+        subprocess.check_call(['git', 'commit', '-m', message,'--allow-empty'],stdout=devnull,stderr=devnull)
+
+
+def add_tag(path,tag):
+    """Helper to tag commit"""
+    
+    with cwd(path):
+
+        subprocess.check_call(['git', 'tag', tag])
+
+
+def push(path):
+    """Helper to tag commit"""
+
+    devnull = open(os.devnull,'w')
+
+    with cwd(path):
+
+        subprocess.check_call(['git', 'push','--tags', 'origin', 'master'],stdout=devnull,stderr=devnull)
