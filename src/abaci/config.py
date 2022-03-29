@@ -84,8 +84,9 @@ def config_schema():
     compile_defaults = compile_schema.validate({})
 
     config_schema = Schema(And(Use(toml.loads),{
+                            Optional('name', default=None): unicode,
                             Optional('output', default=u'.'): unicode,
-                            'user-sub-file': unicode,
+                            Optional('user-sub-file',default=None): unicode,
                             Optional('dependency',default=[]): dependency_schema,
                             Optional('job',default=[]): job_schema,
                             Optional('compile',default=compile_defaults): And(dict,compile_schema)}))
@@ -128,7 +129,8 @@ def sanitize_config(config, config_dir):
     config['output'] = os.path.realpath(config['output'])
 
     # User subroutine path is relative to the config file
-    config['user-sub-file'] = os.path.realpath(os.path.join(
+    if config['user-sub-file']:
+        config['user-sub-file'] = os.path.realpath(os.path.join(
                                 config_dir,config['user-sub-file']))
 
     # User subroutine include paths are relative to the config file
@@ -172,7 +174,7 @@ def sanitize_config(config, config_dir):
 def check_config(config):
     """Check config to raise any errors before continuing"""
 
-    if not exists(config['user-sub-file']):
+    if config['user-sub-file'] and not exists(config['user-sub-file']):
         raise Exception('The user subroutine file "{file}" cannot be found'.format(file=config['user-sub-file']))
 
 

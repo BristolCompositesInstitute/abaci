@@ -43,8 +43,7 @@ class TestDependencies(AbaciUnitTestSuite):
 
             with open(project_manifest,'w') as f:
 
-                f.write('# name = "{name}"\n'.format(name=name))
-                f.write('user-sub-file = "usub.f"\n\n')
+                f.write('name = "{name}"\n'.format(name=name))
 
                 if deps:
 
@@ -54,10 +53,6 @@ class TestDependencies(AbaciUnitTestSuite):
                         f.write('name = "{name}"\n'.format(name=dep['name']))
                         f.write("git = '{path}'\n".format(path=dep['git']))
                         f.write('version = "{ver}"\n\n'.format(ver=dep['version']))
-
-            with open(join(project_path,'usub.f'),'w') as f:
-                pass
-        
 
             git.add_and_commit(project_path,'Initial commit')
 
