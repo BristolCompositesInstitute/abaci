@@ -23,6 +23,11 @@ jobs:
     - name: Check version
       run: python --version
 
+    - name: Setup git config
+      run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "<>"
+
     - name: Run Tests
       run: python test/test_runner.py
 
