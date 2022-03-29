@@ -7,10 +7,10 @@ from redist import toml
 from redist.schema import Schema, And, Optional, Use, Or#
 from abaci.utils import relpathshort
 
-def load_config(args):
+def load_config(config_file,echo):
     """Top-level routine to read, parse, validate and sanitize config file"""
 
-    config_file, config_dir = get_config_path(args)
+    config_file, config_dir = get_config_path(config_file)
 
     config_str = read_config_file(config_file)
 
@@ -18,24 +18,24 @@ def load_config(args):
 
     config = sanitize_config(config, config_dir)
 
-    if args.echo:
+    if echo:
         print toml.dumps(config)
         exit()
 
     check_config(config)
 
-    return config
+    return config, config_dir
 
 
-def get_config_path(args):
+def get_config_path(config_file):
     """Establish absolute path for config file"""
 
     log = logging.getLogger('abaci')
 
-    config_file = os.path.realpath(args.config)
+    config_file = os.path.realpath(config_file)
     config_dir = os.path.dirname(config_file)
 
-    log.info('Config file is "%s"',relpathshort(config_file))
+    log.debug('Config file is "%s"',relpathshort(config_file))
     log.debug('Config directory is "%s"',config_dir)
 
     return config_file, config_dir
@@ -179,10 +179,10 @@ def list_config_jobs(config,verbose):
 
         print "    {i}: {name}  [{tags}]".format(
                i=i, name=job_name, tags=', '.join(j['tags']),
-               file=relpathshort(j['job-file'],os.getcwd())
+               file=relpathshort(j['job-file'])
         )
 
         if verbose > 0:
              print "     ({file})".format(
-               file=relpathshort(j['job-file'],os.getcwd())
+               file=relpathshort(j['job-file'])
         )

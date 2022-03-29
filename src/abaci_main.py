@@ -11,7 +11,7 @@ def main():
 
     init_logger(args.verbose)
 
-    config = load_config(args)
+    config, config_dir = load_config(args.config,args.echo)
 
     mkdir(config['output'])
 
