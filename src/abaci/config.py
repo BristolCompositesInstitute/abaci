@@ -68,6 +68,10 @@ def config_schema():
                          Optional('mp-mode',default='threads'): Or(u'threads',u'mpi',u'disable'),
                          Optional('check',default=None): check_schema}])
 
+    dependency_schema = Schema([{'name': unicode,
+                                'git': unicode,
+                                'version': unicode}])
+
     compile_schema = Schema({Optional('fflags',default=[]): Or(unicode,[unicode]),
                             Optional('lflags',default=''): unicode,
                             Optional('opt-host',default=True): bool,
@@ -82,6 +86,7 @@ def config_schema():
     config_schema = Schema(And(Use(toml.loads),{
                             Optional('output', default=u'.'): unicode,
                             'user-sub-file': unicode,
+                            Optional('dependency',default=[]): dependency_schema,
                             Optional('job',default=[]): job_schema,
                             Optional('compile',default=compile_defaults): And(dict,compile_schema)}))
 
