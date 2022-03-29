@@ -3,6 +3,7 @@ from abaci.config import load_config, list_config_jobs
 from abaci.compile import compile_user_subroutine, collect_cov_report
 from abaci.jobs import get_jobs, run_jobs
 from abaci.utils import mkdir, daemonize
+from abaci.dependencies import fetch_dependencies
 
 def main():
     """Main entry point for abaci program"""
@@ -20,6 +21,8 @@ def main():
     if args.list:
         list_config_jobs(config,args.verbose)
         exit()
+
+    fetch_dependencies(config, config_dir, args.verbose)
 
     jobs = get_jobs(args,config)
 
