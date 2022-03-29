@@ -161,7 +161,13 @@ def sanitize_config(config, config_dir):
             j['check']['reference'] = os.path.realpath(os.path.join(
                                 config_dir,j['check']['reference']))
 
+    abaci_root = os.path.join(os.path.dirname(os.path.realpath(__file__)),os.pardir,os.pardir)
+    for d  in config['dependency']:
+
+        d['git'] = os.path.realpath(d['git'].format(ABACI_ROOT=abaci_root))
+
     return config
+
 
 def check_config(config):
     """Check config to raise any errors before continuing"""

@@ -17,5 +17,6 @@ if __name__ == '__main__':
         AbaciUnitTestSuite.verbose =True
 
     from TestAbaqusJob import TestAbaqusJob
+    from TestDependencies import TestDependencies
 
     unittest.main()
