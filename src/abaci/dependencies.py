@@ -15,17 +15,29 @@ def fetch_dependencies(config, config_dir, verbosity):
 
         mkdir(deps_dir)
 
+    dep_list = []
+
     while dependencies:
 
         dep = dependencies.pop(0)
 
-        dep_path = fetch_dependency(deps_dir,dep['name'],dep['git'],dep['version'],verbosity)
-        
-        with cwd(dep_path):
-            
-            dep_config_file = os.path.join(dep_path,'abaci.toml')
+        if dep['name'] not in dep_list:
 
-            dep_config, dep_config_dir = load_config(dep_config_file, echo=False)
+            dep_path = fetch_dependency(deps_dir,dep['name'],dep['git'],dep['version'],verbosity)
+            
+            with cwd(dep_path):
+                
+                dep_config_file = os.path.join(dep_path,'abaci.toml')
+
+                dep_config, dep_config_dir = load_config(dep_config_file, echo=False)
+
+            # Check specified name matches that in package config
+            if dep['name'] != dep_config['name']:
+
+                raise Exception('Dependency name mismatch for "{n1}", found name="{n2}" in dependency manifest'.format(
+                                n1=dep['name'],n2=dep_config['name']))
+
+            dep_list.append(dep['name'])
 
             dependencies.extend(dep_config['dependency'])
 
