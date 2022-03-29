@@ -67,9 +67,22 @@ class TestDependencies(AbaciUnitTestSuite):
         return project_upstream
 
 
-    def test_dependency_fetching(self):
+    def clone_and_load_config(self,upstream_path,local_dir):
+
+        git.clone(upstream_path,self.output_dir,local_dir,verbosity=-1)
+
+        project_path = join(self.output_dir,local_dir)
+
+        project_manifest = join(project_path,'abaci.toml')
+
+        config, config_dir = load_config(project_manifest, echo=False)
+
+        return project_path, config, config_dir
+        
+
+    def test_simple_dependencies(self):
         """
-            Test dependency fetching
+            Test simple dependency hierarchy
         """
 
         self.new_temp_project(name="dep1",version="v1",deps=None)
@@ -82,13 +95,7 @@ class TestDependencies(AbaciUnitTestSuite):
                                     self.temp_dep(name="dep3",version="v1")
                               ])
 
-        git.clone(temp_upstream,self.output_dir,'root',verbosity=-1)
-
-        project_path = join(self.output_dir,'root')
-
-        project_manifest = join(project_path,'abaci.toml')
-
-        config, config_dir = load_config(project_manifest, echo=False)
+        project_path, config, config_dir = self.clone_and_load_config(temp_upstream,'root')
 
         if verbose:
             verbosity = 1
@@ -107,3 +114,44 @@ class TestDependencies(AbaciUnitTestSuite):
             self.assertTrue(exists(join('dependencies','dep1','abaci.toml')))
             self.assertTrue(exists(join('dependencies','dep2','abaci.toml')))
             self.assertTrue(exists(join('dependencies','dep3','abaci.toml')))
+
+
+    def test_circular_dependencies(self):
+        """
+            Test mutually dependent projects
+        """
+
+        project1 = self.new_temp_project(name="project1",version="v1",
+                              deps=[self.temp_dep(name="project2",version="v1")])
+
+        project2 = self.new_temp_project(name="project2",version="v1",
+                              deps=[self.temp_dep(name="project1",version="v1")])
+
+        if verbose:
+            verbosity = 1
+        else:
+            verbosity = 0
+
+        # Try project 1
+        project_path, config, config_dir = self.clone_and_load_config(project1,'project1')
+        
+        with cwd(project_path):
+
+            fetch_dependencies(config, config_dir, verbosity)
+
+            # Check dependencies were fetched
+            self.assertTrue(isdir('dependencies'))
+            self.assertTrue(isdir(join('dependencies','project2')))
+            self.assertTrue(exists(join('dependencies','project2','abaci.toml')))
+
+        # Try project 2
+        project_path, config, config_dir = self.clone_and_load_config(project2,'project2')
+        
+        with cwd(project_path):
+
+            fetch_dependencies(config, config_dir, verbosity)
+
+            # Check dependencies were fetched
+            self.assertTrue(isdir('dependencies'))
+            self.assertTrue(isdir(join('dependencies','project1')))
+            self.assertTrue(exists(join('dependencies','project1','abaci.toml')))

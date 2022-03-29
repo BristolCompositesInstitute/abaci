@@ -110,7 +110,7 @@ def add_and_commit(path,message):
         
         subprocess.check_call(['git', 'add', '-A'],stdout=devnull,stderr=devnull)
 
-        subprocess.check_call(['git', 'commit', '-m', message,'--allow-empty'],stdout=devnull,stderr=devnull)
+        subprocess.check_call(['git', 'commit', '-m', message,'--allow-empty'])
 
 
 def add_tag(path,tag):
