@@ -254,3 +254,32 @@ class TestDependencies(AbaciUnitTestSuite):
 
             # Check dependency was updated
             self.assertEquals(git.get_tag(join('dependencies','dep1')), 'v2')
+
+
+    def test_invalid_dependency(self):
+        """
+            Test exception for an invalid dependency
+            When 'name' field does not match in parent and child project manifests
+
+            root-->dep1
+            
+        """
+
+        self.new_temp_project(name="dep1",version="v1",deps=None)
+
+        temp_upstream = self.new_temp_project(name="root",version="v1",
+                              deps=[self.temp_dep(name="dep1",version="v1")])
+
+        project_path, config, config_dir = self.clone_and_load_config(temp_upstream,'root')
+
+        config['dependency'][0]['name'] = 'wrong_name'
+
+        if verbose:
+            verbosity = 1
+        else:
+            verbosity = 0
+
+        with self.assertRaises(Exception):
+
+            fetch_dependencies(config, config_dir, verbosity)
+
