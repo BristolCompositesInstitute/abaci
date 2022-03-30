@@ -89,6 +89,16 @@ def show_ref(git_path,ref):
         return subprocess.check_output(git_cmd).strip()
 
 
+def get_tag(git_path):
+    """Return the git tag for current commit """
+
+    with cwd(git_path):
+
+        git_cmd = ['git', 'describe', '--tags', 'HEAD']
+        
+        return subprocess.check_output(git_cmd).strip()
+
+
 def init_bare(path):
     """Initialise a bare git repo at the local path"""
 
@@ -122,7 +132,7 @@ def add_tag(path,tag):
 
 
 def push(path):
-    """Helper to tag commit"""
+    """Helper to push master to remote with tags"""
 
     devnull = open(os.devnull,'w')
 

@@ -83,16 +83,20 @@ class TestDependencies(AbaciUnitTestSuite):
     def test_simple_dependencies(self):
         """
             Test simple dependency hierarchy
+
+            root-->dep1
+                -->dep3-->dep2
+                
         """
 
         self.new_temp_project(name="dep1",version="v1",deps=None)
-        self.new_temp_project(name="dep2",version="v1",deps=None)
-        self.new_temp_project(name="dep3",version="v1",
-                              deps=[self.temp_dep(name="dep2",version="v1")])
+        self.new_temp_project(name="dep2",version="v2",
+                              deps=[self.temp_dep(name="dep3",version="v3")])
+        self.new_temp_project(name="dep3",version="v3",deps=None)
 
         temp_upstream = self.new_temp_project(name="root",version="v1",
                               deps=[self.temp_dep(name="dep1",version="v1"),
-                                    self.temp_dep(name="dep3",version="v1")
+                                    self.temp_dep(name="dep2",version="v2")
                               ])
 
         project_path, config, config_dir = self.clone_and_load_config(temp_upstream,'root')
@@ -115,10 +119,18 @@ class TestDependencies(AbaciUnitTestSuite):
             self.assertTrue(exists(join('dependencies','dep2','abaci.toml')))
             self.assertTrue(exists(join('dependencies','dep3','abaci.toml')))
 
+            # Check correct versions of dependencies were checked-out
+            self.assertEquals(git.get_tag(join('dependencies','dep1')), 'v1')
+            self.assertEquals(git.get_tag(join('dependencies','dep2')), 'v2')
+            self.assertEquals(git.get_tag(join('dependencies','dep3')), 'v3')
+
 
     def test_circular_dependencies(self):
         """
             Test mutually dependent projects
+
+            project1<-->project2
+
         """
 
         project1 = self.new_temp_project(name="project1",version="v1",
@@ -155,3 +167,48 @@ class TestDependencies(AbaciUnitTestSuite):
             self.assertTrue(isdir('dependencies'))
             self.assertTrue(isdir(join('dependencies','project1')))
             self.assertTrue(exists(join('dependencies','project1','abaci.toml')))
+
+
+    def test_duplicate_dependencies(self):
+        """
+            Test dependency hierarchy with a duplicate dependent
+
+            root-->dep1-->dep3@v1
+                -->dep2-->dep3@v2
+                
+            Both dep1 and dep2 depend on dep3 with differing versions:
+            priority is given to the higher/earlier dependent. In this
+            case dep1 is listed first, so dep3 should be taken at v1 not v2.
+
+        """
+
+        self.new_temp_project(name="dep1",version="v1",
+                              deps=[self.temp_dep(name="dep3",version="v1")])
+        self.new_temp_project(name="dep2",version="v1",
+                              deps=[self.temp_dep(name="dep3",version="v2")])
+        self.new_temp_project(name="dep3",version="v1",deps=None)
+
+        temp_upstream = self.new_temp_project(name="root",version="v1",
+                              deps=[self.temp_dep(name="dep1",version="v1"),
+                                    self.temp_dep(name="dep2",version="v1")
+                              ])
+
+        project_path, config, config_dir = self.clone_and_load_config(temp_upstream,'root')
+
+        if verbose:
+            verbosity = 1
+        else:
+            verbosity = 0
+
+        with cwd(project_path):
+
+            fetch_dependencies(config, config_dir, verbosity)
+
+            # Check dependencies were fetched
+            self.assertTrue(isdir('dependencies'))
+            self.assertTrue(isdir(join('dependencies','dep1')))
+            self.assertTrue(isdir(join('dependencies','dep2')))
+            self.assertTrue(isdir(join('dependencies','dep3')))
+
+            # Check correct version of dep3 has been fetched
+            self.assertEquals(git.get_tag(join('dependencies','dep3')), 'v1')
