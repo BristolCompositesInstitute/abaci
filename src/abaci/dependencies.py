@@ -6,8 +6,9 @@ from abaci.utils import cwd, mkdir, system_cmd, system_cmd_wait
 
 def fetch_dependencies(config, config_dir, verbosity):
     """Breadth-first fetching of project dependencies via git"""
-
-    dependencies = config['dependency']
+    
+    # Enqueue dependencies from the root project
+    dependencies = list(config['dependency'])
 
     deps_dir = os.path.join(config_dir,'dependencies')
 
@@ -38,7 +39,8 @@ def fetch_dependencies(config, config_dir, verbosity):
                                 n1=dep['name'],n2=dep_config['name']))
 
             dep_list.append(dep['name'])
-
+            
+            # Enqueue dependencies from this dependency
             dependencies.extend(dep_config['dependency'])
 
 
