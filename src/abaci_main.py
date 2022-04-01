@@ -22,11 +22,12 @@ def main():
         list_config_jobs(config,args.verbose)
         exit()
 
-    fetch_dependencies(config, config_dir, args.verbose)
+    dep_list = fetch_dependencies(config, config_dir, args.verbose)
 
     jobs = get_jobs(args,config)
 
-    stat, compile_dir = compile_user_subroutine(args,config)
+    stat, compile_dir = compile_user_subroutine(args, config['output'], 
+                        config['user-sub-file'], config['compile'], dep_list)
 
     if args.compile or stat != 0:
         return

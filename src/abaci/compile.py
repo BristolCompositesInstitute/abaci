@@ -4,25 +4,19 @@ from utils import cwd, mkdir, copyfile, system_cmd, system_cmd_wait, relpathshor
 from shutil import rmtree
 from getpass import getuser
 
-def compile_user_subroutine(args,config):
+def compile_user_subroutine(args, output_dir, user_file, compile_conf, dep_list):
     """Perform pre-compilation step using abaqus make"""
 
     log = logging.getLogger('abaci')
 
-    output_dir = config['output']
-
     compile_dir = os.path.join(output_dir,'lib')
-
-    user_file = config['user-sub-file']
 
     compile_file = os.path.join(compile_dir,
                                  os.path.basename(user_file))
 
-    compile_conf = config['compile']
-
     includes = compile_conf['include']
 
-    stage_files(compile_dir, user_file, compile_file, includes)
+    stage_files(compile_dir, user_file, compile_file, includes, dep_list)
 
     flags = get_flags(compile_dir=compile_dir,
                       fortran_flags = compile_conf['fflags'],
@@ -41,7 +35,7 @@ def compile_user_subroutine(args,config):
     
     return stat, compile_dir
 
-def stage_files(compile_dir, user_file, compile_file, include_files):
+def stage_files(compile_dir, user_file, compile_file, include_files, dep_list):
     """Create output compilation directory and move files there"""
 
     log = logging.getLogger('abaci')
@@ -54,9 +48,23 @@ def stage_files(compile_dir, user_file, compile_file, include_files):
 
     copyfile(user_file,compile_file)
 
+    # Stage additional 'include' files from this project
     for inc in include_files:
         dest = os.path.join(compile_dir,os.path.basename(inc))
         copyfile(inc,dest)
+
+    # Stage 'include' files from dependencies
+    #  (in subdirectories named by dependency name)
+    for dep_name,dep in dep_list.items():
+
+        dep_dir = os.path.join(compile_dir,dep_name)
+
+        mkdir(dep_dir)
+        
+        for inc in dep['includes']:
+
+            dest = os.path.join(dep_dir,os.path.basename(inc))
+            copyfile(inc,dest)
 
 
 def get_flags(compile_dir,fortran_flags, debug_symbols, runtime_checks, compiletime_checks, codecov,

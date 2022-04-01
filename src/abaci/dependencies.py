@@ -16,7 +16,7 @@ def fetch_dependencies(config, config_dir, verbosity):
 
         mkdir(deps_dir)
 
-    dep_list = []
+    dep_list = {}
 
     while dependencies:
 
@@ -38,10 +38,15 @@ def fetch_dependencies(config, config_dir, verbosity):
                 raise Exception('Dependency name mismatch for "{n1}", found name="{n2}" in dependency manifest'.format(
                                 n1=dep['name'],n2=dep_config['name']))
 
-            dep_list.append(dep['name'])
+            dep_list[dep['name']] = {'local_path': dep_path, 
+                                     'config': dep_config,
+                                     'version': dep['version'],
+                                     'includes': dep_config['compile']['include']}
             
             # Enqueue dependencies from this dependency
             dependencies.extend(dep_config['dependency'])
+    
+    return dep_list
 
 
 def fetch_dependency(deps_dir,dep_name,dep_git,dep_version,verbosity):
