@@ -64,11 +64,6 @@ def fetch_dependency(deps_dir,dep_name,dep_git,dep_version,verbosity):
 
         git.checkout(dep_path,dep_version,verbosity)
 
-
-    if not git.is_head_detached(dep_path):
-
-        log.warning('(!) Warning, dependency {dep} is not pinned to a specific commit/tag - the current configuration is not reproducible.'.format(dep=dep_name))
-
     is_dirty = git.is_dirty(dep_path)
     if is_dirty:
 
@@ -77,7 +72,7 @@ def fetch_dependency(deps_dir,dep_name,dep_git,dep_version,verbosity):
 
     commit = git.current_commit(dep_path)
 
-    needs_update = False
+    needs_update = not git.is_head_detached(dep_path)
     if commit != dep_version:
 
         dep_version_commit = git.show_ref(dep_path,dep_version)
@@ -95,7 +90,12 @@ def fetch_dependency(deps_dir,dep_name,dep_git,dep_version,verbosity):
 
         log.info('Updating dependency "{dep}" to {ver}'.format(dep=dep_name,ver=dep_version))
 
+        git.pull(dep_path)
         git.checkout(dep_path,dep_version,verbosity)
+
+    if not git.is_head_detached(dep_path):
+
+        log.warning('(!) Warning, dependency {dep} is not pinned to a specific commit/tag - the current configuration is not reproducible.'.format(dep=dep_name))
 
     commit = git.current_commit(dep_path)
     log.debug('Dependency {dep} is at commit {h}'.format(dep=dep_name,h=commit))

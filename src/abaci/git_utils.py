@@ -44,13 +44,14 @@ def checkout(git_path,git_ref,verbosity):
 
 def is_head_detached(git_path):
     """Check if HEAD is detached in a local repository"""
+
+    devnull = open(os.devnull,'w')
+    
     with cwd(git_path):
 
         git_cmd = ['git', 'symbolic-ref', '-q', 'HEAD']
-        
-        p, ofile, efile = system_cmd(git_cmd)
                 
-        stat = system_cmd_wait(p, verbosity=-1)
+        stat =  subprocess.call(git_cmd,stdout=devnull,stderr=devnull)
 
     return stat != 0
 
@@ -139,3 +140,13 @@ def push(path):
     with cwd(path):
 
         subprocess.check_call(['git', 'push','--tags', 'origin', 'master'],stdout=devnull,stderr=devnull)
+
+
+def pull(path):
+    """Helper to pull from default remote"""
+
+    devnull = open(os.devnull,'w')
+
+    with cwd(path):
+
+        subprocess.check_call(['git', 'pull'],stdout=devnull,stderr=devnull)
