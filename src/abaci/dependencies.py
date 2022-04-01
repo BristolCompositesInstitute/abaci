@@ -90,7 +90,7 @@ def fetch_dependency(deps_dir,dep_name,dep_git,dep_version,verbosity):
 
         log.info('Updating dependency "{dep}" to {ver}'.format(dep=dep_name,ver=dep_version))
 
-        git.pull(dep_path)
+        git.fetch(dep_path)
         git.checkout(dep_path,dep_version,verbosity)
 
     if not git.is_head_detached(dep_path):

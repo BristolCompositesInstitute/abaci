@@ -142,11 +142,11 @@ def push(path):
         subprocess.check_call(['git', 'push','--tags', 'origin', 'master'],stdout=devnull,stderr=devnull)
 
 
-def pull(path):
-    """Helper to pull from default remote"""
+def fetch(path):
+    """Helper to fetch from default remote"""
 
     devnull = open(os.devnull,'w')
 
     with cwd(path):
 
-        subprocess.check_call(['git', 'pull']) #,stdout=devnull,stderr=devnull)
+        subprocess.check_call(['git', 'fetch'],stdout=devnull,stderr=devnull)
