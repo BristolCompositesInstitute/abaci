@@ -9,9 +9,20 @@ In particular it allows you to define multiple abaqus jobs and group them by tag
 __Example:__
 
 ```toml
+name = 'project-name'
 user-sub-file = 'usersub.f90'
 output = 'scratch'
 ```
+
+### `name` (*string*, optional)
+
+Specifies the name of the project to uniquely identify it when used as a dependency for
+another abaci project.
+
+__Note:__ this field is mandatory if the project is to be used as a dependency, otherwise
+it can be omitted.
+
+
 ### `user-sub-file` (*string*, mandatory)
 
 Specifies the filename of the abaqus user subroutine to compile.
@@ -110,6 +121,52 @@ Either a list of element indices for which to perform checks or `'all'`.
 If not specified, then `'all'` is the default.
 
 
+## Dependency list (optional)
+
+Array of optional subsections that specify third-party repositories from
+which to include additional source files.
+
+__Example:__
+
+```toml
+[[dependency]]
+name = 'demo-dependency'
+git = 'git@github.com:BristolCompositesInstitute/demo-dep.git'
+version = '<commit|tag>'
+```
+
+__Note:__ The dependency must have an `abaci.toml` file in the repository root that specifies a project
+`name` and the `include` field in the `[compile]` subsection.
+
+### `name` (*string*)
+
+The name of the dependency used to uniqueuly identify it and organise its source files.
+
+__Note:__ this `name` field must match the top-level `name` field in the corresponding `abaci.toml` file in the dependency repository.
+
+To include source files from a dependency into your Fortran source, prefix the source file path
+with the dependency name, _e.g._:
+
+```fortran
+      include '<dependency-name>/source-file.f'
+```
+
+### `git` (*string*)
+
+The remote url to the upstream git repository from which to fetch the dependency.
+
+### `version` (*string*)
+
+A mandatory commit hash or tag specifying the exact version to fetch from the upstream repository.
+
+__Note:__ Abaci will automatically refetch the dependency if this field changes.
+
+__Note:__ it is possible to specify a branch name for `version`, however this is __not recommended__ since
+the dependency is not 'pinned' to a specific snapshot; this can cause sudden breaking changes and
+prevents other users of your code from reproducing your configuration. If you specify a branch, then
+abaci will fetch the latest changes from the branch everytime it is run.
+
+
 ## Compile section (optional)
 
 An optional subsection that details compilation settings.
@@ -163,5 +220,5 @@ String or list of strings specifying additional files that are included in the u
 
 - Included file paths are specified relative to the folder containing the configuration file ('abaci.toml')
 - File globbing is supported, _e.g._: `include = 'src/*.f'`
-
+- Sources specified here are made available to other projects that use your project as a dependency
 

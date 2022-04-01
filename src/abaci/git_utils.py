@@ -149,4 +149,4 @@ def pull(path):
 
     with cwd(path):
 
-        subprocess.check_call(['git', 'pull'],stdout=devnull,stderr=devnull)
+        subprocess.check_call(['git', 'pull']) #,stdout=devnull,stderr=devnull)
