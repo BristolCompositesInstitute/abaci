@@ -1,6 +1,6 @@
 import logging
 import os
-from utils import cwd, mkdir, copyfile, system_cmd, system_cmd_wait, relpathshort
+from utils import cwd, mkdir, copyfile, copydir, system_cmd, system_cmd_wait, relpathshort
 from shutil import rmtree
 from getpass import getuser
 
@@ -50,9 +50,17 @@ def stage_files(compile_dir, user_file, compile_file, include_files, dep_list):
 
     # Stage additional 'include' files from this project
     for inc in include_files:
-        dest = os.path.join(compile_dir,os.path.basename(inc))
-        copyfile(inc,dest)
 
+        dest = os.path.join(compile_dir,os.path.basename(inc))
+
+        if os.path.isdir(inc):
+
+            copydir(inc,dest)
+
+        else:
+
+            copyfile(inc,dest)
+        
     # Stage 'include' files from dependencies
     #  (in subdirectories named by dependency name)
     for dep_name,dep in dep_list.items():
@@ -64,7 +72,14 @@ def stage_files(compile_dir, user_file, compile_file, include_files, dep_list):
         for inc in dep['includes']:
 
             dest = os.path.join(dep_dir,os.path.basename(inc))
-            copyfile(inc,dest)
+
+            if os.path.isdir(inc):
+
+                copydir(inc,dest)
+
+            else:
+
+                copyfile(inc,dest)
 
 
 def get_flags(compile_dir,fortran_flags, debug_symbols, runtime_checks, compiletime_checks, codecov,
