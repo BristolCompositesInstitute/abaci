@@ -70,16 +70,11 @@ def fetch_dependency(deps_dir,dep_name,dep_git,dep_version,verbosity):
         log.warning("(!) Warning, dependency {dep} has modified code - the current configuration is not reproducible.\n\t"
                         "To ensure others to use your changes, commit them to the upstream repository at:\n\t {upstream}".format(dep=dep_name,upstream=dep_git))
 
-    commit = git.current_commit(dep_path)
-
-    needs_update = not git.is_head_detached(dep_path)
-    if commit != dep_version:
-
-        dep_version_commit = git.show_ref(dep_path,dep_version)
-
-        if commit != dep_version_commit:
-
-            needs_update = True
+    current_tag = git.get_tag(dep_path)
+    current_commit = git.current_commit(dep_path)
+    
+    needs_update = not git.is_head_detached(dep_path) or \
+        (current_commit != dep_version and current_tag != dep_version)
 
     if needs_update and is_dirty:
 
@@ -97,8 +92,8 @@ def fetch_dependency(deps_dir,dep_name,dep_git,dep_version,verbosity):
 
         log.warning('(!) Warning, dependency {dep} is not pinned to a specific commit/tag - the current configuration is not reproducible.'.format(dep=dep_name))
 
-    commit = git.current_commit(dep_path)
-    log.debug('Dependency {dep} is at commit {h}'.format(dep=dep_name,h=commit))
+    current = git.get_tag(dep_path) or git.current_commit(dep_path)
+    log.debug('Dependency {dep} is at {h}'.format(dep=dep_name,h=current))
 
     return dep_path
 

@@ -80,24 +80,19 @@ def current_commit(git_path):
         return subprocess.check_output(git_cmd).strip()
 
 
-def show_ref(git_path,ref):
-    """Return the git commit for reference (tag)"""
-
-    with cwd(git_path):
-
-        git_cmd = ['git', 'show-ref', '-s', ref]
-        
-        return subprocess.check_output(git_cmd).strip()
-
-
 def get_tag(git_path):
     """Return the git tag for current commit """
+
+    devnull = open(os.devnull,'w')
 
     with cwd(git_path):
 
         git_cmd = ['git', 'describe', '--tags', 'HEAD']
         
-        return subprocess.check_output(git_cmd).strip()
+        try:
+            return subprocess.check_output(git_cmd,stderr=devnull).strip()
+        except(subprocess.CalledProcessError):
+            return None
 
 
 def init_bare(path):

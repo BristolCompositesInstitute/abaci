@@ -223,7 +223,6 @@ class TestDependencies(AbaciUnitTestSuite):
         """
 
         self.new_temp_project(name="dep1",version="v1",deps=None)
-        self.new_temp_project(name="dep1",version="v2",deps=None)
 
         temp_upstream = self.new_temp_project(name="root",version="v1",
                               deps=[self.temp_dep(name="dep1",version="v1")])
@@ -244,6 +243,8 @@ class TestDependencies(AbaciUnitTestSuite):
             self.assertTrue(isdir(join('dependencies','dep1')))
             self.assertEquals(git.get_tag(join('dependencies','dep1')), 'v1')
 
+        # Push a new tag to the upstream
+        self.new_temp_project(name="dep1",version="v2",deps=None)
 
         # Now specify a newer version of dep1
         config['dependency'][0]['version'] = 'v2'
