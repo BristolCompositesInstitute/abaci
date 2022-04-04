@@ -18,9 +18,9 @@ def load_config(config_file,echo):
 
     config = sanitize_config(config, config_dir)
 
-    if echo:
-        print toml.dumps(config)
-        exit()
+    # if echo:
+    #     print toml.dumps(config)
+    #     exit()
 
     check_config(config)
 

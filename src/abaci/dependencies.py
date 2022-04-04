@@ -40,6 +40,7 @@ def fetch_dependencies(config, config_dir, verbosity):
 
             dep_list[dep['name']] = {'local_path': dep_path, 
                                      'config': dep_config,
+                                     'git': dep['git'],
                                      'version': dep['version'],
                                      'includes': dep_config['compile']['include']}
             
