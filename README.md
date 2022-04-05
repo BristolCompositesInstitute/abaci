@@ -54,7 +54,7 @@ Given a configuration file `abaci.toml` in the current directory, abaci is invok
 <summary>Click for full help text</summary>
   
 ```
-usage: abaci [-h] [-V] [-v | -q] [--config CONFIG] {run,compile,show} ...
+usage: abaci [-h] [-V] {run,compile,show} ...
 
 Utility for compiling and running abaqus jobs with user subroutines
 
@@ -67,10 +67,6 @@ positional arguments:
 optional arguments:
   -h, --help          show this help message and exit
   -V, --version       show abaci version
-  -v, --verbose       output more information from abaci
-  -q, --quiet         output less information from abaci
-  --config CONFIG     specify a different config file to default
-                      ("abaci.toml")
 
 Run a subcommand with --help to view specific help for that command, for
 example: abaci compile --help
@@ -93,7 +89,9 @@ Run all jobs with the `test` tag concurrently:
 <summary>Click for abaci run help text</summary>
   
 ```
-usage: abaci run [-h] [-t] [-d] [-0] [-b] [-n NPROC] [-j [NJOB]] [job-spec]
+usage: abaci run [-h] [-v | -q] [--config CONFIG] [-t] [-d] [-0] [-b]
+                 [-n NPROC] [-j [NJOB]]
+                 [job-spec]
 
 Compile user subroutines and run one or abaqus jobs as described by job-spec
 
@@ -104,6 +102,10 @@ positional arguments:
 
 optional arguments:
   -h, --help            show this help message and exit
+  -v, --verbose         output more information from abaci
+  -q, --quiet           output less information from abaci
+  --config CONFIG       specify a different config file to default
+                        ("abaci.toml")
   -t, --codecov         compile subroutines for code coverage analysis
   -d, --debug           compile with debug flags
   -0, --noopt           compile without any optimisations
@@ -131,15 +133,18 @@ Compile user-subroutines with runtime debug options:
 <summary>Click for abaci compile help text</summary>
   
 ```
-usage: abaci compile [-h] [-t] [-d] [-0]
+usage: abaci compile [-h] [-v | -q] [--config CONFIG] [-t] [-d] [-0]
 
 Compile user subroutines and exit
 
 optional arguments:
-  -h, --help     show this help message and exit
-  -t, --codecov  compile subroutines for code coverage analysis
-  -d, --debug    compile with debug flags
-  -0, --noopt    compile without any optimisations
+  -h, --help       show this help message and exit
+  -v, --verbose    output more information from abaci
+  -q, --quiet      output less information from abaci
+  --config CONFIG  specify a different config file to default ("abaci.toml")
+  -t, --codecov    compile subroutines for code coverage analysis
+  -d, --debug      compile with debug flags
+  -0, --noopt      compile without any optimisations
 ```
 </details>
 
@@ -165,15 +170,18 @@ Show a list of source files that can be 'included':
 <summary>Click for abaci show help text</summary>
   
 ```
-usage: abaci show [-h] [object [object ...]]
+usage: abaci show [-h] [-v | -q] [--config CONFIG] [object [object ...]]
 
 Show useful information about this project
 
 positional arguments:
-  object      {config|jobs|dependencies|sources}
+  object           {config|jobs|dependencies|sources}
 
 optional arguments:
-  -h, --help  show this help message and exit
+  -h, --help       show this help message and exit
+  -v, --verbose    output more information from abaci
+  -q, --quiet      output less information from abaci
+  --config CONFIG  specify a different config file to default ("abaci.toml")
 ```
 </details>
 

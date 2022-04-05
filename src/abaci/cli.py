@@ -13,12 +13,18 @@ def parse_cli():
                 epilog="""Run a subcommand with --help to view specific help for that command,
                            for example: abaci compile --help""")
 
-    # Top-level options (all subcommands)
+    # Top-level options
 
     parser.add_argument('-V','--version',help='show abaci version',
                         action='version', version="%(prog)s v0.2.0")
 
-    verbose_group = parser.add_mutually_exclusive_group()
+    subparsers = parser.add_subparsers(help='Subcommand to run', dest='action')
+
+    # Command options (all subcommands)
+
+    common_group = argparse.ArgumentParser(add_help=False)
+
+    verbose_group = common_group.add_mutually_exclusive_group()
 
     verbose_group.add_argument('-v','--verbose',help='output more information from abaci',
                         dest='verbose',action='count',default=0)
@@ -26,11 +32,8 @@ def parse_cli():
     verbose_group.add_argument('-q','--quiet',help='output less information from abaci',
                         dest='verbose',action='store_const',const=-1)
 
-    parser.add_argument('--config',type=str,help='specify a different config file to default ("abaci.toml")',
+    common_group.add_argument('--config',type=str,help='specify a different config file to default ("abaci.toml")',
                         dest='config',default='abaci.toml')
-
-    subparsers = parser.add_subparsers(help='Subcommand to run', dest='action')
-
 
     # Build command group
     build_group = argparse.ArgumentParser(add_help=False)
@@ -45,7 +48,7 @@ def parse_cli():
                         dest='noopt',action='store_true')
 
     # RUN subcommand
-    run_command = subparsers.add_parser('run', parents=[build_group],
+    run_command = subparsers.add_parser('run', parents=[common_group,build_group],
                                          help='Compile user subroutines and run an abaqus job',
                                          description="Compile user subroutines and run one or abaqus jobs as described by job-spec")
 
@@ -64,12 +67,13 @@ def parse_cli():
 
     
     # COMPILE subcommand
-    compile_command = subparsers.add_parser('compile', parents=[build_group],
+    compile_command = subparsers.add_parser('compile', parents=[common_group,build_group],
                                          help='Compile user subroutines only',
                                          description="Compile user subroutines and exit")
 
     # SHOW subcommand
-    show_command = subparsers.add_parser('show', help='Show useful information about this project',
+    show_command = subparsers.add_parser('show', parents=[common_group],
+                                     help='Show useful information about this project',
                                      description="Show useful information about this project")
 
     show_command.add_argument(metavar='object',dest='object',type=str,nargs='*',default='jobs',
