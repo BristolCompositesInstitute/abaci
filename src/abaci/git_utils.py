@@ -1,20 +1,17 @@
 import os
-import tempfile
 import subprocess
-from abaci.utils import cwd, system_cmd, system_cmd_wait
+from abaci.utils import cwd
 
 def clone(git_path,working_dir,target_dir,verbosity):
     """Clone a git repository"""
-    fh,git_log_file = tempfile.mkstemp()
-    os.close(fh)
+    
+    devnull = open(os.devnull,'w')
 
-    with cwd(working_dir):
+    with cwd(working_dir, quiet=True):
 
         git_cmd = ['git', 'clone', git_path, target_dir]
 
-        p, ofile, efile = system_cmd(git_cmd,output=git_log_file)
-        
-        stat = system_cmd_wait(p, verbosity, ofile, efile)
+        stat = subprocess.call(git_cmd,stdout=devnull,stderr=devnull)
 
         if stat:
 
@@ -23,16 +20,14 @@ def clone(git_path,working_dir,target_dir,verbosity):
 
 def checkout(git_path,git_ref,verbosity):
     """Checkout a branch/tag/commit in an existing local repository"""
-    fh,git_log_file = tempfile.mkstemp()
-    os.close(fh)
+    
+    devnull = open(os.devnull,'w')
 
-    with cwd(git_path):
+    with cwd(git_path, quiet=True):
 
         git_cmd = ['git', 'checkout', git_ref]
-
-        p, ofile, efile = system_cmd(git_cmd,output=git_log_file)
         
-        stat = system_cmd_wait(p, verbosity, ofile, efile)
+        stat = subprocess.call(git_cmd,stdout=devnull,stderr=devnull)
 
         if stat:
 
@@ -47,7 +42,7 @@ def is_head_detached(git_path):
 
     devnull = open(os.devnull,'w')
     
-    with cwd(git_path):
+    with cwd(git_path, quiet=True):
 
         git_cmd = ['git', 'symbolic-ref', '-q', 'HEAD']
                 
@@ -59,13 +54,13 @@ def is_head_detached(git_path):
 def is_dirty(git_path):
     """Check if git repository has unstaged changes"""
 
-    with cwd(git_path):
+    devnull = open(os.devnull,'w')
+
+    with cwd(git_path, quiet=True):
 
         git_cmd = ['git', 'diff', '--quiet']
         
-        p, ofile, efile = system_cmd(git_cmd)
-                
-        stat = system_cmd_wait(p, verbosity=-1)
+        stat =  subprocess.call(git_cmd,stdout=devnull,stderr=devnull)
 
     return stat != 0
 
@@ -73,7 +68,7 @@ def is_dirty(git_path):
 def current_commit(git_path):
     """Get the current commit of HEAD"""
 
-    with cwd(git_path):
+    with cwd(git_path, quiet=True):
 
         git_cmd = ['git', 'show', '--format=%H', '-s']
         
@@ -85,7 +80,7 @@ def get_tag(git_path):
 
     devnull = open(os.devnull,'w')
 
-    with cwd(git_path):
+    with cwd(git_path, quiet=True):
 
         git_cmd = ['git', 'describe', '--tags', 'HEAD']
         
@@ -100,7 +95,7 @@ def init_bare(path):
 
     devnull = open(os.devnull,'w')
 
-    with cwd(path):
+    with cwd(path, quiet=True):
 
         git_cmd = ['git', 'init', '--bare']
         
@@ -112,7 +107,7 @@ def add_and_commit(path,message):
 
     devnull = open(os.devnull,'w')
 
-    with cwd(path):
+    with cwd(path, quiet=True):
         
         subprocess.check_call(['git', 'add', '-A'],stdout=devnull,stderr=devnull)
 
@@ -122,7 +117,7 @@ def add_and_commit(path,message):
 def add_tag(path,tag):
     """Helper to tag commit"""
     
-    with cwd(path):
+    with cwd(path, quiet=True):
 
         subprocess.check_call(['git', 'tag', tag])
 
@@ -132,7 +127,7 @@ def push(path):
 
     devnull = open(os.devnull,'w')
 
-    with cwd(path):
+    with cwd(path, quiet=True):
 
         subprocess.check_call(['git', 'push','--tags', 'origin', 'master'],stdout=devnull,stderr=devnull)
 
@@ -142,6 +137,6 @@ def fetch(path):
 
     devnull = open(os.devnull,'w')
 
-    with cwd(path):
+    with cwd(path, quiet=True):
 
         subprocess.check_call(['git', 'fetch'],stdout=devnull,stderr=devnull)

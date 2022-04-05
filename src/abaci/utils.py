@@ -21,20 +21,25 @@ def relpathshort(path):
 
 
 @contextmanager
-def cwd(path):
+def cwd(path, quiet=None):
     """Helper to change directory temporarily"""
 
     log = logging.getLogger('abaci')
 
     oldpwd=os.getcwd()
+    
+    if not quiet:
+        log.debug('Changing into directory "%s"',relpathshort(path))
 
-    log.debug('Changing into directory "%s"',relpathshort(path))
     os.chdir(path)
 
     try:
         yield
     finally:
-        log.debug('Changing back to directory "%s"',oldpwd)
+
+        if not quiet:
+            log.debug('Changing back to directory "%s"',oldpwd)
+            
         os.chdir(oldpwd)
 
 
@@ -142,6 +147,25 @@ def system_cmd_wait(p,verbosity,ofile=None,efile=None):
 def to_ascii(ustring):
 
     return normalize('NFKD',ustring).encode('ascii','ignore')
+
+
+def recurse_files(path):
+
+    filelist = []
+
+    if os.path.isdir(path):
+
+        for currentpath, folders, files in os.walk(path):
+
+            for file in files:
+                        
+                filelist.append(os.path.join(currentpath, file))
+
+    else:
+
+        filelist = [path]
+
+    return filelist
 
 
 def daemonize():
