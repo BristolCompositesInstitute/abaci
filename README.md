@@ -2,9 +2,11 @@
 
 __A helper utility for compiling, running and testing abaqus user subroutines and jobs.__
 
-| Author | Maintainer contact | Status |
-|--------|--------------------|--------|
-| Laurence Kedward | laurence.kedward@bristol.ac.uk | Alpha, under development |
+__Author:__ Laurence Kedward
+
+__Maintainer:__ laurence.kedward@bristol.ac.uk
+
+__Status:__ v0.2.0 beta
 
 ### Key Features:
 
@@ -14,6 +16,7 @@ __A helper utility for compiling, running and testing abaqus user subroutines an
   - Perform code coverage to identify executed lines of code
 - Prescribe and run benchmark problems as test cases
   - Perform regression checks on output database results
+- Specify dependencies to reuse code from other abaci projects
 
 ## 1. Getting Started
 
@@ -40,17 +43,59 @@ An `uninstall-windows.cmd` script is also provided in the `scripts` folder to re
 
 On linux, add the `./scripts` folder to your path to start using abaci.
 
-## 2.0 Usage
+## 2. Usage
 
 Information about the user subroutine file(s) and benchmark problems are stored in a configuration file, `abaci.toml`.
 See the [configuration reference documentation](config-reference.md) for more information on what goes in the config file.
 
-Given a configuration file `abaci.toml` in the current directory, abaci is invoked at the command line and accepts a number of optional arguments:
+Given a configuration file `abaci.toml` in the current directory, abaci is invoked at the command line and accepts a number of different subcommands:
 
+<details>
+<summary>Click for full help text</summary>
+  
 ```
-usage: abaci [job-spec] [optional arguments]
+usage: abaci [-h] [-V] [-v | -q] [--config CONFIG] {run,compile,show} ...
 
 Utility for compiling and running abaqus jobs with user subroutines
+
+positional arguments:
+  {run,compile,show}  Subcommand to run
+    run               Compile user subroutines and run an abaqus job
+    compile           Compile user subroutines only
+    show              Show useful information about this project
+
+optional arguments:
+  -h, --help          show this help message and exit
+  -V, --version       show abaci version
+  -v, --verbose       output more information from abaci
+  -q, --quiet         output less information from abaci
+  --config CONFIG     specify a different config file to default
+                      ("abaci.toml")
+
+Run a subcommand with --help to view specific help for that command, for
+example: abaci compile --help
+```
+  
+ </details>
+
+ ### 2.1 `abaci run`
+
+ _Compile user subroutine and run one or more abaqus jobs_
+
+__Example:__
+Run all jobs with the `test` tag concurrently:
+
+```
+> abaci run -j test
+```
+
+<details>
+<summary>Click for abaci run help text</summary>
+  
+```
+usage: abaci run [-h] [-t] [-d] [-0] [-b] [-n NPROC] [-j [NJOB]] [job-spec]
+
+Compile user subroutines and run one or abaqus jobs as described by job-spec
 
 positional arguments:
   job-spec              Either: a comma-separated list of job tags or jobs
@@ -59,30 +104,77 @@ positional arguments:
 
 optional arguments:
   -h, --help            show this help message and exit
-  -V, --version         show abaci version
-  -v, --verbose         output more information from abaci
-  -q, --quiet           output less information from abaci
-  -e, --echo            parse and display the config file, then stop
-  -l, --list            list jobs specified in config file, then stop
   -t, --codecov         compile subroutines for code coverage analysis
   -d, --debug           compile with debug flags
   -0, --noopt           compile without any optimisations
-  -c, --compile         compile only, don't run abaqus
   -b, --background      run abaci in the background after compilation
-  --config CONFIG       specify a different config file to default
-                        ("abaci.toml")
   -n NPROC, --nproc NPROC
                         specify number of threads/processes to run with Abaqus
   -j [NJOB], --jobs [NJOB]
                         run jobs concurrently, optionally specify a maximum
                         number of concurrently running jobs
+```
+</details>
 
-On execution, abaci will look for and parse an 'abaci.toml' configuration file
-in the current working directory, unless an alternative path has been
-specified via the '--config' option. Abaci will then compile the user
-subroutine and launch one or more abaqus jobs as specified by the 'job-spec'
-argument. If no job-spec is given, then all jobs with the 'default' tag are
-run. Regression checks are performed at the end for those jobs with checks
-specified.
+ ### 2.2 `abaci compile`
+
+ _Compile user subroutine only_
+
+__Example:__
+Compile user-subroutines with runtime debug options:
 
 ```
+> abaci compile --debug
+```
+
+<details>
+<summary>Click for abaci compile help text</summary>
+  
+```
+usage: abaci compile [-h] [-t] [-d] [-0]
+
+Compile user subroutines and exit
+
+optional arguments:
+  -h, --help     show this help message and exit
+  -t, --codecov  compile subroutines for code coverage analysis
+  -d, --debug    compile with debug flags
+  -0, --noopt    compile without any optimisations
+```
+</details>
+
+ ### 2.3 `abaci show`
+
+_Show useful information about the current project_
+
+__Example:__
+Show a list of jobs in the configuration file
+
+```
+> abaci show jobs
+```
+
+__Example:__
+Show a list of source files that can be 'included':
+
+```
+> abaci show sources
+```
+
+<details>
+<summary>Click for abaci show help text</summary>
+  
+```
+usage: abaci show [-h] [object [object ...]]
+
+Show useful information about this project
+
+positional arguments:
+  object      {config|jobs|dependencies|sources}
+
+optional arguments:
+  -h, --help  show this help message and exit
+```
+</details>
+
+
