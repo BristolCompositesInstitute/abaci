@@ -69,11 +69,12 @@ def parse_cli():
                                          description="Compile user subroutines and exit")
 
     # SHOW subcommand
-    show_command = subparsers.add_parser('show', help='Show useful information about this project')
+    show_command = subparsers.add_parser('show', help='Show useful information about this project',
+                                     description="Show useful information about this project")
 
     show_command.add_argument(metavar='object',dest='object',type=str,nargs='*',default='jobs',
                              choices=['jobs','dependencies','config','sources'],
-                             help='Query specific objects for information')
+                             help='{config|jobs|dependencies|sources}')
 
     args = parser.parse_args()
 
