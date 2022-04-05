@@ -1,11 +1,10 @@
-from redist import toml
-import os
 from abaci.cli import parse_cli, init_logger, init_logger_file
-from abaci.config import load_config, list_config_jobs
+from abaci.config import load_config
 from abaci.compile import compile_user_subroutine, collect_cov_report
 from abaci.jobs import get_jobs, run_jobs
 from abaci.utils import mkdir, daemonize
 from abaci.dependencies import fetch_dependencies
+from abaci.show_info import show_info
 
 def main():
     """Main entry point for abaci program"""
@@ -19,33 +18,8 @@ def main():
     dep_list = fetch_dependencies(config, config_dir, args.verbose)
 
     if args.action == 'show':
-         
-        if 'config' in args.object:
 
-            print(toml.dumps(config))
-
-        if 'jobs' in args.object:
-
-            list_config_jobs(config,args.verbose)
-
-        if 'dependencies' in args.object:
-
-            for dep_name,dep in dep_list.items():
-                    
-                    print('  {name} {ver} {git}'.format(name=dep_name,
-                                                         ver=dep['version'],git=dep['git']))
-            
-        if 'sources' in args.object:
-
-            sources = [config['user-sub-file']] + config['compile']['include']
-
-            for dep_name,dep in dep_list.items():
-
-                sources.extend(dep['includes'])
-
-            for file in sources:
-
-                print(os.path.relpath(file))
+        show_info(args, config, dep_list)
 
         exit()
 

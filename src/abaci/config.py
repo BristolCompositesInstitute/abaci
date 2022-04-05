@@ -177,25 +177,3 @@ def check_config(config):
     if config['user-sub-file'] and not exists(config['user-sub-file']):
         raise Exception('The user subroutine file "{file}" cannot be found'.format(file=config['user-sub-file']))
 
-
-def list_config_jobs(config,verbose):
-
-    for i,j in enumerate(config['job']):
-
-        if j['name']:
-
-            job_name = j['name']
-
-        else:
-
-            job_name = os.path.basename(j['job-file'])
-
-        print "    {i}: {name}  [{tags}]".format(
-               i=i, name=job_name, tags=', '.join(j['tags']),
-               file=relpathshort(j['job-file'])
-        )
-
-        if verbose > 0:
-             print "     ({file})".format(
-               file=relpathshort(j['job-file'])
-        )
