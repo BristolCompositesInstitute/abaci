@@ -131,6 +131,12 @@ class AbaqusJob:
             log.info('Cancelling abaqus job "%s"',self.name)
 
             kill_cmd = ['abaqus', 'terminate','job={name}'.format(name=self.local_job_name)]
+            
+            if os.name == 'nt':
+                
+                kill_cmd[0] = 'c:\\SIMULIA\\Commands\\abaqus.bat'
+                kill_cmd.append('&')
+                kill_cmd.append('exit')
 
             p, ofile, efile = system_cmd(kill_cmd,output=join(self.job_dir,'abaqus-terminate'))
 
