@@ -140,7 +140,9 @@ class AbaqusJob:
 
             p, ofile, efile = system_cmd(kill_cmd)
 
-            system_cmd_wait(p,verbose)
+            if os.name != 'nt':
+                
+                system_cmd_wait(p,verbose)
 
 
     def get_abaqus_cmd(self,nproc):
