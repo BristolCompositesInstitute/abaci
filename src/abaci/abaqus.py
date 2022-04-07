@@ -18,7 +18,13 @@ def have_abaqus():
 
     cmd = abaqus_cmd(['information=version'])
     
-    stat =  subprocess.call(cmd,stdout=devnull,stderr=devnull)
+    try:
+
+        stat =  subprocess.call(cmd,stdout=devnull,stderr=devnull)
+
+    except:
+
+        stat = -1
 
     return stat == 0
 
