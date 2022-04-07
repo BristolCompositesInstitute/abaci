@@ -110,9 +110,17 @@ def init_bare(path):
 
     with cwd(path, quiet=True):
 
-        git_cmd = ['git', 'init', '--bare', '--initial-branch=master']
-        
-        subprocess.check_call(git_cmd,stdout=devnull,stderr=devnull)
+        try:
+
+            git_cmd = ['git', 'init', '--bare', '--initial-branch=master']
+            
+            subprocess.check_call(git_cmd,stdout=devnull,stderr=devnull)
+
+        except:
+
+            git_cmd.pop(-1)
+
+            subprocess.check_call(git_cmd,stdout=devnull,stderr=devnull)
 
 
 def add_and_commit(path,message):
