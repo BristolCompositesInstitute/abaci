@@ -110,7 +110,7 @@ def init_bare(path):
 
     with cwd(path, quiet=True):
 
-        git_cmd = ['git', 'init', '--bare']
+        git_cmd = ['git', 'init', '--bare', '--initial-branch=master']
         
         subprocess.check_call(git_cmd,stdout=devnull,stderr=devnull)
 
