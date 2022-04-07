@@ -3,6 +3,7 @@ import os
 import sys
 import unittest
 
+import abaci.abaqus as abq
 from abaci.cli import logging
 
 verbose = False
@@ -42,18 +43,8 @@ class AbaciUnitTestSuite(unittest.TestCase):
                 abaqus_enabled = False
 
             else:
-
-                fh,tempf = tempfile.mkstemp()
-                os.close(fh)
-
-                try:
-                    p,ofile,efile = system_cmd(['abaqus', 'information=versions'],output=tempf)
-                    stat = system_cmd_wait(p,verbosity=-1)
-
-                except:
-                    stat = 1
                     
-                abaqus_enabled = stat == 0
+                abaqus_enabled = abq.have_abaqus()
 
             abaqus_checked = True
         
