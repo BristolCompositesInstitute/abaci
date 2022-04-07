@@ -2,6 +2,19 @@ import os
 import subprocess
 from abaci.utils import cwd
 
+
+def have_git():
+    """Check if git is callable in current environment"""
+
+    devnull = open(os.devnull,'w')
+
+    git_cmd = ['git', '--version']
+    
+    stat =  subprocess.call(git_cmd,stdout=devnull,stderr=devnull)
+
+    return stat == 0
+
+
 def clone(git_path,working_dir,target_dir,verbosity):
     """Clone a git repository"""
     

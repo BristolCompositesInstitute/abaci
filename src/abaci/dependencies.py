@@ -14,6 +14,10 @@ def fetch_dependencies(config, config_dir, verbosity):
 
         return {}
 
+    if not git.have_git:
+
+        raise Exception('git not found, cannot continue: git is required to fetch dependencies.')
+
     deps_dir = os.path.join(config_dir,'dependencies')
 
     if not os.path.isdir(deps_dir):
