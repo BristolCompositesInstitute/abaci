@@ -5,6 +5,7 @@ from abaci.jobs import get_jobs, run_jobs
 from abaci.utils import mkdir, daemonize
 from abaci.dependencies import fetch_dependencies
 from abaci.show_info import show_info
+from abaci.abaqus import check_for_abaqus
 
 def main():
     """Main entry point for abaci program"""
@@ -22,6 +23,8 @@ def main():
         show_info(args, config, dep_list)
 
         exit()
+
+    check_for_abaqus()
 
     mkdir(config['output'])
 

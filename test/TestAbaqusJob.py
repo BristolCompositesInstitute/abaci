@@ -111,53 +111,6 @@ class TestAbaqusJob(AbaciUnitTestSuite):
             os.mkdir(job_dir)
 
 
-    def test_abq_cmd(self):
-        """
-            Test the AbaqusJob get_abaqus_cmd
-        """
-
-        from abaci.AbaqusJob import AbaqusJob
-        import os
-
-        for mp_mode  in ['threads', 'mpi','disable']:
-
-            for nproc in range(1,4):
-
-                job_config, job_base_name = self.get_dummy_job()
-                job_config['mp-mode'] = mp_mode
-
-                job = AbaqusJob(self.output_dir,job=job_config)
-
-                abq_cmd = job.get_abaqus_cmd(nproc=nproc)
-
-                if os.name == 'nt':
-
-                    self.assertIn('abaqus.bat', abq_cmd[0])
-                    self.assertEquals(abq_cmd[-2],'&')
-                    self.assertEquals(abq_cmd[-1],'exit')
-
-                else:
-
-                    self.assertEquals('abaqus', abq_cmd[0])
-                    self.assertNotEquals(abq_cmd[-2],'&')
-                    self.assertNotEquals(abq_cmd[-1],'exit')
-
-                self.assertIn('double', abq_cmd)
-                self.assertIn('interactive', abq_cmd)
-                
-                if mp_mode == 'disable' or nproc == 1:
-
-                    for arg in abq_cmd:
-
-                        self.assertNotIn('mp_mode',arg)
-                        self.assertNotIn('cpus=',arg)
-
-                else:
-
-                    self.assertIn('mp_mode={m}'.format(m=mp_mode),abq_cmd)
-                    self.assertIn('cpus={n}'.format(n=nproc),abq_cmd)
-
-
     def test_prepare_job(self):
         """
             Test the AbaqusJob preparation

@@ -2,6 +2,7 @@ import logging
 import os
 from os.path import basename, join, splitext, isdir, exists
 from utils import cwd, copyfile, system_cmd, system_cmd_wait, copydir, mkdir
+import abaci.abaqus as abq
 from datetime import datetime
 from exceptions import ValueError
 
@@ -62,16 +63,15 @@ class AbaqusJob:
         log = logging.getLogger('abaci')
 
         self.prepare_job(lib_dir)
-
-        abq_cmd = self.get_abaqus_cmd(nproc)
         
         log.info('Launching abaqus for job "%s"',self.name)
 
-        with cwd(self.job_dir):
+        self.start_time = datetime.now()
 
-            self.start_time = datetime.now()
-
-            self.p, self.ofile, self.efile = system_cmd(abq_cmd,output=join(self.job_dir,'abaqus'))
+        self.p, self.ofile, self.efile = abq.run(dir=self.job_dir,
+                                          job_name=self.local_job_name,
+                                          mp_mode=self.mp_mode,
+                                          nproc=nproc)
 
 
     def is_running(self):
@@ -126,42 +126,13 @@ class AbaqusJob:
 
         self.p.terminate()
 
-        with cwd(self.job_dir):
-            
-            log.info('Cancelling abaqus job "%s"',self.name)
+        log.info('Cancelling abaqus job "%s"',self.name)
 
-            kill_cmd = ['abaqus', 'terminate','job={name}'.format(name=self.local_job_name)]
-            
-            if os.name == 'nt':
+        p, ofile, efile = abq.terminate(dir=self.job_dir,job_name=self.local_job_name)
+
+        if os.name != 'nt':
                 
-                kill_cmd[0] = 'c:\\SIMULIA\\Commands\\abaqus.bat'
-                kill_cmd.append('&')
-                kill_cmd.append('exit')
-
-            p, ofile, efile = system_cmd(kill_cmd,output=join(self.job_dir,'abaqus-terminate'))
-
-            if os.name != 'nt':
-                
-                system_cmd_wait(p,verbose)
-
-
-    def get_abaqus_cmd(self,nproc):
-        """Returns the system command to launch abaqus"""
-
-        abq_cmd = ['abaqus','job={name}'.format(name=self.local_job_name)]
-
-        if self.mp_mode != 'disable' and nproc > 1:
-            abq_cmd.append('mp_mode={mode}'.format(mode=self.mp_mode))
-            abq_cmd.append('cpus={n}'.format(n=nproc))
-
-        abq_cmd.extend(['double','interactive'])
-
-        if os.name == 'nt':
-            abq_cmd[0] = 'c:\\SIMULIA\\Commands\\abaqus.bat'
-            abq_cmd.append('&')
-            abq_cmd.append('exit')
-
-        return abq_cmd
+            system_cmd_wait(p,verbose)
 
 
     def prepare_job(self,lib_dir):
