@@ -1,5 +1,6 @@
 import logging
 import os
+import abaqus as abq
 from utils import cwd, mkdir, copyfile, copydir, system_cmd, system_cmd_wait, relpathshort
 from shutil import rmtree
 from getpass import getuser
@@ -31,7 +32,9 @@ def compile_user_subroutine(args, output_dir, user_file, compile_conf, dep_list)
 
     spool_env_file(compile_dir,flags)
 
-    stat = run_abq_make(compile_file, compile_dir,args.verbose)
+    log.info('Running abaqus make')
+
+    stat = abq.make(dir=compile_dir, lib_file=compile_file, verbosity=args.verbose)
     
     return stat, compile_dir
 
@@ -139,29 +142,6 @@ def spool_env_file(compile_dir,flags):
     with open(env_file,'w') as f:
 
         f.write('compile_fortran.extend({flags})\n'.format(flags=flags.__str__()))
-
-
-def run_abq_make(compile_file, compile_dir, verbosity):
-    """Invoke abaqus make"""
-
-    log = logging.getLogger('abaci')
-
-    abqmake_cmd = ['abaqus','make','library={file}'.format(file=os.path.basename(compile_file))]
-
-    if os.name == 'nt':
-        abqmake_cmd[0] = 'c:\\SIMULIA\\Commands\\abaqus.bat'
-        abqmake_cmd.append('&')
-        abqmake_cmd.append('exit')
-		
-    log.info('Running abaqus make')
-
-    with cwd(compile_dir):
-
-        p,ofile,efile = system_cmd(abqmake_cmd, output=os.path.join(compile_dir,'abaqus-make'))
-
-        stat = system_cmd_wait(p,verbosity,ofile,efile)
-
-    return stat
 
 
 def collect_cov_report(config,compile_dir,verbosity):

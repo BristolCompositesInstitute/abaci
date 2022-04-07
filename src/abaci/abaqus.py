@@ -1,7 +1,7 @@
 import os
 from os.path import join
 import subprocess
-from abaci.utils import cwd, system_cmd
+from abaci.utils import cwd, system_cmd, system_cmd_wait
 
 def check_for_abaqus():
     """Check for Abaqus and raise Exception if not found"""
@@ -61,15 +61,30 @@ def terminate(dir, job_name):
     return p, ofile, efile
 
 
+def make(dir, lib_file, verbosity):
+    """Invoke Abaqus make command"""
+
+    args = ['make']
+    args.append('library={file}'.format(file=os.path.basename(lib_file)))
+
+    cmd = abaqus_cmd(args)
+
+    with cwd(dir):
+
+        p,ofile,efile = system_cmd(cmd, output=os.path.join(dir,'abaqus-make'))
+
+        stat = system_cmd_wait(p,verbosity,ofile,efile)
+
+    return stat
+
 
 def abaqus_cmd(args):
+    """Build abaqus launch command"""
 
     cmd = ['abaqus'] + args
 
     if os.name == 'nt':
                 
         cmd[0] = 'c:\\SIMULIA\\Commands\\abaqus.bat'
-        cmd.append('&')
-        cmd.append('exit')
 
     return cmd
