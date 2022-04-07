@@ -3,7 +3,7 @@ import logging
 from abaci import git_utils as git
 from abaci.config import load_config
 from abaci.utils import mkdir
-from abaci.ssh_utils import setup_ssh_agent
+from abaci.ssh_utils import setup_ssh_agent, is_ssh_url
 
 
 def fetch_dependencies(config, config_dir, verbosity):
@@ -19,8 +19,6 @@ def fetch_dependencies(config, config_dir, verbosity):
     if not git.have_git:
 
         raise Exception('git not found, cannot continue: git is required to fetch dependencies.')
-
-    setup_ssh_agent()
 
     deps_dir = os.path.join(config_dir,'dependencies')
 
@@ -70,6 +68,10 @@ def fetch_dependency(deps_dir,dep_name,dep_git,dep_version,verbosity):
     if not os.path.isdir(dep_path):
 
         log.info('Fetching dependency "{dep}" ({ver})'.format(dep=dep_name,ver=dep_version))
+
+        if is_ssh_url(dep_git):
+            
+            setup_ssh_agent()
 
         git.clone(dep_git,deps_dir,dep_name,verbosity)
 

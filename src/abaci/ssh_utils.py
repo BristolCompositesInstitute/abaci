@@ -3,9 +3,15 @@ import subprocess
 import cPickle as pkl
 from tempfile import gettempdir
 import logging
+import re
+
 from redist import parse_agent_variables
 
 ssh_agent_cache_file = os.path.join(gettempdir(),'abaci-ssh-agent-cache')
+
+ssh_agent_setup_done = False
+
+_SSH_PATTERN = re.compile(r'^(?P<user>.*?)@(?P<host>.*?):(?:(?P<port>.*?)/)?(?P<path>.*?/.*?)$')
 
 def setup_ssh_agent():
     """ Top-level wrapper to setup a persistent ssh-agent for abaci
@@ -15,6 +21,12 @@ def setup_ssh_agent():
 
     """
     
+    global ssh_agent_setup_done
+
+    if ssh_agent_setup_done:
+
+        return
+
     log = logging.getLogger('abaci')
     
     agent_data = get_existing_agent()
@@ -31,6 +43,8 @@ def setup_ssh_agent():
 
     if not is_identity_added():
         subprocess.check_call([get_ssh_cmd('ssh-add')])
+
+    ssh_agent_setup_done = True
 
 
 def is_identity_added():
@@ -129,3 +143,15 @@ def check_agent(pid):
     return 'ssh-agent' in output
 
 
+def is_ssh_url(url):
+    """Verify if a url is of the form
+       user@domain.tld:[port]/path
+    """
+
+    match = _SSH_PATTERN.search(url)
+
+    if match is None:
+        return None
+    else:
+        print match.groupdict()
+        return match.groupdict()
