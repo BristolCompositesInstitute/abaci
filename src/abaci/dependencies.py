@@ -2,7 +2,9 @@ import os
 import logging
 from abaci import git_utils as git
 from abaci.config import load_config
-from abaci.utils import cwd, mkdir, system_cmd, system_cmd_wait
+from abaci.utils import mkdir
+from abaci.ssh_utils import setup_ssh_agent
+
 
 def fetch_dependencies(config, config_dir, verbosity):
     """Breadth-first fetching of project dependencies via git"""
@@ -17,6 +19,8 @@ def fetch_dependencies(config, config_dir, verbosity):
     if not git.have_git:
 
         raise Exception('git not found, cannot continue: git is required to fetch dependencies.')
+
+    setup_ssh_agent()
 
     deps_dir = os.path.join(config_dir,'dependencies')
 
