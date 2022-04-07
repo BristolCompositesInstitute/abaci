@@ -65,15 +65,26 @@ def get_existing_agent():
 
     global ssh_agent_cache_file
 
-    if os.path.exists(ssh_agent_cache_file):
+    pid = os.getenv('SSH_AGENT_PID')
+    sock = os.getenv('SSH_AUTH_SOCK')
+
+    if pid and sock and check_agent(pid):
+
+        # Use ssh-agent from parent environment
+        return {'SSH_AGENT_PID': os.getenv('SSH_AGENT_PID'),
+                    'SSH_AUTH_SOCK': os.getenv('SSH_AUTH_SOCK')}
+
+    elif os.path.exists(ssh_agent_cache_file):
 
         with open(ssh_agent_cache_file,'r') as f:
             agent_data = pkl.load(f)
         
         if check_agent(agent_data['SSH_AGENT_PID']):
 
+            # Use ssh-agent from cache file
             return agent_data
 
+    # No existing ssh-agent found
     return None
 
 
