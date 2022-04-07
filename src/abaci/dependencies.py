@@ -10,6 +10,10 @@ def fetch_dependencies(config, config_dir, verbosity):
     # Enqueue dependencies from the root project
     dependencies = list(config['dependency'])
 
+    if not dependencies:
+
+        return {}
+
     deps_dir = os.path.join(config_dir,'dependencies')
 
     if not os.path.isdir(deps_dir):
