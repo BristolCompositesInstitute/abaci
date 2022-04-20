@@ -3,7 +3,7 @@
 if exist C:\SIMULIA\Commands\ (
 
     echo Installing abaci to %LOCALAPPDATA%\BCI\abaci
-    xcopy "%~dp0.." "%LOCALAPPDATA%\BCI\abaci" /E /Y /I /Q
+    xcopy "%~dp0..\src" "%LOCALAPPDATA%\BCI\abaci" /E /Y /I /Q
 
     echo Installing abaci launcher to C:\SIMULIA\Commands
     copy "%~dp0..\scripts\abaci.cmd" "C:\SIMULIA\Commands"
