@@ -4,6 +4,8 @@ import os
 from os.path import exists, join
 import multiprocessing
 from abaci.utils import relpathshort
+from abaci.update import UpdateAction
+
 
 def parse_cli():
     """Parses the command line inputs and returns the resulting namespace"""
@@ -17,6 +19,9 @@ def parse_cli():
 
     parser.add_argument('-V','--version',help='show abaci version',
                         action='version', version="%(prog)s v0.2.0")
+
+    parser.add_argument('--update',help='update abaci from upstream', nargs='?',
+                        metavar='[REPO:]GITREF', default=None, action=UpdateAction)
 
     subparsers = parser.add_subparsers(help='Subcommand to run', dest='action')
 
