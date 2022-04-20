@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+#
+# Installation script for abaci
+#
+
+root=$(dirname "$(readlink -f "$0")")/..
+
+prefix=$HOME/.local
+lib_dest=$prefix/lib/abaci
+launch_dest=$prefix/bin/abaci
+
+if [[ -d "$lib_dest" ]]; then
+  rm -rf $lib_dest
+fi
+
+echo "Installing abaci to $lib_dest"
+cp -rf $root/src $lib_dest
+
+echo "Installing abaci launcher to $launch_dest"
+cp $root/scripts/abaci $launch_dest
+
+

@@ -41,7 +41,15 @@ An `uninstall-windows.cmd` script is also provided in the `scripts` folder to re
 
 ### 1.3 Linux
 
-On linux, add the `./scripts` folder to your path to start using abaci.
+After downloading or cloning the repository, use the `install` script in the `scripts` folder which will install abaci to `$HOME/.local/`.
+After running the `install` script, make sure the `$HOME/.local/bin/` folder is on your path if not already;
+you can do this by adding the following line to the end of your `$HOME/.bash_profile` file:
+
+```bash
+export PATH=$PATH:$HOME/.local/bin
+```
+
+You can check your installation by opening a new command windows, or logging in again, and running the command `abaci --version` or `abaci --help`.
 
 ## 2. Usage
 
