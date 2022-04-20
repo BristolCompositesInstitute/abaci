@@ -153,5 +153,4 @@ def is_ssh_url(url):
     if match is None:
         return None
     else:
-        print match.groupdict()
         return match.groupdict()
