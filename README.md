@@ -54,19 +54,21 @@ Given a configuration file `abaci.toml` in the current directory, abaci is invok
 <summary>Click for full help text</summary>
   
 ```
-usage: abaci [-h] [-V] {run,compile,show} ...
+usage: abaci [-h] [-V] [--update [[REPO:]GITREF]] {run,compile,show} ...
 
 Utility for compiling and running abaqus jobs with user subroutines
 
 positional arguments:
-  {run,compile,show}  Subcommand to run
-    run               Compile user subroutines and run an abaqus job
-    compile           Compile user subroutines only
-    show              Show useful information about this project
+  {run,compile,show}    Subcommand to run
+    run                 Compile user subroutines and run an abaqus job
+    compile             Compile user subroutines only
+    show                Show useful information about this project
 
 optional arguments:
-  -h, --help          show this help message and exit
-  -V, --version       show abaci version
+  -h, --help            show this help message and exit
+  -V, --version         show abaci version
+  --update [[REPO:]GITREF]
+                        update abaci from upstream
 
 Run a subcommand with --help to view specific help for that command, for
 example: abaci compile --help
