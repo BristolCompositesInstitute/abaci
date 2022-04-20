@@ -4,7 +4,6 @@ from os.path import join, dirname, pardir, realpath, exists
 from shutil import rmtree
 import argparse
 from tempfile import mkdtemp
-
 import logging
 
 from abaci.ssh_utils import is_ssh_url, setup_ssh_agent
@@ -16,6 +15,7 @@ _DEFAULT_UPSTREAM = 'git@github.com:BristolCompositesInstitute/abaci.git'
 _DEFAULT_REF = 'main'
 
 class UpdateAction(argparse.Action):
+    """Argparse action for --update"""
 
     def __init__(self, option_strings, dest, nargs=None, **kwargs):
         super(UpdateAction, self).__init__(option_strings, dest, nargs=nargs, **kwargs)
@@ -40,6 +40,7 @@ class UpdateAction(argparse.Action):
 
 
 def parse_update_arg(value):
+    """Parse [[REPO:]GITREF] from CLI"""
 
     if not value:
 
@@ -64,6 +65,7 @@ def parse_update_arg(value):
 
 
 def update_abaci(install_location,upstream,git_ref):
+    """Clone abaci into temporary dir and copy sources to local installation"""
 
     log = logging.getLogger('abaci')
     
