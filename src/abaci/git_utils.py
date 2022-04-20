@@ -15,6 +15,20 @@ def have_git():
     return stat == 0
 
 
+def isa_git_repo(git_path):
+    """Check if a path is a git repo"""
+
+    devnull = open(os.devnull,'w')
+
+    with cwd(git_path, quiet=True):
+
+        git_cmd = ['git', 'status']
+        
+        stat =  subprocess.call(git_cmd,stdout=devnull,stderr=devnull)
+
+    return stat == 0
+
+
 def clone(git_path,working_dir,target_dir,verbosity):
     """Clone a git repository"""
     
