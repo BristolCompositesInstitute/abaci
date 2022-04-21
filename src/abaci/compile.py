@@ -111,6 +111,9 @@ def get_flags(compile_dir,fortran_flags, debug_symbols, runtime_checks, compilet
     set_flag(flags,unix='-qopt-report-file={dir}/optrpt'.format(dir=compile_dir),
                     win='/Qopt-report-file:{dir}\optrpt'.format(dir=compile_dir))
 
+    set_flag(flags,unix=['-error-limit','5'],
+                    win='/error-limit:5')
+
     if debug_symbols:
         set_flag(flags,unix=['-g','-debug'],win=['/debug','/Z7'])
 
