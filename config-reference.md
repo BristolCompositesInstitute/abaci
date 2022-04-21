@@ -187,32 +187,17 @@ include = ['extra-source.f90']
 
 Extra compilation flags to pass to the fortran compiler.
 
-### `debug-symbols` (*bool*, optional)
-
-Whether to compile with debug symbols.
-
 ### `opt-host` (*bool*, optional)
 
 Whether to compile with host-specific optimisations (**default: `true`**). Disable if distributable binaries are required.
 
 See [Intel Compiler Developer Guide: xHost](https://www.intel.com/content/www/us/en/develop/documentation/cpp-compiler-developer-guide-and-reference/top/compiler-reference/compiler-options/compiler-option-details/code-generation-options/xhost-qxhost.html) for more information.
 
-### `runtime-checks` (*bool*, optional)
-
-Whether to compile with runtime checks enabled.
-
-See [Intel Fortran Compiler Developer Guide: check](https://www.intel.com/content/www/us/en/develop/documentation/fortran-compiler-oneapi-dev-guide-and-reference/top/compiler-reference/compiler-options/compiler-option-details/language-options/check.html) for more information on runtime checks.
-
-
 ### `compiletime-checks` (*bool*, optional)
 
-Whether to perform strict compile-time checks.
+Whether to always perform strict compile-time checks.
 
 See [Intel Fortran Compiler Developer Guide: warn](https://www.intel.com/content/www/us/en/develop/documentation/fortran-compiler-oneapi-dev-guide-and-reference/top/compiler-reference/compiler-options/compiler-option-details/compiler-diagnostic-options/warn.html#warn) for more information on compile-time checks.
-
-### `code-coverage` (*bool*, optional)
-
-Whether to instrument code for coverage analysis and generate a coverage report.
 
 ### `include` (*string* or *[string]*, optional)
 

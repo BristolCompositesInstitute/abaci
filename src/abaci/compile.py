@@ -21,10 +21,10 @@ def compile_user_subroutine(args, output_dir, user_file, compile_conf, dep_list)
 
     flags = get_flags(compile_dir=compile_dir,
                       fortran_flags = compile_conf['fflags'],
-                      debug_symbols = args.debug or compile_conf['debug-symbols'],
-                      runtime_checks = args.debug or compile_conf['runtime-checks'],
-                      compiletime_checks = compile_conf['compiletime-checks'],
-                      codecov = args.codecov or compile_conf['code-coverage'],
+                      debug_symbols = args.debug,
+                      runtime_checks = args.debug,
+                      compiletime_checks = args.check or compile_conf['compiletime-checks'],
+                      codecov = args.codecov,
                       opt_host = compile_conf['opt-host'],
                       noopt = args.noopt)
 

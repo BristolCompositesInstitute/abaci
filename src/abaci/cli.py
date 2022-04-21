@@ -46,8 +46,11 @@ def parse_cli():
     build_group.add_argument('-t','--codecov',help='compile subroutines for code coverage analysis',
                         dest='codecov',action='store_true')
 
-    build_group.add_argument('-d','--debug',help='compile with debug flags',
+    build_group.add_argument('-d','--debug',help='enable run-time debugging checks',
                         dest='debug',action='store_true')
+
+    build_group.add_argument('-c','--check',help='enable strict compile-time checks',
+                        dest='check',action='store_true')
 
     build_group.add_argument('-0','--noopt',help='compile without any optimisations',
                         dest='noopt',action='store_true')

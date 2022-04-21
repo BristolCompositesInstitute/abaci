@@ -49,7 +49,7 @@ def main():
 
             job.run_checks()
 
-    if args.codecov or config['compile']['code-coverage']:
+    if args.codecov:
         
         collect_cov_report(config,compile_dir,args.verbose)
 

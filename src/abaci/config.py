@@ -69,12 +69,8 @@ def config_schema():
                                 'version': unicode}])
 
     compile_schema = Schema({Optional('fflags',default=[]): Or(unicode,[unicode]),
-                            Optional('lflags',default=''): unicode,
                             Optional('opt-host',default=True): bool,
-                            Optional('debug-symbols',default=False): bool,
-                            Optional('runtime-checks',default=False): bool,
                             Optional('compiletime-checks',default=False): bool,
-                            Optional('code-coverage',default=False): bool,
                             Optional('include',default=[]): Or(unicode,[unicode])})
 
     compile_defaults = compile_schema.validate({})
@@ -114,9 +110,6 @@ def sanitize_config(config, config_dir):
     # Optional lists
     if not isinstance(config['compile']['fflags'],list):
         config['compile']['fflags'] = [config['compile']['fflags']]
-    
-    if not isinstance(config['compile']['lflags'],list):
-        config['compile']['lflags'] = [config['compile']['lflags']]
 
     if not isinstance(config['compile']['include'],list):
         config['compile']['include'] = [config['compile']['include']]
