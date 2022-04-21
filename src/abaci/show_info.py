@@ -27,6 +27,10 @@ def show_info(args, config, dep_list):
 def show_dependencies(dep_list):
     """Print dependency list"""
 
+    if not dep_list:
+
+        return
+
     table = []
 
     for dep_name,dep in dep_list.items():
@@ -73,6 +77,10 @@ def show_sources(config,dep_list):
 
 def show_config_jobs(config,verbose):
     """Print list of jobs in config file"""
+
+    if not config['job']:
+
+        return
 
     table = []
 
