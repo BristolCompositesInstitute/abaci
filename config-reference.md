@@ -50,6 +50,7 @@ name = 'job1'
 tags = ['test','three_elem']
 include = ['job1_extra_inputs.inp']
 mp-mode = 'threads'
+post-process = '{PY} {ROOT}/scripts/postprocess.py {ODB}'
 ```
 
 ### `job-file` (*string*, mandatory)
@@ -77,6 +78,36 @@ An optional list of additional files to copy to the job folder before launching 
 An optional field taking the value of either `'threads'` (default), `'mpi'` or `'disable'` to indicate the parallel mode to execute in abaqus (corresponds to the `-mp_mode` command line flag).
 
 If `mp-mode` is `'disable'`, then the abaci command line option for multiple processors will be ignored for this job, it will always run in serial.
+
+### `post-process` (*string*, optional)
+
+An optional field specifying a post-processing command to run once the job has completed.
+
+The field takes the form of a command to execute and allows certain variables to be used:
+
+- `{PY}` will be substituted with the correct `abaqus python` command
+- `{ROOT}` will be substituted with the path to the directory containing the `abaci.toml` configuration file; this allows you to specify the path to your postprocessing script relative to the repository root
+- `{ODB}` will be substituted with the path to the output database (`.odb`) file for this job
+- `{DIR}` will be substituted with the path to the output directory for this job
+- `{JOB}` will be substituted with the name of the job (without any extensions or paths)
+
+__Example:__ run a python script:
+
+```toml
+[[job]]
+job-file = 'myjob.inp'
+name = 'myjob'
+post-process = '{PY} {ROOT}/scripts/postprocess.py {ODB} {JOB}'
+```
+
+This will execute the following command once the job has completed:
+
+```bash
+abaqus python /path/to/repo/scripts/postprocess.py /path/to/job-dir/myjob.odb myjob
+```
+
+where `{ROOT}` has been replaced with the absolute path to the repository root (defined by the directory containing the abaci.toml file); `{ODB}` has been replaced by the absolute path to the output database file and `{JOB}` has been replaced by the name of the job.
+In the postprocessing script, you can access the values for `{ODB}` and `{JOB}` that were passed as command line arguments using [`sys.argv`](https://docs.python.org/3/library/sys.html#sys.argv).
 
 ### `check` options (optional)
 

@@ -26,6 +26,7 @@ class AbaqusJob:
                 self.name = splitext(basename(job_file))[0]
             
             self.checks = job['check']
+            self.postprocess = job['post-process']
             self.mp_mode = job['mp-mode']
 
         else:
@@ -34,6 +35,7 @@ class AbaqusJob:
             self.include =[]
             self.job_file = job_file
             self.checks = None
+            self.postprocess = None
             self.mp_mode = 'threads'
 
         self.job_dir = self.get_new_job_dir(output_dir)
@@ -199,3 +201,34 @@ class AbaqusJob:
             return
 
         compare_odb(odb_ref_file,odb_out_file,self.name,self.checks)
+
+
+    def post_process(self,config_dir,verbosity):
+        """Run any post-processing scripts for this job"""
+
+        if not self.postprocess:
+
+            return
+
+        log = logging.getLogger('abaci')
+
+        abq_py = ' '.join(abq.abaqus_cmd(['python']))
+        post_cmd = self.postprocess.format(
+            PY=abq_py,
+            JOB=self.local_job_name,
+            ROOT=config_dir,
+            ODB=join(self.job_dir,self.local_job_name+'.odb'),
+            DIR=self.job_dir
+        )
+
+        log.info('Running post-processing script for job "%s"', self.name)
+
+        p, ofile, efile = system_cmd(post_cmd.split())
+
+        stat = system_cmd_wait(p, verbosity, ofile, efile)
+
+        if stat != 0:
+
+            log.warn('Post-processing script exited with non-zero status')
+
+        return stat

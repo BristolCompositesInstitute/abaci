@@ -28,6 +28,7 @@ class TestAbaqusJob(AbaciUnitTestSuite):
         job['name'] = 'job-name'
         job['check'] = self.get_dummy_check()
         job['mp-mode'] = 'threads'
+        job['post-process'] = None
         
         return job, job_base_name
 

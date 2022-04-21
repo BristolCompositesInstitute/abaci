@@ -62,6 +62,7 @@ def config_schema():
                          Optional('tags',default=[]): Or(unicode,[unicode]),
                          Optional('name',default=None): unicode,
                          Optional('mp-mode',default='threads'): Or(u'threads',u'mpi',u'disable'),
+                         Optional('post-process',default=None): unicode,
                          Optional('check',default=None): check_schema}])
 
     dependency_schema = Schema([{'name': unicode,

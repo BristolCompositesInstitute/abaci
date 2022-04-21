@@ -49,6 +49,8 @@ def main():
 
             job.run_checks()
 
+            job.post_process(config_dir,args.verbose)
+
     if args.codecov:
         
         collect_cov_report(config,compile_dir,args.verbose)
