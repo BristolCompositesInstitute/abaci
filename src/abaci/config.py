@@ -18,10 +18,6 @@ def load_config(config_file,echo):
 
     config = sanitize_config(config, config_dir)
 
-    # if echo:
-    #     print toml.dumps(config)
-    #     exit()
-
     check_config(config)
 
     return config, config_dir
@@ -172,3 +168,9 @@ def check_config(config):
     if config['user-sub-file'] and not exists(config['user-sub-file']):
         raise Exception('The user subroutine file "{file}" cannot be found'.format(file=config['user-sub-file']))
 
+
+    for j in config['job']:
+
+        if not exists(j['job-file']):
+
+            raise Exception('The job file "{file}" cannot be found'.format(file=j['job-file']))
