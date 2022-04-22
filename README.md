@@ -117,7 +117,8 @@ optional arguments:
   --config CONFIG       specify a different config file to default
                         ("abaci.toml")
   -t, --codecov         compile subroutines for code coverage analysis
-  -d, --debug           compile with debug flags
+  -d, --debug           enable run-time debugging checks
+  -c, --check           enable strict compile-time checks
   -0, --noopt           compile without any optimisations
   -b, --background      run abaci in the background after compilation
   -n NPROC, --nproc NPROC
@@ -153,7 +154,8 @@ optional arguments:
   -q, --quiet      output less information from abaci
   --config CONFIG  specify a different config file to default ("abaci.toml")
   -t, --codecov    compile subroutines for code coverage analysis
-  -d, --debug      compile with debug flags
+  -d, --debug      enable run-time debugging checks
+  -c, --check      enable strict compile-time checks
   -0, --noopt      compile without any optimisations
 ```
 </details>
