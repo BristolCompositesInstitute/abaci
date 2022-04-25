@@ -65,13 +65,13 @@ def fetch_dependency(deps_dir,dep_name,dep_git,dep_version,verbosity):
 
     dep_path = os.path.join(deps_dir,dep_name)
 
+    if is_ssh_url(dep_git):
+            
+        setup_ssh_agent()
+            
     if not os.path.isdir(dep_path):
 
         log.info('Fetching dependency "{dep}" ({ver})'.format(dep=dep_name,ver=dep_version))
-
-        if is_ssh_url(dep_git):
-            
-            setup_ssh_agent()
 
         git.clone(dep_git,deps_dir,dep_name,verbosity)
 
