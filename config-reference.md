@@ -207,10 +207,7 @@ __Example:__
 ```toml
 [compile]
 fflags = ''
-debug-symbols = true
-runtime-checks = false
 compiletime-checks = false
-code-coverage = false
 include = ['extra-source.f90']
 ```
 
