@@ -2,6 +2,11 @@
 
 if exist C:\SIMULIA\Commands\ (
 
+    if exist %LOCALAPPDATA%\BCI\abaci\ (
+        echo Removing existing abaci installation
+        rmdir /S /Q "%LOCALAPPDATA%\BCI\abaci"
+    )
+    
     echo Installing abaci to %LOCALAPPDATA%\BCI\abaci
     xcopy "%~dp0..\src" "%LOCALAPPDATA%\BCI\abaci" /E /Y /I /Q
 
