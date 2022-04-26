@@ -216,7 +216,7 @@ class TestDependencies(AbaciUnitTestSuite):
 
     def test_dependency_update(self):
         """
-            Test updating of a dependency
+            Test updating of a dependency with git tags
 
             root-->dep1@v1
             
@@ -248,6 +248,46 @@ class TestDependencies(AbaciUnitTestSuite):
 
         # Now specify a newer version of dep1
         config['dependency'][0]['version'] = 'v2'
+
+        with cwd(project_path):
+
+            fetch_dependencies(config, config_dir, verbosity)
+
+            # Check dependency was updated
+            self.assertEquals(git.get_tag(join('dependencies','dep1')), 'v2')
+
+
+    def test_dependency_update_branch(self):
+        """
+            Test updating of a dependency on a branch (master)
+
+            root-->dep1@v1
+            
+        """
+
+        self.new_temp_project(name="dep1",version="v1",deps=None)
+
+        temp_upstream = self.new_temp_project(name="root",version="v1",
+                              deps=[self.temp_dep(name="dep1",version="master")])
+
+        project_path, config, config_dir = self.clone_and_load_config(temp_upstream,'root')
+
+        if verbose:
+            verbosity = 1
+        else:
+            verbosity = 0
+
+        with cwd(project_path):
+
+            fetch_dependencies(config, config_dir, verbosity)
+
+            # Check dependency was fetched
+            self.assertTrue(isdir('dependencies'))
+            self.assertTrue(isdir(join('dependencies','dep1')))
+            self.assertEquals(git.get_tag(join('dependencies','dep1')), 'v1')
+
+        # Push a new tag to the upstream
+        self.new_temp_project(name="dep1",version="v2",deps=None)
 
         with cwd(project_path):
 
