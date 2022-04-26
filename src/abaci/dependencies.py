@@ -89,17 +89,24 @@ def fetch_dependency(deps_dir,dep_name,dep_git,dep_version,verbosity):
     needs_update = not git.is_head_detached(dep_path) or \
         (current_commit != dep_version and current_tag != dep_version)
 
-    if needs_update and is_dirty:
+    if needs_update:
 
-        log.warning("(!) Warning, dependency {dep} cannot be updated to version '{ver}' because it contains modified code.\n\t".format(
-                     dep=dep_name,ver=dep_version))
+        if is_dirty:
 
-    elif needs_update:
+            log.warning("(!) Warning, dependency {dep} cannot be updated to version '{ver}' because it contains modified code.\n\t".format(
+                        dep=dep_name,ver=dep_version))
 
-        log.info('Updating dependency "{dep}" to {ver}'.format(dep=dep_name,ver=dep_version))
+        else:
 
-        git.fetch(dep_path)
-        git.checkout(dep_path,dep_version,verbosity)
+            log.info('Updating dependency "{dep}" to {ver}'.format(dep=dep_name,ver=dep_version))
+
+            git.fetch(dep_path)
+            git.checkout(dep_path,dep_version,verbosity)
+            
+            # Merge changes from upstream if on a branch
+            if not git.is_head_detached(dep_path):
+                
+                git.merge_remote(dep_path)
 
     if not git.is_head_detached(dep_path):
 
