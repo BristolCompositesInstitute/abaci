@@ -175,3 +175,13 @@ def fetch(path):
     with cwd(path, quiet=True):
 
         subprocess.check_call(['git', 'fetch'],stdout=devnull,stderr=devnull)
+
+
+def merge_remote(path):
+    """Helper to merge FETCH_HEAD"""
+
+    devnull = open(os.devnull,'w')
+
+    with cwd(path, quiet=True):
+
+        subprocess.check_call(['git', 'merge', 'FETCH_HEAD'],stdout=devnull,stderr=devnull)
