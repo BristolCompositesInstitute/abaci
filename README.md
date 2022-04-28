@@ -19,6 +19,7 @@ __Status:__ v0.2.0 beta
   - Perform code coverage to identify executed lines of code
 - Prescribe and run benchmark problems as test cases
   - Perform regression checks on output database results
+  - Automatically run post-processing commands and scripts
 - Specify dependencies to reuse code from other abaci projects
 
 ## 1. Getting Started
