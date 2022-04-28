@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+#
+# Run test scripts for abaci
+#
+
+root=$(dirname "$(readlink -f "$0")")/..
+
+abaqus python $root/test/test_runner.py $@

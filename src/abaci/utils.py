@@ -6,21 +6,40 @@ from contextlib import contextmanager
 import subprocess
 from unicodedata import normalize
 
+def relpathshort(path):
+    """
+        Returns the shorter of path and relpath
+        Avoids issue on Windows for different drive letters
+    """
+
+    try:
+        rpath = os.path.relpath(path)
+    except:
+        rpath = path
+
+    return min(path, rpath, key=len)
+
+
 @contextmanager
-def cwd(path):
+def cwd(path, quiet=None):
     """Helper to change directory temporarily"""
 
     log = logging.getLogger('abaci')
 
     oldpwd=os.getcwd()
+    
+    if not quiet:
+        log.debug('Changing into directory "%s"',relpathshort(path))
 
-    log.debug('Changing into directory "%s"',os.path.relpath(path))
     os.chdir(path)
 
     try:
         yield
     finally:
-        log.debug('Changing back to directory "%s"',oldpwd)
+
+        if not quiet:
+            log.debug('Changing back to directory "%s"',oldpwd)
+            
         os.chdir(oldpwd)
 
 
@@ -31,11 +50,11 @@ def mkdir(dir):
 
     if os.path.isdir(dir):
         
-        log.debug('Directory already exists ("%s")',os.path.relpath(dir))
+        log.debug('Directory already exists ("%s")',relpathshort(dir))
 
     else:
 
-        log.debug('Making directory "%s"',os.path.relpath(dir))
+        log.debug('Making directory "%s"',relpathshort(dir))
         os.mkdir(dir)
 
 
@@ -45,7 +64,7 @@ def copyfile(source,dest):
 
     log = logging.getLogger('abaci')
     
-    log.debug('Copying "%s" to "%s"',os.path.relpath(source), os.path.relpath(dest))
+    log.debug('Copying "%s" to "%s"',relpathshort(source), relpathshort(dest))
     copyfile(source,dest)
 
 
@@ -55,7 +74,7 @@ def copydir(source,dest):
 
     log = logging.getLogger('abaci')
     
-    log.debug('Copying directory "%s" to "%s"',os.path.relpath(source), os.path.relpath(dest))
+    log.debug('Copying directory "%s" to "%s"',relpathshort(source), relpathshort(dest))
     copy_tree(source,dest)
 
 
@@ -69,20 +88,26 @@ def system_cmd(cmd,output=None):
     if output:
 
         ofile = '{stem}.stdout'.format(stem=output)
-        fo = open(ofile,'w')
-        log.debug('Command stdout redirected to "%s"',os.path.relpath(ofile))
+        fo = open(ofile,'a')
+        log.debug('Command stdout redirected to "%s"',relpathshort(ofile))
 
         efile = '{stem}.stderr'.format(stem=output)
-        fe = open(efile,'w')
-        log.debug('Command stderr redirected to "%s"',os.path.relpath(efile))
+        fe = open(efile,'a')
+        log.debug('Command stderr redirected to "%s"',relpathshort(efile))
 
     else:
 
         ofile = None
         efile = None
         
-        fo = sys.stdout
-        fe = sys.stderr
+        fo = None
+        fe = None
+
+    # Needed on Windows to get return code correctly
+    if os.name == 'nt':
+        
+        cmd.append('&')
+        cmd.append('exit')
 
     p = subprocess.Popen(cmd,stdout=fo,stderr=fe)
 
@@ -101,10 +126,6 @@ def system_cmd_wait(p,verbosity,ofile=None,efile=None):
     log = logging.getLogger('abaci')
 
     p.communicate()
-
-    if p.returncode != 0:
-
-        log.warn('Command exited with status %s',p.returncode)
 
     # Print outputs if (non-zero status and not in quiet mode) or
     #  if in very verbose mode
@@ -132,6 +153,25 @@ def system_cmd_wait(p,verbosity,ofile=None,efile=None):
 def to_ascii(ustring):
 
     return normalize('NFKD',ustring).encode('ascii','ignore')
+
+
+def recurse_files(path):
+
+    filelist = []
+
+    if os.path.isdir(path):
+
+        for currentpath, folders, files in os.walk(path):
+
+            for file in files:
+                        
+                filelist.append(os.path.join(currentpath, file))
+
+    else:
+
+        filelist = [path]
+
+    return filelist
 
 
 def daemonize():

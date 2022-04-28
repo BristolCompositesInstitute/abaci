@@ -1,15 +1,16 @@
 import os
 import logging
 import glob
-from os.path import exists, relpath
+from os.path import exists
 
 from redist import toml
 from redist.schema import Schema, And, Optional, Use, Or#
+from abaci.utils import relpathshort
 
-def load_config(args):
+def load_config(config_file,echo):
     """Top-level routine to read, parse, validate and sanitize config file"""
 
-    config_file, config_dir = get_config_path(args)
+    config_file, config_dir = get_config_path(config_file)
 
     config_str = read_config_file(config_file)
 
@@ -17,24 +18,20 @@ def load_config(args):
 
     config = sanitize_config(config, config_dir)
 
-    if args.echo:
-        print toml.dumps(config)
-        exit()
-
     check_config(config)
 
-    return config
+    return config, config_dir
 
 
-def get_config_path(args):
+def get_config_path(config_file):
     """Establish absolute path for config file"""
 
     log = logging.getLogger('abaci')
 
-    config_file = os.path.realpath(args.config)
+    config_file = os.path.realpath(config_file)
     config_dir = os.path.dirname(config_file)
 
-    log.info('Config file is "%s"',relpath(config_file))
+    log.debug('Config file is "%s"',relpathshort(config_file))
     log.debug('Config directory is "%s"',config_dir)
 
     return config_file, config_dir
@@ -65,22 +62,25 @@ def config_schema():
                          Optional('tags',default=[]): Or(unicode,[unicode]),
                          Optional('name',default=None): unicode,
                          Optional('mp-mode',default='threads'): Or(u'threads',u'mpi',u'disable'),
+                         Optional('post-process',default=None): unicode,
                          Optional('check',default=None): check_schema}])
 
+    dependency_schema = Schema([{'name': unicode,
+                                'git': unicode,
+                                'version': unicode}])
+
     compile_schema = Schema({Optional('fflags',default=[]): Or(unicode,[unicode]),
-                            Optional('lflags',default=''): unicode,
                             Optional('opt-host',default=True): bool,
-                            Optional('debug-symbols',default=False): bool,
-                            Optional('runtime-checks',default=False): bool,
                             Optional('compiletime-checks',default=False): bool,
-                            Optional('code-coverage',default=False): bool,
                             Optional('include',default=[]): Or(unicode,[unicode])})
 
     compile_defaults = compile_schema.validate({})
 
     config_schema = Schema(And(Use(toml.loads),{
+                            Optional('name', default=None): unicode,
                             Optional('output', default=u'.'): unicode,
-                            'user-sub-file': unicode,
+                            Optional('user-sub-file',default=None): unicode,
+                            Optional('dependency',default=[]): dependency_schema,
                             Optional('job',default=[]): job_schema,
                             Optional('compile',default=compile_defaults): And(dict,compile_schema)}))
 
@@ -111,9 +111,6 @@ def sanitize_config(config, config_dir):
     # Optional lists
     if not isinstance(config['compile']['fflags'],list):
         config['compile']['fflags'] = [config['compile']['fflags']]
-    
-    if not isinstance(config['compile']['lflags'],list):
-        config['compile']['lflags'] = [config['compile']['lflags']]
 
     if not isinstance(config['compile']['include'],list):
         config['compile']['include'] = [config['compile']['include']]
@@ -122,7 +119,8 @@ def sanitize_config(config, config_dir):
     config['output'] = os.path.realpath(config['output'])
 
     # User subroutine path is relative to the config file
-    config['user-sub-file'] = os.path.realpath(os.path.join(
+    if config['user-sub-file']:
+        config['user-sub-file'] = os.path.realpath(os.path.join(
                                 config_dir,config['user-sub-file']))
 
     # User subroutine include paths are relative to the config file
@@ -157,31 +155,16 @@ def sanitize_config(config, config_dir):
 
     return config
 
+
 def check_config(config):
     """Check config to raise any errors before continuing"""
 
-    if not exists(config['user-sub-file']):
+    if config['user-sub-file'] and not exists(config['user-sub-file']):
         raise Exception('The user subroutine file "{file}" cannot be found'.format(file=config['user-sub-file']))
 
 
-def list_config_jobs(config,verbose):
+    for j in config['job']:
 
-    for i,j in enumerate(config['job']):
+        if not exists(j['job-file']):
 
-        if j['name']:
-
-            job_name = j['name']
-
-        else:
-
-            job_name = os.path.basename(j['job-file'])
-
-        print "    {i}: {name}  [{tags}]".format(
-               i=i, name=job_name, tags=', '.join(j['tags']),
-               file=os.path.relpath(j['job-file'],os.getcwd())
-        )
-
-        if verbose > 0:
-             print "     ({file})".format(
-               file=os.path.relpath(j['job-file'],os.getcwd())
-        )
+            raise Exception('The job file "{file}" cannot be found'.format(file=j['job-file']))

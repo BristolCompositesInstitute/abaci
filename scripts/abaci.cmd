@@ -9,14 +9,14 @@ set FOR_DISABLE_CONSOLE_CTRL_HANDLER=1
 if exist %~dp0..\src\abaci_main.py (
 
     REM Relative execution path
-    abaqus python %~dp0..\src\abaci_main.py %* < nul
+    abaqus python %~dp0..\src\abaci_main.py %*
     
 ) else (
 
-    if exist %LOCALAPPDATA%\BCI\abaci\src\abaci_main.py (
+    if exist %LOCALAPPDATA%\BCI\abaci\abaci_main.py (
 
         REM Local installation path
-        abaqus python %LOCALAPPDATA%\BCI\abaci\src\abaci_main.py %* < nul
+        abaqus python %LOCALAPPDATA%\BCI\abaci\abaci_main.py %*
 
     ) else (
 

@@ -2,8 +2,9 @@ import logging
 import os
 from os.path import basename, join, splitext, isdir, exists
 from utils import cwd, copyfile, system_cmd, system_cmd_wait, copydir, mkdir
-from odb_check import compare_odb, dump_ref
+import abaci.abaqus as abq
 from datetime import datetime
+from exceptions import ValueError
 
 class AbaqusJob:
 
@@ -12,7 +13,7 @@ class AbaqusJob:
 
         if bool(job) is bool(job_file):
 
-            raise Exception('AbaqusJob needs one of job or job_file to instantiate')
+            raise ValueError('AbaqusJob needs one of job or job_file to instantiate')
 
         if job:
 
@@ -25,6 +26,7 @@ class AbaqusJob:
                 self.name = splitext(basename(job_file))[0]
             
             self.checks = job['check']
+            self.postprocess = job['post-process']
             self.mp_mode = job['mp-mode']
 
         else:
@@ -33,6 +35,7 @@ class AbaqusJob:
             self.include =[]
             self.job_file = job_file
             self.checks = None
+            self.postprocess = None
             self.mp_mode = 'threads'
 
         self.job_dir = self.get_new_job_dir(output_dir)
@@ -62,16 +65,15 @@ class AbaqusJob:
         log = logging.getLogger('abaci')
 
         self.prepare_job(lib_dir)
-
-        abq_cmd = self.get_abaqus_cmd(nproc)
         
         log.info('Launching abaqus for job "%s"',self.name)
 
-        with cwd(self.job_dir):
+        self.start_time = datetime.now()
 
-            self.start_time = datetime.now()
-
-            self.p, self.ofile, self.efile = system_cmd(abq_cmd,output=join(self.job_dir,'abaqus'))
+        self.p, self.ofile, self.efile = abq.run(dir=self.job_dir,
+                                          job_name=self.local_job_name,
+                                          mp_mode=self.mp_mode,
+                                          nproc=nproc)
 
 
     def is_running(self):
@@ -126,42 +128,13 @@ class AbaqusJob:
 
         self.p.terminate()
 
-        with cwd(self.job_dir):
+        log.info('Cancelling abaqus job "%s"',self.name)
 
-            log.info('Cancelling abaqus job "%s"',self.name)
+        p, ofile, efile = abq.terminate(dir=self.job_dir,job_name=self.local_job_name)
 
-            kill_cmd = ['abaqus', 'terminate','job={name}'.format(name=self.local_job_name)]
-            
-            if os.name == 'nt':
+        if os.name != 'nt':
                 
-                kill_cmd[0] = 'c:\\SIMULIA\\Commands\\abaqus.bat'
-                kill_cmd.append('&')
-                kill_cmd.append('exit')
-
-            p, ofile, efile = system_cmd(kill_cmd)
-
-            if os.name != 'nt':
-                
-                system_cmd_wait(p,verbose)
-
-
-    def get_abaqus_cmd(self,nproc):
-        """Returns the system command to launch abaqus"""
-
-        abq_cmd = ['abaqus','job={name}'.format(name=self.local_job_name)]
-
-        if self.mp_mode != 'disable' and nproc > 1:
-            abq_cmd.append('mp_mode={mode}'.format(mode=self.mp_mode))
-            abq_cmd.append('cpus={n}'.format(n=nproc))
-
-        abq_cmd.extend(['double','interactive'])
-
-        if os.name == 'nt':
-            abq_cmd[0] = 'c:\\SIMULIA\\Commands\\abaqus.bat'
-    	    abq_cmd.append('&')
-    	    abq_cmd.append('exit')
-
-        return abq_cmd
+            system_cmd_wait(p,verbose)
 
 
     def prepare_job(self,lib_dir):
@@ -200,6 +173,8 @@ class AbaqusJob:
     def run_checks(self):
         """Run reference checks"""
         
+        from odb_check import compare_odb, dump_ref
+
         log = logging.getLogger('abaci')
 
         if not self.checks:
@@ -226,3 +201,34 @@ class AbaqusJob:
             return
 
         compare_odb(odb_ref_file,odb_out_file,self.name,self.checks)
+
+
+    def post_process(self,config_dir,verbosity):
+        """Run any post-processing scripts for this job"""
+
+        if not self.postprocess:
+
+            return
+
+        log = logging.getLogger('abaci')
+
+        abq_py = ' '.join(abq.abaqus_cmd(['python']))
+        post_cmd = self.postprocess.format(
+            PY=abq_py,
+            JOB=self.local_job_name,
+            ROOT=config_dir,
+            ODB=join(self.job_dir,self.local_job_name+'.odb'),
+            DIR=self.job_dir
+        )
+
+        log.info('Running post-processing script for job "%s"', self.name)
+
+        p, ofile, efile = system_cmd(post_cmd.split())
+
+        stat = system_cmd_wait(p, verbosity, ofile, efile)
+
+        if stat != 0:
+
+            log.warn('Post-processing script exited with non-zero status')
+
+        return stat

@@ -9,9 +9,20 @@ In particular it allows you to define multiple abaqus jobs and group them by tag
 __Example:__
 
 ```toml
+name = 'project-name'
 user-sub-file = 'usersub.f90'
 output = 'scratch'
 ```
+
+### `name` (*string*, optional)
+
+Specifies the name of the project to uniquely identify it when used as a dependency for
+another abaci project.
+
+__Note:__ this field is mandatory if the project is to be used as a dependency, otherwise
+it can be omitted.
+
+
 ### `user-sub-file` (*string*, mandatory)
 
 Specifies the filename of the abaqus user subroutine to compile.
@@ -39,6 +50,7 @@ name = 'job1'
 tags = ['test','three_elem']
 include = ['job1_extra_inputs.inp']
 mp-mode = 'threads'
+post-process = '{PY} {ROOT}/scripts/postprocess.py {ODB}'
 ```
 
 ### `job-file` (*string*, mandatory)
@@ -66,6 +78,36 @@ An optional list of additional files to copy to the job folder before launching 
 An optional field taking the value of either `'threads'` (default), `'mpi'` or `'disable'` to indicate the parallel mode to execute in abaqus (corresponds to the `-mp_mode` command line flag).
 
 If `mp-mode` is `'disable'`, then the abaci command line option for multiple processors will be ignored for this job, it will always run in serial.
+
+### `post-process` (*string*, optional)
+
+An optional field specifying a post-processing command to run once the job has completed.
+
+The field takes the form of a command to execute and allows certain variables to be used:
+
+- `{PY}` will be substituted with the correct `abaqus python` command
+- `{ROOT}` will be substituted with the path to the directory containing the `abaci.toml` configuration file; this allows you to specify the path to your postprocessing script relative to the repository root
+- `{ODB}` will be substituted with the path to the output database (`.odb`) file for this job
+- `{DIR}` will be substituted with the path to the output directory for this job
+- `{JOB}` will be substituted with the name of the job (without any extensions or paths)
+
+__Example:__ run a python script:
+
+```toml
+[[job]]
+job-file = 'myjob.inp'
+name = 'myjob'
+post-process = '{PY} {ROOT}/scripts/postprocess.py {ODB} {JOB}'
+```
+
+This will execute the following command once the job has completed:
+
+```bash
+abaqus python /path/to/repo/scripts/postprocess.py /path/to/job-dir/myjob.odb myjob
+```
+
+where `{ROOT}` has been replaced with the absolute path to the repository root (defined by the directory containing the abaci.toml file); `{ODB}` has been replaced by the absolute path to the output database file and `{JOB}` has been replaced by the name of the job.
+In the postprocessing script, you can access the values for `{ODB}` and `{JOB}` that were passed as command line arguments using [`sys.argv`](https://docs.python.org/3/library/sys.html#sys.argv).
 
 ### `check` options (optional)
 
@@ -110,6 +152,52 @@ Either a list of element indices for which to perform checks or `'all'`.
 If not specified, then `'all'` is the default.
 
 
+## Dependency list (optional)
+
+Array of optional subsections that specify third-party repositories from
+which to include additional source files.
+
+__Example:__
+
+```toml
+[[dependency]]
+name = 'demo-dependency'
+git = 'git@github.com:BristolCompositesInstitute/demo-dep.git'
+version = '<commit|tag>'
+```
+
+__Note:__ The dependency must have an `abaci.toml` file in the repository root that specifies a project
+`name` and the `include` field in the `[compile]` subsection.
+
+### `name` (*string*)
+
+The name of the dependency used to uniqueuly identify it and organise its source files.
+
+__Note:__ this `name` field must match the top-level `name` field in the corresponding `abaci.toml` file in the dependency repository.
+
+To include source files from a dependency into your Fortran source, prefix the source file path
+with the dependency name, _e.g._:
+
+```fortran
+      include '<dependency-name>/source-file.f'
+```
+
+### `git` (*string*)
+
+The remote url to the upstream git repository from which to fetch the dependency.
+
+### `version` (*string*)
+
+A mandatory commit hash or tag specifying the exact version to fetch from the upstream repository.
+
+__Note:__ Abaci will automatically refetch the dependency if this field changes.
+
+__Note:__ it is possible to specify a branch name for `version`, however this is __not recommended__ since
+the dependency is not 'pinned' to a specific snapshot; this can cause sudden breaking changes and
+prevents other users of your code from reproducing your configuration. If you specify a branch, then
+abaci will fetch the latest changes from the branch everytime it is run.
+
+
 ## Compile section (optional)
 
 An optional subsection that details compilation settings.
@@ -119,10 +207,7 @@ __Example:__
 ```toml
 [compile]
 fflags = ''
-debug-symbols = true
-runtime-checks = false
 compiletime-checks = false
-code-coverage = false
 include = ['extra-source.f90']
 ```
 
@@ -130,32 +215,17 @@ include = ['extra-source.f90']
 
 Extra compilation flags to pass to the fortran compiler.
 
-### `debug-symbols` (*bool*, optional)
-
-Whether to compile with debug symbols.
-
 ### `opt-host` (*bool*, optional)
 
 Whether to compile with host-specific optimisations (**default: `true`**). Disable if distributable binaries are required.
 
 See [Intel Compiler Developer Guide: xHost](https://www.intel.com/content/www/us/en/develop/documentation/cpp-compiler-developer-guide-and-reference/top/compiler-reference/compiler-options/compiler-option-details/code-generation-options/xhost-qxhost.html) for more information.
 
-### `runtime-checks` (*bool*, optional)
-
-Whether to compile with runtime checks enabled.
-
-See [Intel Fortran Compiler Developer Guide: check](https://www.intel.com/content/www/us/en/develop/documentation/fortran-compiler-oneapi-dev-guide-and-reference/top/compiler-reference/compiler-options/compiler-option-details/language-options/check.html) for more information on runtime checks.
-
-
 ### `compiletime-checks` (*bool*, optional)
 
-Whether to perform strict compile-time checks.
+Whether to always perform strict compile-time checks.
 
 See [Intel Fortran Compiler Developer Guide: warn](https://www.intel.com/content/www/us/en/develop/documentation/fortran-compiler-oneapi-dev-guide-and-reference/top/compiler-reference/compiler-options/compiler-option-details/compiler-diagnostic-options/warn.html#warn) for more information on compile-time checks.
-
-### `code-coverage` (*bool*, optional)
-
-Whether to instrument code for coverage analysis and generate a coverage report.
 
 ### `include` (*string* or *[string]*, optional)
 
@@ -163,5 +233,5 @@ String or list of strings specifying additional files that are included in the u
 
 - Included file paths are specified relative to the folder containing the configuration file ('abaci.toml')
 - File globbing is supported, _e.g._: `include = 'src/*.f'`
-
+- Sources specified here are made available to other projects that use your project as a dependency
 

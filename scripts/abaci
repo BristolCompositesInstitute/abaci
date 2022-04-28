@@ -5,4 +5,22 @@
 
 root=$(dirname "$(readlink -f "$0")")/..
 
-abaqus python $root/src/abaci_main.py $@
+abaci_main_repo=$root/src/abaci_main.py
+abaci_main_local=$root/lib/abaci/abaci_main.py
+
+if [[ -f "$abaci_main_repo" ]]; then
+
+  abaci_main=$abaci_main_repo
+
+elif [[ -f "$abaci_main_local" ]]; then
+
+  abaci_main=$abaci_main_local
+
+else
+
+  echo "Unable to find abaci installation"
+  exit 1
+
+fi
+
+abaqus python $abaci_main $@
