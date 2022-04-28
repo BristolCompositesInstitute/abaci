@@ -1,5 +1,8 @@
 # Abaci
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Test](https://github.com/BristolCompositesInstitute/abaci/actions/workflows/Test.yml/badge.svg)](https://github.com/BristolCompositesInstitute/abaci/actions/workflows/Test.yml)
+
 __A helper utility for compiling, running and testing abaqus user subroutines and jobs.__
 
 __Author:__ Laurence Kedward
