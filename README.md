@@ -9,7 +9,7 @@ __Author:__ Laurence Kedward
 
 __Maintainer:__ laurence.kedward@bristol.ac.uk
 
-__Status:__ v0.2.0 beta
+__Status:__ v0.2.1 beta
 
 ### Key Features:
 
