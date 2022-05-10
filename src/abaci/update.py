@@ -8,7 +8,7 @@ import logging
 
 from abaci.ssh_utils import is_ssh_url, setup_ssh_agent
 import abaci.git_utils as git
-from abaci.utils import copydir, copyfile
+from abaci.utils import copydir, copyfile, mkdir
 import abaci.cli
 
 _DEFAULT_UPSTREAM = 'git@github.com:BristolCompositesInstitute/abaci.git'
@@ -107,7 +107,16 @@ def update_abaci(install_location,upstream,git_ref):
         if os.name == 'nt':
 
             ABAQUS_INSTALL = 'c:\SIMULIA\Commands'
-            copyfile(join(git_dir,'scripts','abaci.cmd'),join(ABAQUS_INSTALL,'abaci.cmd'))
+            ABACI_LAUNCHER = join(ABAQUS_INSTALL,'abaci.cmd')
+
+            if not exists(ABACI_LAUNCHER):
+
+                ABACI_SCRIPTS_DIR = join(os.environ['LOCALAPPDATA'],'BCI','abaci','scripts')
+                ABACI_LAUNCHER = join(ABACI_SCRIPTS_DIR,'abaci.cmd')
+
+                mkdir(ABACI_SCRIPTS_DIR)
+                
+            copyfile(join(git_dir,'scripts','abaci.cmd'),ABACI_LAUNCHER)
 
         else:
 
