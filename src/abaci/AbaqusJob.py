@@ -23,7 +23,7 @@ class AbaqusJob:
             if job['name']:
                 self.name = job['name']
             else:
-                self.name = splitext(basename(job_file))[0]
+                self.name = splitext(basename(self.job_file))[0]
             
             self.checks = job['check']
             self.postprocess = job['post-process']

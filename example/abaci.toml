@@ -1,0 +1,61 @@
+# Abaci config file
+#  This file describes our project for Abaci including
+#  information about user subroutine source files and
+#  jobs to run
+
+# Name of this project
+name = "Abaci_Example"
+
+# Name of output directory
+output = "scratch"
+
+# Path to user subroutine file
+#  (relative to this config file)
+user-sub-file = "src/umat.f"
+
+
+# ------------ Compile settings ------------
+[compile]
+include = "src/*.f90"    # extra source files to include
+
+
+# ------------ Specify a job ------------
+[[job]]
+
+# Name job
+name = "test-job"
+
+# Path to job input file
+job-file = "jobs/test-job.inp"
+
+# Tags to group similar jobs
+tags = ['default','test']
+
+# --- Settings for job automatic regression checks ---
+
+# Where to save/load results to compare against
+check.reference = 'jobs/test-job-results.pkl'
+
+# Which job step(s) to compare
+check.steps = ['Step-1']
+
+# Which field values to compare
+check.fields = ['AC YIELD', 'E', 'PE', 'PEEQ', 'PEMAG', 'RF', 'S', 'U']
+
+# Run a post-processing script with Abaqus python after job is finished
+#  {PY} is `abaqus python`
+#  {ROOT} is the path to repository containing this config file
+#  {ODB} is the path to the job output database file
+#  {DIR} is the path to the job output directory (for saving outputs)
+post-process = '{PY} {ROOT}/scripts/post-process.py {ODB} {DIR}'
+
+
+
+# ------------ Specify another job ------------
+# [[job]]
+# job-file = 'jobs/job2.inp'
+# name = 'job2'
+# tags = ['test']
+# include = ['job1_extra_inputs.inp']
+# mp-mode = 'threads'
+# post-process = '{PY} {ROOT}/scripts/post-process.py {ODB} {DIR}'
