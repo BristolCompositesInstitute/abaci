@@ -1,0 +1,101 @@
+name: MakeInstallers
+
+on:
+  workflow_dispatch:
+  push:
+  release:
+    types: [published]
+
+env:
+  ENVAR_DOWNLOAD: "https://github.com/GsNSIS/EnVar/releases/download/v0.3.1/EnVar-Plugin.zip"
+  MAKESELF_DOWNLOAD: "https://github.com/megastep/makeself/releases/download/release-2.4.5/makeself-2.4.5.run"
+
+jobs:
+  make_installer_win:
+    runs-on: windows-2022
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Fetch EnVar Plugin for NSIS
+      working-directory: installer
+      run: |
+        Invoke-WebRequest -Uri $Env:ENVAR_DOWNLOAD -Outfile EnVar-Plugin.zip
+        mkdir nsis-plugins\EnVar_plugin -ea 0
+        Expand-Archive EnVar-Plugin.zip -DestinationPath nsis-plugins\EnVar_plugin
+
+    - name: Generate installer
+      working-directory: installer
+      run: makensis abaci-installer.nsi
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: abaci-installer
+        path: installer/abaci-installer.exe
+
+    - name: Upload to release
+      if: ${{ github.event_name == 'release' }}
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: installer/abaci-installer.exe
+        tag: ${{ github.ref }}
+        overwrite: true
+
+    - name: Run Quickstart-Fortran installer
+      shell: cmd
+      run: installer\abaci-installer.exe /S
+
+    - name: Update path manually
+      run: |
+        echo "$env:LOCALAPPDATA\BCI\abaci\scripts" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+
+    - name: Check installation
+      shell: cmd
+      run: |
+        where abaci
+
+
+  make_installer_nix:
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    
+    - name: Fetch and install makeself
+      run: |
+        wget $MAKESELF_DOWNLOAD -O makeself.run
+        chmod u+x makeself.run
+        ./makeself.run
+        ls -al
+        chmod u+x makeself-2.4.5/makeself.sh
+
+    - name: Run makeself for Abaci
+      run: makeself-2.4.5/makeself.sh `pwd` abaci-installer.sh abaci ./scripts/install
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: abaci-installer-nix
+        path: abaci-installer.sh
+
+    - name: Upload to release
+      if: ${{ github.event_name == 'release' }}
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: abaci-installer.sh
+        tag: ${{ github.ref }}
+        overwrite: true
+
+    - name: Run installer
+      run: |
+        chmod u+x abaci-installer.sh
+        ./abaci-installer.sh
+
+    - name: Check installation
+      run: |
+        test -d $HOME/.local/lib/abaci
+        test -f $HOME/.local/bin/abaci
+        which abaci

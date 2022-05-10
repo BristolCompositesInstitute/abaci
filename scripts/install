@@ -14,9 +14,11 @@ if [[ -d "$lib_dest" ]]; then
 fi
 
 echo "Installing abaci to $lib_dest"
-cp -rf $root/src $lib_dest
+mkdir -p $lib_dest
+cp -rf $root/src/* $lib_dest/
 
 echo "Installing abaci launcher to $launch_dest"
+mkdir -p $prefix/bin/
 cp $root/scripts/abaci $launch_dest
 
 
