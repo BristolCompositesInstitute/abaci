@@ -13,7 +13,9 @@ def parse_cli():
     parser = argparse.ArgumentParser(prog='abaci',
                 description='Utility for compiling and running abaqus jobs with user subroutines', 
                 epilog="""Run a subcommand with --help to view specific help for that command,
-                           for example: abaci compile --help""")
+                           for example: abaci compile --help""",
+                           usage='abaci' # need to override manually due to argparse bug
+                           )
 
     # Top-level options
 
@@ -63,6 +65,15 @@ def parse_cli():
     build_group.add_argument('-0','--noopt',help='compile without any optimisations',
                         dest='noopt',action='store_true')
 
+    # SUBMIT subcommand
+    submit_command = subparsers.add_parser('submit', parents=[common_group,build_group],
+                                         help='Compile user subroutines and submit jobs to cluster (SLURM)',
+                                         description="Compile user subroutines and submit jobs to cluster (SLURM)")
+
+    submit_command.add_argument(metavar='job-spec',dest='job_spec',type=str,nargs='?',default='default',
+                          help='Either: a comma-separated list of job tags or jobs names to filter jobs'
+                                ' specified in the manifest; OR a path to an abaqus job file to run.')
+    
     # RUN subcommand
     run_command = subparsers.add_parser('run', parents=[common_group,build_group],
                                          help='Compile user subroutines and run an abaqus job',
@@ -100,6 +111,11 @@ def parse_cli():
 
     args.verbose = min(args.verbose,2)
     
+    if args.action == 'submit' and os.name == 'nt':
+
+        print(' (!) Job submission is not available on Windows.')
+        exit(1)
+
     if args.action == 'run':
 
         if args.background:
@@ -112,15 +128,20 @@ def parse_cli():
             # No screen output if going into the background
             args.verbose = -1
 
+        # Use number of CPUs if value not given for jobs
+        if not args.njob:
+            args.njob = multiprocessing.cpu_count()
+
+
+    if args.action == 'run' or args.action == 'submit':
+
         # Normalise the job-spec into a list
         if ',' in args.job_spec:
             args.job_spec = args.job_spec.split(',')
         else:
             args.job_spec = [args.job_spec]
 
-        # Use number of CPUs if value not given for jobs
-        if not args.njob:
-            args.njob = multiprocessing.cpu_count()
+        
 
     return args
 
