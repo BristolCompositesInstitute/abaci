@@ -1,6 +1,5 @@
 import logging
 import os
-import sys
 import signal
 from contextlib import contextmanager
 import subprocess
@@ -207,3 +206,24 @@ def daemonize():
          os._exit(0)    # Exit the first child
    else:
       os._exit(0)   # Exit parent of the first child.
+
+
+def get_current_env_modules():
+    """Get a list of environment modules in current env"""
+
+    cmd = ['bash','-c','module -t list']
+    
+    try:
+
+        p =  subprocess.Popen(cmd,stderr=subprocess.PIPE)
+
+        stdout, stderr = p.communicate()
+
+        modules = stderr.strip().split('\n')
+
+    except:
+
+        modules = None
+
+    return modules
+    

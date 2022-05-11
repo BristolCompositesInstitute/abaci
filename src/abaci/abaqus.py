@@ -32,6 +32,18 @@ def have_abaqus():
 def run(dir,job_name,mp_mode,nproc):
     """Helper to launch an Abaqus job"""
 
+    cmd = get_run_cmd(job_name,mp_mode,nproc)
+
+    with cwd(dir):
+
+        p, ofile, efile = system_cmd(cmd,output=join(dir,'abaqus'))
+
+    return p, ofile, efile
+
+
+def get_run_cmd(job_name,mp_mode,nproc):
+    """Helper to construct an Abaqus job command"""
+
     args = []
     args.append('job={name}'.format(name=job_name))
 
@@ -43,13 +55,7 @@ def run(dir,job_name,mp_mode,nproc):
     args.append('double')
     args.append('interactive')
 
-    cmd = abaqus_cmd(args)
-
-    with cwd(dir):
-
-        p, ofile, efile = system_cmd(cmd,output=join(dir,'abaqus'))
-
-    return p, ofile, efile
+    return abaqus_cmd(args)
 
 
 def terminate(dir, job_name):

@@ -6,7 +6,7 @@ import abaci.abaqus as abq
 from datetime import datetime
 from exceptions import ValueError
 import cPickle as pkl
-
+import abaci.slurm as slurm
 
 class AbaqusJob:
 
@@ -30,6 +30,7 @@ class AbaqusJob:
             self.checks = job['check']
             self.postprocess = job['post-process']
             self.mp_mode = job['mp-mode']
+            self.cluster = job['cluster']
 
         else:
 
@@ -39,6 +40,7 @@ class AbaqusJob:
             self.checks = None
             self.postprocess = None
             self.mp_mode = 'threads'
+            self.cluster = None
 
         self.job_dir = self.get_new_job_dir(output_dir)
 
@@ -139,6 +141,37 @@ class AbaqusJob:
         if os.name != 'nt':
                 
             system_cmd_wait(p,verbose)
+
+
+    def submit_job(self,lib_dir,env_modules,sched_args):
+        """Submit job to cluster"""
+
+        log = logging.getLogger('abaci')
+
+        self.prepare_job(lib_dir)
+        
+        log.info('Submitting abaqus job "%s" via slurm',self.name)
+        log.info('Job directory is "%s"',relpathshort(self.job_dir))
+
+        nproc = self.cluster['tasks-per-node'] * self.cluster['cpus-per-task']
+
+        cmd = [' '.join(abq.get_run_cmd(self.local_job_name,self.mp_mode,nproc))]
+        
+        job_script = join(self.job_dir,'sljob')
+
+        slurm.spool_job_script(job_script,env_modules,cmd,job_name=self.local_job_name,
+                               time=self.cluster['time'],
+                               nodes=self.cluster['nodes'],
+                               partition=self.cluster['partition'],
+                               tasks_per_node=self.cluster['tasks-per-node'],
+                               cpus_per_task=self.cluster['cpus-per-task'],
+                               mem_per_cpu=self.cluster['mem-per-cpu'],
+                               email=self.cluster['email']
+                               )
+
+        job_id = slurm.submit_job(self.job_dir,job_script,sched_args)
+
+        log.info('Job id is "%s"',job_id)
 
 
     def prepare_job(self,lib_dir):

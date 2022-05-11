@@ -3,6 +3,8 @@ import os
 import signal
 import time
 from abaci.AbaqusJob import AbaqusJob
+from abaci.utils import get_current_env_modules
+
 import cPickle as pkl
 
 def get_jobs(args,config):
@@ -49,6 +51,16 @@ def get_jobs(args,config):
         log.debug('Jobs to run = %s',jobs)
 
     return jobs
+
+
+def submit_jobs(args,compile_dir,jobs):
+    """Submit jobs to cluster job scheduler"""
+
+    modules = get_current_env_modules()
+
+    for job in jobs:
+
+        job.submit_job(compile_dir,modules,'')
 
 
 def run_jobs(args,compile_dir,jobs):
