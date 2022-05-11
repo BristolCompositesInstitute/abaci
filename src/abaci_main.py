@@ -1,7 +1,7 @@
 from abaci.cli import parse_cli, init_logger, init_logger_file
 from abaci.config import load_config
 from abaci.compile import compile_user_subroutine, collect_cov_report
-from abaci.jobs import get_jobs, run_jobs
+from abaci.jobs import get_jobs, run_jobs, post_process
 from abaci.utils import mkdir, daemonize
 from abaci.dependencies import fetch_dependencies
 from abaci.show_info import show_info
@@ -14,6 +14,12 @@ def main():
 
     init_logger(args.verbose)
 
+    if args.action == 'post':
+
+        post_process(args.job_dir,args.verbose)
+
+        exit()
+
     config, config_dir = load_config(args.config,False)
          
     dep_list = fetch_dependencies(config, config_dir, args.verbose)
@@ -23,7 +29,7 @@ def main():
         show_info(args, config, dep_list)
 
         exit()
-
+    
     check_for_abaqus()
 
     mkdir(config['output'])
@@ -49,7 +55,7 @@ def main():
 
             job.run_checks()
 
-            job.post_process(config_dir,args.verbose)
+            job.post_process(args.verbose)
 
     if args.codecov:
         

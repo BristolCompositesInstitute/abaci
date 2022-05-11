@@ -1,10 +1,12 @@
 import logging
 import os
 from os.path import basename, join, splitext, isdir, exists
-from utils import cwd, copyfile, system_cmd, system_cmd_wait, copydir, mkdir
+from utils import cwd, copyfile, system_cmd, system_cmd_wait, copydir, mkdir, relpathshort
 import abaci.abaqus as abq
 from datetime import datetime
 from exceptions import ValueError
+import cPickle as pkl
+
 
 class AbaqusJob:
 
@@ -41,6 +43,7 @@ class AbaqusJob:
         self.job_dir = self.get_new_job_dir(output_dir)
 
         self.local_job_file = join(self.job_dir,basename(self.job_file))
+        self.cache_file = join(self.job_dir,'abaci-cache.pkl')
         self.local_job_name = splitext(basename(self.local_job_file))[0]
         self.start_time = None
         self.end_time = None
@@ -67,6 +70,7 @@ class AbaqusJob:
         self.prepare_job(lib_dir)
         
         log.info('Launching abaqus for job "%s"',self.name)
+        log.info('Job directory is "%s"',relpathshort(self.job_dir))
 
         self.start_time = datetime.now()
 
@@ -154,6 +158,10 @@ class AbaqusJob:
 
         self.spool_env_file(local_lib_dir)
 
+        # Cache full job info to file for post-processing subcommand
+        with open(self.cache_file,'w') as f:
+            pkl.dump(self,f)
+
 
     def spool_env_file(self,lib_dir):
         """Generate the abaqus_v6.env file"""
@@ -203,7 +211,7 @@ class AbaqusJob:
         compare_odb(odb_ref_file,odb_out_file,self.name,self.checks)
 
 
-    def post_process(self,config_dir,verbosity):
+    def post_process(self,verbosity):
         """Run any post-processing scripts for this job"""
 
         if not self.postprocess:
@@ -216,7 +224,6 @@ class AbaqusJob:
         post_cmd = self.postprocess.format(
             PY=abq_py,
             JOB=self.local_job_name,
-            ROOT=config_dir,
             ODB=join(self.job_dir,self.local_job_name+'.odb'),
             DIR=self.job_dir
         )

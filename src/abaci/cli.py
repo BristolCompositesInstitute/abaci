@@ -18,7 +18,7 @@ def parse_cli():
     # Top-level options
 
     parser.add_argument('-V','--version',help='show abaci version',
-                        action='version', version="%(prog)s v0.2.1")
+                        action='version', version="%(prog)s v0.2.2")
 
     parser.add_argument('--update',help='update abaci from upstream', nargs='?',
                         metavar='[REPO:]GITREF', default=None, action=UpdateAction)
@@ -39,6 +39,14 @@ def parse_cli():
 
     common_group.add_argument('--config',type=str,help='specify a different config file to default ("abaci.toml")',
                         dest='config',default='abaci.toml')
+
+    # POST subcommand
+    run_command = subparsers.add_parser('post', parents=[common_group],
+                                         help='Run regression checks and post-processing scripts for a completed job',
+                                         description="Run regression checks and post-processing scripts for a completed job")
+
+    run_command.add_argument(metavar='job-dir',dest='job_dir',type=str,
+                             help='Path to job output directory')
 
     # Build command group
     build_group = argparse.ArgumentParser(add_help=False)

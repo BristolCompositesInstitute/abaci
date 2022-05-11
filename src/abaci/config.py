@@ -153,6 +153,11 @@ def sanitize_config(config, config_dir):
             j['check']['reference'] = os.path.realpath(os.path.join(
                                 config_dir,j['check']['reference']))
 
+        if j['post-process']:
+
+            j['post-process'] = j['post-process'].replace(
+                            r'{ROOT}',config_dir)
+
     return config
 
 

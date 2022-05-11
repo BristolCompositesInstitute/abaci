@@ -3,6 +3,7 @@ import os
 import signal
 import time
 from abaci.AbaqusJob import AbaqusJob
+import cPickle as pkl
 
 def get_jobs(args,config):
     """Get list of jobs to run"""
@@ -100,3 +101,23 @@ def run_jobs(args,compile_dir,jobs):
         stats.append( job.wait(args.verbose) )
 
     return stats
+
+
+def post_process(job_dir,verbose):
+    """Post process subcommand for post-processing existing jobs"""
+
+    cache_file = os.path.join(job_dir,'abaci-cache.pkl')
+
+    if not os.path.exists(cache_file):
+
+        raise Exception('Unable to find abaci-cache.pkl file in directory "{dir}"'.format(
+            dir=job_dir))
+
+    else:
+
+        with open(cache_file,'r') as f:
+            job = pkl.load(f)
+
+        job.run_checks()
+
+        job.post_process(verbose)

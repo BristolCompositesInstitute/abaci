@@ -9,7 +9,7 @@ __Author:__ Laurence Kedward
 
 __Maintainer:__ laurence.kedward@bristol.ac.uk
 
-__Status:__ v0.2.1 beta
+__Status:__ v0.2.2 beta
 
 ### Key Features:
 
@@ -66,12 +66,15 @@ Given a configuration file `abaci.toml` in the current directory, abaci is invok
 <summary>Click for full help text</summary>
   
 ```
-usage: abaci [-h] [-V] [--update [[REPO:]GITREF]] {run,compile,show} ...
+usage: abaci [-h] [-V] [--update [[REPO:]GITREF]] {post,run,compile,show} ...
 
 Utility for compiling and running abaqus jobs with user subroutines
 
 positional arguments:
-  {run,compile,show}    Subcommand to run
+  {post,run,compile,show}
+                        Subcommand to run
+    post                Run regression checks and post-processing scripts for
+                        a completed job
     run                 Compile user subroutines and run an abaqus job
     compile             Compile user subroutines only
     show                Show useful information about this project
@@ -88,7 +91,7 @@ example: abaci compile --help
   
  </details>
 
- ### 2.1 `abaci run`
+### 2.1 `abaci run`
 
  _Compile user subroutine and run one or more abaqus jobs_
 
@@ -133,7 +136,7 @@ optional arguments:
 ```
 </details>
 
- ### 2.2 `abaci compile`
+### 2.2 `abaci compile`
 
  _Compile user subroutine only_
 
@@ -164,7 +167,7 @@ optional arguments:
 ```
 </details>
 
- ### 2.3 `abaci show`
+### 2.3 `abaci show`
 
 _Show useful information about the current project_
 
@@ -202,3 +205,35 @@ optional arguments:
 </details>
 
 
+### 2.4 `abaci post`
+
+_Run or rerun regression checks and post-processing commands for a completed job_
+
+See the [check](config-reference.md#check-options-optional) and [post processing](config-reference.md#post-process-string-optional) configuration options for how to setup post-processing.
+
+__Example:__
+Run post-processing for a job in directory `scratch/job_0`
+
+```
+> abaci post scratch/job_0
+```
+
+
+<details>
+<summary>Click for abaci post help text</summary>
+  
+```
+usage: abaci post [-h] [-v | -q] [--config CONFIG] job-dir
+
+Run regression checks and post-processing scripts for a completed job
+
+positional arguments:
+  job-dir          Path to job output directory
+
+optional arguments:
+  -h, --help       show this help message and exit
+  -v, --verbose    output more information from abaci
+  -q, --quiet      output less information from abaci
+  --config CONFIG  specify a different config file to default ("abaci.toml")
+```
+</details>
