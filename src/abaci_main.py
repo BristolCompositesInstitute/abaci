@@ -65,7 +65,7 @@ def main():
 
     elif args.action == 'submit':
 
-        submit_jobs(args,compile_dir,jobs)
+        submit_jobs(compile_dir,jobs,args.interactive)
 
 
 if __name__ == "__main__":

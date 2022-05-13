@@ -1,7 +1,7 @@
 import logging
 import os
 from os.path import basename, join, splitext, isdir, exists
-from utils import cwd, copyfile, system_cmd, system_cmd_wait, copydir, mkdir, relpathshort
+from utils import cwd, copyfile, system_cmd, system_cmd_wait, copydir, mkdir, relpathshort, prompt_input_default
 import abaci.abaqus as abq
 from datetime import datetime
 from exceptions import ValueError
@@ -141,6 +141,16 @@ class AbaqusJob:
         if os.name != 'nt':
                 
             system_cmd_wait(p,verbose)
+
+
+    def cluster_config_interactive_override(self):
+        """Interactively let user override default cluster settings"""
+
+        for field in self.cluster:
+
+            self.cluster[field] = prompt_input_default('  {f}: '.format(f=field),
+                                                        self.cluster[field])
+
 
 
     def submit_job(self,lib_dir,env_modules,sched_args):

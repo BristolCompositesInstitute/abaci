@@ -53,12 +53,19 @@ def get_jobs(args,config):
     return jobs
 
 
-def submit_jobs(args,compile_dir,jobs):
+def submit_jobs(compile_dir,jobs,interactive):
     """Submit jobs to cluster job scheduler"""
 
     modules = get_current_env_modules()
 
+    log = logging.getLogger('abaci')
+
     for job in jobs:
+
+        if interactive:
+
+            log.info('Prompt user for job settings for "{j}"'.format(j=job.name))
+            job.cluster_config_interactive_override()
 
         job.submit_job(compile_dir,modules,'')
 

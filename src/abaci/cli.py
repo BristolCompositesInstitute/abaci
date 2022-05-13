@@ -73,6 +73,9 @@ def parse_cli():
     submit_command.add_argument(metavar='job-spec',dest='job_spec',type=str,nargs='?',default='default',
                           help='Either: a comma-separated list of job tags or jobs names to filter jobs'
                                 ' specified in the manifest; OR a path to an abaqus job file to run.')
+
+    submit_command.add_argument('-i','--interactive',help='interactively override job setting defaults before submitting',
+                        dest='interactive',action='store_true')
     
     # RUN subcommand
     run_command = subparsers.add_parser('run', parents=[common_group,build_group],
