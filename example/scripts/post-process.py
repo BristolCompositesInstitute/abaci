@@ -18,7 +18,7 @@ def main():
     print '  ODB file "{f}"'.format(f=odb_file)
     print '  Output directory: "{d}"'.format(d=output_dir)
 
-    odb = openOdb(odb_file)
+    odb = openOdb(odb_file,readOnly=True)
 
     # Iterate over job steps
     for step in odb.steps.keys():
