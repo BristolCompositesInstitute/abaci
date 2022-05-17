@@ -41,6 +41,21 @@ def run(dir,job_name,mp_mode,nproc):
     return p, ofile, efile
 
 
+def get_mpi_job_allocation_cmd():
+    """Return the bash commands for extracting node allocation for Abaqus mpi"""
+
+    cmd = ['env_file=abaqus_v6.env']
+    cmd.append(r'node_list=$(scontrol show hostname ${SLURM_NODELIST} | sort -u)')
+    cmd.append(r'mp_host_list="["')
+    cmd.append(r'for host in ${node_list}; do')
+    cmd.append('    mp_host_list="${mp_host_list}[\'$host\', ${SLURM_CPUS_ON_NODE}],"')
+    cmd.append(r'done')
+    cmd.append(r'mp_host_list=$(echo ${mp_host_list} | sed -e "s/,$/]/")')
+    cmd.append(r'echo ""  >> ${env_file}')
+    cmd.append(r'echo "mp_host_list=${mp_host_list}"  >> ${env_file}')
+
+    return cmd
+
 def get_run_cmd(job_name,mp_mode,nproc):
     """Helper to construct an Abaqus job command"""
 

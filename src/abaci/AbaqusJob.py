@@ -49,6 +49,7 @@ class AbaqusJob:
         self.local_job_name = splitext(basename(self.local_job_file))[0]
         self.start_time = None
         self.end_time = None
+        self.job_script = None
         
 
     def get_new_job_dir(self,output_dir):
@@ -72,7 +73,6 @@ class AbaqusJob:
         self.prepare_job(lib_dir)
         
         log.info('Launching abaqus for job "%s"',self.name)
-        log.info('Job directory is "%s"',relpathshort(self.job_dir))
 
         self.start_time = datetime.now()
 
@@ -146,30 +146,63 @@ class AbaqusJob:
     def cluster_config_interactive_override(self):
         """Interactively let user override default cluster settings"""
 
+        self.mp_mode = prompt_input_default('  mp_mode: ', self.mp_mode)
+
         for field in self.cluster:
+
+            if self.mp_mode == 'threads':
+
+                if field == 'tasks-per-node' or field == 'nodes':
+
+                    self.cluster[field] = 1
+                    continue
+
+            elif self.mp_mode == 'mpi':
+
+                if field == 'cpus-per-task':
+
+                    self.cluster[field] = 1
+                    continue
+
+            else:
+
+                raise Exception('AbaqusJob: invalid mp_mode specified interactively.')
 
             self.cluster[field] = prompt_input_default('  {f}: '.format(f=field),
                                                         self.cluster[field])
 
 
-
-    def submit_job(self,lib_dir,env_modules,sched_args):
+    def submit_job(self):
         """Submit job to cluster"""
 
         log = logging.getLogger('abaci')
-
-        self.prepare_job(lib_dir)
         
         log.info('Submitting abaqus job "%s" via slurm',self.name)
-        log.info('Job directory is "%s"',relpathshort(self.job_dir))
-
-        nproc = self.cluster['tasks-per-node'] * self.cluster['cpus-per-task']
-
-        cmd = [' '.join(abq.get_run_cmd(self.local_job_name,self.mp_mode,nproc))]
         
-        job_script = join(self.job_dir,'sljob')
+        job_id = slurm.submit_job(self.job_dir,self.job_script,'')
 
-        slurm.spool_job_script(job_script,env_modules,cmd,job_name=self.local_job_name,
+        log.info('Job id is "%s"',job_id)
+
+
+    def spool_job_script(self,env_modules):
+        """Generate a cluster job script in job dir"""
+
+        self.job_script = join(self.job_dir,'sljob')
+
+        nproc = self.cluster['tasks-per-node'] * self.cluster['cpus-per-task'] * self.cluster['nodes']
+
+        if self.mp_mode == 'mpi':
+
+            cmd = abq.get_mpi_job_allocation_cmd()
+
+        else:
+
+            cmd = []
+
+
+        cmd.append(' '.join(abq.get_run_cmd(self.local_job_name,self.mp_mode,nproc)))
+
+        slurm.spool_job_script(self.job_script,env_modules,cmd,job_name=self.local_job_name,
                                time=self.cluster['time'],
                                nodes=self.cluster['nodes'],
                                partition=self.cluster['partition'],
@@ -179,13 +212,13 @@ class AbaqusJob:
                                email=self.cluster['email']
                                )
 
-        job_id = slurm.submit_job(self.job_dir,job_script,sched_args)
-
-        log.info('Job id is "%s"',job_id)
-
 
     def prepare_job(self,lib_dir):
         """Create job directory and copy job files into it"""
+
+        log = logging.getLogger('abaci')
+
+        log.info('Preparing job "%s" in directory "%s"',self.name,relpathshort(self.job_dir))
 
         mkdir(self.job_dir)
 

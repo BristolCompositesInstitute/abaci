@@ -76,6 +76,9 @@ def parse_cli():
 
     submit_command.add_argument('-i','--interactive',help='interactively override job setting defaults before submitting',
                         dest='interactive',action='store_true')
+
+    submit_command.add_argument('-n','--no-submit',help='prepare job files, but don\'t submit the batch job',
+                        dest='no_submit',action='store_true')
     
     # RUN subcommand
     run_command = subparsers.add_parser('run', parents=[common_group,build_group],

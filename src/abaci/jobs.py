@@ -53,7 +53,7 @@ def get_jobs(args,config):
     return jobs
 
 
-def submit_jobs(compile_dir,jobs,interactive):
+def submit_jobs(compile_dir,jobs,interactive,no_submit):
     """Submit jobs to cluster job scheduler"""
 
     modules = get_current_env_modules()
@@ -67,7 +67,13 @@ def submit_jobs(compile_dir,jobs,interactive):
             log.info('Prompt user for job settings for "{j}"'.format(j=job.name))
             job.cluster_config_interactive_override()
 
-        job.submit_job(compile_dir,modules,'')
+        job.prepare_job(compile_dir)
+
+        job.spool_job_script(modules)
+
+        if not no_submit:
+
+            job.submit_job()
 
 
 def run_jobs(args,compile_dir,jobs):
