@@ -3,6 +3,7 @@ import os
 from os.path import basename, join, splitext, isdir, exists
 from utils import cwd, copyfile, system_cmd, system_cmd_wait, copydir, mkdir, relpathshort, prompt_input_default
 import abaci.abaqus as abq
+from abaci.config import get_default_cluster_schema
 from datetime import datetime
 from exceptions import ValueError
 import cPickle as pkl
@@ -34,13 +35,15 @@ class AbaqusJob:
 
         else:
 
+            cluster_schema, cluster_defaults = get_default_cluster_schema()
+
             self.name = basename(job_file)
             self.include =[]
             self.job_file = job_file
             self.checks = None
             self.postprocess = None
             self.mp_mode = 'threads'
-            self.cluster = None
+            self.cluster = cluster_defaults
 
         self.job_dir = self.get_new_job_dir(output_dir)
 

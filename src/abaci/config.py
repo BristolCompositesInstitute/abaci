@@ -48,10 +48,10 @@ def read_config_file(config_file):
     return config_str
 
 
-def config_schema():
-    """Defines the schema for the abaci.toml config files"""
-    
-    default_cluster_schema = Schema({Optional('time',default='01:00:00'): unicode,
+def get_default_cluster_schema():
+    """Returns the default (top-level) cluster schema"""
+
+    schema = Schema({Optional('time',default='01:00:00'): unicode,
                            Optional('partition',default=None): unicode,
                            Optional('nodes',default=1): int,
                            Optional('tasks-per-node',default=1): int,
@@ -60,7 +60,15 @@ def config_schema():
                            Optional('email',default=None): unicode
                            })
 
-    cluster_defaults = default_cluster_schema.validate({})
+    schema_defaults = schema.validate({})
+
+    return schema, schema_defaults
+
+
+def config_schema():
+    """Defines the schema for the abaci.toml config files"""
+    
+    default_cluster_schema, cluster_defaults = get_default_cluster_schema()
 
     job_cluster_schema = Schema({Optional('time',default=None): unicode,
                            Optional('partition',default=None): unicode,
