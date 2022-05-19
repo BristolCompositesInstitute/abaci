@@ -162,6 +162,12 @@ class AbaqusJob:
 
                     continue
 
+            elif self.mp_mode == 'disable':
+
+                if field == 'tasks-per-node' or field == 'nodes' or field == 'cpus-per-task':
+
+                    continue
+
             else:
 
                 raise Exception('AbaqusJob: invalid mp_mode specified interactively.')
@@ -194,6 +200,12 @@ class AbaqusJob:
 
         elif self.mp_mode == 'mpi':
 
+            self.cluster['cpus-per-task'] = 1
+
+        elif self.mp_mode == 'disable':
+
+            self.cluster['tasks-per-node'] = 1
+            self.cluster['nodes'] = 1
             self.cluster['cpus-per-task'] = 1
 
         nproc = self.cluster['tasks-per-node'] * self.cluster['cpus-per-task'] * self.cluster['nodes']
