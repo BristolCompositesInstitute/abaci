@@ -20,6 +20,7 @@ __Status:__ v0.2.2 beta
 - Prescribe and run benchmark problems as test cases
   - Perform regression checks on output database results
   - Automatically run post-processing commands and scripts
+- Submit jobs to a cluster via SLURM with an easy interface
 - Specify dependencies to reuse code from other abaci projects
 
 ## 1. Getting Started
@@ -33,27 +34,33 @@ __Note:__ To use abaci, the Intel Fortran compiler needs to be available within 
 On Windows you can use the *'Abaqus Command + iFort'* link from the start menu to ensure this.
 On Linux, you can add the appropriate environment module or source the `setvars` script from your Intel compiler installation. 
 
-### 1.2 Windows
-After downloading or cloning the repository, use the `install-windows.cmd` script in the `scripts` folder
-to install abaci into your existing Abaqus installation.
-The script assumes your Abaqus commands folder is `C:\SIMULIA\Commands` and this is where the abaci launcher is placed.
+### 1.2 Installers
 
-After running the `install-windows.cmd` script, you can check your installation by opening a new command window
-and running the command `abaci --version` or `abaci --help`.
+You can download installers for Windows and Linux from the [Latest Release](https://github.com/BristolCompositesInstitute/abaci/releases/latest) page. These installers will install abaci for the local user and hence do not require
+administrator/root permissions.
 
-An `uninstall-windows.cmd` script is also provided in the `scripts` folder to remove an existing abaci installation.
-
-### 1.3 Linux
-
-After downloading or cloning the repository, use the `install` script in the `scripts` folder which will install abaci to `$HOME/.local/`.
-After running the `install` script, make sure the `$HOME/.local/bin/` folder is on your path if not already;
-you can do this by adding the following line to the end of your `$HOME/.bash_profile` file:
+The Linux installer will install abaci to `$HOME/.local/bin`, so you should ensure that this folder
+is on your path if not already; you can do this by adding the following line to the end of
+your `$HOME/.bash_profile` file:
 
 ```bash
 export PATH=$PATH:$HOME/.local/bin
 ```
 
-You can check your installation by opening a new command windows, or logging in again, and running the command `abaci --version` or `abaci --help`.
+You can check your installation by opening a new command window, or logging in again, and running the command `abaci --version` or `abaci --help`.
+
+### 1.3 Install from Source
+
+If you are developing abaci and you would like to test local changes, then you can
+install abaci from the cloned repository by running the install scripts located in
+the `scripts` folder.
+
+__On Windows__, this script is called `install-windows.cmd` and this assumes your Abaqus commands folder is `C:\SIMULIA\Commands` as this is where the abaci launcher is placed.
+An `uninstall-windows.cmd` script is also provided in the `scripts` folder to remove an existing abaci installation.
+
+__On Linux__, the install script is called `install` and this will install abaci to `$HOME/.local/` so you should
+check that `$HOME/.local/bin/` folder is on your path and follow the instructions above if not.
+
 
 ## 2. Usage
 
