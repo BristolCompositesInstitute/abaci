@@ -66,15 +66,17 @@ Given a configuration file `abaci.toml` in the current directory, abaci is invok
 <summary>Click for full help text</summary>
   
 ```
-usage: abaci [-h] [-V] [--update [[REPO:]GITREF]] {post,run,compile,show} ...
+usage: abaci [-h] [-V] [--update [[REPO:]GITREF]] {post,submit,run,compile,show} ...
 
 Utility for compiling and running abaqus jobs with user subroutines
 
 positional arguments:
-  {post,run,compile,show}
+  {post,submit,run,compile,show}
                         Subcommand to run
     post                Run regression checks and post-processing scripts for
                         a completed job
+    submit              Compile user subroutines and submit jobs to cluster
+                        (SLURM)
     run                 Compile user subroutines and run an abaqus job
     compile             Compile user subroutines only
     show                Show useful information about this project
@@ -235,5 +237,56 @@ optional arguments:
   -v, --verbose    output more information from abaci
   -q, --quiet      output less information from abaci
   --config CONFIG  specify a different config file to default ("abaci.toml")
+```
+</details>
+
+
+### 2.5 `abaci submit`
+
+_Prepare and submit a job for running on a cluster via SLURM_
+
+See the [cluster](config-reference.md#cluster-section-optional) configuration options for how to specify job script settings via the configuration file.
+
+__Example:__
+Submit all jobs with the 'test' flag using options in the configuration file
+
+```
+> abaci submit test
+```
+
+__Example:__
+Submit the 'static' job and override cluster options interactively at the command line
+
+```
+> abaci submit --interactive static
+```
+
+<details>
+<summary>Click for abaci submit help text</summary>
+  
+```
+usage: abaci submit [-h] [-v | -q] [--config CONFIG] [-t] [-d] [-c] [-0] [-i]
+                    [-n]
+                    [job-spec]
+
+Compile user subroutines and submit jobs to cluster (SLURM)
+
+positional arguments:
+  job-spec           Either: a comma-separated list of job tags or jobs names
+                     to filter jobs specified in the manifest; OR a path to an
+                     abaqus job file to run.
+
+optional arguments:
+  -h, --help         show this help message and exit
+  -v, --verbose      output more information from abaci
+  -q, --quiet        output less information from abaci
+  --config CONFIG    specify a different config file to default ("abaci.toml")
+  -t, --codecov      compile subroutines for code coverage analysis
+  -d, --debug        enable run-time debugging checks
+  -c, --check        enable strict compile-time checks
+  -0, --noopt        compile without any optimisations
+  -i, --interactive  interactively override job setting defaults before
+                     submitting
+  -n, --no-submit    prepare job files, but don't submit the batch job
 ```
 </details>
