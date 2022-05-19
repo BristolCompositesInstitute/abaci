@@ -154,14 +154,12 @@ class AbaqusJob:
 
                 if field == 'tasks-per-node' or field == 'nodes':
 
-                    self.cluster[field] = 1
                     continue
 
             elif self.mp_mode == 'mpi':
 
                 if field == 'cpus-per-task':
 
-                    self.cluster[field] = 1
                     continue
 
             else:
@@ -188,6 +186,15 @@ class AbaqusJob:
         """Generate a cluster job script in job dir"""
 
         self.job_script = join(self.job_dir,'sljob')
+
+        if self.mp_mode == 'threads':
+
+            self.cluster['tasks-per-node'] = 1
+            self.cluster['nodes'] = 1
+
+        elif self.mp_mode == 'mpi':
+
+            self.cluster['cpus-per-task'] = 1
 
         nproc = self.cluster['tasks-per-node'] * self.cluster['cpus-per-task'] * self.cluster['nodes']
 
