@@ -10,7 +10,15 @@ from abaci.utils import relpathshort
 def load_config(config_file,echo):
     """Top-level routine to read, parse, validate and sanitize config file"""
 
+    log = logging.getLogger('abaci')
+    
     config_file, config_dir = get_config_path(config_file)
+
+    if not exists(config_file):
+
+        log.fatal('Unable to find config file "%s"',config_file)
+
+        exit(1)
 
     config_str = read_config_file(config_file)
 
