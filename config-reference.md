@@ -227,7 +227,7 @@ time = '0-01:00:00'
 nodes = 1
 tasks-per-node = 14
 cpus-per-task = 1
-mem-per-cpu = 4000m
+mem-per-cpu = '4000m'
 email = 'ab12345@bristol.ac.uk'
 ```
 
@@ -267,7 +267,7 @@ Specifies the number of processors to allocate per task for the job.
 This option is only valid if [`mp-mode`](#mp-mode-string-optional) is `'threads'`,
 otherwise it is ignored and set to `1`.
 
-### `mem-per-task` (*string*, optional)
+### `mem-per-cpu` (*string*, optional)
 
 Specifies the amount of memory to request per CPU/task for theh job.
 
