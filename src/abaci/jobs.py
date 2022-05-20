@@ -3,6 +3,9 @@ import os
 import signal
 import time
 from abaci.AbaqusJob import AbaqusJob
+from abaci.utils import get_current_env_modules
+
+import cPickle as pkl
 
 def get_jobs(args,config):
     """Get list of jobs to run"""
@@ -48,6 +51,29 @@ def get_jobs(args,config):
         log.debug('Jobs to run = %s',jobs)
 
     return jobs
+
+
+def submit_jobs(compile_dir,jobs,interactive,no_submit):
+    """Submit jobs to cluster job scheduler"""
+
+    modules = get_current_env_modules()
+
+    log = logging.getLogger('abaci')
+
+    for job in jobs:
+
+        if interactive:
+
+            log.info('Prompt user for job settings for "{j}"'.format(j=job.name))
+            job.cluster_config_interactive_override()
+
+        job.prepare_job(compile_dir)
+
+        job.spool_job_script(modules)
+
+        if not no_submit:
+
+            job.submit_job()
 
 
 def run_jobs(args,compile_dir,jobs):
@@ -100,3 +126,23 @@ def run_jobs(args,compile_dir,jobs):
         stats.append( job.wait(args.verbose) )
 
     return stats
+
+
+def post_process(job_dir,verbose):
+    """Post process subcommand for post-processing existing jobs"""
+
+    cache_file = os.path.join(job_dir,'abaci-cache.pkl')
+
+    if not os.path.exists(cache_file):
+
+        raise Exception('Unable to find abaci-cache.pkl file in directory "{dir}"'.format(
+            dir=job_dir))
+
+    else:
+
+        with open(cache_file,'r') as f:
+            job = pkl.load(f)
+
+        job.run_checks()
+
+        job.post_process(verbose)

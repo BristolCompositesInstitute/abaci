@@ -51,6 +51,8 @@ tags = ['test','three_elem']
 include = ['job1_extra_inputs.inp']
 mp-mode = 'threads'
 post-process = '{PY} {ROOT}/scripts/postprocess.py {ODB}'
+cluster.mem-per-cpu = '8000M'
+cluster.time = '1-00:00:00'
 ```
 
 ### `job-file` (*string*, mandatory)
@@ -78,6 +80,13 @@ An optional list of additional files to copy to the job folder before launching 
 An optional field taking the value of either `'threads'` (default), `'mpi'` or `'disable'` to indicate the parallel mode to execute in abaqus (corresponds to the `-mp_mode` command line flag).
 
 If `mp-mode` is `'disable'`, then the abaci command line option for multiple processors will be ignored for this job, it will always run in serial.
+
+### `cluster.` options (optional)
+
+Override the default options for submitting this job to a cluster via SLURM.
+
+See [cluster options](#cluster-section-optional) below for more information on the cluster option fields.
+
 
 ### `post-process` (*string*, optional)
 
@@ -196,6 +205,79 @@ __Note:__ it is possible to specify a branch name for `version`, however this is
 the dependency is not 'pinned' to a specific snapshot; this can cause sudden breaking changes and
 prevents other users of your code from reproducing your configuration. If you specify a branch, then
 abaci will fetch the latest changes from the branch everytime it is run.
+
+
+## Cluster section (optional)
+
+An optional subsection that details default values for submitting jobs
+to a cluster via SLURM.
+
+Options specified in this section can be overridden on a per-job basis
+by providing them within each job table or by running the `submit` command
+interactively (`--interactive`).
+
+__Note:__ the multiprocessing mode (`mp_mode`) is specified separately on a
+per-job basis using the [`mp-mode` job field](#mp-mode-string-optional).
+
+__Example:__
+
+```toml
+[cluster]
+time = '0-01:00:00'
+nodes = 1
+tasks-per-node = 14
+cpus-per-task = 1
+mem-per-cpu = '4000m'
+email = 'ab12345@bristol.ac.uk'
+```
+
+### `time` (*string*, optional)
+
+Specifies the maximum time limit to request for the job. Format: `days-hours:minutes:seconds`.
+
+If not specified, default is 1 hour if not specified.
+
+### `partition` (*string*, optional)
+
+Specifies the cluster partitiion to which to submit the job.
+
+If not specified, default is to let SLURM choose the most appropriate partitiion.
+
+### `nodes` (*integer*, optional)
+
+Specifies the number of nodes to request for the job.
+This option is only valid if [`mp-mode`](#mp-mode-string-optional) is `'mpi'`,
+otherwise it is ignored and set to `1`.
+
+If not specified, default is `1`.
+
+### `tasks-per-node` (*integer*, optional)
+
+Specifies the number of separate tasks to allocate per node for the job.
+
+This option is only valid if [`mp-mode`](#mp-mode-string-optional) is `'mpi'`,
+otherwise it is ignored and set to `1`.
+
+If not specified, default is `1`.
+
+### `cpus-per-task` (*integer*, optional)
+
+Specifies the number of processors to allocate per task for the job.
+
+This option is only valid if [`mp-mode`](#mp-mode-string-optional) is `'threads'`,
+otherwise it is ignored and set to `1`.
+
+### `mem-per-cpu` (*string*, optional)
+
+Specifies the amount of memory to request per CPU/task for theh job.
+
+If not specified, default is `'4000M'` (4000 MB).
+
+### `email` (*string*, optional)
+
+Specifies an email address to which to send job termination notifications.
+
+If not specified, default is for no email notifications.
 
 
 ## Compile section (optional)

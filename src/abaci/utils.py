@@ -1,6 +1,5 @@
 import logging
 import os
-import sys
 import signal
 from contextlib import contextmanager
 import subprocess
@@ -207,3 +206,60 @@ def daemonize():
          os._exit(0)    # Exit the first child
    else:
       os._exit(0)   # Exit parent of the first child.
+
+
+def get_current_env_modules():
+    """Get a list of environment modules in current env"""
+
+    # (module command is a bash alias)
+    cmd = ['bash','-c','module -t list']
+    
+    try:
+
+        p =  subprocess.Popen(cmd,stderr=subprocess.PIPE)
+
+        stdout, stderr = p.communicate()
+
+        modules = stderr.strip().split('\n')
+
+    except:
+
+        modules = None
+
+    return modules
+    
+
+def prompt_input_default(prompt,default):
+    """Interactively prompt user for input with editable default"""
+
+    # readline module doesn't work with abaqus python
+    #  so use bash instead (never used on Windows)
+
+    if not default:
+
+        default = ''
+
+    cmd = ['bash','-c','read -r -p "{p}" -e -i "{d}" && echo $REPLY'.format(
+            p=prompt,d=default)]
+
+    p =  subprocess.Popen(cmd,stdout=subprocess.PIPE)
+
+    stdout, stderr = p.communicate()
+
+    if p.returncode != 0:
+
+        raise Exception('Interactive input prompt cancelled by user')
+
+    stdout = stdout.strip()
+
+    if len(stdout) < 1:
+        
+        stdout = None
+        
+    elif isinstance(default, int):
+
+        stdout = int(stdout)
+   
+    return stdout
+
+  

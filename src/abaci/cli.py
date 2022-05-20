@@ -13,12 +13,14 @@ def parse_cli():
     parser = argparse.ArgumentParser(prog='abaci',
                 description='Utility for compiling and running abaqus jobs with user subroutines', 
                 epilog="""Run a subcommand with --help to view specific help for that command,
-                           for example: abaci compile --help""")
+                           for example: abaci compile --help""",
+                           usage='abaci' # need to override manually due to argparse bug
+                           )
 
     # Top-level options
 
     parser.add_argument('-V','--version',help='show abaci version',
-                        action='version', version="%(prog)s v0.2.1")
+                        action='version', version="%(prog)s v0.3.0")
 
     parser.add_argument('--update',help='update abaci from upstream', nargs='?',
                         metavar='[REPO:]GITREF', default=None, action=UpdateAction)
@@ -40,6 +42,14 @@ def parse_cli():
     common_group.add_argument('--config',type=str,help='specify a different config file to default ("abaci.toml")',
                         dest='config',default='abaci.toml')
 
+    # POST subcommand
+    run_command = subparsers.add_parser('post', parents=[common_group],
+                                         help='Run regression checks and post-processing scripts for a completed job',
+                                         description="Run regression checks and post-processing scripts for a completed job")
+
+    run_command.add_argument(metavar='job-dir',dest='job_dir',type=str,
+                             help='Path to job output directory')
+
     # Build command group
     build_group = argparse.ArgumentParser(add_help=False)
 
@@ -55,6 +65,21 @@ def parse_cli():
     build_group.add_argument('-0','--noopt',help='compile without any optimisations',
                         dest='noopt',action='store_true')
 
+    # SUBMIT subcommand
+    submit_command = subparsers.add_parser('submit', parents=[common_group,build_group],
+                                         help='Compile user subroutines and submit jobs to cluster (SLURM)',
+                                         description="Compile user subroutines and submit jobs to cluster (SLURM)")
+
+    submit_command.add_argument(metavar='job-spec',dest='job_spec',type=str,nargs='?',default='default',
+                          help='Either: a comma-separated list of job tags or jobs names to filter jobs'
+                                ' specified in the manifest; OR a path to an abaqus job file to run.')
+
+    submit_command.add_argument('-i','--interactive',help='interactively override job setting defaults before submitting',
+                        dest='interactive',action='store_true')
+
+    submit_command.add_argument('-n','--no-submit',help='prepare job files, but don\'t submit the batch job',
+                        dest='no_submit',action='store_true')
+    
     # RUN subcommand
     run_command = subparsers.add_parser('run', parents=[common_group,build_group],
                                          help='Compile user subroutines and run an abaqus job',
@@ -92,6 +117,11 @@ def parse_cli():
 
     args.verbose = min(args.verbose,2)
     
+    if args.action == 'submit' and os.name == 'nt':
+
+        print(' (!) Job submission is not available on Windows.')
+        exit(1)
+
     if args.action == 'run':
 
         if args.background:
@@ -104,15 +134,20 @@ def parse_cli():
             # No screen output if going into the background
             args.verbose = -1
 
+        # Use number of CPUs if value not given for jobs
+        if not args.njob:
+            args.njob = multiprocessing.cpu_count()
+
+
+    if args.action == 'run' or args.action == 'submit':
+
         # Normalise the job-spec into a list
         if ',' in args.job_spec:
             args.job_spec = args.job_spec.split(',')
         else:
             args.job_spec = [args.job_spec]
 
-        # Use number of CPUs if value not given for jobs
-        if not args.njob:
-            args.njob = multiprocessing.cpu_count()
+        
 
     return args
 

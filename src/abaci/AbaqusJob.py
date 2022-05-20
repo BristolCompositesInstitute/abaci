@@ -1,10 +1,13 @@
 import logging
 import os
 from os.path import basename, join, splitext, isdir, exists
-from utils import cwd, copyfile, system_cmd, system_cmd_wait, copydir, mkdir
+from utils import cwd, copyfile, system_cmd, system_cmd_wait, copydir, mkdir, relpathshort, prompt_input_default
 import abaci.abaqus as abq
+from abaci.config import get_default_cluster_schema
 from datetime import datetime
 from exceptions import ValueError
+import cPickle as pkl
+import abaci.slurm as slurm
 
 class AbaqusJob:
 
@@ -28,8 +31,11 @@ class AbaqusJob:
             self.checks = job['check']
             self.postprocess = job['post-process']
             self.mp_mode = job['mp-mode']
+            self.cluster = job['cluster']
 
         else:
+
+            cluster_schema, cluster_defaults = get_default_cluster_schema()
 
             self.name = basename(job_file)
             self.include =[]
@@ -37,13 +43,16 @@ class AbaqusJob:
             self.checks = None
             self.postprocess = None
             self.mp_mode = 'threads'
+            self.cluster = cluster_defaults
 
         self.job_dir = self.get_new_job_dir(output_dir)
 
         self.local_job_file = join(self.job_dir,basename(self.job_file))
+        self.cache_file = join(self.job_dir,'abaci-cache.pkl')
         self.local_job_name = splitext(basename(self.local_job_file))[0]
         self.start_time = None
         self.end_time = None
+        self.job_script = None
         
 
     def get_new_job_dir(self,output_dir):
@@ -137,8 +146,101 @@ class AbaqusJob:
             system_cmd_wait(p,verbose)
 
 
+    def cluster_config_interactive_override(self):
+        """Interactively let user override default cluster settings"""
+
+        self.mp_mode = prompt_input_default('  mp_mode: ', self.mp_mode)
+
+        for field in self.cluster:
+
+            if self.mp_mode == 'threads':
+
+                if field == 'tasks-per-node' or field == 'nodes':
+
+                    continue
+
+            elif self.mp_mode == 'mpi':
+
+                if field == 'cpus-per-task':
+
+                    continue
+
+            elif self.mp_mode == 'disable':
+
+                if field == 'tasks-per-node' or field == 'nodes' or field == 'cpus-per-task':
+
+                    continue
+
+            else:
+
+                raise Exception('AbaqusJob: invalid mp_mode specified interactively.')
+
+            self.cluster[field] = prompt_input_default('  {f}: '.format(f=field),
+                                                        self.cluster[field])
+
+
+    def submit_job(self):
+        """Submit job to cluster"""
+
+        log = logging.getLogger('abaci')
+        
+        log.info('Submitting abaqus job "%s" via slurm',self.name)
+        
+        job_id = slurm.submit_job(self.job_dir,self.job_script,'')
+
+        log.info('Job id is "%s"',job_id)
+
+
+    def spool_job_script(self,env_modules):
+        """Generate a cluster job script in job dir"""
+
+        self.job_script = join(self.job_dir,'sljob')
+
+        if self.mp_mode == 'threads':
+
+            self.cluster['tasks-per-node'] = 1
+            self.cluster['nodes'] = 1
+
+        elif self.mp_mode == 'mpi':
+
+            self.cluster['cpus-per-task'] = 1
+
+        elif self.mp_mode == 'disable':
+
+            self.cluster['tasks-per-node'] = 1
+            self.cluster['nodes'] = 1
+            self.cluster['cpus-per-task'] = 1
+
+        nproc = self.cluster['tasks-per-node'] * self.cluster['cpus-per-task'] * self.cluster['nodes']
+
+        if self.mp_mode == 'mpi':
+
+            cmd = abq.get_mpi_job_allocation_cmd()
+
+        else:
+
+            cmd = []
+
+
+        cmd.append(' '.join(abq.get_run_cmd(self.local_job_name,self.mp_mode,nproc)))
+
+        slurm.spool_job_script(self.job_script,env_modules,cmd,job_name=self.local_job_name,
+                               time=self.cluster['time'],
+                               nodes=self.cluster['nodes'],
+                               partition=self.cluster['partition'],
+                               tasks_per_node=self.cluster['tasks-per-node'],
+                               cpus_per_task=self.cluster['cpus-per-task'],
+                               mem_per_cpu=self.cluster['mem-per-cpu'],
+                               email=self.cluster['email']
+                               )
+
+
     def prepare_job(self,lib_dir):
         """Create job directory and copy job files into it"""
+
+        log = logging.getLogger('abaci')
+
+        log.info('Preparing job "%s" in directory "%s"',self.name,relpathshort(self.job_dir))
 
         mkdir(self.job_dir)
 
@@ -153,6 +255,10 @@ class AbaqusJob:
         copydir(lib_dir,local_lib_dir)
 
         self.spool_env_file(local_lib_dir)
+
+        # Cache full job info to file for post-processing subcommand
+        with open(self.cache_file,'w') as f:
+            pkl.dump(self,f)
 
 
     def spool_env_file(self,lib_dir):
@@ -203,7 +309,7 @@ class AbaqusJob:
         compare_odb(odb_ref_file,odb_out_file,self.name,self.checks)
 
 
-    def post_process(self,config_dir,verbosity):
+    def post_process(self,verbosity):
         """Run any post-processing scripts for this job"""
 
         if not self.postprocess:
@@ -216,7 +322,6 @@ class AbaqusJob:
         post_cmd = self.postprocess.format(
             PY=abq_py,
             JOB=self.local_job_name,
-            ROOT=config_dir,
             ODB=join(self.job_dir,self.local_job_name+'.odb'),
             DIR=self.job_dir
         )

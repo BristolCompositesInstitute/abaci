@@ -9,7 +9,7 @@ __Author:__ Laurence Kedward
 
 __Maintainer:__ laurence.kedward@bristol.ac.uk
 
-__Status:__ v0.2.1 beta
+__Status:__ v0.3.0 beta
 
 ### Key Features:
 
@@ -20,6 +20,7 @@ __Status:__ v0.2.1 beta
 - Prescribe and run benchmark problems as test cases
   - Perform regression checks on output database results
   - Automatically run post-processing commands and scripts
+- Submit jobs to a cluster via SLURM with an easy interface
 - Specify dependencies to reuse code from other abaci projects
 
 ## 1. Getting Started
@@ -33,27 +34,33 @@ __Note:__ To use abaci, the Intel Fortran compiler needs to be available within 
 On Windows you can use the *'Abaqus Command + iFort'* link from the start menu to ensure this.
 On Linux, you can add the appropriate environment module or source the `setvars` script from your Intel compiler installation. 
 
-### 1.2 Windows
-After downloading or cloning the repository, use the `install-windows.cmd` script in the `scripts` folder
-to install abaci into your existing Abaqus installation.
-The script assumes your Abaqus commands folder is `C:\SIMULIA\Commands` and this is where the abaci launcher is placed.
+### 1.2 Installers
 
-After running the `install-windows.cmd` script, you can check your installation by opening a new command window
-and running the command `abaci --version` or `abaci --help`.
+You can download installers for Windows and Linux from the [Latest Release](https://github.com/BristolCompositesInstitute/abaci/releases/latest) page. These installers will install abaci for the local user and hence do not require
+administrator/root permissions.
 
-An `uninstall-windows.cmd` script is also provided in the `scripts` folder to remove an existing abaci installation.
-
-### 1.3 Linux
-
-After downloading or cloning the repository, use the `install` script in the `scripts` folder which will install abaci to `$HOME/.local/`.
-After running the `install` script, make sure the `$HOME/.local/bin/` folder is on your path if not already;
-you can do this by adding the following line to the end of your `$HOME/.bash_profile` file:
+The Linux installer will install abaci to `$HOME/.local/bin`, so you should ensure that this folder
+is on your path if not already; you can do this by adding the following line to the end of
+your `$HOME/.bash_profile` file:
 
 ```bash
 export PATH=$PATH:$HOME/.local/bin
 ```
 
-You can check your installation by opening a new command windows, or logging in again, and running the command `abaci --version` or `abaci --help`.
+You can check your installation by opening a new command window, or logging in again, and running the command `abaci --version` or `abaci --help`.
+
+### 1.3 Install from Source
+
+If you are developing abaci and you would like to test local changes, then you can
+install abaci from the cloned repository by running the install scripts located in
+the `scripts` folder.
+
+__On Windows__, this script is called `install-windows.cmd` and this assumes your Abaqus commands folder is `C:\SIMULIA\Commands` as this is where the abaci launcher is placed.
+An `uninstall-windows.cmd` script is also provided in the `scripts` folder to remove an existing abaci installation.
+
+__On Linux__, the install script is called `install` and this will install abaci to `$HOME/.local/` so you should
+check that `$HOME/.local/bin/` folder is on your path and follow the instructions above if not.
+
 
 ## 2. Usage
 
@@ -66,12 +73,17 @@ Given a configuration file `abaci.toml` in the current directory, abaci is invok
 <summary>Click for full help text</summary>
   
 ```
-usage: abaci [-h] [-V] [--update [[REPO:]GITREF]] {run,compile,show} ...
+usage: abaci [-h] [-V] [--update [[REPO:]GITREF]] {post,submit,run,compile,show} ...
 
 Utility for compiling and running abaqus jobs with user subroutines
 
 positional arguments:
-  {run,compile,show}    Subcommand to run
+  {post,submit,run,compile,show}
+                        Subcommand to run
+    post                Run regression checks and post-processing scripts for
+                        a completed job
+    submit              Compile user subroutines and submit jobs to cluster
+                        (SLURM)
     run                 Compile user subroutines and run an abaqus job
     compile             Compile user subroutines only
     show                Show useful information about this project
@@ -88,7 +100,7 @@ example: abaci compile --help
   
  </details>
 
- ### 2.1 `abaci run`
+### 2.1 `abaci run`
 
  _Compile user subroutine and run one or more abaqus jobs_
 
@@ -133,7 +145,7 @@ optional arguments:
 ```
 </details>
 
- ### 2.2 `abaci compile`
+### 2.2 `abaci compile`
 
  _Compile user subroutine only_
 
@@ -164,7 +176,7 @@ optional arguments:
 ```
 </details>
 
- ### 2.3 `abaci show`
+### 2.3 `abaci show`
 
 _Show useful information about the current project_
 
@@ -202,3 +214,86 @@ optional arguments:
 </details>
 
 
+### 2.4 `abaci post`
+
+_Run or rerun regression checks and post-processing commands for a completed job_
+
+See the [check](config-reference.md#check-options-optional) and [post processing](config-reference.md#post-process-string-optional) configuration options for how to setup post-processing.
+
+__Example:__
+Run post-processing for a job in directory `scratch/job_0`
+
+```
+> abaci post scratch/job_0
+```
+
+
+<details>
+<summary>Click for abaci post help text</summary>
+  
+```
+usage: abaci post [-h] [-v | -q] [--config CONFIG] job-dir
+
+Run regression checks and post-processing scripts for a completed job
+
+positional arguments:
+  job-dir          Path to job output directory
+
+optional arguments:
+  -h, --help       show this help message and exit
+  -v, --verbose    output more information from abaci
+  -q, --quiet      output less information from abaci
+  --config CONFIG  specify a different config file to default ("abaci.toml")
+```
+</details>
+
+
+### 2.5 `abaci submit`
+
+_Prepare and submit a job for running on a cluster via SLURM_
+
+See the [cluster](config-reference.md#cluster-section-optional) configuration options for how to specify job script settings via the configuration file.
+
+__Example:__
+Submit all jobs with the 'test' flag using options in the configuration file
+
+```
+> abaci submit test
+```
+
+__Example:__
+Submit the 'static' job and override cluster options interactively at the command line
+
+```
+> abaci submit --interactive static
+```
+
+<details>
+<summary>Click for abaci submit help text</summary>
+  
+```
+usage: abaci submit [-h] [-v | -q] [--config CONFIG] [-t] [-d] [-c] [-0] [-i]
+                    [-n]
+                    [job-spec]
+
+Compile user subroutines and submit jobs to cluster (SLURM)
+
+positional arguments:
+  job-spec           Either: a comma-separated list of job tags or jobs names
+                     to filter jobs specified in the manifest; OR a path to an
+                     abaqus job file to run.
+
+optional arguments:
+  -h, --help         show this help message and exit
+  -v, --verbose      output more information from abaci
+  -q, --quiet        output less information from abaci
+  --config CONFIG    specify a different config file to default ("abaci.toml")
+  -t, --codecov      compile subroutines for code coverage analysis
+  -d, --debug        enable run-time debugging checks
+  -c, --check        enable strict compile-time checks
+  -0, --noopt        compile without any optimisations
+  -i, --interactive  interactively override job setting defaults before
+                     submitting
+  -n, --no-submit    prepare job files, but don't submit the batch job
+```
+</details>

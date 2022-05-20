@@ -10,7 +10,15 @@ from abaci.utils import relpathshort
 def load_config(config_file,echo):
     """Top-level routine to read, parse, validate and sanitize config file"""
 
+    log = logging.getLogger('abaci')
+    
     config_file, config_dir = get_config_path(config_file)
+
+    if not exists(config_file):
+
+        log.fatal('Unable to find config file "%s"',config_file)
+
+        exit(1)
 
     config_str = read_config_file(config_file)
 
@@ -48,9 +56,37 @@ def read_config_file(config_file):
     return config_str
 
 
+def get_default_cluster_schema():
+    """Returns the default (top-level) cluster schema"""
+
+    schema = Schema({Optional('time',default='01:00:00'): unicode,
+                           Optional('partition',default=None): unicode,
+                           Optional('nodes',default=1): int,
+                           Optional('tasks-per-node',default=1): int,
+                           Optional('cpus-per-task',default=1): int,
+                           Optional('mem-per-cpu',default='4000m'): unicode,
+                           Optional('email',default=None): unicode
+                           })
+
+    schema_defaults = schema.validate({})
+
+    return schema, schema_defaults
+
+
 def config_schema():
     """Defines the schema for the abaci.toml config files"""
     
+    default_cluster_schema, cluster_defaults = get_default_cluster_schema()
+
+    job_cluster_schema = Schema({Optional('time',default=None): unicode,
+                           Optional('partition',default=None): unicode,
+                           Optional('nodes',default=None): int,
+                           Optional('tasks-per-node',default=None): int,
+                           Optional('cpus-per-task',default=None): int,
+                           Optional('mem-per-cpu',default=None): unicode,
+                           Optional('email',default=None): unicode
+                           })
+
     check_schema = Schema({'fields': [unicode],
                            'reference': unicode,
                            'steps': [unicode],
@@ -63,7 +99,8 @@ def config_schema():
                          Optional('name',default=None): unicode,
                          Optional('mp-mode',default='threads'): Or(u'threads',u'mpi',u'disable'),
                          Optional('post-process',default=None): unicode,
-                         Optional('check',default=None): check_schema}])
+                         Optional('check',default=None): check_schema,
+                         Optional('cluster',default=None): job_cluster_schema}])
 
     dependency_schema = Schema([{'name': unicode,
                                 'git': unicode,
@@ -80,6 +117,7 @@ def config_schema():
                             Optional('name', default=None): unicode,
                             Optional('output', default=u'.'): unicode,
                             Optional('user-sub-file',default=None): unicode,
+                            Optional('cluster',default=cluster_defaults): default_cluster_schema,
                             Optional('dependency',default=[]): dependency_schema,
                             Optional('job',default=[]): job_schema,
                             Optional('compile',default=compile_defaults): And(dict,compile_schema)}))
@@ -152,6 +190,26 @@ def sanitize_config(config, config_dir):
         if j['check']:
             j['check']['reference'] = os.path.realpath(os.path.join(
                                 config_dir,j['check']['reference']))
+
+        # Substitute {ROOT} for config dir at this stage
+        if j['post-process']:
+
+            j['post-process'] = j['post-process'].replace(
+                            r'{ROOT}',config_dir)
+
+        # Apply top-level cluster defaults to individual jobs
+        if not j['cluster']:
+
+            j['cluster'] = config['cluster']
+
+        else:
+            
+            for field in j['cluster']:
+
+                if not j['cluster'][field]:
+
+                    j['cluster'][field] = config['cluster'][field]
+
 
     return config
 
