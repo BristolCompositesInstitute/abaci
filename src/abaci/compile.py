@@ -265,6 +265,9 @@ def compile_cpp(use_gcc, cflags, source_file, verbose):
 
         raise Exception('(!) Error while compiling auxillary source file')
 
+    copyfile(obj_file,obj_file.replace('-std','-xpl'))
+    copyfile(obj_file,obj_file.replace('-std','-xplD'))
+
 
 def compile_auxillary_sources(compile_dir,compile_conf,args,aux_source_list,fflags):
     """Perform separate compilation of auxillary sources files"""
