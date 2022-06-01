@@ -318,7 +318,7 @@ class AbaqusJob:
 
         log = logging.getLogger('abaci')
 
-        abq_py = ' '.join(abq.abaqus_cmd(['python']))
+        abq_py = ' '.join(abq.abaqus_cmd(['python'],noshell=True))
         post_cmd = self.postprocess.format(
             PY=abq_py,
             JOB=self.local_job_name,

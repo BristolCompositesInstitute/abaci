@@ -105,7 +105,7 @@ def make(dir, lib_file, verbosity):
     return stat
 
 
-def abaqus_cmd(args):
+def abaqus_cmd(args,noshell=None):
     """Build abaqus launch command"""
 
     cmd = ['abaqus'] + args
@@ -113,5 +113,10 @@ def abaqus_cmd(args):
     if os.name == 'nt':
                 
         cmd[0] = 'c:\\SIMULIA\\Commands\\abaqus.bat'
+
+        # Needed on Windows to get return code correctly
+        if not noshell:
+            cmd.append('&')
+            cmd.append('exit')
 
     return cmd
