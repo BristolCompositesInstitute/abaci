@@ -65,6 +65,9 @@ def parse_cli():
     build_group.add_argument('-0','--noopt',help='compile without any optimisations',
                         dest='noopt',action='store_true')
 
+    build_group.add_argument('-g','--gcc',help='use gnu compilers for auxillary source files',
+                        dest='gcc',action='store_true')
+
     # SUBMIT subcommand
     submit_command = subparsers.add_parser('submit', parents=[common_group,build_group],
                                          help='Compile user subroutines and submit jobs to cluster (SLURM)',

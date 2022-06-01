@@ -94,6 +94,12 @@ def make(dir, lib_file, verbosity):
     args = ['make']
     args.append('library={file}'.format(file=os.path.basename(lib_file)))
 
+    if os.name == 'nt':
+        args.append('directory="{dir}"'.format(dir=dir))
+    else:
+        args.append('directory={dir}'.format(dir=dir))     # (Can't quote path on linux for some reason)
+
+
     cmd = abaqus_cmd(args)
 
     with cwd(dir):
