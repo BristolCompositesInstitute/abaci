@@ -193,7 +193,7 @@ def get_cflags(use_gcc, c_flags, debug_symbols, compiletime_checks,
 
     flags = c_flags
 
-    set_flag(flags,intel_unix=['-error-limit=5'],
+    set_flag(flags,intel_unix=['-diag-error-limit=5'],
                     intel_win=[],
                     gnu=["-fmax-errors=5"])
 
