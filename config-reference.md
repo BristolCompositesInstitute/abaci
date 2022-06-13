@@ -331,3 +331,4 @@ String or list of strings specifying additional c/c++ source files that are to b
 
 - Included file paths are specified relative to the folder containing the configuration file ('abaci.toml')
 - File globbing is supported, _e.g._: `sources = 'src/*.cpp'`
+- Sources specified here are compiled with other projects that use your project as a dependency

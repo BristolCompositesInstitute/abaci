@@ -105,6 +105,20 @@ def stage_files(compile_dir, user_file, compile_file, include_files, aux_sources
 
                 copyfile(inc,dest)
 
+        for src in dep['sources']:
+
+            dest = os.path.join(dep_dir,os.path.basename(src))
+            
+            aux_source_list.append(dest)
+
+            if os.path.isdir(src):
+
+                copydir(src,dest)
+
+            else:
+
+                copyfile(src,dest)
+
     return aux_source_list
 
 
@@ -245,7 +259,7 @@ def compile_cpp(use_gcc, cflags, source_file, verbose):
     else:
         cc = 'icc'
         
-    cmd = [cc,'-c',base]
+    cmd = [cc,'-c',os.path.relpath(source_file)]
     cmd.extend(cflags)
 
     obj_file = base.split('.')[0] +'-std.o'
