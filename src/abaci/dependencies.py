@@ -50,7 +50,8 @@ def fetch_dependencies(config, config_dir, verbosity):
                                      'config': dep_config,
                                      'git': dep['git'],
                                      'version': dep['version'],
-                                     'includes': dep_config['compile']['include']}
+                                     'includes': dep_config['compile']['include'],
+                                     'sources': dep_config['compile']['sources']}
             
             # Enqueue dependencies from this dependency
             dependencies.extend(dep_config['dependency'])

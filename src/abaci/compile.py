@@ -17,9 +17,11 @@ def compile_user_subroutine(args, output_dir, user_file, compile_conf, dep_list)
 
     includes = compile_conf['include']
 
-    stage_files(compile_dir, user_file, compile_file, includes, dep_list)
+    aux_sources = compile_conf['sources']
 
-    flags = get_flags(compile_dir=compile_dir,
+    aux_source_list = stage_files(compile_dir, user_file, compile_file, includes, aux_sources, dep_list)
+
+    fflags = get_flags(compile_dir=compile_dir,
                       fortran_flags = compile_conf['fflags'],
                       debug_symbols = args.debug,
                       runtime_checks = args.debug,
@@ -27,10 +29,12 @@ def compile_user_subroutine(args, output_dir, user_file, compile_conf, dep_list)
                       codecov = args.codecov,
                       opt_host = compile_conf['opt-host'],
                       noopt = args.noopt)
+    
+    compile_auxillary_sources(compile_dir,compile_conf,args,aux_source_list,fflags)
 
-    log.debug('Flags = %s',flags)
+    log.debug('Flags = %s',fflags)
 
-    spool_env_file(compile_dir,flags)
+    spool_env_file(compile_dir,fflags)
 
     log.info('Running abaqus make')
 
@@ -38,7 +42,8 @@ def compile_user_subroutine(args, output_dir, user_file, compile_conf, dep_list)
     
     return stat, compile_dir
 
-def stage_files(compile_dir, user_file, compile_file, include_files, dep_list):
+
+def stage_files(compile_dir, user_file, compile_file, include_files, aux_sources, dep_list):
     """Create output compilation directory and move files there"""
 
     log = logging.getLogger('abaci')
@@ -63,7 +68,23 @@ def stage_files(compile_dir, user_file, compile_file, include_files, dep_list):
         else:
 
             copyfile(inc,dest)
-        
+    
+    # Stage auxillary source files
+    aux_source_list = []
+    for src in aux_sources:
+
+        dest = os.path.join(compile_dir,os.path.basename(src))
+
+        aux_source_list.append(dest)
+
+        if os.path.isdir(src):
+
+            copydir(src,dest)
+
+        else:
+
+            copyfile(src,dest)
+
     # Stage 'include' files from dependencies
     #  (in subdirectories named by dependency name)
     for dep_name,dep in dep_list.items():
@@ -83,6 +104,22 @@ def stage_files(compile_dir, user_file, compile_file, include_files, dep_list):
             else:
 
                 copyfile(inc,dest)
+
+        for src in dep['sources']:
+
+            dest = os.path.join(dep_dir,os.path.basename(src))
+            
+            aux_source_list.append(dest)
+
+            if os.path.isdir(src):
+
+                copydir(src,dest)
+
+            else:
+
+                copyfile(src,dest)
+
+    return aux_source_list
 
 
 def get_flags(compile_dir,fortran_flags, debug_symbols, runtime_checks, compiletime_checks, codecov,
@@ -105,8 +142,10 @@ def get_flags(compile_dir,fortran_flags, debug_symbols, runtime_checks, compilet
         else:
             flags.extend(unix)
     
-
-    flags = fortran_flags
+    if os.name == 'nt':
+        flags = fortran_flags['windows']
+    else:
+        flags = fortran_flags['linux']
 
     set_flag(flags,unix='-qopt-report-file={dir}/optrpt'.format(dir=compile_dir),
                     win='/Qopt-report-file:{dir}\optrpt'.format(dir=compile_dir))
@@ -135,6 +174,146 @@ def get_flags(compile_dir,fortran_flags, debug_symbols, runtime_checks, compilet
         set_flag(flags,unix='-O0',win='/Od')
 
     return flags
+
+
+
+def get_cflags(use_gcc, c_flags, debug_symbols, compiletime_checks,
+               opt_host, noopt):
+    """Set platform specific flags for c compilation"""
+
+    def set_flag(flags,intel_unix,intel_win,gnu):
+        """Helper to add flag depending on platform"""
+        
+        import os
+        
+        if not isinstance(intel_unix,list):
+            intel_unix = [intel_unix]
+
+        if not isinstance(intel_win,list):
+            intel_win = [intel_win]
+
+        if not isinstance(gnu,list):
+            gnu = [gnu]
+
+        if use_gcc:
+
+            flags.extend(gnu)
+
+        else:
+
+            if os.name == 'nt':
+                flags.extend(intel_win)
+            else:
+                flags.extend(intel_unix)
+    
+    if use_gcc:
+        flags = c_flags['gcc']
+    elif os.name == 'nt':
+        flags = c_flags['windows']
+    else:
+        flags = c_flags['linux']
+
+    set_flag(flags,intel_unix=['-diag-error-limit=5'],
+                    intel_win=[],
+                    gnu=["-fmax-errors=5"])
+
+    if debug_symbols:
+        set_flag(flags,intel_unix=['-g','-debug'],
+                       intel_win=['/Z7'],
+                       gnu="-g")
+
+    if compiletime_checks:
+        set_flag(flags,intel_unix=['-warn', 'all'],
+                       intel_win='/Wall',
+                       gnu="-Wall -Wextra -Wimplicit-interface")
+
+    if opt_host and not noopt:
+        set_flag(flags,intel_unix='-xHOST',
+                       intel_win=[],
+                       gnu="-march=native")
+
+    if noopt:
+        set_flag(flags,intel_unix='-O0',intel_win='/Od',gnu='-O0')
+    else:
+        set_flag(flags,intel_unix=[],intel_win='/O2',gnu="-O3")
+
+    return flags
+
+
+def compile_cpp(use_gcc, cflags, source_file, verbose):
+    """Heler for compiling c/c++ source files"""
+
+    log = logging.getLogger('abaci')
+
+    base = os.path.basename(source_file)
+    log.debug('Compiling auxillary source file "%s"',base)
+
+    if use_gcc:
+        if source_file.endswith('.cpp'):
+            cc = 'g++'
+        else:
+            cc = 'gcc'
+            
+    elif os.name == 'nt':
+        cc = 'cl'
+    else:
+        cc = 'icc'
+        
+    cmd = [cc,'-c',os.path.relpath(source_file)]
+    cmd.extend(cflags)
+
+    obj_file = base.split('.')[0] +'-std.o'
+
+    if os.name == 'nt':
+        obj_file += 'bj'
+
+    if cc == 'cl':
+
+        cmd.extend(["/Fo:",obj_file])
+
+    else:
+
+        cmd.extend(["-o",obj_file])
+
+    p, ofile, efile = system_cmd(cmd,output=obj_file+'.log')
+
+    stat = system_cmd_wait(p,verbose,ofile,efile)
+
+    if stat != 0:
+
+        log.fatal('(!) Error while compiling auxillary source "%s"',base)
+
+        raise Exception('(!) Error while compiling auxillary source file')
+
+    copyfile(obj_file,obj_file.replace('-std','-xpl'))
+    copyfile(obj_file,obj_file.replace('-std','-xplD'))
+
+
+def compile_auxillary_sources(compile_dir,compile_conf,args,aux_source_list,fflags):
+    """Perform separate compilation of auxillary sources files"""
+    
+    if not aux_source_list:
+
+        return
+    
+    cflags = get_cflags(use_gcc=args.gcc,
+                      c_flags = compile_conf['cflags'],
+                      debug_symbols = args.debug,
+                      compiletime_checks = args.check or compile_conf['compiletime-checks'],
+                      opt_host = compile_conf['opt-host'],
+                      noopt = args.noopt) 
+
+    log = logging.getLogger('abaci')
+
+    log.info('Compiling auxillary sources')
+
+    with cwd(compile_dir):
+
+        for src in aux_source_list:
+
+            if src.endswith('.c') or src.endswith('.cpp'):
+                
+                compile_cpp(args.gcc, cflags, src, args.verbose)
 
 
 def spool_env_file(compile_dir,flags):

@@ -106,9 +106,17 @@ def config_schema():
                                 'git': unicode,
                                 'version': unicode}])
 
-    compile_schema = Schema({Optional('fflags',default=[]): Or(unicode,[unicode]),
+    flag_schema = Schema({Optional('linux',default=[]): Or(unicode,[unicode]),
+                          Optional('windows',default=[]): Or(unicode,[unicode]),
+                          Optional('gcc',default=[]): Or(unicode,[unicode])})
+
+    flag_schema_defaults = flag_schema.validate({})
+
+    compile_schema = Schema({Optional('fflags',default=flag_schema_defaults): flag_schema,
+                            Optional('cflags',default=flag_schema_defaults): flag_schema,
                             Optional('opt-host',default=True): bool,
                             Optional('compiletime-checks',default=False): bool,
+                            Optional('sources',default=[]): Or(unicode,[unicode]),
                             Optional('include',default=[]): Or(unicode,[unicode])})
 
     compile_defaults = compile_schema.validate({})
@@ -146,12 +154,26 @@ def sanitize_config(config, config_dir):
     
     log.debug('Santizing config contents...')
 
-    # Optional lists
-    if not isinstance(config['compile']['fflags'],list):
-        config['compile']['fflags'] = [config['compile']['fflags']]
+    def ensure_list(potential_list):
+        """Helper to unify optional list inputs"""
+        if not isinstance(potential_list,list):
 
-    if not isinstance(config['compile']['include'],list):
-        config['compile']['include'] = [config['compile']['include']]
+            return [potential_list]
+
+        else:
+
+            return potential_list
+
+    # Optional lists
+    for flag_lang in ('fflags','cflags'):
+
+        for flag_target in ('linux','windows','gcc'):
+
+            config['compile'][flag_lang][flag_target] = ensure_list(config['compile'][flag_lang][flag_target])
+    
+    for field in ('include','sources'):
+
+        config['compile'][field] = ensure_list(config['compile'][field])
 
     # Output is relative to cwd
     config['output'] = os.path.realpath(config['output'])
@@ -172,6 +194,18 @@ def sanitize_config(config, config_dir):
         compile_includes.extend(glob.glob(full_path))
 
     config['compile']['include'] = compile_includes
+
+    # User subroutine auxillary source file paths are relative to the config file
+    #  and expand globbing
+    compile_sources = []
+    for sfile in config['compile']['sources']:
+
+        full_path = os.path.realpath(os.path.join(
+                                config_dir,sfile))
+
+        compile_sources.extend(glob.glob(full_path))
+
+    config['compile']['sources'] = compile_sources
 
     for j in config['job']:
         j['job-file'] = os.path.realpath(os.path.join(

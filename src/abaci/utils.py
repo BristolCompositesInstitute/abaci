@@ -102,12 +102,6 @@ def system_cmd(cmd,output=None):
         fo = None
         fe = None
 
-    # Needed on Windows to get return code correctly
-    if os.name == 'nt':
-        
-        cmd.append('&')
-        cmd.append('exit')
-
     p = subprocess.Popen(cmd,stdout=fo,stderr=fe)
 
     def handle_interrupt(signal, frame):
