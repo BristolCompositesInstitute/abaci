@@ -14,6 +14,7 @@ __Status:__ v0.4.0 beta
 ### Key Features:
 
 - Pre-compile user subroutines (using abaqus make)
+  - Supports compilation and linking of auxiliary c/c++ sources
 - Customise compilation procedure with compiler flags
   - Enable 'debug' mode for catching common errors
   - Perform code coverage to identify executed lines of code
