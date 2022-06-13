@@ -18,7 +18,6 @@ user-sub-file = "src/umat.f"
 [compile]
 include = "src/*.f90"    # extra source files to include
 
-
 # ------------ Specify a job ------------
 [[job]]
 

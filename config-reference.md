@@ -294,6 +294,7 @@ cflags.windows = ''
 cflags.linux = ''
 compiletime-checks = false
 include = ['extra-source.f90']
+sources = ['cpp_functions.cpp']
 ```
 
 ### `fflags.windows` / `fflags.linux` (*string*, optional)
@@ -324,3 +325,9 @@ String or list of strings specifying additional files that are included in the u
 - File globbing is supported, _e.g._: `include = 'src/*.f'`
 - Sources specified here are made available to other projects that use your project as a dependency
 
+### `sources` (*string* or *[string]*, optional)
+
+String or list of strings specifying additional c/c++ source files that are to be compiled and linked with the main user subroutine file.
+
+- Included file paths are specified relative to the folder containing the configuration file ('abaci.toml')
+- File globbing is supported, _e.g._: `sources = 'src/*.cpp'`
