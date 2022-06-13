@@ -288,14 +288,21 @@ __Example:__
 
 ```toml
 [compile]
-fflags = ''
+fflags.windows = ''
+fflags.linux = ''
+cflags.windows = ''
+cflags.linux = ''
 compiletime-checks = false
 include = ['extra-source.f90']
 ```
 
-### `fflags` (*string*, optional)
+### `fflags.windows` / `fflags.linux` (*string*, optional)
 
 Extra compilation flags to pass to the fortran compiler.
+
+### `cflags.windows` / `cflags.linux` (*string*, optional)
+
+Extra compilation flags to pass to the c/c++ compiler (auxilliary sources only).
 
 ### `opt-host` (*bool*, optional)
 

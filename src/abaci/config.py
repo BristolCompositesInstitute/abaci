@@ -106,9 +106,14 @@ def config_schema():
                                 'git': unicode,
                                 'version': unicode}])
 
-    compile_schema = Schema({Optional('fflags',default=[]): Or(unicode,[unicode]),
-                            Optional('cflags',default=[]): Or(unicode,[unicode]),
-                            Optional('cppflags',default=[]): Or(unicode,[unicode]),
+    flag_schema = Schema({Optional('linux',default=[]): Or(unicode,[unicode]),
+                          Optional('windows',default=[]): Or(unicode,[unicode]),
+                          Optional('gcc',default=[]): Or(unicode,[unicode])})
+
+    flag_schema_defaults = flag_schema.validate({})
+
+    compile_schema = Schema({Optional('fflags',default=flag_schema_defaults): flag_schema,
+                            Optional('cflags',default=flag_schema_defaults): flag_schema,
                             Optional('opt-host',default=True): bool,
                             Optional('compiletime-checks',default=False): bool,
                             Optional('sources',default=[]): Or(unicode,[unicode]),
@@ -149,21 +154,26 @@ def sanitize_config(config, config_dir):
     
     log.debug('Santizing config contents...')
 
+    def ensure_list(potential_list):
+        """Helper to unify optional list inputs"""
+        if not isinstance(potential_list,list):
+
+            return [potential_list]
+
+        else:
+
+            return potential_list
+
     # Optional lists
-    if not isinstance(config['compile']['fflags'],list):
-        config['compile']['fflags'] = [config['compile']['fflags']]
+    for flag_lang in ('fflags','cflags'):
 
-    if not isinstance(config['compile']['cflags'],list):
-        config['compile']['cflags'] = [config['compile']['cflags']]
+        for flag_target in ('linux','windows','gcc'):
 
-    if not isinstance(config['compile']['cppflags'],list):
-        config['compile']['cppflags'] = [config['compile']['cppflags']]
+            config['compile'][flag_lang][flag_target] = ensure_list(config['compile'][flag_lang][flag_target])
+    
+    for field in ('include','sources'):
 
-    if not isinstance(config['compile']['include'],list):
-        config['compile']['include'] = [config['compile']['include']]
-
-    if not isinstance(config['compile']['sources'],list):
-        config['compile']['sources'] = [config['compile']['sources']]
+        config['compile'][field] = ensure_list(config['compile'][field])
 
     # Output is relative to cwd
     config['output'] = os.path.realpath(config['output'])
