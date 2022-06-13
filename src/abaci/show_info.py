@@ -47,7 +47,7 @@ def show_sources(config,dep_list):
         into a top-level Fortran user subroutine.
     """
 
-    sources = [os.path.basename(config['user-sub-file'])]
+    sources = [' [user-sub] '+os.path.basename(config['user-sub-file'])]
     
     # Include files from this project
     for inc in config['compile']['include']:
@@ -56,7 +56,16 @@ def show_sources(config,dep_list):
 
             file_rel = os.path.relpath(file,os.path.dirname(inc))
             
-            sources.append(file_rel)
+            sources.append(' [included] '+file_rel)
+
+    # Aux source files from this project
+    for src in config['compile']['sources']:
+
+        for file in recurse_files(src):
+
+            file_rel = os.path.relpath(file,os.path.dirname(src))
+            
+            sources.append(' [compiled] '+file_rel)
 
     # Include files from dependencies
     #  (deployed in a subfolder named after the dependency)
@@ -68,11 +77,23 @@ def show_sources(config,dep_list):
 
                 file_rel = os.path.relpath(file,os.path.dirname(inc))
                 
-                sources.append(os.path.join(dep_name,file_rel))
+                sources.append(' [included] '+os.path.join(dep_name,file_rel))
+
+    # Aux source files from dependencies
+    #  (deployed in a subfolder named after the dependency)
+    for dep_name,dep in dep_list.items():
+
+        for src in dep['sources']:
+
+            for file in recurse_files(src):
+
+                file_rel = os.path.relpath(file,os.path.dirname(src))
+                
+                sources.append(' [compiled] '+os.path.join(dep_name,file_rel))
 
     for file in sources:
 
-        print(' '+os.path.relpath(file))
+        print(os.path.relpath(file))
 
 
 def show_config_jobs(config,verbose):
