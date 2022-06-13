@@ -4,6 +4,12 @@ Notable changes to this project are logged here according to release version and
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [Unreleased v0.4.0]
+
+- Minor update to example project post-processing script to avoid warning message
+- Add support for separately compile c/c++ sources files via `sources` field
+- Separate `fflags` field into `fflags.linux` and `fflags.windows`
+
 ## [[v0.3.0]](https://github.com/BristolCompositesInstitute/abaci/releases/tag/v0.3.0) - 20/05/22
 
 - Add new `post` subcommand for (re)running post-processing checks and scripts
