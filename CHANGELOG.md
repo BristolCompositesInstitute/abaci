@@ -9,6 +9,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Minor update to example project post-processing script to avoid warning message
 - Add support for separately compile c/c++ sources files via `sources` field
 - Separate `fflags` field into `fflags.linux` and `fflags.windows`
+- Fix utf-8 encoding issue on Windows using `PYTHONIOENCODING` environment variable
+- Add support for multiple post-processing scripts
 
 ## [[v0.3.0]](https://github.com/BristolCompositesInstitute/abaci/releases/tag/v0.3.0) - 20/05/22
 
