@@ -98,7 +98,7 @@ def config_schema():
                          Optional('tags',default=[]): Or(unicode,[unicode]),
                          Optional('name',default=None): unicode,
                          Optional('mp-mode',default='threads'): Or(u'threads',u'mpi',u'disable'),
-                         Optional('post-process',default=None): unicode,
+                         Optional('post-process',default=[]): Or(unicode,[unicode]),
                          Optional('check',default=None): check_schema,
                          Optional('cluster',default=None): job_cluster_schema}])
 
@@ -211,26 +211,26 @@ def sanitize_config(config, config_dir):
         j['job-file'] = os.path.realpath(os.path.join(
                                 config_dir,j['job-file']))
 
-        if not isinstance(j['include'],list):
-            j['include'] = [j['include']]
+        j['include'] = ensure_list(j['include'])
 
         for i,ifile in enumerate(j['include']):
             j['include'][i] = os.path.realpath(os.path.join(
                                 config_dir,ifile))
 
-        if not isinstance(j['tags'],list):
-            j['tags'] = [j['tags']]
+        j['tags'] = ensure_list(j['tags'])
 
         if j['check']:
             j['check']['reference'] = os.path.realpath(os.path.join(
                                 config_dir,j['check']['reference']))
 
+        j['post-process'] = ensure_list(j['post-process'])
+
         # Substitute {ROOT} for config dir at this stage
-        if j['post-process']:
+        for i, script in enumerate(j['post-process']):
 
-            j['post-process'] = j['post-process'].replace(
+            j['post-process'][i] = script.replace(
                             r'{ROOT}',config_dir)
-
+        
         # Apply top-level cluster defaults to individual jobs
         if not j['cluster']:
 

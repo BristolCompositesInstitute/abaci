@@ -319,21 +319,24 @@ class AbaqusJob:
         log = logging.getLogger('abaci')
 
         abq_py = ' '.join(abq.abaqus_cmd(['python'],noshell=True))
-        post_cmd = self.postprocess.format(
-            PY=abq_py,
-            JOB=self.local_job_name,
-            ODB=join(self.job_dir,self.local_job_name+'.odb'),
-            DIR=self.job_dir
-        )
 
-        log.info('Running post-processing script for job "%s"', self.name)
+        for cmd in self.postprocess:
 
-        p, ofile, efile = system_cmd(post_cmd.split())
+            post_cmd = cmd.format(
+                PY=abq_py,
+                JOB=self.local_job_name,
+                ODB=join(self.job_dir,self.local_job_name+'.odb'),
+                DIR=self.job_dir
+            )
 
-        stat = system_cmd_wait(p, verbosity, ofile, efile)
+            log.info('Running post-processing script for job "%s"', self.name)
 
-        if stat != 0:
+            p, ofile, efile = system_cmd(post_cmd.split())
 
-            log.warn('Post-processing script exited with non-zero status')
+            stat = system_cmd_wait(p, verbosity, ofile, efile)
 
-        return stat
+            if stat != 0:
+
+                log.warn('Post-processing script exited with non-zero status')
+
+        return

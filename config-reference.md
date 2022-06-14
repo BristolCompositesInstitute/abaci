@@ -88,9 +88,11 @@ Override the default options for submitting this job to a cluster via SLURM.
 See [cluster options](#cluster-section-optional) below for more information on the cluster option fields.
 
 
-### `post-process` (*string*, optional)
+### `post-process` (*string* or *[string]*, optional)
 
-An optional field specifying a post-processing command to run once the job has completed.
+An optional field specifying one or more post-processing commands to run once the job has completed.
+Specify multiple commands as a list ( _e.g._ `['command_1.sh', 'command_2.sh']`) where each command is
+run sequentially in order.
 
 The field takes the form of a command to execute and allows certain variables to be used:
 
@@ -117,6 +119,8 @@ abaqus python /path/to/repo/scripts/postprocess.py /path/to/job-dir/myjob.odb my
 
 where `{ROOT}` has been replaced with the absolute path to the repository root (defined by the directory containing the abaci.toml file); `{ODB}` has been replaced by the absolute path to the output database file and `{JOB}` has been replaced by the name of the job.
 In the postprocessing script, you can access the values for `{ODB}` and `{JOB}` that were passed as command line arguments using [`sys.argv`](https://docs.python.org/3/library/sys.html#sys.argv).
+
+__Note:__ you can run and rerun post-processing scripts for completed jobs using the command `abaci post <job-dir>` where `<job-dir>` is the output directory for the abaci job that has completed.
 
 ### `check` options (optional)
 
