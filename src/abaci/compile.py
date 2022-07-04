@@ -153,6 +153,9 @@ def get_flags(compile_dir,fortran_flags, debug_symbols, runtime_checks, compilet
     set_flag(flags,unix=['-error-limit','5'],
                     win='/error-limit:5')
 
+    set_flag(flags,unix='-qopenmp',
+                    win='/Qopenmp')
+
     if debug_symbols:
         set_flag(flags,unix=['-g','-debug'],win=['/debug','/Z7'])
 
