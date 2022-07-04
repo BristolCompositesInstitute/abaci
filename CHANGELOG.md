@@ -11,6 +11,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Separate `fflags` field into `fflags.linux` and `fflags.windows`
 - Fix utf-8 encoding issue on Windows using `PYTHONIOENCODING` environment variable
 - Add support for multiple post-processing scripts
+- Update ifort flags to include `qopenmp` option
+- Update ifort flags to include interface checking (`-gen-interfaces`,`-warn interfaces`)
+- Update ifort debug flags to initialise NaN
+- Update ifort debug flags to remove check for array temporaries unless strict checks enabled
+- Update abaqus_v6.env file to print final compile flag combination
 
 ## [[v0.3.0]](https://github.com/BristolCompositesInstitute/abaci/releases/tag/v0.3.0) - 20/05/22
 
