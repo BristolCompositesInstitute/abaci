@@ -328,6 +328,8 @@ def spool_env_file(compile_dir,flags):
 
         f.write('compile_fortran.extend({flags})\n'.format(flags=flags.__str__()))
 
+        f.write('print(compile_fortran)\n')
+
 
 def collect_cov_report(config,compile_dir,verbosity):
     """Run profmerge to get coverage report"""
