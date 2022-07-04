@@ -156,6 +156,9 @@ def get_flags(compile_dir,fortran_flags, debug_symbols, runtime_checks, compilet
     set_flag(flags,unix='-qopenmp',
                     win='/Qopenmp')
 
+    set_flag(flags,unix=['-gen-interfaces','-warn','interfaces'],
+                   win=['/gen-interfaces','/warn:interfaces'])
+
     if debug_symbols:
         set_flag(flags,unix=['-g','-debug'],win=['/debug','/Z7'])
 
