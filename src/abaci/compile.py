@@ -168,6 +168,8 @@ def get_flags(compile_dir,fortran_flags, debug_symbols, runtime_checks, compilet
 
     if compiletime_checks:
         set_flag(flags,unix=['-warn', 'all'],win='/warn:all')
+    else:
+        set_flag(flags,unix=['-check','noarg_temp_created'],win='/check:noarg_temp_created')
 
     if codecov:
         set_flag(flags,unix='-prof-gen=srcpos',win='/Qcov-gen')
