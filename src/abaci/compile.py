@@ -163,7 +163,8 @@ def get_flags(compile_dir,fortran_flags, debug_symbols, runtime_checks, compilet
         set_flag(flags,unix=['-g','-debug'],win=['/debug','/Z7'])
 
     if runtime_checks:
-        set_flag(flags,unix=['-check', 'all'],win='/check:all')
+        set_flag(flags,unix=['-check', 'all','-init:snan','-init:arrays,snan'],
+                       win=['/check:all','/Qinit:snan','/Qinit:arrays,snan'])
 
     if compiletime_checks:
         set_flag(flags,unix=['-warn', 'all'],win='/warn:all')
