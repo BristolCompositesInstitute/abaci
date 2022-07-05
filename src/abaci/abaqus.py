@@ -67,7 +67,7 @@ def get_run_cmd(job_name,mp_mode,nproc):
         args.append('mp_mode={mode}'.format(mode=mp_mode))
         args.append('cpus={n}'.format(n=nproc))
 
-    args.append('double')
+    args.append('double=both')
     args.append('interactive')
 
     return abaqus_cmd(args)
