@@ -4,7 +4,7 @@ Notable changes to this project are logged here according to release version and
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [Unreleased v0.4.0]
+## [[v0.4.0]](https://github.com/BristolCompositesInstitute/abaci/releases/tag/v0.4.0) - 05/07/22
 
 - Minor update to example project post-processing script to avoid warning message
 - Add support for separately compile c/c++ sources files via `sources` field
@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Update ifort debug flags to initialise NaN
 - Update ifort debug flags to remove check for array temporaries unless strict checks enabled
 - Update abaqus_v6.env file to print final compile flag combination
+- Update abaqus launch flags with `double=both`
 
 ## [[v0.3.0]](https://github.com/BristolCompositesInstitute/abaci/releases/tag/v0.3.0) - 20/05/22
 
