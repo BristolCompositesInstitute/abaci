@@ -311,7 +311,10 @@ Extra compilation flags to pass to the c/c++ compiler (auxilliary sources only).
 
 ### `opt-host` (*bool*, optional)
 
-Whether to compile with host-specific optimisations (**default: `true`**). Disable if distributable binaries are required.
+Whether to compile with host-specific optimisations (**default: `false`**). Disable if distributable binaries are required.
+
+> There are some incompatibilities with using host-specific optimisation from newer Intel compilers due
+> to how Abaqus vendors fixed versions of Intel shared libraries
 
 See [Intel Compiler Developer Guide: xHost](https://www.intel.com/content/www/us/en/develop/documentation/cpp-compiler-developer-guide-and-reference/top/compiler-reference/compiler-options/compiler-option-details/code-generation-options/xhost-qxhost.html) for more information.
 

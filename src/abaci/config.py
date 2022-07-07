@@ -114,7 +114,7 @@ def config_schema():
 
     compile_schema = Schema({Optional('fflags',default=flag_schema_defaults): flag_schema,
                             Optional('cflags',default=flag_schema_defaults): flag_schema,
-                            Optional('opt-host',default=True): bool,
+                            Optional('opt-host',default=False): bool,
                             Optional('compiletime-checks',default=False): bool,
                             Optional('sources',default=[]): Or(unicode,[unicode]),
                             Optional('include',default=[]): Or(unicode,[unicode])})
