@@ -50,6 +50,23 @@ def parse_cli():
     run_command.add_argument(metavar='job-dir',dest='job_dir',type=str,
                              help='Path to job output directory')
 
+    # INIT subcommand
+    init_command = subparsers.add_parser('init', parents=[common_group],
+                                         help='Initialise a new abaci.toml project file',
+                                         description="Initialise a new abaci.toml project file")
+
+    init_command.add_argument('-f','--full',help='output a full set of config options',
+                        dest='full_config',action='store_true')
+
+    init_command.add_argument('-b','--bare',help='exclude explanatory comments from config',
+                        dest='bare_config',action='store_true')
+
+    init_command.add_argument('-u','--user',type=str,help='specify the user subroutine file path',
+                        dest='config_usub_file',default=None)
+
+    init_command.add_argument('-o','--output',type=str,help='specify the output directory path',
+                        dest='config_output_path',default=None)
+
     # Build command group
     build_group = argparse.ArgumentParser(add_help=False)
 

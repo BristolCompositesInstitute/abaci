@@ -260,3 +260,95 @@ def check_config(config):
         if not exists(j['job-file']):
 
             raise Exception('The job file "{file}" cannot be found'.format(file=j['job-file']))
+
+
+
+def init_new_config(file_path,user_sub_file=None,output=None,full=None,bare=None):
+    """Initialise a new config file"""
+
+    user_sub_file = user_sub_file or "user.f"
+    output = output or "scratch"
+
+    config_str = """## Abaci configuration file
+##
+##  Lines beginning with '#' are comments
+##  See the abaci documentation for a full definition of this file
+##  Read more about the toml format here: https://toml.io/
+##
+##  File and folder paths are relative to the location
+##   of this config file
+##
+
+## Path to your main user subroutine file
+user-sub-file = "{usub}"
+
+## Path for output directory
+output = "{output}"
+
+ 
+## Uncomment lines below to define a job
+# [[job]]
+# name = "myjob"
+# job-file = "job.inp"
+# mp-mode = "threads"
+# tags = ["default"]
+# include = []         # extra files needed for this job
+    """.format(usub=user_sub_file,output=output)
+
+    if full:
+
+        config_str +="""
+## --- Compilation settings section ----
+[compile]
+
+## List of included files
+include = []
+
+## List of auxilliary C/C++ source files to compile
+sources  = []
+
+## Enable host-specific compiler optimisations
+opt-host = false
+
+## Enforce strict compile-time code checks
+compiletime-checks = false
+
+## Extra fortran compiler flags
+fflags.linux = ""
+fflags.windows = ""
+
+## Extra C/C++ compiler flags
+cflags.linux = ""
+cflags.windows = ""
+        """
+
+        schema, schema_defaults = get_default_cluster_schema()
+
+        config_str += """
+## --- HPC Cluster default settings ---
+[cluster]
+"""
+
+        config_str += toml.dumps(schema_defaults)
+
+    if bare:
+
+        output = ''
+
+        for line in config_str.split('\n'):
+
+            if line[0:2] != '##' and len(line) > 0:
+
+                output += line + '\n'
+    else:
+
+        output = config_str
+
+    # print(output)
+
+    with open(file_path,'w') as f:
+
+        f.write(output)
+    
+
+

@@ -18,5 +18,6 @@ if __name__ == '__main__':
 
     from TestAbaqusJob import TestAbaqusJob
     from TestDependencies import TestDependencies
+    from TestConfig import TestConfig
 
     unittest.main()

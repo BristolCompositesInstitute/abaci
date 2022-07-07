@@ -74,15 +74,16 @@ Given a configuration file `abaci.toml` in the current directory, abaci is invok
 <summary>Click for full help text</summary>
   
 ```
-usage: abaci [-h] [-V] [--update [[REPO:]GITREF]] {post,submit,run,compile,show} ...
+usage: abaci [-h] [-V] [--update [[REPO:]GITREF]] {post,submit,run,compile,show,init}
 
 Utility for compiling and running abaqus jobs with user subroutines
 
 positional arguments:
-  {post,submit,run,compile,show}
+  {post,init,submit,run,compile,show}
                         Subcommand to run
     post                Run regression checks and post-processing scripts for
                         a completed job
+    init                Initialise a new abaci.toml project file
     submit              Compile user subroutines and submit jobs to cluster
                         (SLURM)
     run                 Compile user subroutines and run an abaqus job
@@ -296,5 +297,48 @@ optional arguments:
   -i, --interactive  interactively override job setting defaults before
                      submitting
   -n, --no-submit    prepare job files, but don't submit the batch job
+```
+</details>
+
+
+## 2.6 `abaci init`
+
+_Create a new `abaci.toml` configuration file in the current directory_
+
+__Example:__
+Create a full configuration file template in the current directory
+
+```
+> abaci init --full
+```
+
+__Example:__
+Create a basic configuration file with a known user subroutine file
+
+```
+> abaci init --bare --user usub.f
+```
+
+
+<details>
+<summary>Click for abaci init help text</summary>
+```
+usage: abaci init [-h] [-v | -q] [--config CONFIG] [-f] [-b]
+                  [-u CONFIG_USUB_FILE] [-o CONFIG_OUTPUT_PATH]
+
+Initialise a new abaci.toml project file
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -v, --verbose         output more information from abaci
+  -q, --quiet           output less information from abaci
+  --config CONFIG       specify a different config file to default
+                        ("abaci.toml")
+  -f, --full            output a full set of config options
+  -b, --bare            exclude explanatory comments from config
+  -u CONFIG_USUB_FILE, --user CONFIG_USUB_FILE
+                        specify the user subroutine file path
+  -o CONFIG_OUTPUT_PATH, --output CONFIG_OUTPUT_PATH
+                        specify the output directory path
 ```
 </details>

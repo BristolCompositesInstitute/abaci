@@ -1,5 +1,5 @@
 from abaci.cli import parse_cli, init_logger, init_logger_file
-from abaci.config import load_config
+from abaci.config import load_config, init_new_config
 from abaci.compile import compile_user_subroutine, collect_cov_report
 from abaci.jobs import get_jobs, run_jobs, submit_jobs, post_process
 from abaci.utils import mkdir, daemonize
@@ -18,6 +18,14 @@ def main():
 
         post_process(args.job_dir,args.verbose)
 
+        exit()
+
+    elif args.action == 'init':
+
+        init_new_config(args.config,user_sub_file=args.config_usub_file,
+                                    output=args.config_output_path,
+                                    full=args.full_config,
+                                    bare=args.bare_config)
         exit()
 
     config, config_dir = load_config(args.config,False)
