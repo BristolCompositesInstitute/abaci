@@ -4,7 +4,7 @@ Notable changes to this project are logged here according to release version and
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [v0.4.1] Unreleased
+## [v0.4.1] (https://github.com/BristolCompositesInstitute/abaci/releases/tag/v0.4.1) - 11/07/22
 
 - Host-specific compiler optimisations are now disabled by default
 - Add new `abaci init` subcommand to initialise a new `abaci.toml` configuration file
