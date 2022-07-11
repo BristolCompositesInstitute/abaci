@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - Host-specific compiler optimisations are now disabled by default
 - Add new `abaci init` subcommand to initialise a new `abaci.toml` configuration file
+- Revert addition of nan initialisation to runtime checking flags since it
+  prevents the uninitialised use check
 
 ## [[v0.4.0]](https://github.com/BristolCompositesInstitute/abaci/releases/tag/v0.4.0) - 05/07/22
 
