@@ -131,7 +131,7 @@ __Example:__
 ```toml
 [[job]]
 job-file = 'job.inp'
-check.reference = 'reference-output.odb'
+check.reference = 'reference-output.pkl'
 check.steps = ['Step-1']
 check.fields = ['SDV1','SDV2']
 check.frames = 'last'
