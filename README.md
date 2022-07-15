@@ -322,6 +322,7 @@ Create a basic configuration file with a known user subroutine file
 
 <details>
 <summary>Click for abaci init help text</summary>
+
 ```
 usage: abaci init [-h] [-v | -q] [--config CONFIG] [-f] [-b]
                   [-u CONFIG_USUB_FILE] [-o CONFIG_OUTPUT_PATH]
