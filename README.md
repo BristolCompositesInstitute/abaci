@@ -301,7 +301,7 @@ optional arguments:
 </details>
 
 
-## 2.6 `abaci init`
+### 2.6 `abaci init`
 
 _Create a new `abaci.toml` configuration file in the current directory_
 
