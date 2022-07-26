@@ -38,6 +38,13 @@ Specifies the name of the directory into which compilation and job folders will 
 - The output folder is created if it does not exist
 
 
+### `abq-flags` (*string* or *[string]*, optional)
+
+String or list of strings specifying additional flags to pass to Abaqus when launching a job.
+
+- This top-level option applies to all jobs in the config file unless it has been overridden
+  in the specification of the job
+
 ## Jobs list
 
 Array of optional subsections that predefine specific abaqus jobs to run.
@@ -49,6 +56,7 @@ __Example:__
 job-file = 'my-abaqus-job.inp'
 name = 'job1'
 tags = ['test','three_elem']
+abq-flags = 'domains'
 include = ['job1_extra_inputs.inp']
 mp-mode = 'threads'
 post-process = '{PY} {ROOT}/scripts/postprocess.py {ODB}'
@@ -69,6 +77,13 @@ An optional unique name to reference this job in the *job-spec* at the command l
 ### `tags` (*[string]*, optional)
 
 An optional list of non-unique tags to reference groups of jobs in the *job-spec* at the command line.
+
+### `abq-flags` (*string* or *[string]*, optional)
+
+String or list of strings specifying additional flags to pass to Abaqus when launching a job.
+
+- This option overrides the top-level default for this job only
+- Use the top-level `abq-flags` option to set the default for all jobs
 
 ### `include` (*[string]*, optional)
 

@@ -29,10 +29,10 @@ def have_abaqus():
     return stat == 0
 
 
-def run(dir,job_name,mp_mode,nproc):
+def run(dir,job_name,abq_flags,mp_mode,nproc):
     """Helper to launch an Abaqus job"""
 
-    cmd = get_run_cmd(job_name,mp_mode,nproc)
+    cmd = get_run_cmd(job_name,abq_flags,mp_mode,nproc)
 
     with cwd(dir):
 
@@ -56,7 +56,7 @@ def get_mpi_job_allocation_cmd():
 
     return cmd
 
-def get_run_cmd(job_name,mp_mode,nproc):
+def get_run_cmd(job_name,abq_flags,mp_mode,nproc):
     """Helper to construct an Abaqus job command"""
 
     args = []
@@ -69,6 +69,7 @@ def get_run_cmd(job_name,mp_mode,nproc):
 
     args.append('double=both')
     args.append('interactive')
+    args.extend(abq_flags)
 
     return abaqus_cmd(args)
 

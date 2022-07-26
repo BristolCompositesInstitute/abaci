@@ -26,6 +26,7 @@ class TestAbaqusJob(AbaciUnitTestSuite):
         job['job-file'] = job_base_name + '.inp'
         job['include'] = ['extra.inp']
         job['name'] = 'job-name'
+        job['abq-flags'] = []
         job['check'] = self.get_dummy_check()
         job['mp-mode'] = 'threads'
         job['post-process'] = None

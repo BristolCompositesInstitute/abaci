@@ -98,6 +98,7 @@ def config_schema():
                          Optional('tags',default=[]): Or(unicode,[unicode]),
                          Optional('name',default=None): unicode,
                          Optional('mp-mode',default='threads'): Or(u'threads',u'mpi',u'disable'),
+                         Optional('abq-flags',default=[]): Or(unicode,[unicode]),
                          Optional('post-process',default=[]): Or(unicode,[unicode]),
                          Optional('check',default=None): check_schema,
                          Optional('cluster',default=None): job_cluster_schema}])
@@ -125,6 +126,7 @@ def config_schema():
                             Optional('name', default=None): unicode,
                             Optional('output', default=u'scratch'): unicode,
                             Optional('user-sub-file',default=None): unicode,
+                            Optional('abq-flags',default=[]): Or(unicode,[unicode]),
                             Optional('cluster',default=cluster_defaults): default_cluster_schema,
                             Optional('dependency',default=[]): dependency_schema,
                             Optional('job',default=[]): job_schema,
@@ -225,6 +227,13 @@ def sanitize_config(config, config_dir):
                                 config_dir,ifile))
 
         j['tags'] = ensure_list(j['tags'])
+
+        j['abq-flags'] = ensure_list(j['abq-flags'])
+
+        # Apply abq-flag defaults from top-level field if empty
+        if not j['abq-flags']:
+
+            j['abq-flags'] = config['abq-flags']
 
         if j['check']:
             j['check']['reference'] = os.path.realpath(os.path.join(

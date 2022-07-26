@@ -32,6 +32,7 @@ class AbaqusJob:
             self.postprocess = job['post-process']
             self.mp_mode = job['mp-mode']
             self.cluster = job['cluster']
+            self.abq_flags = job['abq-flags']
 
         else:
 
@@ -44,6 +45,7 @@ class AbaqusJob:
             self.postprocess = None
             self.mp_mode = 'threads'
             self.cluster = cluster_defaults
+            self.abq_flags = []
 
         self.job_dir = self.get_new_job_dir(output_dir)
 
@@ -81,6 +83,7 @@ class AbaqusJob:
 
         self.p, self.ofile, self.efile = abq.run(dir=self.job_dir,
                                           job_name=self.local_job_name,
+                                          abq_flags=self.abq_flags,
                                           mp_mode=self.mp_mode,
                                           nproc=nproc)
 
@@ -222,7 +225,7 @@ class AbaqusJob:
             cmd = []
 
 
-        cmd.append(' '.join(abq.get_run_cmd(self.local_job_name,self.mp_mode,nproc)))
+        cmd.append(' '.join(abq.get_run_cmd(self.local_job_name,self.abq_flags,self.mp_mode,nproc)))
 
         slurm.spool_job_script(self.job_script,env_modules,cmd,job_name=self.local_job_name,
                                time=self.cluster['time'],

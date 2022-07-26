@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Fix bug with c/c++ compiler flags being set wrong due to list mutation
 - Change the default output directory to be `./scratch`
 - Automatically add Fortran files in the same folder as the user subroutine file to the include list
+- Add `abq-flags` field to config for specifying additional flags for Abaqus launch command
 
 ## [[v0.4.1]](https://github.com/BristolCompositesInstitute/abaci/releases/tag/v0.4.1) - 11/07/22
 
