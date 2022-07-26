@@ -143,9 +143,9 @@ def get_flags(compile_dir,fortran_flags, debug_symbols, runtime_checks, compilet
             flags.extend(unix)
     
     if os.name == 'nt':
-        flags = fortran_flags['windows']
+        flags = fortran_flags['windows'][:]
     else:
-        flags = fortran_flags['linux']
+        flags = fortran_flags['linux'][:]
 
     set_flag(flags,unix='-qopt-report-file={dir}/optrpt'.format(dir=compile_dir),
                     win='/Qopt-report-file:{dir}\optrpt'.format(dir=compile_dir))
@@ -216,11 +216,11 @@ def get_cflags(use_gcc, c_flags, debug_symbols, compiletime_checks,
                 flags.extend(intel_unix)
     
     if use_gcc:
-        flags = c_flags['gcc']
+        flags = c_flags['gcc'][:]
     elif os.name == 'nt':
-        flags = c_flags['windows']
+        flags = c_flags['windows'][:]
     else:
-        flags = c_flags['linux']
+        flags = c_flags['linux'][:]
 
     set_flag(flags,intel_unix=['-diag-error-limit=5'],
                     intel_win=[],
