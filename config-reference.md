@@ -327,7 +327,9 @@ See [Intel Fortran Compiler Developer Guide: warn](https://www.intel.com/content
 
 ### `include` (*string* or *[string]*, optional)
 
-String or list of strings specifying additional files that are included in the user subroutine file.
+String or list of strings specifying additional files that are included (with `#include`) in the user subroutine file.
+
+Abaci will automatically detect Fortran source files in the same directory as your main user subroutine file as include files - use this field to specify source files in other folders that need to be included into your user subroutine.
 
 - Included file paths are specified relative to the folder containing the configuration file ('abaci.toml')
 - File globbing is supported, _e.g._: `include = 'src/*.f'`

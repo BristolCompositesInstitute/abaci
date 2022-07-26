@@ -183,6 +183,13 @@ def sanitize_config(config, config_dir):
         config['user-sub-file'] = os.path.realpath(os.path.join(
                                 config_dir,config['user-sub-file']))
 
+    # Automatically include *.f and *.f90 from user-sub directory
+    usub_dir = os.path.dirname(config['user-sub-file'])
+    for ext in ['.f', '.for', '.f90']:
+        auto_include = os.path.join(usub_dir,'*'+ext)
+        config['compile']['include'].extend(glob.glob(auto_include))
+    config['compile']['include'].remove(config['user-sub-file'])
+
     # User subroutine include paths are relative to the config file
     #  and expand globbing
     compile_includes = []
