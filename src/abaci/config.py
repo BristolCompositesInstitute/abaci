@@ -123,7 +123,7 @@ def config_schema():
 
     config_schema = Schema(And(Use(toml.loads),{
                             Optional('name', default=None): unicode,
-                            Optional('output', default=u'.'): unicode,
+                            Optional('output', default=u'scratch'): unicode,
                             Optional('user-sub-file',default=None): unicode,
                             Optional('cluster',default=cluster_defaults): default_cluster_schema,
                             Optional('dependency',default=[]): dependency_schema,

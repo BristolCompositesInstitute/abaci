@@ -34,7 +34,8 @@ Specifies the filename of the abaqus user subroutine to compile.
 Specifies the name of the directory into which compilation and job folders will be placed.
 
 - Specified relative to the current working directory.
-- If omitted, the default is '.', ie the current working directory
+- If omitted, the default is `./scratch` (in the current working directory)
+- The output folder is created if it does not exist
 
 
 ## Jobs list

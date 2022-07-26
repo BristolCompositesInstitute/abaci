@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [v0.4.2] - Unreleased
 
 - Fix bug with c/c++ compiler flags being set wrong due to list mutation
+- Change the default output directory to be `./scratch`
 
 ## [[v0.4.1]](https://github.com/BristolCompositesInstitute/abaci/releases/tag/v0.4.1) - 11/07/22
 
