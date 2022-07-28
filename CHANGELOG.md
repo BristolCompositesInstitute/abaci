@@ -4,7 +4,7 @@ Notable changes to this project are logged here according to release version and
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [v0.4.2] - Unreleased
+## [[v0.4.2]](https://github.com/BristolCompositesInstitute/abaci/releases/tag/v0.4.2) - 28/07/22
 
 - Fix bug with c/c++ compiler flags being set wrong due to list mutation
 - Change the default output directory to be `./scratch`
