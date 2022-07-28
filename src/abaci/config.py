@@ -115,6 +115,7 @@ def config_schema():
 
     compile_schema = Schema({Optional('fflags',default=flag_schema_defaults): flag_schema,
                             Optional('cflags',default=flag_schema_defaults): flag_schema,
+                            Optional('lflags',default=flag_schema_defaults): flag_schema,
                             Optional('opt-host',default=False): bool,
                             Optional('compiletime-checks',default=False): bool,
                             Optional('sources',default=[]): Or(unicode,[unicode]),
@@ -167,11 +168,11 @@ def sanitize_config(config, config_dir):
             return potential_list
 
     # Optional lists
-    for flag_lang in ('fflags','cflags'):
+    for flag_group in ('fflags','cflags','lflags'):
 
         for flag_target in ('linux','windows','gcc'):
 
-            config['compile'][flag_lang][flag_target] = ensure_list(config['compile'][flag_lang][flag_target])
+            config['compile'][flag_group][flag_target] = ensure_list(config['compile'][flag_group][flag_target])
     
     for field in ('include','sources'):
 

@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Automatically add Fortran files in the same folder as the user subroutine file to the include list
 - Add `abq-flags` field to config for specifying additional flags for Abaqus launch command
 - Add `--screen/-s` flag to echo Abaqus output to the console while running
+- Add `lflags` field to config compile table to specify extra linker flags
 
 ## [[v0.4.1]](https://github.com/BristolCompositesInstitute/abaci/releases/tag/v0.4.1) - 11/07/22
 

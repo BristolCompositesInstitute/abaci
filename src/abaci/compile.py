@@ -1,7 +1,7 @@
 import logging
 import os
 import abaqus as abq
-from utils import cwd, mkdir, copyfile, copydir, system_cmd, system_cmd_wait, relpathshort
+from utils import cwd, mkdir, copyfile, copydir, system_cmd, system_cmd_wait, relpathshort, to_ascii
 from shutil import rmtree
 from getpass import getuser
 
@@ -15,7 +15,7 @@ def compile_user_subroutine(args, output_dir, user_file, compile_conf, dep_list)
     compile_file = os.path.join(compile_dir,
                                  os.path.basename(user_file))
 
-    includes = compile_conf['include']
+    includes = compile_conf['include'][:]
 
     aux_sources = compile_conf['sources']
 
@@ -34,7 +34,12 @@ def compile_user_subroutine(args, output_dir, user_file, compile_conf, dep_list)
 
     log.debug('Flags = %s',fflags)
 
-    spool_env_file(compile_dir,fflags)
+    if os.name == 'nt':
+        lflags = compile_conf['lflags']['windows']
+    else:
+        lflags = compile_conf['lflags']['linux']
+
+    spool_env_file(compile_dir,fflags,lflags)
 
     log.info('Running abaqus make')
 
@@ -325,16 +330,21 @@ def compile_auxillary_sources(compile_dir,compile_conf,args,aux_source_list,ffla
                 compile_cpp(args.gcc, cflags, src, args.verbose)
 
 
-def spool_env_file(compile_dir,flags):
+def spool_env_file(compile_dir,fflags,lflags):
     """Generate the abaqus_v6.env file containing compiler flags"""
 
     env_file = os.path.join(compile_dir,'abaqus_v6.env')
 
+    fflags = map(to_ascii,fflags)
+    lflags = map(to_ascii,lflags)
+
     with open(env_file,'w') as f:
 
-        f.write('compile_fortran.extend({flags})\n'.format(flags=flags.__str__()))
+        f.write('compile_fortran.extend({fflags})\n'.format(fflags=fflags.__str__()))
+        f.write('link_sl.extend({lflags})\n'.format(lflags=lflags.__str__()))
 
         f.write('print(" ".join(compile_fortran))\n')
+        f.write('print(" ".join(link_sl))\n')
 
 
 def collect_cov_report(config,compile_dir,verbosity):

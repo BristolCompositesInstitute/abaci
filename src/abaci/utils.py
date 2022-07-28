@@ -145,7 +145,10 @@ def system_cmd_wait(p,verbosity,ofile=None,efile=None):
 
 def to_ascii(ustring):
 
-    return normalize('NFKD',ustring).encode('ascii','ignore')
+    if isinstance(ustring,str):
+        return ustring
+    else:
+        return normalize('NFKD',ustring).encode('ascii','ignore')
 
 
 def recurse_files(path):

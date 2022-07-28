@@ -312,18 +312,28 @@ fflags.windows = ''
 fflags.linux = ''
 cflags.windows = ''
 cflags.linux = ''
+lflags.windows = ''
+lflags.linux = ''
 compiletime-checks = false
 include = ['extra-source.f90']
 sources = ['cpp_functions.cpp']
 ```
 
-### `fflags.windows` / `fflags.linux` (*string*, optional)
+### `fflags.windows` / `fflags.linux` (*string* or *[string]*, optional)
 
 Extra compilation flags to pass to the fortran compiler.
 
-### `cflags.windows` / `cflags.linux` (*string*, optional)
+- Flags specified here are appended to the Abaqus defaults
+
+### `cflags.windows` / `cflags.linux` (*string* or *[string], optional)
 
 Extra compilation flags to pass to the c/c++ compiler (auxilliary sources only).
+
+### `lflags.windows` / `lflags.linux` (*string* or *[string], optional)
+
+Extra link flags to pass to the shared library linker.
+
+- Flags specified here are appended to the Abaqus defaults
 
 ### `opt-host` (*bool*, optional)
 
