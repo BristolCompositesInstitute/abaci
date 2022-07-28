@@ -89,6 +89,9 @@ String or list of strings specifying additional flags to pass to Abaqus when lau
 
 An optional list of additional files to copy to the job folder before launching the job.
 
+Abaci will automatically detect and copy `.inp` files in the same folder as the job file - use this field to specify
+other files that also need to be copied to the job folder for running the job.
+
 - Include file path is specified relative to the folder containing the configuration file ('abaci.toml')
 
 ### `mp-mode` (*[string]*, optional)

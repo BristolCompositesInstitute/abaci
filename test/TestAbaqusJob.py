@@ -178,8 +178,8 @@ class TestAbaqusJob(AbaciUnitTestSuite):
 
         job.launch_job(nproc=1,lib_dir=lib_dir)
 
-        # Check is_running reports true
-        self.assertTrue(job.is_running())
+        # Check poll() reports true (is running)
+        self.assertTrue(job.poll())
 
         # Wait for job and check completed successfully
         self.assertTrue(job.wait(verbose=-1) == 0)
@@ -202,8 +202,8 @@ class TestAbaqusJob(AbaciUnitTestSuite):
 
         job.launch_job(nproc=1,lib_dir=lib_dir)
 
-        # Check is_running reports true
-        self.assertTrue(job.is_running())
+        # Check poll() reports true (is running)
+        self.assertTrue(job.poll())
 
         # Wait for abaqus job to start
         stat_file = os.path.join(job.job_dir,job.local_job_name+'.sta')

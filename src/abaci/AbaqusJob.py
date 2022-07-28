@@ -1,6 +1,6 @@
 import logging
 import os
-from os.path import basename, join, splitext, isdir, exists
+from os.path import basename, join, splitext, isdir, exists, dirname
 from utils import cwd, copyfile, system_cmd, system_cmd_wait, copydir, mkdir, relpathshort, prompt_input_default
 import abaci.abaqus as abq
 from abaci.config import get_default_cluster_schema
@@ -8,6 +8,7 @@ from datetime import datetime
 from exceptions import ValueError
 import cPickle as pkl
 import abaci.slurm as slurm
+import glob
 
 class AbaqusJob:
 
@@ -46,6 +47,13 @@ class AbaqusJob:
             self.mp_mode = 'threads'
             self.cluster = cluster_defaults
             self.abq_flags = []
+
+        # Automatically include .inp files in same dir as job file
+        job_file_dir = dirname(self.job_file)
+        auto_include = join(job_file_dir,'*.inp')
+        self.include.extend(glob.glob(auto_include))
+        if self.job_file in self.include:
+            self.include.remove(self.job_file)
 
         self.job_dir = self.get_new_job_dir(output_dir)
 
