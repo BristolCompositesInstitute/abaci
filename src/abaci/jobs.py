@@ -110,10 +110,10 @@ def run_jobs(args,compile_dir,jobs):
     stats = []
 
 
-    # Wait for all jobs to complete
+    # Poll jobs for output and to check for completion time
     while True:
 
-        n_running = sum([j.is_running() for j in launched])
+        n_running = sum([j.poll(args.screen_output) for j in launched])
 
         if n_running == 0:
             break

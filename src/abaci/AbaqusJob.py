@@ -55,7 +55,8 @@ class AbaqusJob:
         self.start_time = None
         self.end_time = None
         self.job_script = None
-        
+        self.ofile_handle = None
+        self.efile_handle = None
 
     def get_new_job_dir(self,output_dir):
         """Find a new job directory to run job in"""
@@ -88,10 +89,11 @@ class AbaqusJob:
                                           nproc=nproc)
 
 
-    def is_running(self):
+    def poll(self, screen_output=None):
         """
-        Check if job is currently running and record end time if not
-        (The resolution of recorded end time is how frequently you poll this function)
+        Check if job is currently running, dump latest output if requested,
+        and record end time at completion.
+        (The resolution of recorded end time is how frequently you call this function)
         """
 
         log = logging.getLogger('abaci')
@@ -100,6 +102,32 @@ class AbaqusJob:
 
         has_started = self.start_time
 
+        if has_started and not self.ofile_handle:
+
+            self.ofile_handle = open(self.ofile,'r')
+
+        if has_started and not self.efile_handle:
+
+            self.efile_handle = open(self.efile,'r')
+
+        # Print latest output from stdout & stderr logs
+        if has_started and screen_output:
+
+            for handle in [self.ofile_handle, self.efile_handle]:
+
+                while True:
+
+                    line = handle.readline()
+
+                    if line:
+
+                        print line.strip()
+
+                    else:
+
+                        break
+        
+        # Record end time
         if has_started and (not is_running) and \
             (not self.end_time):
 
@@ -118,7 +146,7 @@ class AbaqusJob:
 
         log = logging.getLogger('abaci')
 
-        if self.is_running():
+        if self.poll():
 
             # Job not finished yet
             log.info('Waiting for job "%s" to complete...', self.name)
@@ -133,7 +161,7 @@ class AbaqusJob:
 
         log = logging.getLogger('abaci')
 
-        if not self.is_running():
+        if not self.poll():
             
             # Job already completed
             return

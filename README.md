@@ -138,6 +138,7 @@ optional arguments:
   -d, --debug           enable run-time debugging checks
   -c, --check           enable strict compile-time checks
   -0, --noopt           compile without any optimisations
+  -s, --screen          echo Abaqus output to the screen while running
   -b, --background      run abaci in the background after compilation
   -n NPROC, --nproc NPROC
                         specify number of threads/processes to run with Abaqus
@@ -175,6 +176,7 @@ optional arguments:
   -d, --debug      enable run-time debugging checks
   -c, --check      enable strict compile-time checks
   -0, --noopt      compile without any optimisations
+  -s, --screen     echo Abaqus output to the screen while running
 ```
 </details>
 

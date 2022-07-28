@@ -85,6 +85,9 @@ def parse_cli():
     build_group.add_argument('-g','--gcc',help='use gnu compilers for auxillary source files',
                         dest='gcc',action='store_true')
 
+    build_group.add_argument('-s','--screen',help='echo Abaqus output to the screen while running',
+                        dest='screen_output',action='store_true')
+
     # SUBMIT subcommand
     submit_command = subparsers.add_parser('submit', parents=[common_group,build_group],
                                          help='Compile user subroutines and submit jobs to cluster (SLURM)',

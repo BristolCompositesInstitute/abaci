@@ -38,7 +38,7 @@ def compile_user_subroutine(args, output_dir, user_file, compile_conf, dep_list)
 
     log.info('Running abaqus make')
 
-    stat = abq.make(dir=compile_dir, lib_file=compile_file, verbosity=args.verbose)
+    stat = abq.make(dir=compile_dir, lib_file=compile_file, verbosity=(args.verbose + 2*args.screen_output))
     
     return stat, compile_dir
 
@@ -334,7 +334,7 @@ def spool_env_file(compile_dir,flags):
 
         f.write('compile_fortran.extend({flags})\n'.format(flags=flags.__str__()))
 
-        f.write('print(compile_fortran)\n')
+        f.write('print(" ".join(compile_fortran))\n')
 
 
 def collect_cov_report(config,compile_dir,verbosity):
