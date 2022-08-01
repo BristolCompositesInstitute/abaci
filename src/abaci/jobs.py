@@ -94,7 +94,7 @@ def run_jobs(args,compile_dir,jobs):
 
         # Wait here if already running maximum number of concurrent jobs
         while True:
-            n_running = sum([j.is_running() for j in launched])
+            n_running = sum([j.poll() for j in launched])
 
             if n_running < args.njob:
                 break
