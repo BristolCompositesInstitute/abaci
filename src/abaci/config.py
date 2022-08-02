@@ -281,8 +281,23 @@ def check_config(config):
 
 
 
-def init_new_config(file_path,user_sub_file=None,output=None,full=None,bare=None):
+def init_new_config(file_path,user_sub_file=None,output=None,full=None,bare=None,overwrite=None):
     """Initialise a new config file"""
+
+    log = logging.getLogger('abaci')
+
+    if exists(file_path):
+
+        if not overwrite:
+
+            log.fatal('(!) File "%s" already exists, not overwriting',file_path)
+
+            exit(1)
+
+        else:
+
+            log.warn('Overwriting file %s with new configuration',file_path)
+
 
     user_sub_file = user_sub_file or "user.f"
     output = output or "scratch"

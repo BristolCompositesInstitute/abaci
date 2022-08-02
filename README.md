@@ -326,7 +326,7 @@ Create a basic configuration file with a known user subroutine file
 <summary>Click for abaci init help text</summary>
 
 ```
-usage: abaci init [-h] [-v | -q] [--config CONFIG] [-f] [-b]
+usage: abaci init [-h] [-v | -q] [--config CONFIG] [-e] [-f] [-b]
                   [-u CONFIG_USUB_FILE] [-o CONFIG_OUTPUT_PATH]
 
 Initialise a new abaci.toml project file
@@ -337,7 +337,8 @@ optional arguments:
   -q, --quiet           output less information from abaci
   --config CONFIG       specify a different config file to default
                         ("abaci.toml")
-  -f, --full            output a full set of config options
+  -e, --extra           output extra config options
+  -f, --force           force overwrite of existing config file
   -b, --bare            exclude explanatory comments from config
   -u CONFIG_USUB_FILE, --user CONFIG_USUB_FILE
                         specify the user subroutine file path

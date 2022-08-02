@@ -55,8 +55,11 @@ def parse_cli():
                                          help='Initialise a new abaci.toml project file',
                                          description="Initialise a new abaci.toml project file")
 
-    init_command.add_argument('-f','--full',help='output a full set of config options',
+    init_command.add_argument('-e','--extra',help='output extra config options',
                         dest='full_config',action='store_true')
+
+    init_command.add_argument('-f','--force',help='force overwrite of existing config file',
+                        dest='overwrite_config',action='store_true')
 
     init_command.add_argument('-b','--bare',help='exclude explanatory comments from config',
                         dest='bare_config',action='store_true')

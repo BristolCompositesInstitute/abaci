@@ -25,7 +25,8 @@ def main():
         init_new_config(args.config,user_sub_file=args.config_usub_file,
                                     output=args.config_output_path,
                                     full=args.full_config,
-                                    bare=args.bare_config)
+                                    bare=args.bare_config,
+                                    overwrite=args.overwrite_config)
         exit()
 
     config, config_dir = load_config(args.config,False)
