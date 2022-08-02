@@ -18,7 +18,7 @@ jobs:
 
       - name: Build documentation
         working-directory: docs
-        run: conda run --name abaci-docs-env sphinx-build -M html src build -W --keep-going
+        run: conda run --name abaci-docs-env sphinx-build -M html . build -W --keep-going
 
       - name: Upload built HTML documentation artifact
         uses: actions/upload-artifact@v3
