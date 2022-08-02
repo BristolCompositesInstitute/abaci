@@ -11,7 +11,7 @@ Name "Abaci"
 !define SM_FOLDER "BCI"
 
 ; Installer icon
-!define MUI_ICON "abaci.ico"
+!define MUI_ICON "../media/abaci.ico"
 
 ; Compress installer
 SetCompress auto
