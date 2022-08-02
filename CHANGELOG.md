@@ -4,6 +4,12 @@ Notable changes to this project are logged here according to release version and
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [v0.4.4] - Unreleased
+
+- Update abaci init config template to include `abq-flags` and `lflags`
+- Update abaci init to not overwrite existing files unless requested
+
+
 ## [[v0.4.3]](https://github.com/BristolCompositesInstitute/abaci/releases/tag/v0.4.3) - 01/08/22
 
 - Fix bug from previous release for running jobs concurrently
