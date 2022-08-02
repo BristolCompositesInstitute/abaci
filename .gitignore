@@ -1,3 +1,4 @@
 *.pyc
 *.pyi
 .vscode*
+docs/build
