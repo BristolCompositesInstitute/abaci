@@ -101,7 +101,7 @@ any command with the `--verbose` flag, _e.g._ `$ abaci compile --verbose`
 ```{seealso}
 Abaci provides a number of extra command line flags for controlling the compilation process,
 including some for identifying bugs in the user-subroutine code.
-See the [compilation how-to guide](how-to-guides/compile) for more information, or run:
+See the [Command Line Reference](reference/cli.md) for more information, or run:
 `$ abaci compile --help`
 ```
 
@@ -129,11 +129,6 @@ previously-compiled user subroutines.
 ```{hint}
 Abaci will create a new job folder every time you launch a job by incrementing the numbered suffix.
 ``` 
-
-```{seealso}
-See the [regression checks](how-to-guides/regression-checks) and [post-processing](how-to-guides/post-processing) how-to guides for an explanation
-of the extra command line output when running this example
-```
 
 In this example, `test-job` is the name of the job we wish to run. We can also specify other job names
 or job tags to run a group of jobs.
@@ -177,5 +172,5 @@ about the `example` project including:
 - Path to the Fortran user-subroutine source file
 - Information about the test-job
 
-You can learn more about individual parts of the configuration file in the [how-to guides](how-to-guides/index)
-or you can read the full specification in the [configuration reference documentation](reference/config).
+You can learn more about individual parts of the configuration file in the
+[configuration reference documentation](reference/config).
