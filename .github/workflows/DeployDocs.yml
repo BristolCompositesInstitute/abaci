@@ -4,11 +4,14 @@ on:
     branches:
   pull_request:
   workflow_dispatch:
+  release:
+    types: [published]
 
 jobs:
   html:
+    if: github.event_name != 'release'
     runs-on: ubuntu-latest
-    steps:
+    steps: 
       - name: Checkout repository
         uses: actions/checkout@v3
 
@@ -62,3 +65,13 @@ jobs:
         with:
           name: abaci-docs-env-pdf
           path: docs/build/latex/
+
+      - name: Upload to release
+        if: ${{ github.event_name == 'release' }}
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: docs/build/latex/abaci.pdf
+          asset_name: abaci-docs-$tag.pdf
+          tag: ${{ github.ref }}
+          overwrite: true
