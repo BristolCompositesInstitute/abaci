@@ -239,7 +239,7 @@ def get_cflags(use_gcc, c_flags, debug_symbols, compiletime_checks,
     if compiletime_checks:
         set_flag(flags,intel_unix=['-warn', 'all'],
                        intel_win='/Wall',
-                       gnu="-Wall -Wextra -Wimplicit-interface")
+                       gnu=['-Wall', '-Wextra'])
 
     if opt_host and not noopt:
         set_flag(flags,intel_unix='-xHOST',
@@ -327,7 +327,7 @@ def compile_auxillary_sources(compile_dir,compile_conf,args,aux_source_list,ffla
 
             if src.endswith('.c') or src.endswith('.cpp'):
                 
-                compile_cpp(args.gcc, cflags, src, args.verbose)
+                compile_cpp(args.gcc, cflags, src, args.verbose + 2*args.screen_output)
 
 
 def spool_env_file(compile_dir,fflags,lflags):
