@@ -50,13 +50,15 @@ jobs:
         run: sudo apt install ${{ env.APT_DEPS }}
 
       - name: Create Conda environment
+        working-directory: docs
         run: conda env create --file environment.yml
 
       - name: Build documentation
+        working-directory: docs
         run: conda run --name abaci-docs-env sphinx-build -M latexpdf src build -W --keep-going
 
       - name: Upload built pdf documentation artifact
         uses: actions/upload-artifact@v3
         with:
           name: abaci-docs-env-pdf
-          path: build/latex/
+          path: docs/build/latex/
