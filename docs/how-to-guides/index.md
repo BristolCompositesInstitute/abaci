@@ -9,4 +9,5 @@ maxdepth: 1
 caption: "Contents:"
 ---
 install
+regression-checks
 ```

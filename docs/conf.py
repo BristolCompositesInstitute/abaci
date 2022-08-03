@@ -71,4 +71,4 @@ html_title = "Abaci Documentation"
 # Use title: key in YAML frontmatter to set document title
 myst_title_to_header = True
 
-myst_heading_anchors = 3
+myst_heading_anchors = 4
