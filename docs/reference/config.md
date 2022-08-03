@@ -246,14 +246,6 @@ Either a list of frame indices for which to perform checks or `'all'` or `'last'
 
 If not specified, then `'last'` is the default.
 
-#### check.elements
-
-__*strings or [int,...], optional*__
-
-Either a list of element indices for which to perform checks or `'all'`.
-
-If not specified, then `'all'` is the default.
-
 
 ## Compile section
 

@@ -9,5 +9,6 @@ maxdepth: 1
 caption: "Contents:"
 ---
 install
+getting-started-with-abaci
 regression-checks
 ```
