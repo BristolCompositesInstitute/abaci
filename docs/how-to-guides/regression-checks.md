@@ -2,9 +2,9 @@
 title: "How to Setup Regression Checks"
 ---
 
-Regression checks are useful when updating or refactoring code as a quick
-way of ensuring that code changes do not substantially alter the functionality
-of the code.
+Regression checks are useful when updating or refactoring user subroutine code
+as a quick way of ensuring that code changes do not substantially alter the
+functionality of the code.
 
 Regression checks in Abaci work very simply by calculating and displaying the
 [RMS](https://en.wikipedia.org/wiki/Root-mean-square_deviation) error in field

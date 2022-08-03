@@ -197,7 +197,7 @@ In these examples, Abaci will:
 3. Copy job files and the user-subroutine library to each job folder
 4. Launch each job with Abaqus and wait for the jobs to complete
 5. Run any [regression checks](./regression-checks.md) or
-   post-processing scripts if specified
+   [post-processing commands](./post-processing.md) if specified
 
 ```{note}
 By default, the `<output>` folder is called `scratch` in the current directory.
