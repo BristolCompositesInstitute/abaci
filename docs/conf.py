@@ -19,8 +19,8 @@
 # -- Project information -----------------------------------------------------
 
 project = 'Abaci'
-copyright = 'Laurence Kedward 2022'
-author = 'Laurence Kedward'
+copyright = 'University of Bristol 2022'
+author = 'Bristol Composites Institute Research Software Engineering Team'
 
 
 # -- General configuration ---------------------------------------------------
