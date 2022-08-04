@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Getting Started with Abaci in your Project" href="getting-started-with-abaci.html" /><link rel="prev" title="How-to guides" href="index.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Reference" href="../reference/index.html" /><link rel="prev" title="How to Setup Regression Checks" href="regression-checks.html" />
 
     <link rel="shortcut icon" href="../_static/abaci.ico"/><meta name="generator" content="sphinx-5.1.1, furo 2022.06.21"/>
-        <title>How to Install Abaci - Abaci Documentation</title>
+        <title>How to Setup Post-Processing Commands - Abaci Documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=40978830699223671f4072448e654b5958f38b89" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
@@ -161,10 +161,10 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../quickstart-tutorial.html">Quickstart Tutorial</a></li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">How-to guides</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">How to Install Abaci</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html">How to Install Abaci</a></li>
 <li class="toctree-l2"><a class="reference internal" href="getting-started-with-abaci.html">Getting Started with Abaci in your Project</a></li>
 <li class="toctree-l2"><a class="reference internal" href="regression-checks.html">How to Setup Regression Checks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="post-processing.html">How to Setup Post-Processing Commands</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">How to Setup Post-Processing Commands</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -205,101 +205,100 @@
           </label>
         </div>
         <article role="main">
-          <section id="how-to-install-abaci">
-<h1>How to Install Abaci<a class="headerlink" href="#how-to-install-abaci" title="Permalink to this heading">#</a></h1>
-<section id="prerequisites">
-<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this heading">#</a></h2>
-<p>The following software is required to use abaci:</p>
-<ol class="arabic simple">
-<li><p>Abaqus</p></li>
-<li><p>Intel Fortran Compiler</p></li>
-</ol>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>To use abaci, Abaqus and the Intel Fortran compiler need to be available within
-your command line environment.</p>
-<ul class="simple">
-<li><p>On Windows you can use the ‘Abaqus Command + iFort’ link from the start menu</p></li>
-<li><p>On Linux, you can add the appropriate environment module or source the setvars
-script from your Intel compiler installation.</p></li>
-</ul>
-</div>
-<section id="check-environment">
-<h3>Check Environment<a class="headerlink" href="#check-environment" title="Permalink to this heading">#</a></h3>
-<p>You can check that all prerequisites are available by running the following
-commands in your terminal:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>  abaqus <span class="nv">information</span><span class="o">=</span>version
-  ifort --version
+          <section id="how-to-setup-post-processing-commands">
+<h1>How to Setup Post-Processing Commands<a class="headerlink" href="#how-to-setup-post-processing-commands" title="Permalink to this heading">#</a></h1>
+<p>Abaci can be easily configured to run post-processing commands after an Abaqus job
+has completed.</p>
+<section id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this heading">#</a></h2>
+<p>To add post-processing commands for a particular job file, that job must first be
+specified in the configuration file.</p>
+<p><strong>Example:</strong></p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[[job]]</span><span class="w"></span>
+<span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;jobs/my-abaqus-job.inp&#39;</span><span class="w"></span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;job1&#39;</span><span class="w"></span>
+<span class="n">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;test&#39;</span><span class="p">,</span><span class="s">&#39;1elem&#39;</span><span class="p">]</span><span class="w"></span>
 </pre></div>
 </div>
-<p>which should output information about the current Abaqus and Intel Fortran compiler versions.
-If either of these commands fails, then you should first check your environment is setup correctly.</p>
-</section>
-</section>
-<section id="option-1-recommended-installers">
-<h2>Option 1 (Recommended): Installers<a class="headerlink" href="#option-1-recommended-installers" title="Permalink to this heading">#</a></h2>
-<p>Self-contained installers are available to download for Windows and Linux from the <a class="reference external" href="https://github.com/BristolCompositesInstitute/abaci/releases/latest">latest release page</a>.</p>
+<p>Post-processing commands are easily added to a job by adding the
+<a class="reference internal" href="../reference/config.html#post-process"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">post-process</span></code></span></a> field to the job entry:</p>
+<p><strong>Example:</strong> <em>adding a post-processing command</em></p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[[job]]</span><span class="w"></span>
+<span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;jobs/my-abaqus-job.inp&#39;</span><span class="w"></span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;job1&#39;</span><span class="w"></span>
+<span class="n">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;test&#39;</span><span class="p">,</span><span class="s">&#39;1elem&#39;</span><span class="p">]</span><span class="w"></span>
+<span class="n">post-process</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;python scripts/post-process.py&#39;</span><span class="p">]</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Multiple post-processing commands can be specified as a list, where each
+command is run sequentially in the order listed.</p>
+<p><strong>Example:</strong> <em>add multiple post-processing commands</em></p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[[job]]</span><span class="w"></span>
+<span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;jobs/my-abaqus-job.inp&#39;</span><span class="w"></span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;job1&#39;</span><span class="w"></span>
+<span class="n">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;test&#39;</span><span class="p">,</span><span class="s">&#39;1elem&#39;</span><span class="p">]</span><span class="w"></span>
+<span class="n">post-process</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;abaqus python scripts/extract-data.py&#39;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                 </span><span class="s">&#39;python scripts/plot-data.py&#39;</span><span class="p">]</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Now, once the job has completed execution Abaci will automatically
+execute the post-processing commands.</p>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
-<p>You <strong>do not need to be an administrator</strong> to use the Abaci installers, since they will install for the local user only.</p>
+<p>You can run and rerun post-processing commands for completed jobs using the command <a class="reference internal" href="../reference/cli.html#abaci-post"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">post</span> <span class="pre">&lt;job-dir&gt;</span></code></span></a> where <code class="docutils literal notranslate"><span class="pre">&lt;job-dir&gt;</span></code> is the output directory for the abaci job that has completed.</p>
 </div>
-<section id="windows">
-<h3>Windows<a class="headerlink" href="#windows" title="Permalink to this heading">#</a></h3>
-<p>Simply download the <code class="docutils literal notranslate"><span class="pre">abaci-installer.exe</span></code> executable from the <a class="reference external" href="https://github.com/BristolCompositesInstitute/abaci/releases/latest">latest release page</a>
-and run the installer.</p>
+</section>
+<section id="special-variables">
+<h2>Special Variables<a class="headerlink" href="#special-variables" title="Permalink to this heading">#</a></h2>
+<p>There are a number of special variables that can be used in the post-process
+commands in order to pass job-specific information to our scripts:</p>
 <ul class="simple">
-<li><p>It is recommended to leave the default destination folder unchanged</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{PY}</span></code> will be substituted with the correct <code class="docutils literal notranslate"><span class="pre">abaqus</span> <span class="pre">python</span></code> command</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{ROOT}</span></code> will be substituted with the path to the directory containing the
+<code class="docutils literal notranslate"><span class="pre">abaci.toml</span></code> configuration file</p>
+<ul>
+<li><p>This allows you to specify the path to your postprocessing script relative
+to the repository root</p></li>
 </ul>
-<p><img alt="image" src="../_images/windows-installer.png" /></p>
-</section>
-<section id="on-linux">
-<h3>On Linux<a class="headerlink" href="#on-linux" title="Permalink to this heading">#</a></h3>
-<p>Download the <code class="docutils literal notranslate"><span class="pre">abaci-installer.sh</span></code> script from the <a class="reference external" href="https://github.com/BristolCompositesInstitute/abaci/releases/latest">latest release page</a>
-and then enable execution with:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>  chmod u+x abaci-installer.sh
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{ODB}</span></code> will be substituted with the path to the output database (<code class="docutils literal notranslate"><span class="pre">.odb</span></code>)
+file for this job</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{DIR}</span></code> will be substituted with the path to the output directory for this job</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{JOB}</span></code> will be substituted with the name of the job (without any extensions or paths)</p></li>
+</ul>
+<p><strong>Example:</strong> <em>run a python script using Abaqus python</em></p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[[job]]</span><span class="w"></span>
+<span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;myjob.inp&#39;</span><span class="w"></span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;myjob&#39;</span><span class="w"></span>
+<span class="n">post-process</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;{PY} {ROOT}/scripts/postprocess.py {ODB} {JOB}&#39;</span><span class="w"></span>
 </pre></div>
 </div>
-<p>Then execute with:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>  ./abaci-installer.sh
+<p>This will execute the following command once the job has completed:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>abaqus python /path/to/repo/scripts/postprocess.py /path/to/job-dir/myjob.odb myjob
 </pre></div>
 </div>
-<p>The Linux installer will install abaci to <code class="docutils literal notranslate"><span class="pre">$HOME/.local/bin</span></code>, so you should ensure that this folder is on your path if not already;
-you can do this by adding the following line to the end of your <code class="docutils literal notranslate"><span class="pre">$HOME/.bash_profile</span></code> file:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$HOME</span>/.local/bin
-</pre></div>
-</div>
-</section>
-</section>
-<section id="option-2-clone-the-repository">
-<h2>Option 2: Clone the Repository<a class="headerlink" href="#option-2-clone-the-repository" title="Permalink to this heading">#</a></h2>
-<p>First clone the repository with git:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>  git clone git@github.com:BristolCompositesInstitute/abaci.git
-</pre></div>
-</div>
-<p>Then run one of the installation scripts in the <code class="docutils literal notranslate"><span class="pre">scripts</span></code> subfolder:</p>
+<p>where:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">./scripts/install</span></code> on Linux</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">./scripts/install-windows.cmd</span></code> on Windows</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{ROOT}</span></code> has been replaced with the absolute path to the repository root (defined by the directory containing the abaci.toml file);</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{ODB}</span></code> has been replaced by the absolute path to the output database file;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{JOB}</span></code> has been replaced by the name of the job.</p></li>
 </ul>
-<p>The Linux installer will install abaci to <code class="docutils literal notranslate"><span class="pre">$HOME/.local/bin</span></code>, so you should ensure that this folder is on your path if not already.</p>
-</section>
-<section id="check-your-installation">
-<h2>Check Your Installation<a class="headerlink" href="#check-your-installation" title="Permalink to this heading">#</a></h2>
-<p>After following the installations instruction above, you can verify your abaci installation
-by opening a command window and running:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>  abaci --version
+<p>In this example, the odb filepath and job name have been passed to the script
+as a command line arguments. To access them within the Python script, you can
+use <a class="reference external" href="https://docs.python.org/3/library/sys.html#sys.argv"><code class="docutils literal notranslate"><span class="pre">sys.argv</span></code></a>.</p>
+<p><strong>Example:</strong> <em>read the first two command line arguments in a Python script</em></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">odb_file</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">job_name</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>which should output version information for abaci.</p>
-</section>
-<section id="install-locations">
-<h2>Install Locations<a class="headerlink" href="#install-locations" title="Permalink to this heading">#</a></h2>
-<p>The self-contained Windows installer will install Abaci files to
-<code class="docutils literal notranslate"><span class="pre">c:\Users\&lt;username&gt;\AppData\BCI\abaci</span></code> by default.</p>
-<p>The Windows installer script (<code class="docutils literal notranslate"><span class="pre">install-windows.cmd</span></code>) and will place
-the launcher script in <code class="docutils literal notranslate"><span class="pre">c:\SIMULIA\Commands</span></code> (with the abaqus launcher).</p>
-<p>The Linux installer script will install Abaci files to <code class="docutils literal notranslate"><span class="pre">$HOME/.local/lib/abaci</span></code> and will place
-the launcher script in <code class="docutils literal notranslate"><span class="pre">$HOME/.local/bin</span></code>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>See the <a class="reference external" href="https://github.com/BristolCompositesInstitute/abaci/tree/main/example">Example Project</a>
+in the Abaci repository for a full working example of using the post-processing
+command.</p>
+</div>
 </section>
 </section>
 
@@ -308,23 +307,23 @@ the launcher script in <code class="docutils literal notranslate"><span class="p
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="getting-started-with-abaci.html">
+          <a class="next-page" href="../reference/index.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Getting Started with Abaci in your Project</div>
+                <div class="title">Reference</div>
               </div>
               <svg><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="index.html">
+          <a class="prev-page" href="regression-checks.html">
               <svg><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">How-to guides</div>
+                <div class="title">How to Setup Regression Checks</div>
                 
               </div>
             </a>
@@ -360,19 +359,9 @@ the launcher script in <code class="docutils literal notranslate"><span class="p
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">How to Install Abaci</a><ul>
-<li><a class="reference internal" href="#prerequisites">Prerequisites</a><ul>
-<li><a class="reference internal" href="#check-environment">Check Environment</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#option-1-recommended-installers">Option 1 (Recommended): Installers</a><ul>
-<li><a class="reference internal" href="#windows">Windows</a></li>
-<li><a class="reference internal" href="#on-linux">On Linux</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#option-2-clone-the-repository">Option 2: Clone the Repository</a></li>
-<li><a class="reference internal" href="#check-your-installation">Check Your Installation</a></li>
-<li><a class="reference internal" href="#install-locations">Install Locations</a></li>
+<li><a class="reference internal" href="#">How to Setup Post-Processing Commands</a><ul>
+<li><a class="reference internal" href="#configuration">Configuration</a></li>
+<li><a class="reference internal" href="#special-variables">Special Variables</a></li>
 </ul>
 </li>
 </ul>

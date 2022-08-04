@@ -161,12 +161,13 @@
 <ul class="current">
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Quickstart Tutorial</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="how-to-guides/index.html">How-to guides</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2 has-children"><a class="reference internal" href="how-to-guides/install.html">How to Install Abaci</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
+<li class="toctree-l2"><a class="reference internal" href="how-to-guides/install.html">How to Install Abaci</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how-to-guides/getting-started-with-abaci.html">Getting Started with Abaci in your Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how-to-guides/regression-checks.html">How to Setup Regression Checks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how-to-guides/post-processing.html">How to Setup Post-Processing Commands</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="reference/cli.html">Command Line Interface Reference</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/config.html">Configuration Reference</a></li>
 </ul>
@@ -327,19 +328,36 @@ We could therefore also run this job with:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>  abaci run <span class="nb">test</span>
 </pre></div>
 </div>
-<p>You have now seen how to run abaci from the command line using the example repository,
-<strong>but how does abaci know about your code files and abaqus <code class="docutils literal notranslate"><span class="pre">.inp</span></code> job files?</strong></p>
-<p>This information is stored in the <code class="docutils literal notranslate"><span class="pre">abaci.toml</span></code> configuration file, described in the next section.</p>
+<section id="running-a-job-in-debug-mode">
+<h3>Running a Job in Debug Mode<a class="headerlink" href="#running-a-job-in-debug-mode" title="Permalink to this heading">#</a></h3>
+<p>To help identify or diagnose bugs in your user subroutine code, you can compile
+and run your code in ‘debug’ mode by adding the <code class="docutils literal notranslate"><span class="pre">--debug</span></code> flag:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>  abaci run <span class="nb">test</span> --debug
+</pre></div>
+</div>
+<p>Debug mode will add a number of additional compiler flags to check for common
+errors. Most notably, <strong>debug mode enables runtime checks</strong>, which adds extra
+code to your compiled user subroutine to check for the following error
+conditions:</p>
+<ul class="simple">
+<li><p>Out-of-bounds array access</p></li>
+<li><p>Use of uninitialised variables in expressions</p></li>
+<li><p>Use of unallocated arrays or uninitialised pointers</p></li>
+<li><p>Checking of subroutine and function interfaces</p></li>
+</ul>
+<div class="admonition-recommendation admonition">
+<p class="admonition-title">Recommendation</p>
+<p>Regularly check that your code runs successfully in debug mode, to ensure
+that subtle bugs are not hidden in your code.</p>
+</div>
+</section>
 </section>
 <section id="the-configuration-file">
 <h2>The Configuration File<a class="headerlink" href="#the-configuration-file" title="Permalink to this heading">#</a></h2>
-<p>The configuration file is used to store all the information needed by abaci about your user-subroutine code
-and test jobs.</p>
+<p>You have now seen how to run abaci from the command line using the example repository,
+but how does abaci know about your code files and abaqus <code class="docutils literal notranslate"><span class="pre">.inp</span></code> job files?
+This information is stored in the <code class="docutils literal notranslate"><span class="pre">abaci.toml</span></code> configuration file.</p>
 <p>When abaci starts, it will look for a configuration file called <code class="docutils literal notranslate"><span class="pre">abaci.toml</span></code> in the current directory.</p>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<p><em>toml</em> is a human-readable configuration format, see <a class="reference external" href="https://toml.io/">https://toml.io/</a> for more information.</p>
-</div>
 <p>If you open the <code class="docutils literal notranslate"><span class="pre">abaci.toml</span></code> file in any code editor, you can see information
 about the <code class="docutils literal notranslate"><span class="pre">example</span></code> project including:</p>
 <ul class="simple">
@@ -348,8 +366,28 @@ about the <code class="docutils literal notranslate"><span class="pre">example</
 <li><p>Path to the Fortran user-subroutine source file</p></li>
 <li><p>Information about the test-job</p></li>
 </ul>
-<p>You can learn more about individual parts of the configuration file in the
-<a class="reference internal" href="reference/config.html"><span class="doc std std-doc">configuration reference documentation</span></a>.</p>
+<p>Other information that can go in the configuration file includes:</p>
+<ul class="simple">
+<li><p>Extra command line flags to pass to Abaqus or the compiler</p></li>
+<li><p>Information about auxiliary source files, including C/C++ sources</p></li>
+<li><p>Information for specifying regression checks and post-processing commands</p></li>
+<li><p>Settings for controlling job submission to SLURM</p></li>
+<li><p>Details for using code from remote repositories as dependencies</p></li>
+</ul>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>You can read more about what can go in the configuration file in the
+<a class="reference internal" href="reference/config.html"><span class="doc std std-doc">Configuration Reference</span></a></p>
+</div>
+</section>
+<section id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this heading">#</a></h2>
+<p>Now that you have completed the quickstart tutorial, take a
+look at the <a class="reference internal" href="how-to-guides/index.html"><span class="doc std std-doc">How-to Guides</span></a> for how to perform
+common tasks with Abaci.</p>
+<p>Detailed documentation can be found in the
+<a class="reference internal" href="reference/cli.html"><span class="doc std std-doc">Command Line Interface Reference</span></a> and the
+<a class="reference internal" href="reference/config.html"><span class="doc std std-doc">Configuration File Reference</span></a>.</p>
 </section>
 </section>
 
@@ -382,7 +420,7 @@ about the <code class="docutils literal notranslate"><span class="pre">example</
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; Laurence Kedward 2022
+                Copyright &#169; University of Bristol 2022
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
@@ -420,8 +458,12 @@ about the <code class="docutils literal notranslate"><span class="pre">example</
 </ul>
 </li>
 <li><a class="reference internal" href="#compiling-user-subroutine-code">Compiling User Subroutine Code</a></li>
-<li><a class="reference internal" href="#running-an-abaqus-job">Running an Abaqus Job</a></li>
+<li><a class="reference internal" href="#running-an-abaqus-job">Running an Abaqus Job</a><ul>
+<li><a class="reference internal" href="#running-a-job-in-debug-mode">Running a Job in Debug Mode</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#the-configuration-file">The Configuration File</a></li>
+<li><a class="reference internal" href="#next-steps">Next Steps</a></li>
 </ul>
 </li>
 </ul>
@@ -439,5 +481,7 @@ about the <code class="docutils literal notranslate"><span class="pre">example</
     <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/scripts/furo.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-TFZ8YW7MNE"></script>
+    <script src="_static/ga-init.js"></script>
     </body>
 </html>

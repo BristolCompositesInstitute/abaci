@@ -146,23 +146,39 @@ We could therefore also run this job with:
   abaci run test
 ```
 
-You have now seen how to run abaci from the command line using the example repository,
-__but how does abaci know about your code files and abaqus `.inp` job files?__
 
-This information is stored in the `abaci.toml` configuration file, described in the next section.
+### Running a Job in Debug Mode
+
+To help identify or diagnose bugs in your user subroutine code, you can compile
+and run your code in 'debug' mode by adding the `--debug` flag:
+
+```shell
+  abaci run test --debug
+```
+
+Debug mode will add a number of additional compiler flags to check for common
+errors. Most notably, __debug mode enables runtime checks__, which adds extra
+code to your compiled user subroutine to check for the following error
+conditions:
+
+- Out-of-bounds array access
+- Use of uninitialised variables in expressions
+- Use of unallocated arrays or uninitialised pointers
+- Checking of subroutine and function interfaces
+
+```{admonition} Recommendation
+Regularly check that your code runs successfully in debug mode, to ensure
+that subtle bugs are not hidden in your code.
+```
 
 
 ## The Configuration File
 
-The configuration file is used to store all the information needed by abaci about your user-subroutine code
-and test jobs.
+You have now seen how to run abaci from the command line using the example repository,
+but how does abaci know about your code files and abaqus `.inp` job files?
+This information is stored in the `abaci.toml` configuration file.
 
 When abaci starts, it will look for a configuration file called `abaci.toml` in the current directory.
-
-
-```{seealso}
-_toml_ is a human-readable configuration format, see <https://toml.io/> for more information.
-```
 
 If you open the `abaci.toml` file in any code editor, you can see information
 about the `example` project including:
@@ -172,5 +188,25 @@ about the `example` project including:
 - Path to the Fortran user-subroutine source file
 - Information about the test-job
 
-You can learn more about individual parts of the configuration file in the
-[configuration reference documentation](reference/config).
+Other information that can go in the configuration file includes:
+
+- Extra command line flags to pass to Abaqus or the compiler
+- Information about auxiliary source files, including C/C++ sources
+- Information for specifying regression checks and post-processing commands
+- Settings for controlling job submission to SLURM
+- Details for using code from remote repositories as dependencies
+
+```{seealso}
+You can read more about what can go in the configuration file in the
+[Configuration Reference](./reference/config.md)
+```
+
+
+## Next Steps
+Now that you have completed the quickstart tutorial, take a
+look at the [How-to Guides](./how-to-guides/index.md) for how to perform
+common tasks with Abaci.
+
+Detailed documentation can be found in the
+[Command Line Interface Reference](./reference/cli.md) and the
+[Configuration File Reference](./reference/config.md).

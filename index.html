@@ -161,12 +161,13 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="quickstart-tutorial.html">Quickstart Tutorial</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="how-to-guides/index.html">How-to guides</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2 has-children"><a class="reference internal" href="how-to-guides/install.html">How to Install Abaci</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
+<li class="toctree-l2"><a class="reference internal" href="how-to-guides/install.html">How to Install Abaci</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how-to-guides/getting-started-with-abaci.html">Getting Started with Abaci in your Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how-to-guides/regression-checks.html">How to Setup Regression Checks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how-to-guides/post-processing.html">How to Setup Post-Processing Commands</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="reference/cli.html">Command Line Interface Reference</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/config.html">Configuration Reference</a></li>
 </ul>
@@ -206,6 +207,45 @@
         <article role="main">
           <section id="abaci-user-documentation">
 <h1>Abaci User Documentation<a class="headerlink" href="#abaci-user-documentation" title="Permalink to this heading">#</a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
+<p><strong>Abaci is a command line tool for streamlining the development, debugging
+and testing of Abaqus user subroutines.</strong></p>
+<p><strong>Key features:</strong></p>
+<ul class="simple">
+<li><p>Pre-compile user subroutines using <code class="docutils literal notranslate"><span class="pre">abaqus</span> <span class="pre">make</span></code></p></li>
+<li><p>Enable ‘debug’ mode for catching common code errors</p></li>
+<li><p>Supports compilation and linking of C/C++ source files</p></li>
+<li><p>Customise compiler flags using a portable configuration file</p></li>
+<li><p>Run test case Abaqus models with compiled user subroutine code</p>
+<ul>
+<li><p>Perform regression checks on output database results</p></li>
+<li><p>Automatically run post-processing commands for each job</p></li>
+</ul>
+</li>
+<li><p>Easily submit Abaqus jobs to a HPC cluster using SLURM</p></li>
+<li><p>Reuse code from other abaci projects as ‘dependencies’ via git</p></li>
+</ul>
+</section>
+<section id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this heading">#</a></h2>
+<p><strong>Prerequisites:</strong> Abaci requires the following software to be installed:</p>
+<ul class="simple">
+<li><p>Abaqus</p></li>
+<li><p>Intel Fortran Compiler</p></li>
+</ul>
+<p>See the <a class="reference internal" href="how-to-guides/install.html"><span class="doc std std-doc">installation guide</span></a> for instructions
+on how to download and install Abaci.</p>
+<p>Once you have installed Abaci, consider reading the <a class="reference internal" href="quickstart-tutorial.html"><span class="doc std std-doc">Quickstart Tutorial</span></a> and the <a class="reference internal" href="how-to-guides/index.html"><span class="doc std std-doc">How-to guides</span></a>.</p>
+</section>
+<section id="documentation-and-support">
+<h2>Documentation and Support<a class="headerlink" href="#documentation-and-support" title="Permalink to this heading">#</a></h2>
+<p>You can find more detailed documentation in the
+<a class="reference internal" href="reference/cli.html"><span class="doc std std-doc">Command Line Interface Reference</span></a> and the
+<a class="reference internal" href="reference/config.html"><span class="doc std std-doc">Configuration File Reference</span></a>.</p>
+<p>If you encounter an problem using Abaci and cannot find the answer using the documentation, then feel free to
+<a class="reference external" href="https://github.com/BristolCompositesInstitute/abaci/issues">open an issue</a>
+in the Github repository.</p>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
@@ -215,10 +255,14 @@
 <li class="toctree-l2"><a class="reference internal" href="quickstart-tutorial.html#compiling-user-subroutine-code">Compiling User Subroutine Code</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quickstart-tutorial.html#running-an-abaqus-job">Running an Abaqus Job</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quickstart-tutorial.html#the-configuration-file">The Configuration File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart-tutorial.html#next-steps">Next Steps</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="how-to-guides/index.html">How-to guides</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="how-to-guides/install.html">How to Install Abaci</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how-to-guides/getting-started-with-abaci.html">Getting Started with Abaci in your Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how-to-guides/regression-checks.html">How to Setup Regression Checks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how-to-guides/post-processing.html">How to Setup Post-Processing Commands</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="reference/index.html">Reference</a><ul>
@@ -228,8 +272,6 @@
 </li>
 </ul>
 </div>
-<section id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
 </section>
 </section>
 
@@ -252,7 +294,7 @@
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; Laurence Kedward 2022
+                Copyright &#169; University of Bristol 2022
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
@@ -282,6 +324,8 @@
             <ul>
 <li><a class="reference internal" href="#">Abaci User Documentation</a><ul>
 <li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li><a class="reference internal" href="#documentation-and-support">Documentation and Support</a></li>
 </ul>
 </li>
 </ul>
@@ -299,5 +343,7 @@
     <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/scripts/furo.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-TFZ8YW7MNE"></script>
+    <script src="_static/ga-init.js"></script>
     </body>
 </html>

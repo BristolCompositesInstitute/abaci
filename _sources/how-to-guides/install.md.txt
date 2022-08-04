@@ -2,13 +2,6 @@
 title: "How to Install Abaci"
 ---
 
-```{toctree}
----
-includehidden: true
-caption: "Contents:"
----
-```
-
 
 ## Prerequisites
 
@@ -41,7 +34,7 @@ If either of these commands fails, then you should first check your environment 
 
 
 
-## (Recommended) Option 1: Installers
+## Option 1 (Recommended): Installers
 
 Self-contained installers are available to download for Windows and Linux from the [latest release page](https://github.com/BristolCompositesInstitute/abaci/releases/latest).
 

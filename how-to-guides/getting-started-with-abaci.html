@@ -1,0 +1,487 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="How to Setup Regression Checks" href="regression-checks.html" /><link rel="prev" title="How to Install Abaci" href="install.html" />
+
+    <link rel="shortcut icon" href="../_static/abaci.ico"/><meta name="generator" content="sphinx-5.1.1, furo 2022.06.21"/>
+        <title>Getting Started with Abaci in your Project - Abaci Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=40978830699223671f4072448e654b5958f38b89" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Abaci Documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../_static/abaci.png" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">Abaci Documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../quickstart-tutorial.html">Quickstart Tutorial</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">How-to guides</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="install.html">How to Install Abaci</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Getting Started with Abaci in your Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regression-checks.html">How to Setup Regression Checks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="post-processing.html">How to Setup Post-Processing Commands</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/cli.html">Command Line Interface Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/config.html">Configuration Reference</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="getting-started-with-abaci-in-your-project">
+<h1>Getting Started with Abaci in your Project<a class="headerlink" href="#getting-started-with-abaci-in-your-project" title="Permalink to this heading">#</a></h1>
+<p>To start using Abaci with your User Subroutine project, you will require:</p>
+<ul class="simple">
+<li><p>Your user subroutine source file(s)</p></li>
+<li><p>One or more simple test-cases that make use of your user-subroutine</p></li>
+</ul>
+<section id="organisation-and-setup">
+<h2>Organisation and Setup<a class="headerlink" href="#organisation-and-setup" title="Permalink to this heading">#</a></h2>
+<p>It is recommended to organise your project with the following folder structure:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>.
+|-- jobs
+|   `-- test-job.inp
+|-- scripts
+|   `-- post-process.py
+`-- src
+    |-- utils_mod.f90
+    `-- usub.f
+</pre></div>
+</div>
+<p>where:</p>
+<ul class="simple">
+<li><p>User subroutine source files are contained in a <code class="docutils literal notranslate"><span class="pre">src</span></code> folder</p>
+<ul>
+<li><p>The top-level user subroutine file is prefixed with <code class="docutils literal notranslate"><span class="pre">usub_</span></code> to indicate
+that it is the main user subroutine for Abaqus</p></li>
+</ul>
+</li>
+<li><p>Abaqus job input files are stored in a separate folder</p></li>
+<li><p>Any other scripts, such as for post-processing, are stored in a <code class="docutils literal notranslate"><span class="pre">scripts</span></code> folder</p></li>
+</ul>
+</section>
+<section id="initialisation">
+<h2>Initialisation<a class="headerlink" href="#initialisation" title="Permalink to this heading">#</a></h2>
+<p>Abaci requires a configuration file to exist in the top-level project directory
+to store useful information about the project. We can automatically generate
+one using the <a class="reference internal" href="../reference/cli.html#abaci-init"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">init</span></code></span></a> command.</p>
+<p>Using the example project shown above, we can initialise a configuration file
+and specify the path to the top-level user subroutine source file:</p>
+<p><strong>Example:</strong> <em>initialise config file with path to main user subroutine file</em></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>  abaci init -u src/usub.f
+</pre></div>
+</div>
+<p>This will create a new configuration file called <code class="docutils literal notranslate"><span class="pre">abaci.toml</span></code> in the current
+directory.</p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<ul class="simple">
+<li><p>Add the <code class="docutils literal notranslate"><span class="pre">-b</span></code> flag to the <code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">init</span></code> command to remove explanatory comments</p></li>
+<li><p>Add the <code class="docutils literal notranslate"><span class="pre">-e</span></code> flag to the <code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">init</span></code> command to include extra useful config options</p></li>
+</ul>
+<p>See <a class="reference internal" href="../reference/cli.html#abaci-init"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">init</span></code></span></a> for more information.</p>
+</div>
+<section id="multiple-source-files">
+<h3>Multiple Source Files<a class="headerlink" href="#multiple-source-files" title="Permalink to this heading">#</a></h3>
+<p>If your user subroutine code is organised in multiple source files, then abaci
+will automatically detect other Fortran source files <strong>in the same directory as
+your top-level user subroutine file</strong>.</p>
+<p>If you include source files from other folders, then you will need to specify
+them in your configuration file using the <a class="reference internal" href="../reference/config.html#id3"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">include</span></code></span></a>
+field in the <code class="docutils literal notranslate"><span class="pre">[compile]</span></code> section.</p>
+<p><strong>Example:</strong> <em>source files in a different folder to main user subroutine</em></p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="n">user-sub-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;src/usub.f&#39;</span><span class="w"></span>
+
+<span class="k">[compile]</span><span class="w"></span>
+<span class="n">include</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;utils/*.f90&#39;</span><span class="p">]</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>See the BCI RSE guide on modularisation<a class="footnote-reference brackets" href="#fortran-modules" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> for how to use
+Fortran modules to organise your user subroutine code and exploit modern Fortran
+interfaces.</p>
+</div>
+</section>
+<section id="c-c-source-files">
+<h3>C/C++ Source Files<a class="headerlink" href="#c-c-source-files" title="Permalink to this heading">#</a></h3>
+<p>If your project has C or C++ source files, these can specified using the
+<a class="reference internal" href="../reference/config.html#sources"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">sources</span></code></span></a> field in the <code class="docutils literal notranslate"><span class="pre">[compile]</span></code> section.</p>
+<p><strong>Example:</strong> <em>specify C++ source files to compile separately</em></p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="n">user-sub-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;src/usub.f&#39;</span><span class="w"></span>
+
+<span class="k">[compile]</span><span class="w"></span>
+<span class="n">sources</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;src/utils.cpp&#39;</span><span class="p">]</span><span class="w"></span>
+</pre></div>
+</div>
+<p>You can specify compiler flags for C/C++ source compilation with the
+<a class="reference internal" href="../reference/config.html#cflags-windows-cflags-linux"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">cflags</span></code></span></a> fields
+in the <code class="docutils literal notranslate"><span class="pre">[compile]</span></code> section.</p>
+</section>
+</section>
+<section id="setup-test-jobs">
+<h2>Setup Test Jobs<a class="headerlink" href="#setup-test-jobs" title="Permalink to this heading">#</a></h2>
+<p>Once you have a configuration file for your project, you can add your test
+job(s) to it so that we can easily run them and test the user subroutine code.</p>
+<section id="add-to-configuration-file">
+<h3>Add to Configuration File<a class="headerlink" href="#add-to-configuration-file" title="Permalink to this heading">#</a></h3>
+<p>Again using the example project shown above, we can add the test job to the
+configuratin file by opening it up in any text or code editor and adding the
+following lines:</p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">[[job]]</span><span class="w"></span>
+<span class="linenos">2</span><span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;jobs/test-job.inp&#39;</span><span class="w"></span>
+<span class="linenos">3</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;test-job1&#39;</span><span class="w"></span>
+<span class="linenos">4</span><span class="n">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;test&#39;</span><span class="p">,</span><span class="s">&#39;1elem&#39;</span><span class="p">]</span><span class="w"></span>
+</pre></div>
+</div>
+<p><strong>Explanation:</strong></p>
+<ul class="simple">
+<li><p>Line <code class="docutils literal notranslate"><span class="pre">1</span></code>: <a class="reference internal" href="../reference/config.html#jobs-list"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">[[job]]</span></code></span></a> indicates the start of a job entry</p></li>
+<li><p>Line <code class="docutils literal notranslate"><span class="pre">2</span></code>: <a class="reference internal" href="../reference/config.html#job-file"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">job-file</span></code></span></a> indicates the path to the Abaqus job file (<code class="docutils literal notranslate"><span class="pre">.inp</span></code>)</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The filepath is specified relative to the location of the configuration file</p>
+</div>
+<ul class="simple">
+<li><p>Line <code class="docutils literal notranslate"><span class="pre">3</span></code>: <a class="reference internal" href="../reference/config.html#id1"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">name</span></code></span></a> indicates a unique name to refer to this job</p></li>
+<li><p>Line <code class="docutils literal notranslate"><span class="pre">4</span></code>: <a class="reference internal" href="../reference/config.html#tags"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">tags</span></code></span></a> are a list of non-unique categories to group similar jobs together</p></li>
+</ul>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>If you add the ‘default’ tag to any job, then that job will run when no
+<em>job-spec</em> is given to a command, <em>e.g.</em> <code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">run</span></code></p>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Multiple test jobs are specified by repeating the <code class="docutils literal notranslate"><span class="pre">[[job]]</span></code> entry in the
+configuration file.</p>
+<details>
+<summary>See example</summary>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[[job]]</span><span class="w"></span>
+<span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;jobs/test-job-1.inp&#39;</span><span class="w"></span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;job2&#39;</span><span class="w"></span>
+<span class="n">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;test&#39;</span><span class="p">,</span><span class="s">&#39;1elem&#39;</span><span class="p">]</span><span class="w"></span>
+
+<span class="k">[[job]]</span><span class="w"></span>
+<span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;jobs/test-job-2.inp&#39;</span><span class="w"></span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;job2&#39;</span><span class="w"></span>
+<span class="n">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;test&#39;</span><span class="p">,</span><span class="s">&#39;1elem&#39;</span><span class="p">]</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</details>
+</section>
+<section id="run-jobs">
+<h3>Run Jobs<a class="headerlink" href="#run-jobs" title="Permalink to this heading">#</a></h3>
+<p>Once our jobs have been added to our configuration file, we can run them
+using the <a class="reference internal" href="../reference/cli.html#abaci-run"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">run</span></code></span></a> command.</p>
+<p><strong>Example:</strong> <em>run the job named ‘test-job1’</em></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>  abaci run test-job1
+</pre></div>
+</div>
+<p><strong>Example:</strong> <em>run all jobs with the ‘test’ tag concurrently</em></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>  abaci run <span class="nb">test</span> -j
+</pre></div>
+</div>
+<p><strong>Example:</strong> <em>run all jobs with the ‘default’ tag and view Abaqus output</em></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>  abaci run -s
+</pre></div>
+</div>
+<p>In these examples, Abaci will:</p>
+<ol class="arabic simple">
+<li><p>Compile the user subroutine code, and halt if there is an error</p>
+<ul class="simple">
+<li><p>(compilation output files are placed in the <code class="docutils literal notranslate"><span class="pre">&lt;output&gt;/lib</span></code> folder)</p></li>
+</ul>
+</li>
+<li><p>Create a new job folder in the <code class="docutils literal notranslate"><span class="pre">&lt;output&gt;</span></code> directory for each job</p></li>
+<li><p>Copy job files and the user-subroutine library to each job folder</p></li>
+<li><p>Launch each job with Abaqus and wait for the jobs to complete</p></li>
+<li><p>Run any <a class="reference internal" href="regression-checks.html"><span class="doc std std-doc">regression checks</span></a> or
+<a class="reference internal" href="post-processing.html"><span class="doc std std-doc">post-processing commands</span></a> if specified</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>By default, the <code class="docutils literal notranslate"><span class="pre">&lt;output&gt;</span></code> folder is called <code class="docutils literal notranslate"><span class="pre">scratch</span></code> in the current directory.
+You can change the <code class="docutils literal notranslate"><span class="pre">&lt;output&gt;</span></code> folder using the <a class="reference internal" href="../reference/config.html#output"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">output</span></code></span></a>
+configuration option.</p>
+</div>
+<hr class="footnotes docutils" />
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="fortran-modules" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://bristolcompositesinstitute.github.io/RSE-Guide/abaqus-user-subroutines/using-fortran-modules.html">https://bristolcompositesinstitute.github.io/RSE-Guide/abaqus-user-subroutines/using-fortran-modules.html</a></p>
+</aside>
+</aside>
+</section>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="regression-checks.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">How to Setup Regression Checks</div>
+              </div>
+              <svg><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="install.html">
+              <svg><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">How to Install Abaci</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; University of Bristol 2022
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            Contents
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Getting Started with Abaci in your Project</a><ul>
+<li><a class="reference internal" href="#organisation-and-setup">Organisation and Setup</a></li>
+<li><a class="reference internal" href="#initialisation">Initialisation</a><ul>
+<li><a class="reference internal" href="#multiple-source-files">Multiple Source Files</a></li>
+<li><a class="reference internal" href="#c-c-source-files">C/C++ Source Files</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#setup-test-jobs">Setup Test Jobs</a><ul>
+<li><a class="reference internal" href="#add-to-configuration-file">Add to Configuration File</a></li>
+<li><a class="reference internal" href="#run-jobs">Run Jobs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/scripts/furo.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-TFZ8YW7MNE"></script>
+    <script src="../_static/ga-init.js"></script>
+    </body>
+</html>

@@ -161,12 +161,13 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../quickstart-tutorial.html">Quickstart Tutorial</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../how-to-guides/index.html">How-to guides</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../how-to-guides/install.html">How to Install Abaci</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
+<li class="toctree-l2"><a class="reference internal" href="../how-to-guides/install.html">How to Install Abaci</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how-to-guides/getting-started-with-abaci.html">Getting Started with Abaci in your Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how-to-guides/regression-checks.html">How to Setup Regression Checks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how-to-guides/post-processing.html">How to Setup Post-Processing Commands</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="cli.html">Command Line Interface Reference</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Configuration Reference</a></li>
 </ul>
@@ -365,22 +366,14 @@ other files that also need to be copied to the job folder for running the job.</
 <li><p><code class="docutils literal notranslate"><span class="pre">{DIR}</span></code> will be substituted with the path to the output directory for this job</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">{JOB}</span></code> will be substituted with the name of the job (without any extensions or paths)</p></li>
 </ul>
-<p><strong>Example:</strong> run a python script:</p>
-<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[[job]]</span><span class="w"></span>
-<span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;myjob.inp&#39;</span><span class="w"></span>
-<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;myjob&#39;</span><span class="w"></span>
-<span class="n">post-process</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;{PY} {ROOT}/scripts/postprocess.py {ODB} {JOB}&#39;</span><span class="w"></span>
-</pre></div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>See the <a class="reference internal" href="../how-to-guides/post-processing.html"><span class="doc std std-doc">Post-processing Guide</span></a> for more information on how to set up
+post-processing commands.</p>
 </div>
-<p>This will execute the following command once the job has completed:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>abaqus python /path/to/repo/scripts/postprocess.py /path/to/job-dir/myjob.odb myjob
-</pre></div>
-</div>
-<p>where <code class="docutils literal notranslate"><span class="pre">{ROOT}</span></code> has been replaced with the absolute path to the repository root (defined by the directory containing the abaci.toml file); <code class="docutils literal notranslate"><span class="pre">{ODB}</span></code> has been replaced by the absolute path to the output database file and <code class="docutils literal notranslate"><span class="pre">{JOB}</span></code> has been replaced by the name of the job.
-In the postprocessing script, you can access the values for <code class="docutils literal notranslate"><span class="pre">{ODB}</span></code> and <code class="docutils literal notranslate"><span class="pre">{JOB}</span></code> that were passed as command line arguments using <a class="reference external" href="https://docs.python.org/3/library/sys.html#sys.argv"><code class="docutils literal notranslate"><span class="pre">sys.argv</span></code></a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>You can run and rerun post-processing scripts for completed jobs using the command <a class="reference internal" href="cli.html#abaci-post"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">post</span> <span class="pre">&lt;job-dir&gt;</span></code></span></a> where <code class="docutils literal notranslate"><span class="pre">&lt;job-dir&gt;</span></code> is the output directory for the abaci job that has completed.</p>
+<p>You can run and rerun post-processing commands for completed jobs using the command <a class="reference internal" href="cli.html#abaci-post"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">post</span> <span class="pre">&lt;job-dir&gt;</span></code></span></a> where <code class="docutils literal notranslate"><span class="pre">&lt;job-dir&gt;</span></code> is the output directory for the abaci job that has completed.</p>
 </div>
 </section>
 <section id="check">
@@ -419,12 +412,6 @@ If the file does not exist, then it is created using the current run.</p>
 <p><strong><em>strings or [int,…], optional</em></strong></p>
 <p>Either a list of frame indices for which to perform checks or <code class="docutils literal notranslate"><span class="pre">'all'</span></code> or <code class="docutils literal notranslate"><span class="pre">'last'</span></code>.</p>
 <p>If not specified, then <code class="docutils literal notranslate"><span class="pre">'last'</span></code> is the default.</p>
-</section>
-<section id="check-elements">
-<h4>check.elements<a class="headerlink" href="#check-elements" title="Permalink to this heading">#</a></h4>
-<p><strong><em>strings or [int,…], optional</em></strong></p>
-<p>Either a list of element indices for which to perform checks or <code class="docutils literal notranslate"><span class="pre">'all'</span></code>.</p>
-<p>If not specified, then <code class="docutils literal notranslate"><span class="pre">'all'</span></code> is the default.</p>
 </section>
 </section>
 </section>
@@ -656,7 +643,7 @@ abaci will fetch the latest changes from the branch everytime it is run.</p>
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; Laurence Kedward 2022
+                Copyright &#169; University of Bristol 2022
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
@@ -707,7 +694,6 @@ abaci will fetch the latest changes from the branch everytime it is run.</p>
 <li><a class="reference internal" href="#check-steps">check.steps</a></li>
 <li><a class="reference internal" href="#check-fields">check.fields</a></li>
 <li><a class="reference internal" href="#check-frames">check.frames</a></li>
-<li><a class="reference internal" href="#check-elements">check.elements</a></li>
 </ul>
 </li>
 </ul>
@@ -755,5 +741,7 @@ abaci will fetch the latest changes from the branch everytime it is run.</p>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <script src="../_static/scripts/furo.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-TFZ8YW7MNE"></script>
+    <script src="../_static/ga-init.js"></script>
     </body>
 </html>
