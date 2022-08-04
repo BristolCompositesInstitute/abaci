@@ -65,6 +65,11 @@ html_static_path = ['_static']
 
 html_title = "Abaci Documentation"
 
+
+html_js_files = [('https://www.googletagmanager.com/gtag/js?id=G-TFZ8YW7MNE',
+                    {'async': 'async'}),
+                 'ga-init.js']
+
 # -- Extension configuration -------------------------------------------------
 
 # -- MyST parser --
