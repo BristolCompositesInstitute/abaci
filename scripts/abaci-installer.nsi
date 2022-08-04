@@ -23,6 +23,11 @@ Unicode true
 ; Use EnVar plugin (https://nsis.sourceforge.io/EnVar_plug-in)
 !addplugindir ".\nsis-plugins\EnVar_plugin\Plugins\x86-unicode"
 
+Function FinishedInstall
+ExecShell "open" "https://bristolcompositesinstitute.github.io/abaci/post-install.html"
+FunctionEnd
+
+
 ; Use the 'Modern' Installer UI macros
 !include "MUI2.nsh"
 
@@ -38,6 +43,7 @@ RequestExecutionLevel user
 
 ; ---------------- Installer Pages ----------------
 !insertmacro MUI_PAGE_DIRECTORY
+!define MUI_PAGE_CUSTOMFUNCTION_LEAVE FinishedInstall
 !insertmacro MUI_PAGE_INSTFILES
 
 
