@@ -46,3 +46,17 @@ administrator/root permissions.
 - [Command Line Reference](https://bristolcompositesinstitute.github.io/abaci/reference/cli.html)
 - [Configuration File Reference](https://bristolcompositesinstitute.github.io/abaci/reference/config.html)
 - [How-to Guides](https://bristolcompositesinstitute.github.io/abaci/how-to-guides/index.html)
+
+
+## License and Use
+
+Abaci is free to use and open source under the MIT license.
+
+__If you find Abaci useful in your own work, please consider giving it a 'star' on Github to let us know.__
+
+You can also email us with any feedback or questions at <bci-github@bristol.ac.uk>.
+
+If you encounter an issue with Abaci that is not explained in the
+[online documentation](https://bristolcompositesinstitute.github.io/abaci/),
+feel free to [open an issue](https://github.com/BristolCompositesInstitute/abaci/issues)
+in the Github repository or email us directly.
