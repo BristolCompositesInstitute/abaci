@@ -1,0 +1,77 @@
+name: Build and Deploy Documentation
+on: 
+  push:
+    branches:
+  pull_request:
+  workflow_dispatch:
+  release:
+    types: [published]
+
+jobs:
+  html:
+    if: github.event_name != 'release'
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Create Conda environment
+        working-directory: docs
+        run: conda env create --file environment.yml
+
+      - name: Build documentation
+        working-directory: docs
+        run: conda run --name abaci-docs-env sphinx-build -M html . build
+
+      - name: Upload built HTML documentation artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: abaci-docs-env-html
+          path: docs/build/html/
+
+      - name: Create .nojekyll
+        run: touch docs/build/html/.nojekyll
+      
+      - name: Deploy to Github pages branch
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: JamesIves/github-pages-deploy-action@v4.3.0
+        with:
+          branch: gh-pages
+          folder: docs/build/html/
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  pdf:
+    runs-on: ubuntu-latest
+    env:
+      APT_DEPS: texlive-latex-recommended texlive-latex-extra texlive-extra-utils latexmk
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Ubuntu Dependencies
+        run: sudo apt install ${{ env.APT_DEPS }}
+
+      - name: Create Conda environment
+        working-directory: docs
+        run: conda env create --file environment.yml
+
+      - name: Build documentation
+        working-directory: docs
+        run: conda run --name abaci-docs-env sphinx-build -M latexpdf . build
+
+      - name: Upload built pdf documentation artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: abaci-docs-env-pdf
+          path: docs/build/latex/
+
+      - name: Upload to release
+        if: ${{ github.event_name == 'release' }}
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: docs/build/latex/abaci.pdf
+          asset_name: abaci-docs-$tag.pdf
+          tag: ${{ github.ref }}
+          overwrite: true

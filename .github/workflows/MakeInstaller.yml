@@ -18,34 +18,34 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Fetch EnVar Plugin for NSIS
-      working-directory: installer
+      working-directory: scripts
       run: |
         Invoke-WebRequest -Uri $Env:ENVAR_DOWNLOAD -Outfile EnVar-Plugin.zip
         mkdir nsis-plugins\EnVar_plugin -ea 0
         Expand-Archive EnVar-Plugin.zip -DestinationPath nsis-plugins\EnVar_plugin
 
     - name: Generate installer
-      working-directory: installer
+      working-directory: scripts
       run: makensis abaci-installer.nsi
 
     - name: Upload artifact
       uses: actions/upload-artifact@v2
       with:
         name: abaci-installer
-        path: installer/abaci-installer.exe
+        path: scripts/abaci-installer.exe
 
     - name: Upload to release
       if: ${{ github.event_name == 'release' }}
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: installer/abaci-installer.exe
+        file: scripts/abaci-installer.exe
         tag: ${{ github.ref }}
         overwrite: true
 
-    - name: Run Quickstart-Fortran installer
+    - name: Run installer
       shell: cmd
-      run: installer\abaci-installer.exe /S
+      run: scripts\abaci-installer.exe /S
 
     - name: Update path manually
       run: |

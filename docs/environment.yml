@@ -1,0 +1,8 @@
+name: abaci-docs-env
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - sphinx>=4.4.0
+  - furo
+  - myst-parser>=0.17.0

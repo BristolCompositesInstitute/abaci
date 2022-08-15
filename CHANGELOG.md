@@ -4,6 +4,13 @@ Notable changes to this project are logged here according to release version and
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [[v0.4.4]](https://github.com/BristolCompositesInstitute/abaci/releases/tag/v0.4.4) - 04/08/22
+
+- Update abaci init config template to include `abq-flags` and `lflags`
+- Update abaci init to not overwrite existing files unless requested
+- Fix: incorrect compiletime check options for gcc
+- Add sphinx documentation to repository
+
 ## [[v0.4.3]](https://github.com/BristolCompositesInstitute/abaci/releases/tag/v0.4.3) - 01/08/22
 
 - Fix bug from previous release for running jobs concurrently

@@ -11,7 +11,7 @@ import abaci.git_utils as git
 from abaci.utils import copydir, copyfile, mkdir
 import abaci.cli
 
-_DEFAULT_UPSTREAM = 'git@github.com:BristolCompositesInstitute/abaci.git'
+_DEFAULT_UPSTREAM = 'https://github.com/BristolCompositesInstitute/abaci.git'
 _DEFAULT_REF = 'main'
 
 class UpdateAction(argparse.Action):

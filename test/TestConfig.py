@@ -19,7 +19,8 @@ class TestConfig(AbaciUnitTestSuite):
         usub_file = 'a.f'
         output = 'b'
 
-        init_new_config(config_file,user_sub_file=usub_file,output=output,full=True,bare=False)
+        init_new_config(config_file,user_sub_file=usub_file,output=output,full=True,
+                        bare=False,overwrite=True)
 
         config_str = read_config_file(config_file)
 

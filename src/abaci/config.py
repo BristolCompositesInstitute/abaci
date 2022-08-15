@@ -281,8 +281,23 @@ def check_config(config):
 
 
 
-def init_new_config(file_path,user_sub_file=None,output=None,full=None,bare=None):
+def init_new_config(file_path,user_sub_file=None,output=None,full=None,bare=None,overwrite=None):
     """Initialise a new config file"""
+
+    log = logging.getLogger('abaci')
+
+    if exists(file_path):
+
+        if not overwrite:
+
+            log.fatal('(!) File "%s" already exists, not overwriting',file_path)
+
+            exit(1)
+
+        else:
+
+            log.warn('Overwriting file %s with new configuration',file_path)
+
 
     user_sub_file = user_sub_file or "user.f"
     output = output or "scratch"
@@ -303,14 +318,8 @@ user-sub-file = "{usub}"
 ## Path for output directory
 output = "{output}"
 
- 
-## Uncomment lines below to define a job
-# [[job]]
-# name = "myjob"
-# job-file = "job.inp"
-# mp-mode = "threads"
-# tags = ["default"]
-# include = []         # extra files needed for this job
+## Extra arguments to pass to Abaqus
+abq-flags = ""
     """.format(usub=user_sub_file,output=output)
 
     if full:
@@ -338,6 +347,10 @@ fflags.windows = ""
 ## Extra C/C++ compiler flags
 cflags.linux = ""
 cflags.windows = ""
+
+## Extra linker flags
+lflags.linux = ""
+lflags.windows = ""
         """
 
         schema, schema_defaults = get_default_cluster_schema()
@@ -348,6 +361,16 @@ cflags.windows = ""
 """
 
         config_str += toml.dumps(schema_defaults)
+
+    config_str += """       
+## Uncomment lines below to define a job
+# [[job]]
+# name = "myjob"
+# job-file = "job.inp"
+# mp-mode = "threads"
+# tags = ["default"]
+# include = []         # extra files needed for this job
+"""
 
     if bare:
 
@@ -361,8 +384,6 @@ cflags.windows = ""
     else:
 
         output = config_str
-
-    # print(output)
 
     with open(file_path,'w') as f:
 
