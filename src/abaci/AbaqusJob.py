@@ -359,13 +359,22 @@ class AbaqusJob:
 
         abq_py = ' '.join(abq.abaqus_cmd(['python'],noshell=True))
 
+        if self.checks:
+
+            ref = self.checks['reference']
+
+        else:
+
+            ref = ''
+
         for cmd in self.postprocess:
 
             post_cmd = cmd.format(
                 PY=abq_py,
                 JOB=self.local_job_name,
                 ODB=join(self.job_dir,self.local_job_name+'.odb'),
-                DIR=self.job_dir
+                DIR=self.job_dir,
+                REF=ref
             )
 
             log.info('Running post-processing script for job "%s"', self.name)
