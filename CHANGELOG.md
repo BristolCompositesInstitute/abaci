@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [v0.5.0] (Unreleased)
 
 - Add `{REF}` special variable for `check.reference` file in post-processing field
+- Add `{NAME}` special variable for `job.name` file in post-processing field
 
 ## [[v0.4.4]](https://github.com/BristolCompositesInstitute/abaci/releases/tag/v0.4.4) - 04/08/22
 
