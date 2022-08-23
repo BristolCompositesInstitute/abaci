@@ -127,6 +127,7 @@ def config_schema():
                             Optional('name', default=None): unicode,
                             Optional('output', default=u'scratch'): unicode,
                             Optional('user-sub-file',default=None): unicode,
+                            Optional('test-mod-dir',default='test'): unicode,
                             Optional('abq-flags',default=[]): Or(unicode,[unicode]),
                             Optional('cluster',default=cluster_defaults): default_cluster_schema,
                             Optional('dependency',default=[]): dependency_schema,
@@ -185,6 +186,9 @@ def sanitize_config(config, config_dir):
     if config['user-sub-file']:
         config['user-sub-file'] = os.path.realpath(os.path.join(
                                 config_dir,config['user-sub-file']))
+
+    config['test-mod-dir'] = os.path.realpath(os.path.join(
+                                config_dir,config['test-mod-dir']))
 
     # Automatically include *.f and *.f90 from user-sub directory
     if config['user-sub-file']:

@@ -55,7 +55,7 @@ def main():
 
     elif args.action == 'test':
 
-        test_sources, testsuites = discover_tests('test')
+        test_sources, testsuites = discover_tests(config['test-mod-dir'])
         
         if not testsuites:
 

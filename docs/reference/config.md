@@ -39,6 +39,7 @@ __Example:__
 name = 'project-name'
 user-sub-file = 'usersub.f90'
 output = 'scratch'
+test-mod-dir = 'test'
 ```
 
 ### name
@@ -73,6 +74,25 @@ Specifies the name of the directory into which compilation and job folders will 
   - an absolute path
 - If omitted, the default output directory is a subdirectory called `scratch` in the current working directory
 - The output folder is created if it does not exist
+
+
+### test-mod-dir
+
+__*string, optional*__
+
+Specifies the name of the directory in which test module files are stored.
+
+- The directory is relative to the folder containing the configuration file
+- If omitted, the default test module directory is `test` 
+
+Test modules are Fortran source files containing:
+
+- Fortran modules with a name beginning with `test`
+   - _e.g._ `module test_mesh_utils`
+- And subroutines with no arguments and with a name beginning with `test`
+   - _e.g._ `subroutine test_neighbour_search()`
+
+Use the `test` subcommand to compile and run these test subroutines.
 
 
 ### abq-flags
