@@ -47,7 +47,7 @@ def compile_user_subroutine(args, output_dir, user_file, compile_conf, dep_list)
 
     stat = abq.make(dir=compile_dir, lib_file=compile_file, verbosity=(args.verbose + 2*args.screen_output))
     
-    return stat, compile_dir
+    return stat, compile_dir, fflags
 
 
 def stage_files(compile_dir, user_file, compile_file, include_files, aux_sources, dep_list):
@@ -156,6 +156,9 @@ def get_flags(compile_dir,fortran_flags, debug_symbols, runtime_checks, compilet
 
     set_flag(flags,unix='-qopt-report-file={dir}/optrpt'.format(dir=compile_dir),
                     win='/Qopt-report-file:{dir}\optrpt'.format(dir=compile_dir))
+
+    set_flag(flags,unix=['-module', compile_dir],
+                    win='/module:{dir}'.format(dir=compile_dir))
 
     set_flag(flags,unix=['-error-limit','5'],
                     win='/error-limit:5')

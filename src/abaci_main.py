@@ -45,7 +45,7 @@ def main():
 
     init_logger_file(log_dir=config['output'])
 
-    stat, compile_dir = compile_user_subroutine(args, config['output'], 
+    stat, compile_dir, fflags = compile_user_subroutine(args, config['output'], 
                         config['user-sub-file'], config['compile'], dep_list)
 
     if args.action == 'compile' or stat != 0:
