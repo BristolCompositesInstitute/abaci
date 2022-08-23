@@ -374,7 +374,8 @@ class AbaqusJob:
                 JOB=self.local_job_name,
                 ODB=join(self.job_dir,self.local_job_name+'.odb'),
                 DIR=self.job_dir,
-                REF=ref
+                REF=ref,
+                NAME=self.name
             )
 
             log.info('Running post-processing script for job "%s"', self.name)

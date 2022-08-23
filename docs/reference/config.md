@@ -178,6 +178,7 @@ The field takes the form of a command to execute and allows certain variables to
 - `{DIR}` will be substituted with the path to the output directory for this job
 - `{JOB}` will be substituted with the name of the job (without any extensions or paths)
 - `{REF}` will be substituted with the path to the [`check.reference`](#checkreference) file
+- `{NAME}` will be substituted with the job [`name`](#name-1) file
 
 ```{seealso}
 See the [Post-processing Guide](../how-to-guides/post-processing.md) for more information on how to set up
