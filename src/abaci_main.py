@@ -1,3 +1,4 @@
+import sys
 from abaci.cli import parse_cli, init_logger, init_logger_file
 from abaci.config import load_config, init_new_config
 from abaci.compile import compile_user_subroutine, collect_cov_report
@@ -6,6 +7,7 @@ from abaci.utils import mkdir, daemonize
 from abaci.dependencies import fetch_dependencies
 from abaci.show_info import show_info
 from abaci.abaqus import check_for_abaqus
+from abaci.tests import discover_tests, gen_test_driver, compile_tests, run_tests
 
 def main():
     """Main entry point for abaci program"""
@@ -50,6 +52,18 @@ def main():
 
     if args.action == 'compile' or stat != 0:
         return
+
+    elif args.action == 'test':
+
+        test_sources, testsuites = discover_tests('test')
+
+        test_driver_file = gen_test_driver(testsuites, compile_dir)
+
+        test_driver = compile_tests(args, fflags, compile_dir, test_driver_file, test_sources)
+
+        stat = run_tests(test_driver, compile_dir, args.verbose)
+
+        sys.exit(stat)
 
     jobs = get_jobs(args,config)
 
