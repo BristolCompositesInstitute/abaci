@@ -40,7 +40,17 @@ def discover_tests(test_dir):
 
                         testsuites[-1]['tests'].append(sub)
 
-            log.debug("Testsuite '%s' : %s",mod,testsuites[-1]['tests'])
+                if not testsuites[-1]['tests']:
+
+                    del testsuites[-1]
+
+                else:
+
+                    log.debug("Testsuite '%s' : %s",mod,testsuites[-1]['tests'])
+
+    if not testsuites:
+
+        log.warn('(!) No tests found in directory "%s"',test_dir)
 
     return test_sources, testsuites
 

@@ -56,7 +56,11 @@ def main():
     elif args.action == 'test':
 
         test_sources, testsuites = discover_tests('test')
+        
+        if not testsuites:
 
+            sys.exit(1)
+            
         test_driver_file = gen_test_driver(testsuites, compile_dir)
 
         test_driver = compile_tests(args, fflags, compile_dir, test_driver_file, test_sources)
