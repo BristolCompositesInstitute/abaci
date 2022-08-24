@@ -67,6 +67,10 @@ def main():
 
         stat = run_tests(test_driver, compile_dir, args.verbose)
 
+        if args.codecov:
+            
+            collect_cov_report(config,compile_dir,args.verbose)
+            
         sys.exit(stat)
 
     jobs = get_jobs(args,config)
