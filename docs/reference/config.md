@@ -85,14 +85,13 @@ Specifies the name of the directory in which test module files are stored.
 - The directory is relative to the folder containing the configuration file
 - If omitted, the default test module directory is `test` 
 
-Test modules are Fortran source files containing:
+```{seealso}
+See the [unit tests guide](../how-to-guides/unit-testing.md) for how to
+structure and write unit tests for your Abaqus user subroutine.
+```
 
-- Fortran modules with a name beginning with `test`
-   - _e.g._ `module test_mesh_utils`
-- And subroutines with no arguments and with a name beginning with `test`
-   - _e.g._ `subroutine test_neighbour_search()`
-
-Use the `test` subcommand to compile and run these test subroutines.
+Use the [`test`](./cli.md#abaci-test) subcommand to compile and run these
+test subroutines.
 
 
 ### abq-flags
