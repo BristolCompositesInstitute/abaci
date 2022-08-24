@@ -481,7 +481,7 @@ usage: abaci show [-h] [-v | -q] [--config CONFIG] [object [object ...]]
 Show useful information about this project
 
 positional arguments:
-  object           {config|jobs|dependencies|sources}
+  object           {config|jobs|dependencies|sources|tests}
 
 optional arguments:
   -h, --help       show this help message and exit
@@ -506,6 +506,12 @@ __Example:__ *show a list of source files*
 
 ```text
   abaci show sources
+```
+
+__Example:__ *show a list of unit tests detected by abaci*
+
+```text
+  abaci show tests
 ```
 
 __Example:__ *show a list of third-party dependencies*

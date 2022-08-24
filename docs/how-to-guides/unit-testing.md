@@ -59,6 +59,11 @@ following conditions:
 - The test module source file is stored in the
 [`test-mod-dir`](../reference/config.md#test-mod-dir) directory (default `test`)
 
+```{hint}
+You can check if Abaci is detecting your test modules and subroutines correctly,
+by running `abaci show tests`.
+```
+
 ```{note}
 There's no need to write a Fortran `program` that runs your test subroutines;
 Abaci will automatically generate this for you.

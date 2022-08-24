@@ -1,6 +1,7 @@
 from redist import toml
 import os
 from abaci.utils import recurse_files, relpathshort
+from abaci.tests import discover_tests
 from redist.tabulate import tabulate
 from textwrap import wrap
 
@@ -22,6 +23,10 @@ def show_info(args, config, dep_list):
     if 'sources' in args.object:
 
         show_sources(config,dep_list)
+
+    if 'tests' in args.object:
+
+        show_tests(config['test-mod-dir'])
 
 
 def show_dependencies(dep_list):
@@ -125,3 +130,27 @@ def show_config_jobs(config,verbose):
             table.append([None,file_path])
 
     print(tabulate(table,tablefmt="plain",colalign=("right",)))
+
+
+def show_tests(test_dir):
+    """Print a list of test modules and test subroutines"""
+
+    print ' Looking for tests in "{d}"'.format(d=test_dir)
+    
+    test_sources, testsuites = discover_tests(test_dir)
+    
+    for suite in testsuites:
+
+        print '  module {s}'.format(s=suite["name"])
+        if not suite["tests"]:
+            
+            print '    No test subroutines found'
+        
+        else:
+            
+            for test in suite['tests']:
+
+                print '    subroutine {t}()'.format(t=test)
+
+        
+    

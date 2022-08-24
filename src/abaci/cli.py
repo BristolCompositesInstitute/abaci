@@ -141,8 +141,8 @@ def parse_cli():
                                      description="Show useful information about this project")
 
     show_command.add_argument(metavar='object',dest='object',type=str,nargs='*',default='jobs',
-                             choices=['jobs','dependencies','config','sources'],
-                             help='{config|jobs|dependencies|sources}')
+                             choices=['jobs','dependencies','config','sources','tests'],
+                             help='{config|jobs|dependencies|sources|tests}')
 
     args = parser.parse_args()
 
