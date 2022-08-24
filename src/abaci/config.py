@@ -169,6 +169,9 @@ def sanitize_config(config, config_dir):
             return potential_list
 
     # Optional lists
+
+    config['abq-flags'] = ensure_list(config['abq-flags'])
+
     for flag_group in ('fflags','cflags','lflags'):
 
         for flag_target in ('linux','windows','gcc'):
