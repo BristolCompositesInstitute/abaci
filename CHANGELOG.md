@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - Add `{REF}` special variable for `check.reference` file in post-processing field
 - Add `{NAME}` special variable for `job.name` file in post-processing field
+- Fix minor issue with `abq-flags` field when not specified as a list
+- Add `test` subcommand for automatically compiling and running unit tests
 
 ## [[v0.4.4]](https://github.com/BristolCompositesInstitute/abaci/releases/tag/v0.4.4) - 04/08/22
 

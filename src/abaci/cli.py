@@ -130,6 +130,11 @@ def parse_cli():
                                          help='Compile user subroutines only',
                                          description="Compile user subroutines and exit")
 
+    # TEST subcommand
+    test_command = subparsers.add_parser('test', parents=[common_group,build_group],
+                                         help='Compile user subroutines only and run unit tests',
+                                         description="Compile user subroutines only and run unit tests")
+
     # SHOW subcommand
     show_command = subparsers.add_parser('show', parents=[common_group],
                                      help='Show useful information about this project',

@@ -417,6 +417,60 @@ abaci lacks the information required to post-process jobs not run via abaci.
 ```
 
 
+## `abaci test`
+
+Compile and run unit tests.
+
+Compiler-related options behave the same as with [`abaci compile`](#abaci-compile).
+
+```text
+usage: abaci test [-h] [-v | -q] [--config CONFIG] [-t] [-d] [-c] [-0] [-g]
+                  [-s]
+
+Compile user subroutines only and run unit tests
+
+optional arguments:
+  -h, --help       show this help message and exit
+  -v, --verbose    output more information from abaci
+  -q, --quiet      output less information from abaci
+  --config CONFIG  specify a different config file to default ("abaci.toml")
+  -t, --codecov    compile subroutines for code coverage analysis
+  -d, --debug      enable run-time debugging checks
+  -c, --check      enable strict compile-time checks
+  -0, --noopt      compile without any optimisations
+  -g, --gcc        use gnu compilers for auxillary source files
+  -s, --screen     echo Abaqus output to the screen while running
+```
+
+```{seealso}
+See the [unit tests guide](../how-to-guides/unit-testing.md) for how to
+structure and write unit tests for your Abaqus user subroutine.
+```
+
+__Example:__ _compile and run unit tests_
+
+```text
+  abaci test
+```
+
+
+__Example:__ _compile and run unit tests in debug mode_
+
+```text
+ abaci test --debug
+ abaci test -d
+```
+
+
+__Example:__ _compile and run unit tests with code coverage checking_
+
+```text
+ abaci test --codecov
+ abaci test -t
+```
+
+
+
 ## `abaci show`
 
 Show useful information about the current project.

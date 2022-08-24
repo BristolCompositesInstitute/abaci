@@ -39,6 +39,7 @@ __Example:__
 name = 'project-name'
 user-sub-file = 'usersub.f90'
 output = 'scratch'
+test-mod-dir = 'test'
 ```
 
 ### name
@@ -73,6 +74,24 @@ Specifies the name of the directory into which compilation and job folders will 
   - an absolute path
 - If omitted, the default output directory is a subdirectory called `scratch` in the current working directory
 - The output folder is created if it does not exist
+
+
+### test-mod-dir
+
+__*string, optional*__
+
+Specifies the name of the directory in which test module files are stored.
+
+- The directory is relative to the folder containing the configuration file
+- If omitted, the default test module directory is `test` 
+
+```{seealso}
+See the [unit tests guide](../how-to-guides/unit-testing.md) for how to
+structure and write unit tests for your Abaqus user subroutine.
+```
+
+Use the [`test`](./cli.md#abaci-test) subcommand to compile and run these
+test subroutines.
 
 
 ### abq-flags

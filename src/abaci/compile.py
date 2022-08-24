@@ -5,6 +5,8 @@ from utils import cwd, mkdir, copyfile, copydir, system_cmd, system_cmd_wait, re
 from shutil import rmtree
 from getpass import getuser
 
+fortran_suffixes = ('.f','.f90','.for','.F90')
+
 def compile_user_subroutine(args, output_dir, user_file, compile_conf, dep_list):
     """Perform pre-compilation step using abaqus make"""
 
@@ -45,7 +47,7 @@ def compile_user_subroutine(args, output_dir, user_file, compile_conf, dep_list)
 
     stat = abq.make(dir=compile_dir, lib_file=compile_file, verbosity=(args.verbose + 2*args.screen_output))
     
-    return stat, compile_dir
+    return stat, compile_dir, fflags
 
 
 def stage_files(compile_dir, user_file, compile_file, include_files, aux_sources, dep_list):
@@ -154,6 +156,9 @@ def get_flags(compile_dir,fortran_flags, debug_symbols, runtime_checks, compilet
 
     set_flag(flags,unix='-qopt-report-file={dir}/optrpt'.format(dir=compile_dir),
                     win='/Qopt-report-file:{dir}\optrpt'.format(dir=compile_dir))
+
+    set_flag(flags,unix=['-module', compile_dir],
+                    win='/module:{dir}'.format(dir=compile_dir))
 
     set_flag(flags,unix=['-error-limit','5'],
                     win='/error-limit:5')
@@ -303,6 +308,50 @@ def compile_cpp(use_gcc, cflags, source_file, verbose):
     copyfile(obj_file,obj_file.replace('-std','-xplD'))
 
 
+def compile_fortran(use_gcc, fflags, source_file, verbose):
+    """Heler for compiling auxiliary fortran source files"""
+
+    log = logging.getLogger('abaci')
+
+    base = os.path.basename(source_file)
+    log.debug('Compiling auxillary source file "%s"',base)
+
+    if use_gcc:
+        fc = 'gfortran'
+    else:
+        fc = 'ifort'
+        
+    cmd = [fc,'-c',os.path.relpath(source_file)]
+    cmd.extend(fflags)
+
+    obj_file = base.split('.')[0] +'-std.o'
+
+    if os.name == 'nt':
+        obj_file += 'bj'
+
+    if os.name == 'nt':
+
+        cmd.extend(["/Fo"+obj_file])
+
+    else:
+
+        cmd.extend(["-o",obj_file])
+
+    p, ofile, efile = system_cmd(cmd,output=obj_file+'.log')
+
+    stat = system_cmd_wait(p,verbose,ofile,efile)
+
+    if stat != 0:
+
+        log.fatal('(!) Error while compiling auxillary source "%s"',base)
+
+        raise Exception('(!) Error while compiling auxillary source file')
+
+    copyfile(obj_file,obj_file.replace('-std','-xpl'))
+    copyfile(obj_file,obj_file.replace('-std','-xplD'))
+
+
+
 def compile_auxillary_sources(compile_dir,compile_conf,args,aux_source_list,fflags):
     """Perform separate compilation of auxillary sources files"""
     
@@ -328,6 +377,10 @@ def compile_auxillary_sources(compile_dir,compile_conf,args,aux_source_list,ffla
             if src.endswith('.c') or src.endswith('.cpp'):
                 
                 compile_cpp(args.gcc, cflags, src, args.verbose + 2*args.screen_output)
+
+            elif src.endswith(fortran_suffixes):
+
+                compile_fortran(args.gcc, fflags, src, args.verbose + 2*args.screen_output)
 
 
 def spool_env_file(compile_dir,fflags,lflags):
