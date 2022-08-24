@@ -82,7 +82,13 @@ def compile_tests(args, fflags, libdir, test_driver_source, test_mod_sources):
 
     log.info('Compiling tests')
 
-    link_objects = glob.glob(join(libdir,'*.obj'))
+    if os.name == 'nt':
+
+        link_objects = glob.glob(join(libdir,'*.obj'))
+
+    else:
+
+        link_objects = glob.glob(join(libdir,'*.o'))
 
     test_files = stage_test_source_files(libdir, test_mod_sources)
 
@@ -114,7 +120,8 @@ def compile_tests(args, fflags, libdir, test_driver_source, test_mod_sources):
     else:
 
         cmd.extend(["-o",out_file])
-    
+
+        cmd.extend(['-shared-intel'])
 
     with cwd(libdir):
 
