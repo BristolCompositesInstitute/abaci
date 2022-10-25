@@ -65,6 +65,7 @@ class AbaqusJob:
         self.job_script = None
         self.ofile_handle = None
         self.efile_handle = None
+        self.nproc = None
 
     def get_new_job_dir(self,output_dir):
         """Find a new job directory to run job in"""
@@ -84,6 +85,8 @@ class AbaqusJob:
 
         log = logging.getLogger('abaci')
 
+        self.nproc = nproc
+        
         self.prepare_job(lib_dir)
         
         log.info('Launching abaqus for job "%s"',self.name)
@@ -328,7 +331,7 @@ class AbaqusJob:
         log.debug('Running regression checks for job "%s"', self.name)
 
         odb_out_file = join(self.job_dir,self.local_job_name+'.odb')
-        odb_ref_file = self.checks['reference']
+        odb_ref_file = self.checks['reference'].format(NCPU=self.nproc)
 
         if not exists(odb_out_file):
             
