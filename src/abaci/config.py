@@ -231,9 +231,18 @@ def sanitize_config(config, config_dir):
 
         j['include'] = ensure_list(j['include'])
 
+        extra_includes = []
         for i,ifile in enumerate(j['include']):
             j['include'][i] = os.path.realpath(os.path.join(
                                 config_dir,ifile))
+
+            extra_includes.extend(glob.glob(j['include'][i]))
+
+
+        if j['job-file'] in extra_includes:
+            extra_includes.remove(j['job-file'])
+
+        j['include'] = extra_includes
 
         j['tags'] = ensure_list(j['tags'])
 
