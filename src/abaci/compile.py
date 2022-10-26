@@ -50,6 +50,12 @@ def compile_user_subroutine(args, output_dir, user_file, compile_conf, dep_list)
     return stat, compile_dir, fflags
 
 
+def get_mod_dir(compile_dir):
+    """Define directory for storing module files"""
+
+    return os.path.join(compile_dir,'mod')
+
+
 def stage_files(compile_dir, user_file, compile_file, include_files, aux_sources, dep_list):
     """Create output compilation directory and move files there"""
 
@@ -60,6 +66,8 @@ def stage_files(compile_dir, user_file, compile_file, include_files, aux_sources
         rmtree(compile_dir)
 
     mkdir(compile_dir)
+
+    mkdir(get_mod_dir(compile_dir))
 
     copyfile(user_file,compile_file)
 
@@ -157,8 +165,8 @@ def get_flags(compile_dir,fortran_flags, debug_symbols, runtime_checks, compilet
     set_flag(flags,unix='-qopt-report-file={dir}/optrpt'.format(dir=compile_dir),
                     win='/Qopt-report-file:{dir}\optrpt'.format(dir=compile_dir))
 
-    set_flag(flags,unix=['-module', compile_dir],
-                    win='/module:{dir}'.format(dir=compile_dir))
+    set_flag(flags,unix=['-module', get_mod_dir(compile_dir)],
+                    win='/module:{dir}'.format(dir=get_mod_dir(compile_dir)))
 
     set_flag(flags,unix=['-error-limit','5'],
                     win='/error-limit:5')
