@@ -4,7 +4,7 @@ Notable changes to this project are logged here according to release version and
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [v0.5.0] (Unreleased)
+## [v0.5.0](https://github.com/BristolCompositesInstitute/abaci/releases/tag/v0.5.0) - 27/10/22
 
 - Add `{REF}` special variable for `check.reference` file in post-processing field
 - Add `{NAME}` special variable for `job.name` file in post-processing field
