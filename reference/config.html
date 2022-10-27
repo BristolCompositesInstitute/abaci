@@ -2,13 +2,13 @@
 <html class="no-js" lang="en">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="prev" title="Command Line Interface Reference" href="cli.html" />
 
-    <link rel="shortcut icon" href="../_static/abaci.ico"/><meta name="generator" content="sphinx-5.1.1, furo 2022.06.21"/>
+    <link rel="shortcut icon" href="../_static/abaci.ico"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
         <title>Configuration Reference - Abaci Documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=40978830699223671f4072448e654b5958f38b89" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     
     
@@ -165,6 +165,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../how-to-guides/getting-started-with-abaci.html">Getting Started with Abaci in your Project</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how-to-guides/regression-checks.html">How to Setup Regression Checks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how-to-guides/post-processing.html">How to Setup Post-Processing Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how-to-guides/unit-testing.html">How-to Write Unit Tests with Abaci</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
@@ -191,7 +192,8 @@
           <span>Back to top</span>
         </a>
         <div class="content-icon-container">
-          <div class="theme-toggle-container theme-toggle-content">
+          
+<div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle">
               <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
               <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
@@ -239,6 +241,7 @@
 <div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;project-name&#39;</span><span class="w"></span>
 <span class="n">user-sub-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;usersub.f90&#39;</span><span class="w"></span>
 <span class="n">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;scratch&#39;</span><span class="w"></span>
+<span class="n">test-mod-dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;test&#39;</span><span class="w"></span>
 </pre></div>
 </div>
 <section id="name">
@@ -274,6 +277,22 @@ it can be omitted.</p>
 <li><p>If omitted, the default output directory is a subdirectory called <code class="docutils literal notranslate"><span class="pre">scratch</span></code> in the current working directory</p></li>
 <li><p>The output folder is created if it does not exist</p></li>
 </ul>
+</section>
+<section id="test-mod-dir">
+<h3>test-mod-dir<a class="headerlink" href="#test-mod-dir" title="Permalink to this heading">#</a></h3>
+<p><strong><em>string, optional</em></strong></p>
+<p>Specifies the name of the directory in which test module files are stored.</p>
+<ul class="simple">
+<li><p>The directory is relative to the folder containing the configuration file</p></li>
+<li><p>If omitted, the default test module directory is <code class="docutils literal notranslate"><span class="pre">test</span></code></p></li>
+</ul>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>See the <a class="reference internal" href="../how-to-guides/unit-testing.html"><span class="doc std std-doc">unit tests guide</span></a> for how to
+structure and write unit tests for your Abaqus user subroutine.</p>
+</div>
+<p>Use the <a class="reference internal" href="cli.html#abaci-test"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">test</span></code></span></a> subcommand to compile and run these
+test subroutines.</p>
 </section>
 <section id="abq-flags">
 <h3>abq-flags<a class="headerlink" href="#abq-flags" title="Permalink to this heading">#</a></h3>
@@ -365,6 +384,8 @@ other files that also need to be copied to the job folder for running the job.</
 <li><p><code class="docutils literal notranslate"><span class="pre">{ODB}</span></code> will be substituted with the path to the output database (<code class="docutils literal notranslate"><span class="pre">.odb</span></code>) file for this job</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">{DIR}</span></code> will be substituted with the path to the output directory for this job</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">{JOB}</span></code> will be substituted with the name of the job (without any extensions or paths)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{REF}</span></code> will be substituted with the path to the <a class="reference internal" href="#check-reference"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">check.reference</span></code></span></a> file</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{NAME}</span></code> will be substituted with the job <a class="reference internal" href="#id1"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">name</span></code></span></a> file</p></li>
 </ul>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
@@ -396,27 +417,27 @@ post-processing commands.</p>
 <p>Specifies the reference file to compare output against. This is a binary Python pickle file
 that contains data from a previous reference run.
 If the file does not exist, then it is created using the current run.</p>
-</section>
-<section id="check-steps">
-<h4>check.steps<a class="headerlink" href="#check-steps" title="Permalink to this heading">#</a></h4>
+<p>The following special variables can be used in this field:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">{NCPU}</span></code> will be substituted with the number of CPUs used to run the job</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It is recommended to include <code class="docutils literal notranslate"><span class="pre">{NCPU}</span></code> in <strong>check.reference</strong> when performing
+regression checks on multicore jobs due to unavoidable variations that occur
+between results produced with different numbers of CPUs
+``</p>
+<p class="rubric">check.steps</p>
 <p><strong><em>[string,…], mandatory</em></strong></p>
 <p>List of strings specifying Abaqus job steps for which to check output.</p>
-</section>
-<section id="check-fields">
-<h4>check.fields<a class="headerlink" href="#check-fields" title="Permalink to this heading">#</a></h4>
+<p class="rubric">check.fields</p>
 <p><strong><em>[string,…], mandatory</em></strong></p>
 <p>List of strings specifying Abaqus output field variables to check.</p>
-</section>
-<section id="check-frames">
-<h4>check.frames<a class="headerlink" href="#check-frames" title="Permalink to this heading">#</a></h4>
+<p class="rubric">check.frames</p>
 <p><strong><em>strings or [int,…], optional</em></strong></p>
 <p>Either a list of frame indices for which to perform checks or <code class="docutils literal notranslate"><span class="pre">'all'</span></code> or <code class="docutils literal notranslate"><span class="pre">'last'</span></code>.</p>
 <p>If not specified, then <code class="docutils literal notranslate"><span class="pre">'last'</span></code> is the default.</p>
-</section>
-</section>
-</section>
-<section id="compile-section">
-<h2>Compile section<a class="headerlink" href="#compile-section" title="Permalink to this heading">#</a></h2>
+<p class="rubric">Compile section</p>
 <p><strong><em>subsection, optional</em></strong></p>
 <p>An optional subsection that details compilation settings.</p>
 <p><strong>Example:</strong></p>
@@ -432,6 +453,9 @@ If the file does not exist, then it is created using the current run.</p>
 <span class="n">sources</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;cpp_functions.cpp&#39;</span><span class="p">]</span><span class="w"></span>
 </pre></div>
 </div>
+</div>
+</section>
+</section>
 <section id="fflags-windows-fflags-linux">
 <h3>fflags.windows / fflags.linux<a class="headerlink" href="#fflags-windows-fflags-linux" title="Permalink to this heading">#</a></h3>
 <p><strong><em>string or [string,…], optional</em></strong></p>
@@ -629,7 +653,7 @@ abaci will fetch the latest changes from the branch everytime it is run.</p>
         <div class="related-pages">
           
           <a class="prev-page" href="cli.html">
-              <svg><use href="#svg-arrow-right"></use></svg>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
@@ -665,7 +689,7 @@ abaci will fetch the latest changes from the branch everytime it is run.</p>
       <div class="toc-sticky toc-scroll">
         <div class="toc-title-container">
           <span class="toc-title">
-            Contents
+            On this page
           </span>
         </div>
         <div class="toc-tree-container">
@@ -677,6 +701,7 @@ abaci will fetch the latest changes from the branch everytime it is run.</p>
 <li><a class="reference internal" href="#name">name</a></li>
 <li><a class="reference internal" href="#user-sub-file">user-sub-file</a></li>
 <li><a class="reference internal" href="#output">output</a></li>
+<li><a class="reference internal" href="#test-mod-dir">test-mod-dir</a></li>
 <li><a class="reference internal" href="#abq-flags">abq-flags</a></li>
 </ul>
 </li>
@@ -691,14 +716,8 @@ abaci will fetch the latest changes from the branch everytime it is run.</p>
 <li><a class="reference internal" href="#post-process">post-process</a></li>
 <li><a class="reference internal" href="#check">check.</a><ul>
 <li><a class="reference internal" href="#check-reference">check.reference</a></li>
-<li><a class="reference internal" href="#check-steps">check.steps</a></li>
-<li><a class="reference internal" href="#check-fields">check.fields</a></li>
-<li><a class="reference internal" href="#check-frames">check.frames</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li><a class="reference internal" href="#compile-section">Compile section</a><ul>
 <li><a class="reference internal" href="#fflags-windows-fflags-linux">fflags.windows / fflags.linux</a></li>
 <li><a class="reference internal" href="#cflags-windows-cflags-linux">cflags.windows / cflags.linux</a></li>
 <li><a class="reference internal" href="#lflags-windows-lflags-linux">lflags.windows / lflags.linux</a></li>
@@ -740,6 +759,7 @@ abaci will fetch the latest changes from the branch everytime it is run.</p>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/scripts/furo.js"></script>
     <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-TFZ8YW7MNE"></script>
     <script src="../_static/ga-init.js"></script>

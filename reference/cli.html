@@ -2,13 +2,13 @@
 <html class="no-js" lang="en">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Configuration Reference" href="config.html" /><link rel="prev" title="Reference" href="index.html" />
 
-    <link rel="shortcut icon" href="../_static/abaci.ico"/><meta name="generator" content="sphinx-5.1.1, furo 2022.06.21"/>
+    <link rel="shortcut icon" href="../_static/abaci.ico"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
         <title>Command Line Interface Reference - Abaci Documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=40978830699223671f4072448e654b5958f38b89" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     
     
@@ -165,6 +165,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../how-to-guides/getting-started-with-abaci.html">Getting Started with Abaci in your Project</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how-to-guides/regression-checks.html">How to Setup Regression Checks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how-to-guides/post-processing.html">How to Setup Post-Processing Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how-to-guides/unit-testing.html">How-to Write Unit Tests with Abaci</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
@@ -191,7 +192,8 @@
           <span>Back to top</span>
         </a>
         <div class="content-icon-container">
-          <div class="theme-toggle-container theme-toggle-content">
+          
+<div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle">
               <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
               <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
@@ -555,6 +557,48 @@ will not affect the behaviour of <code class="docutils literal notranslate"><spa
 abaci lacks the information required to post-process jobs not run via abaci.</p>
 </div>
 </section>
+<section id="abaci-test">
+<h2><code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">test</span></code><a class="headerlink" href="#abaci-test" title="Permalink to this heading">#</a></h2>
+<p>Compile and run unit tests.</p>
+<p>Compiler-related options behave the same as with <a class="reference internal" href="#abaci-compile"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">compile</span></code></span></a>.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>usage: abaci test [-h] [-v | -q] [--config CONFIG] [-t] [-d] [-c] [-0] [-g]
+                  [-s]
+
+Compile user subroutines only and run unit tests
+
+optional arguments:
+  -h, --help       show this help message and exit
+  -v, --verbose    output more information from abaci
+  -q, --quiet      output less information from abaci
+  --config CONFIG  specify a different config file to default (&quot;abaci.toml&quot;)
+  -t, --codecov    compile subroutines for code coverage analysis
+  -d, --debug      enable run-time debugging checks
+  -c, --check      enable strict compile-time checks
+  -0, --noopt      compile without any optimisations
+  -g, --gcc        use gnu compilers for auxillary source files
+  -s, --screen     echo Abaqus output to the screen while running
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>See the <a class="reference internal" href="../how-to-guides/unit-testing.html"><span class="doc std std-doc">unit tests guide</span></a> for how to
+structure and write unit tests for your Abaqus user subroutine.</p>
+</div>
+<p><strong>Example:</strong> <em>compile and run unit tests</em></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  abaci test
+</pre></div>
+</div>
+<p><strong>Example:</strong> <em>compile and run unit tests in debug mode</em></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span> abaci test --debug
+ abaci test -d
+</pre></div>
+</div>
+<p><strong>Example:</strong> <em>compile and run unit tests with code coverage checking</em></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span> abaci test --codecov
+ abaci test -t
+</pre></div>
+</div>
+</section>
 <section id="abaci-show">
 <h2><code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">show</span></code><a class="headerlink" href="#abaci-show" title="Permalink to this heading">#</a></h2>
 <p>Show useful information about the current project.</p>
@@ -563,7 +607,7 @@ abaci lacks the information required to post-process jobs not run via abaci.</p>
 Show useful information about this project
 
 positional arguments:
-  object           {config|jobs|dependencies|sources}
+  object           {config|jobs|dependencies|sources|tests}
 
 optional arguments:
   -h, --help       show this help message and exit
@@ -582,6 +626,10 @@ optional arguments:
 </div>
 <p><strong>Example:</strong> <em>show a list of source files</em></p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  abaci show sources
+</pre></div>
+</div>
+<p><strong>Example:</strong> <em>show a list of unit tests detected by abaci</em></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  abaci show tests
 </pre></div>
 </div>
 <p><strong>Example:</strong> <em>show a list of third-party dependencies</em></p>
@@ -603,10 +651,10 @@ optional arguments:
                 </div>
                 <div class="title">Configuration Reference</div>
               </div>
-              <svg><use href="#svg-arrow-right"></use></svg>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
           <a class="prev-page" href="index.html">
-              <svg><use href="#svg-arrow-right"></use></svg>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
@@ -642,7 +690,7 @@ optional arguments:
       <div class="toc-sticky toc-scroll">
         <div class="toc-title-container">
           <span class="toc-title">
-            Contents
+            On this page
           </span>
         </div>
         <div class="toc-tree-container">
@@ -659,6 +707,7 @@ optional arguments:
 <li><a class="reference internal" href="#abaci-run"><code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">run</span></code></a></li>
 <li><a class="reference internal" href="#abaci-submit"><code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">submit</span></code></a></li>
 <li><a class="reference internal" href="#abaci-post"><code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">post</span></code></a></li>
+<li><a class="reference internal" href="#abaci-test"><code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">test</span></code></a></li>
 <li><a class="reference internal" href="#abaci-show"><code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">show</span></code></a></li>
 </ul>
 </li>
@@ -676,6 +725,7 @@ optional arguments:
     <script src="../_static/underscore.js"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/scripts/furo.js"></script>
     <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-TFZ8YW7MNE"></script>
     <script src="../_static/ga-init.js"></script>

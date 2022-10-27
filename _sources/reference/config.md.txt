@@ -39,6 +39,7 @@ __Example:__
 name = 'project-name'
 user-sub-file = 'usersub.f90'
 output = 'scratch'
+test-mod-dir = 'test'
 ```
 
 ### name
@@ -73,6 +74,24 @@ Specifies the name of the directory into which compilation and job folders will 
   - an absolute path
 - If omitted, the default output directory is a subdirectory called `scratch` in the current working directory
 - The output folder is created if it does not exist
+
+
+### test-mod-dir
+
+__*string, optional*__
+
+Specifies the name of the directory in which test module files are stored.
+
+- The directory is relative to the folder containing the configuration file
+- If omitted, the default test module directory is `test` 
+
+```{seealso}
+See the [unit tests guide](../how-to-guides/unit-testing.md) for how to
+structure and write unit tests for your Abaqus user subroutine.
+```
+
+Use the [`test`](./cli.md#abaci-test) subcommand to compile and run these
+test subroutines.
 
 
 ### abq-flags
@@ -177,6 +196,8 @@ The field takes the form of a command to execute and allows certain variables to
 - `{ODB}` will be substituted with the path to the output database (`.odb`) file for this job
 - `{DIR}` will be substituted with the path to the output directory for this job
 - `{JOB}` will be substituted with the name of the job (without any extensions or paths)
+- `{REF}` will be substituted with the path to the [`check.reference`](#checkreference) file
+- `{NAME}` will be substituted with the job [`name`](#name-1) file
 
 ```{seealso}
 See the [Post-processing Guide](../how-to-guides/post-processing.md) for more information on how to set up
@@ -212,6 +233,16 @@ __*string, mandatory*__
 Specifies the reference file to compare output against. This is a binary Python pickle file
 that contains data from a previous reference run.
 If the file does not exist, then it is created using the current run.
+
+The following special variables can be used in this field:
+
+- `{NCPU}` will be substituted with the number of CPUs used to run the job
+
+```{note}
+It is recommended to include `{NCPU}` in __check.reference__ when performing
+regression checks on multicore jobs due to unavoidable variations that occur
+between results produced with different numbers of CPUs
+``
 
 #### check.steps
 

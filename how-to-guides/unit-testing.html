@@ -1,0 +1,590 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Reference" href="../reference/index.html" /><link rel="prev" title="How to Setup Post-Processing Commands" href="post-processing.html" />
+
+    <link rel="shortcut icon" href="../_static/abaci.ico"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
+        <title>How-to Write Unit Tests with Abaci - Abaci Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Abaci Documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../_static/abaci.png" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">Abaci Documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../quickstart-tutorial.html">Quickstart Tutorial</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">How-to guides</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="install.html">How to Install Abaci</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting-started-with-abaci.html">Getting Started with Abaci in your Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regression-checks.html">How to Setup Regression Checks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="post-processing.html">How to Setup Post-Processing Commands</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">How-to Write Unit Tests with Abaci</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/cli.html">Command Line Interface Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/config.html">Configuration Reference</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="how-to-write-unit-tests-with-abaci">
+<h1>How-to Write Unit Tests with Abaci<a class="headerlink" href="#how-to-write-unit-tests-with-abaci" title="Permalink to this heading">#</a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
+<section id="why-write-tests">
+<h3>Why Write Tests?<a class="headerlink" href="#why-write-tests" title="Permalink to this heading">#</a></h3>
+<p>Writing tests for your code is an important and very useful part of good
+software development. Testing code is particularly beneficial for research
+software to ensure correctness and avoid mistakes while it is being developed
+and updated.</p>
+<p>While developing or updating your user subroutine, the code will likely undergo
+many changes; writing tests gives you, and other users of your code, the
+confidence that your code is still functioning correctly when you make
+changes to your code.</p>
+<p>You can learn more about testing in the RSE Guide
+<a class="reference external" href="https://bristolcompositesinstitute.github.io/RSE-Guide/best-practices/testing.html">here</a>.</p>
+</section>
+<section id="what-are-unit-tests">
+<h3>What are Unit Tests?<a class="headerlink" href="#what-are-unit-tests" title="Permalink to this heading">#</a></h3>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Unit tests are so-called because they each test only a small part of your code,
+<em>i.e.</em> one function or subroutine. It is
+<a class="reference external" href="https://bristolcompositesinstitute.github.io/RSE-Guide/abaqus-user-subroutines/fortran-style-guidelines.html#subroutines-and-functions"><strong>strongly recommended</strong></a>
+to organise your user subroutine code into multiple functions or subroutines
+which each perform a single job.</p>
+<p><strong>See also:</strong></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://bristolcompositesinstitute.github.io/RSE-Guide/best-practices/single-responsibility.html">Single resposibility principle</a></p></li>
+<li><p><a class="reference external" href="https://bristolcompositesinstitute.github.io/RSE-Guide/abaqus-user-subroutines/using-fortran-modules.html">Organising Code with Fortran Modules</a></p></li>
+</ul>
+</div>
+</section>
+<section id="testing-with-abaci">
+<h3>Testing with Abaci<a class="headerlink" href="#testing-with-abaci" title="Permalink to this heading">#</a></h3>
+<p>Abaci provides two ways to test your Abaqus user subroutines:</p>
+<ol class="arabic simple">
+<li><p>Running test jobs and checking/post-processing the outputs</p></li>
+<li><p>Writing unit tests to test individual parts of your code</p></li>
+</ol>
+<p>This guide will explain how to write and run unit tests for your code using
+Abaci.</p>
+</section>
+</section>
+<section id="writing-tests">
+<h2>Writing Tests<a class="headerlink" href="#writing-tests" title="Permalink to this heading">#</a></h2>
+<section id="test-structure">
+<h3>Test Structure<a class="headerlink" href="#test-structure" title="Permalink to this heading">#</a></h3>
+<p>Unit tests with Abaci are written as Fortran subroutines stored in a Fortran
+module. Abaci will automatically detect test subroutines that satisfy the
+following conditions:</p>
+<ul class="simple">
+<li><p>The subroutine takes no arguments</p></li>
+<li><p>The subroutine name begins with <code class="docutils literal notranslate"><span class="pre">test</span></code></p></li>
+<li><p>The subroutine is contained in a module with a name beginning with <code class="docutils literal notranslate"><span class="pre">test</span></code></p></li>
+<li><p>The test module source file is stored in the
+<a class="reference internal" href="../reference/config.html#test-mod-dir"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">test-mod-dir</span></code></span></a> directory (default <code class="docutils literal notranslate"><span class="pre">test</span></code>)</p></li>
+</ul>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>You can check if Abaci is detecting your test modules and subroutines correctly,
+by running <code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">show</span> <span class="pre">tests</span></code>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>There’s no need to write a Fortran <code class="docutils literal notranslate"><span class="pre">program</span></code> that runs your test subroutines;
+Abaci will automatically generate this for you.</p>
+</div>
+<p><strong>Example:</strong> <em>a test module containing one unit test subroutine</em></p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">module </span><span class="n">test_elastic</span><span class="w"></span>
+<span class="w">  </span><span class="k">use </span><span class="n">Elastic_mod</span><span class="w">    </span><span class="c">! &lt;-- the module that we will test</span>
+<span class="w">  </span><span class="k">implicit none</span>
+
+<span class="k">  contains</span>
+
+<span class="k">  subroutine </span><span class="n">test_get_properties</span><span class="p">()</span><span class="w"></span>
+<span class="w">    </span>
+<span class="w">    </span><span class="c">! Test code goes here</span>
+
+<span class="w">  </span><span class="k">end subroutine </span><span class="n">test_get_properties</span><span class="w"></span>
+
+<span class="k">end module </span><span class="n">test_elastic</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You <strong>do not</strong> need to <code class="docutils literal notranslate"><span class="pre">include</span></code> any of your user subroutine source files
+in your test module, it will be linked automatically by abaci.
+You <strong>do need</strong> to add <code class="docutils literal notranslate"><span class="pre">use</span></code> statements for any modules that your user subroutine
+code is stored in.</p>
+</div>
+</section>
+<section id="test-code-assert-methods">
+<h3>Test Code (Assert Methods)<a class="headerlink" href="#test-code-assert-methods" title="Permalink to this heading">#</a></h3>
+<p>Abaci supplies a copy of the <a class="reference external" href="https://github.com/cibinjoseph/naturalFRUIT">naturalFruit</a>
+testing framework for Fortran which provides a number of useful
+<a class="reference external" href="https://cibinjoseph.github.io/naturalFRUIT/page/AssertMethods/index.html">assert methods</a>.</p>
+<p>Assert methods allow us to check if a condition is true and report a useful
+message if it is not.</p>
+<p>To use the naturalfruit assert methods, we simply have to add a <code class="docutils literal notranslate"><span class="pre">use</span></code>
+statement to the top of our test module.</p>
+<p><strong>Example:</strong> <em>a unit test with assert_equal methods</em></p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">module </span><span class="n">test_mod</span><span class="w"></span>
+<span class="w">  </span><span class="k">use </span><span class="n">NaturalFruit</span><span class="w">    </span><span class="c">! &lt;-- the testing framework module</span>
+<span class="w">  </span><span class="k">implicit none</span>
+
+<span class="k">  </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="n">paramter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">  </span><span class="kt">real</span><span class="p">,</span><span class="w"> </span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">pi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="o">*</span><span class="nb">atan</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">contains</span>
+
+<span class="k">  subroutine </span><span class="n">test_parameters</span><span class="p">()</span><span class="w"></span>
+
+<span class="w">    </span><span class="c">! Check that the value of a is one</span>
+<span class="w">    </span><span class="k">call </span><span class="n">assert_equal</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">message</span><span class="o">=</span><span class="s2">&quot;parameter &#39;a&#39; has an incorrect value&quot;</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">    </span><span class="c">! Check that the value of pi is correct to 4 decimal places</span>
+<span class="w">    </span><span class="k">call </span><span class="n">assert_equal</span><span class="p">(</span><span class="n">pi</span><span class="p">,</span><span class="w"> </span><span class="mf">3.141593</span><span class="p">,</span><span class="w"> </span><span class="n">tol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1e-4</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="o">=</span><span class="s2">&quot;parameter &#39;pi&#39; is incorrect&quot;</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">end subroutine </span><span class="n">test_parameters</span><span class="w"></span>
+
+<span class="k">end module </span><span class="n">test_mod</span><span class="w"></span>
+</pre></div>
+</div>
+<p>In this example we use the <code class="docutils literal notranslate"><span class="pre">assert_equal</span></code> method to check the value of two
+parameters. In the case of the real variable <code class="docutils literal notranslate"><span class="pre">pi</span></code>, we check the value within
+a tolerance by specifying the <code class="docutils literal notranslate"><span class="pre">tol</span></code> argument.</p>
+<p>If any assert method fails, it will report a useful message to the screen
+along with the name of the test.</p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>The naturalfruit <code class="docutils literal notranslate"><span class="pre">assert_equal</span></code> method accepts <code class="docutils literal notranslate"><span class="pre">integer</span></code>, <code class="docutils literal notranslate"><span class="pre">real</span></code>, <code class="docutils literal notranslate"><span class="pre">real(dp)</span></code>,
+<code class="docutils literal notranslate"><span class="pre">complex</span></code> and <code class="docutils literal notranslate"><span class="pre">complex(dp)</span></code> arguments of scalar, 1D or 2D dimension.
+Note the first two arguments to <code class="docutils literal notranslate"><span class="pre">assert_equal</span></code> must have the same type
+and dimension.</p>
+</div>
+</section>
+<section id="running-the-tests">
+<h3>Running the Tests<a class="headerlink" href="#running-the-tests" title="Permalink to this heading">#</a></h3>
+<p>Given one or more test subroutines conforming to the
+<a class="reference internal" href="#test-structure"><span class="std std-doc">test structure</span></a> rules described above, you can easily run
+your unit tests at the command line with the <a class="reference internal" href="../reference/cli.html#abaci-test"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">test</span></code></span></a>
+subcommand:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>  abaci <span class="nb">test</span>
+</pre></div>
+</div>
+<p>Abaci will automatically generate and run a Fortran program to call all of your
+unit test subroutines. The output from the assert methods is printed to the
+screen.</p>
+<p>You can use all the same command line options as for <code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">compile</span></code> to control
+the compilation settings.</p>
+<p><strong>Example:</strong> <em>build and run tests with runtime checks enabled</em></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  abaci test --debug
+</pre></div>
+</div>
+<p><strong>Example:</strong> <em>build and run tests with code optimizations disabled</em></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  abaci test --noopt
+</pre></div>
+</div>
+</section>
+<section id="code-coverage">
+<h3>Code Coverage<a class="headerlink" href="#code-coverage" title="Permalink to this heading">#</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Code coverage is not yet supported on Windows</p>
+</div>
+<p>You can verify how much of your code you are testing by using the <code class="docutils literal notranslate"><span class="pre">--codecov</span></code>
+flag at the command line:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  abaci test --codecov
+</pre></div>
+</div>
+<p>After the tests have completed, the resulting code coverage report can be
+found in the <code class="docutils literal notranslate"><span class="pre">&lt;output&gt;/lib</span></code> directory.</p>
+</section>
+</section>
+<section id="complete-example">
+<h2>Complete Example<a class="headerlink" href="#complete-example" title="Permalink to this heading">#</a></h2>
+<p>In this example we will be using the sample code in the
+<a class="reference external" href="https://github.com/BristolCompositesInstitute/abaqus-modern-fortran"><code class="docutils literal notranslate"><span class="pre">abaqus-modern-fortran</span></code></a>
+repository on Github. This is a simple Abaqus/Standard user subroutine that reproduces
+linear elastic behaviour and which has been organised into multiple subroutines
+and functions. In this guide, we will write unit tests to check that these
+subroutines and functions are running correctly.</p>
+<p>We will write a simple test that checks that the
+<a class="reference external" href="https://github.com/BristolCompositesInstitute/abaqus-modern-fortran/blob/b1c9328e3d8de847bf67d3d788db61818bb86fb9/src/Elastic_mod.f90#L51"><code class="docutils literal notranslate"><span class="pre">get_properties</span></code></a>
+subroutine correctly extracts the right property values from the <code class="docutils literal notranslate"><span class="pre">props</span></code>
+array.</p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">test/test_elastic.f90</span></code>:</strong></p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">module </span><span class="n">test_elastic</span><span class="w"></span>
+<span class="w">  </span><span class="k">use </span><span class="n">iso_fortran_env</span><span class="p">,</span><span class="w"> </span><span class="k">only</span><span class="p">:</span><span class="w"> </span><span class="n">dp</span><span class="o">=&gt;</span><span class="n">real64</span><span class="w"></span>
+<span class="w">  </span><span class="k">use </span><span class="n">Elastic_mod</span><span class="w"></span>
+<span class="w">  </span><span class="k">use </span><span class="n">naturalfruit</span><span class="w"></span>
+<span class="w">  </span><span class="k">implicit none</span>
+
+<span class="k">contains</span>
+
+<span class="k">  subroutine </span><span class="n">test_get_props</span><span class="w"></span>
+<span class="w">    </span>
+<span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">elastic_props_t</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">props</span><span class="w"></span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">props_array</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mf">1.0d9</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5d0</span><span class="p">]</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">props</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_properties</span><span class="p">(</span><span class="n">props_array</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">call </span><span class="n">assert_equal</span><span class="p">(</span><span class="n">props_array</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">props</span><span class="p">%</span><span class="n">e</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
+<span class="w">                      </span><span class="n">message</span><span class="o">=</span><span class="s2">&quot;props%e does not match input array&quot;</span><span class="p">)</span><span class="w"></span>
+
+
+<span class="w">    </span><span class="k">call </span><span class="n">assert_equal</span><span class="p">(</span><span class="n">props_array</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="n">props</span><span class="p">%</span><span class="n">xnu</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
+<span class="w">                      </span><span class="n">message</span><span class="o">=</span><span class="s2">&quot;props%xnu does not match input array&quot;</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">end subroutine </span><span class="n">test_get_props</span><span class="w"></span>
+
+<span class="k">end module </span><span class="n">test_elastic</span><span class="w"></span>
+</pre></div>
+</div>
+<p>We can run the unit test at the command line:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>c:\Temp\abaqus-modern-fortran&gt; abaci test
+  Log file for this session is &quot;scratch\abaci-64.log&quot;
+  Running abaqus make
+  Compiling tests
+  Running tests
+
+  Test module initialized
+
+      . : successful assert,   F : failed assert
+
+  ..
+
+      Start of FRUIT summary:
+
+  SUCCESSFUL!
+
+  No messages
+  Total asserts :              2
+  Successful    :              2
+  Failed        :              0
+  Successful rate:   100.00%
+
+  Successful asserts / total asserts : [            2 /           2  ]
+  Successful cases   / total cases   : [            1 /           1  ]
+  -- end of FRUIT summary
+</pre></div>
+</div>
+<p>Here we can see that all of our assertions passed and we get a summary of all
+the tests.</p>
+<hr class="docutils" />
+<p>Now let’s see what happens if we purposefully swap the <code class="docutils literal notranslate"><span class="pre">props_array</span></code> indices
+so that the assertions fail:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>c:\Temp\abaqus-modern-fortran&gt; abaci test
+  Log file for this session is &quot;scratch\abaci-65.log&quot;
+  Running abaqus make
+  Compiling tests
+  Running tests
+
+  Test module initialized
+
+    . : successful assert,   F : failed assert
+
+  FF
+
+      Start of FRUIT summary:
+
+  Some tests failed!
+
+    -- Failed assertion messages:
+    [test_get_props]: Expected [0.500000000000000], Got [1000000000.00000]; User message: [props%e does not match input array]
+    [test_get_props]: Expected [1000000000.00000], Got [0.500000000000000]; User message: [props%xnu does not match input array]
+    -- end of failed assertion messages.
+
+  Total asserts :              2
+  Successful    :              0
+  Failed        :              2
+  Successful rate:     0.00%
+
+  Successful asserts / total asserts : [            0 /           2  ]
+  Successful cases   / total cases   : [            0 /           1  ]
+    -- end of FRUIT summary
+
+
+  (!) Non-zero status return by test driver (1)
+</pre></div>
+</div>
+<p>Now we get a warning that some of our assertions failed and we also get
+messages which describe the failed assertions.</p>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="../reference/index.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Reference</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="post-processing.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">How to Setup Post-Processing Commands</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; University of Bristol 2022
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">How-to Write Unit Tests with Abaci</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a><ul>
+<li><a class="reference internal" href="#why-write-tests">Why Write Tests?</a></li>
+<li><a class="reference internal" href="#what-are-unit-tests">What are Unit Tests?</a></li>
+<li><a class="reference internal" href="#testing-with-abaci">Testing with Abaci</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#writing-tests">Writing Tests</a><ul>
+<li><a class="reference internal" href="#test-structure">Test Structure</a></li>
+<li><a class="reference internal" href="#test-code-assert-methods">Test Code (Assert Methods)</a></li>
+<li><a class="reference internal" href="#running-the-tests">Running the Tests</a></li>
+<li><a class="reference internal" href="#code-coverage">Code Coverage</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#complete-example">Complete Example</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/scripts/furo.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-TFZ8YW7MNE"></script>
+    <script src="../_static/ga-init.js"></script>
+    </body>
+</html>

@@ -12,4 +12,5 @@ install
 getting-started-with-abaci
 regression-checks
 post-processing
+unit-testing
 ```
