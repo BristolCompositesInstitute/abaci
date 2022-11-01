@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Update `show` subcommand with `tests` option to list detected unit tests
 - Add `{NCPU}` special variable for number of CPUs in `check.reference` field
 - Add support for file globbing in `job.include` field
+- Fix minor issue with `abq-flags` field with empty strings
 
 ## [[v0.4.4]](https://github.com/BristolCompositesInstitute/abaci/releases/tag/v0.4.4) - 04/08/22
 

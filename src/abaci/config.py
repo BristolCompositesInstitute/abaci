@@ -162,7 +162,14 @@ def sanitize_config(config, config_dir):
         """Helper to unify optional list inputs"""
         if not isinstance(potential_list,list):
 
-            return [potential_list]
+            if potential_list.strip():
+
+                return [potential_list]
+
+            else:
+
+                # (Empty string becomes empty list)
+                return []
 
         else:
 
