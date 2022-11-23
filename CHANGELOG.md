@@ -4,6 +4,10 @@ Notable changes to this project are logged here according to release version and
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [v0.5.1](https://github.com/BristolCompositesInstitute/abaci/releases/tag/v0.5.0) - 23/11/22
+
+- Fix: exit status propagation from failed jobs (needed for CI)
+
 ## [v0.5.0](https://github.com/BristolCompositesInstitute/abaci/releases/tag/v0.5.0) - 27/10/22
 
 - Add `{REF}` special variable for `check.reference` file in post-processing field

@@ -82,6 +82,8 @@ def main():
 
         stats = run_jobs(args,compile_dir,jobs)
 
+        exitstat = 0
+
         for job, stat in zip(jobs,stats):
 
             if stat == 0:
@@ -90,10 +92,16 @@ def main():
 
                 job.post_process(args.verbose)
 
+            else:
+
+                exitstat = 1
+
         if args.codecov:
             
             collect_cov_report(config,compile_dir,args.verbose)
 
+        exit(exitstat)
+        
     elif args.action == 'submit':
 
         submit_jobs(compile_dir,jobs,args.interactive,args.no_submit)
