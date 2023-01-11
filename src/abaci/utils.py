@@ -102,7 +102,15 @@ def system_cmd(cmd,output=None):
         fo = None
         fe = None
 
-    p = subprocess.Popen(cmd,stdout=fo,stderr=fe)
+    # Remove these Abaqus python env vars 
+    #  (needed to allow launching other Python versions)
+    env = os.environ.copy()
+    env.pop('PYTHONPATH', None)
+    env.pop('PYTHONHOME', None)
+    env.pop('PYTHONIOENCODING', None)
+    env.pop('PYTHONUNBUFFERED', None)
+
+    p = subprocess.Popen(cmd,stdout=fo,stderr=fe,env=env)
 
     def handle_interrupt(signal, frame):
         p.terminate()
