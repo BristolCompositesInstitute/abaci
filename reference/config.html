@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="prev" title="Command Line Interface Reference" href="cli.html" />
 
-    <link rel="shortcut icon" href="../_static/abaci.ico"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
+    <link rel="shortcut icon" href="../_static/abaci.ico"/><!-- Generated with Sphinx 5.3.0 and Furo 2022.12.07 -->
         <title>Configuration Reference - Abaci Documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     
     
@@ -152,7 +152,7 @@
   <span class="sidebar-brand-text">Abaci Documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
-  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
 </form>
@@ -238,10 +238,10 @@
 <section id="top-level-fields">
 <h2>Top-level fields<a class="headerlink" href="#top-level-fields" title="Permalink to this heading">#</a></h2>
 <p><strong>Example:</strong></p>
-<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;project-name&#39;</span><span class="w"></span>
-<span class="n">user-sub-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;usersub.f90&#39;</span><span class="w"></span>
-<span class="n">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;scratch&#39;</span><span class="w"></span>
-<span class="n">test-mod-dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;test&#39;</span><span class="w"></span>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;project-name&#39;</span>
+<span class="n">user-sub-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;usersub.f90&#39;</span>
+<span class="n">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;scratch&#39;</span>
+<span class="n">test-mod-dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;test&#39;</span>
 </pre></div>
 </div>
 <section id="name">
@@ -308,16 +308,16 @@ in the specification of the job</p></li>
 <h2>Jobs list<a class="headerlink" href="#jobs-list" title="Permalink to this heading">#</a></h2>
 <p>Array of optional subsections that predefine specific abaqus jobs to run.</p>
 <p><strong>Example:</strong></p>
-<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[[job]]</span><span class="w"></span>
-<span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;my-abaqus-job.inp&#39;</span><span class="w"></span>
-<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;job1&#39;</span><span class="w"></span>
-<span class="n">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;test&#39;</span><span class="p">,</span><span class="s">&#39;three_elem&#39;</span><span class="p">]</span><span class="w"></span>
-<span class="n">abq-flags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;domains&#39;</span><span class="w"></span>
-<span class="n">include</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;job1_extra_inputs.inp&#39;</span><span class="p">]</span><span class="w"></span>
-<span class="n">mp-mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;threads&#39;</span><span class="w"></span>
-<span class="n">post-process</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;{PY} {ROOT}/scripts/postprocess.py {ODB}&#39;</span><span class="w"></span>
-<span class="n">cluster</span><span class="p">.</span><span class="n">mem-per-cpu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;8000M&#39;</span><span class="w"></span>
-<span class="n">cluster</span><span class="p">.</span><span class="n">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;1-00:00:00&#39;</span><span class="w"></span>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[[job]]</span>
+<span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;my-abaqus-job.inp&#39;</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;job1&#39;</span>
+<span class="n">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;test&#39;</span><span class="p">,</span><span class="s">&#39;three_elem&#39;</span><span class="p">]</span>
+<span class="n">abq-flags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;domains&#39;</span>
+<span class="n">include</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;job1_extra_inputs.inp&#39;</span><span class="p">]</span>
+<span class="n">mp-mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;threads&#39;</span>
+<span class="n">post-process</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;{PY} {ROOT}/scripts/postprocess.py {ODB}&#39;</span>
+<span class="n">cluster</span><span class="p">.</span><span class="n">mem-per-cpu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;8000M&#39;</span>
+<span class="n">cluster</span><span class="p">.</span><span class="n">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;1-00:00:00&#39;</span>
 </pre></div>
 </div>
 <section id="job-file">
@@ -402,13 +402,13 @@ post-processing commands.</p>
 <p><strong><em>subsection, optional</em></strong></p>
 <p>An optional group for detailing regression checks.</p>
 <p><strong>Example:</strong></p>
-<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[[job]]</span><span class="w"></span>
-<span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;job.inp&#39;</span><span class="w"></span>
-<span class="n">check</span><span class="p">.</span><span class="n">reference</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;reference-output.pkl&#39;</span><span class="w"></span>
-<span class="n">check</span><span class="p">.</span><span class="n">steps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;Step-1&#39;</span><span class="p">]</span><span class="w"></span>
-<span class="n">check</span><span class="p">.</span><span class="n">fields</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;SDV1&#39;</span><span class="p">,</span><span class="s">&#39;SDV2&#39;</span><span class="p">]</span><span class="w"></span>
-<span class="n">check</span><span class="p">.</span><span class="n">frames</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;last&#39;</span><span class="w"></span>
-<span class="n">check</span><span class="p">.</span><span class="n">elements</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;all&#39;</span><span class="w"></span>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[[job]]</span>
+<span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;job.inp&#39;</span>
+<span class="n">check</span><span class="p">.</span><span class="n">reference</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;reference-output.pkl&#39;</span>
+<span class="n">check</span><span class="p">.</span><span class="n">steps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;Step-1&#39;</span><span class="p">]</span>
+<span class="n">check</span><span class="p">.</span><span class="n">fields</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;SDV1&#39;</span><span class="p">,</span><span class="s">&#39;SDV2&#39;</span><span class="p">]</span>
+<span class="n">check</span><span class="p">.</span><span class="n">frames</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;last&#39;</span>
+<span class="n">check</span><span class="p">.</span><span class="n">elements</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;all&#39;</span>
 </pre></div>
 </div>
 <section id="check-reference">
@@ -441,16 +441,16 @@ between results produced with different numbers of CPUs
 <p><strong><em>subsection, optional</em></strong></p>
 <p>An optional subsection that details compilation settings.</p>
 <p><strong>Example:</strong></p>
-<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[compile]</span><span class="w"></span>
-<span class="n">fflags</span><span class="p">.</span><span class="n">windows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;&#39;</span><span class="w"></span>
-<span class="n">fflags</span><span class="p">.</span><span class="n">linux</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;&#39;</span><span class="w"></span>
-<span class="n">cflags</span><span class="p">.</span><span class="n">windows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;&#39;</span><span class="w"></span>
-<span class="n">cflags</span><span class="p">.</span><span class="n">linux</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;&#39;</span><span class="w"></span>
-<span class="n">lflags</span><span class="p">.</span><span class="n">windows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;&#39;</span><span class="w"></span>
-<span class="n">lflags</span><span class="p">.</span><span class="n">linux</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;&#39;</span><span class="w"></span>
-<span class="n">compiletime-checks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="w"></span>
-<span class="n">include</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;extra-source.f90&#39;</span><span class="p">]</span><span class="w"></span>
-<span class="n">sources</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;cpp_functions.cpp&#39;</span><span class="p">]</span><span class="w"></span>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[compile]</span>
+<span class="n">fflags</span><span class="p">.</span><span class="n">windows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="n">fflags</span><span class="p">.</span><span class="n">linux</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="n">cflags</span><span class="p">.</span><span class="n">windows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="n">cflags</span><span class="p">.</span><span class="n">linux</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="n">lflags</span><span class="p">.</span><span class="n">windows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="n">lflags</span><span class="p">.</span><span class="n">linux</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="n">compiletime-checks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span>
+<span class="n">include</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;extra-source.f90&#39;</span><span class="p">]</span>
+<span class="n">sources</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;cpp_functions.cpp&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -533,13 +533,13 @@ interactively (<code class="docutils literal notranslate"><span class="pre">--in
 per-job basis using the <a class="reference internal" href="#mp-mode"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">mp-mode</span></code> job field</span></a>.</p>
 </div>
 <p><strong>Example:</strong></p>
-<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[cluster]</span><span class="w"></span>
-<span class="n">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;0-01:00:00&#39;</span><span class="w"></span>
-<span class="n">nodes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="n">tasks-per-node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">14</span><span class="w"></span>
-<span class="n">cpus-per-task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="n">mem-per-cpu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;4000m&#39;</span><span class="w"></span>
-<span class="n">email</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;ab12345@bristol.ac.uk&#39;</span><span class="w"></span>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[cluster]</span>
+<span class="n">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;0-01:00:00&#39;</span>
+<span class="n">nodes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="n">tasks-per-node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">14</span>
+<span class="n">cpus-per-task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="n">mem-per-cpu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;4000m&#39;</span>
+<span class="n">email</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;ab12345@bristol.ac.uk&#39;</span>
 </pre></div>
 </div>
 <section id="time">
@@ -596,10 +596,10 @@ otherwise it is ignored and set to <code class="docutils literal notranslate"><s
 <p>Array of optional subsections that specify third-party repositories from
 which to include additional source files.</p>
 <p><strong>Example:</strong></p>
-<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[[dependency]]</span><span class="w"></span>
-<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;demo-dependency&#39;</span><span class="w"></span>
-<span class="n">git</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;git@github.com:BristolCompositesInstitute/demo-dep.git&#39;</span><span class="w"></span>
-<span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;&lt;commit|tag&gt;&#39;</span><span class="w"></span>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[[dependency]]</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;demo-dependency&#39;</span>
+<span class="n">git</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;git@github.com:BristolCompositesInstitute/demo-dep.git&#39;</span>
+<span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;&lt;commit|tag&gt;&#39;</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -675,9 +675,7 @@ abaci will fetch the latest changes from the branch everytime it is run.</p>
             
           </div>
           <div class="right-details">
-            <div class="icons">
-              
-            </div>
+            
           </div>
         </div>
         

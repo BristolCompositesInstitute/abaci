@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="How-to guides" href="how-to-guides/index.html" /><link rel="prev" title="Abaci User Documentation" href="index.html" />
 
-    <link rel="shortcut icon" href="_static/abaci.ico"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
+    <link rel="shortcut icon" href="_static/abaci.ico"/><!-- Generated with Sphinx 5.3.0 and Furo 2022.12.07 -->
         <title>Quickstart Tutorial - Abaci Documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     
     
@@ -152,7 +152,7 @@
   <span class="sidebar-brand-text">Abaci Documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
-  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
 </form>
@@ -243,8 +243,8 @@ the Windows command prompt or a Linux shell terminal.</p>
 <h3>Get the Example Project Files<a class="headerlink" href="#get-the-example-project-files" title="Permalink to this heading">#</a></h3>
 <p>Once you have established that Abaqus, Intel Fortran and abaci are setup correctly
 you can clone the abaci source repository and navigate to the <code class="docutils literal notranslate"><span class="pre">example</span></code> subdirectory:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>  git clone git@github.com:BristolCompositesInstitute/abaci.git
-  <span class="nb">cd</span> abaci/example
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="w">  </span>git<span class="w"> </span>clone<span class="w"> </span>git@github.com:BristolCompositesInstitute/abaci.git
+<span class="w">  </span><span class="nb">cd</span><span class="w"> </span>abaci/example
 </pre></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">example</span></code> subdirectory contains a complete example of an abaci project including
@@ -270,7 +270,7 @@ The full file structure will look something like this:</p>
 <p>One of the primary roles of abaci is to compile user subroutines for use with Abaqus.
 Abaci interfaces with the <code class="docutils literal notranslate"><span class="pre">abaqus</span> <span class="pre">make</span></code> command to allow customising the compilation procedure.</p>
 <p>Within the example project, you can use abaci to compile a user subroutine with the following command:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>  abaci compile
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="w">  </span>abaci<span class="w"> </span>compile
 </pre></div>
 </div>
 <p>You will notice that a new folder has been created in the <code class="docutils literal notranslate"><span class="pre">example</span></code> directory called <code class="docutils literal notranslate"><span class="pre">scratch</span></code>.
@@ -307,7 +307,7 @@ user subroutine with an actual Abaqus job; this is where the <code class="docuti
 <p>The <code class="docutils literal notranslate"><span class="pre">run</span></code> subcommand will do everything that the <code class="docutils literal notranslate"><span class="pre">compile</span></code> subcommand does but it will
 also run one or more abaqus jobs after compilation.</p>
 <p>Within the example project, you can run an Abaqus job with the following command:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>  abaci run test-job
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="w">  </span>abaci<span class="w"> </span>run<span class="w"> </span>test-job
 </pre></div>
 </div>
 <p>This time, the command will take longer to run and will output more information.</p>
@@ -321,20 +321,20 @@ previously-compiled user subroutines.</p>
 <p>In this example, <code class="docutils literal notranslate"><span class="pre">test-job</span></code> is the name of the job we wish to run. We can also specify other job names
 or job tags to run a group of jobs.
 We can view a list of possible jobs and their tags with the <code class="docutils literal notranslate"><span class="pre">show</span></code> subcommand:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>  abaci show <span class="nb">jobs</span>
-test-job default,test
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="w">  </span>abaci<span class="w"> </span>show<span class="w"> </span><span class="nb">jobs</span>
+test-job<span class="w"> </span>default,test
 </pre></div>
 </div>
 <p>In this example project, there is only one job called <code class="docutils literal notranslate"><span class="pre">test-job</span></code> and it has the tags <code class="docutils literal notranslate"><span class="pre">default</span></code> and <code class="docutils literal notranslate"><span class="pre">test</span></code>.
 We could therefore also run this job with:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>  abaci run <span class="nb">test</span>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="w">  </span>abaci<span class="w"> </span>run<span class="w"> </span><span class="nb">test</span>
 </pre></div>
 </div>
 <section id="running-a-job-in-debug-mode">
 <h3>Running a Job in Debug Mode<a class="headerlink" href="#running-a-job-in-debug-mode" title="Permalink to this heading">#</a></h3>
 <p>To help identify or diagnose bugs in your user subroutine code, you can compile
 and run your code in ‘debug’ mode by adding the <code class="docutils literal notranslate"><span class="pre">--debug</span></code> flag:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>  abaci run <span class="nb">test</span> --debug
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="w">  </span>abaci<span class="w"> </span>run<span class="w"> </span><span class="nb">test</span><span class="w"> </span>--debug
 </pre></div>
 </div>
 <p>Debug mode will add a number of additional compiler flags to check for common
@@ -430,9 +430,7 @@ common tasks with Abaci.</p>
             
           </div>
           <div class="right-details">
-            <div class="icons">
-              
-            </div>
+            
           </div>
         </div>
         

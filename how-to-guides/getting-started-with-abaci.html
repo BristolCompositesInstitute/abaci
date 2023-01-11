@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="How to Setup Regression Checks" href="regression-checks.html" /><link rel="prev" title="How to Install Abaci" href="install.html" />
 
-    <link rel="shortcut icon" href="../_static/abaci.ico"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
+    <link rel="shortcut icon" href="../_static/abaci.ico"/><!-- Generated with Sphinx 5.3.0 and Furo 2022.12.07 -->
         <title>Getting Started with Abaci in your Project - Abaci Documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     
     
@@ -152,7 +152,7 @@
   <span class="sidebar-brand-text">Abaci Documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
-  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
 </form>
@@ -247,7 +247,7 @@ one using the <a class="reference internal" href="../reference/cli.html#abaci-in
 <p>Using the example project shown above, we can initialise a configuration file
 and specify the path to the top-level user subroutine source file:</p>
 <p><strong>Example:</strong> <em>initialise config file with path to main user subroutine file</em></p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>  abaci init -u src/usub.f
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="w">  </span>abaci<span class="w"> </span>init<span class="w"> </span>-u<span class="w"> </span>src/usub.f
 </pre></div>
 </div>
 <p>This will create a new configuration file called <code class="docutils literal notranslate"><span class="pre">abaci.toml</span></code> in the current
@@ -269,10 +269,10 @@ your top-level user subroutine file</strong>.</p>
 them in your configuration file using the <a class="reference internal" href="../reference/config.html#id3"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">include</span></code></span></a>
 field in the <code class="docutils literal notranslate"><span class="pre">[compile]</span></code> section.</p>
 <p><strong>Example:</strong> <em>source files in a different folder to main user subroutine</em></p>
-<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="n">user-sub-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;src/usub.f&#39;</span><span class="w"></span>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="n">user-sub-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;src/usub.f&#39;</span>
 
-<span class="k">[compile]</span><span class="w"></span>
-<span class="n">include</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;utils/*.f90&#39;</span><span class="p">]</span><span class="w"></span>
+<span class="k">[compile]</span>
+<span class="n">include</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;utils/*.f90&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 <div class="admonition seealso">
@@ -287,10 +287,10 @@ interfaces.</p>
 <p>If your project has C or C++ source files, these can specified using the
 <a class="reference internal" href="../reference/config.html#sources"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">sources</span></code></span></a> field in the <code class="docutils literal notranslate"><span class="pre">[compile]</span></code> section.</p>
 <p><strong>Example:</strong> <em>specify C++ source files to compile separately</em></p>
-<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="n">user-sub-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;src/usub.f&#39;</span><span class="w"></span>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="n">user-sub-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;src/usub.f&#39;</span>
 
-<span class="k">[compile]</span><span class="w"></span>
-<span class="n">sources</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;src/utils.cpp&#39;</span><span class="p">]</span><span class="w"></span>
+<span class="k">[compile]</span>
+<span class="n">sources</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;src/utils.cpp&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>You can specify compiler flags for C/C++ source compilation with the
@@ -307,10 +307,10 @@ job(s) to it so that we can easily run them and test the user subroutine code.</
 <p>Again using the example project shown above, we can add the test job to the
 configuratin file by opening it up in any text or code editor and adding the
 following lines:</p>
-<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">[[job]]</span><span class="w"></span>
-<span class="linenos">2</span><span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;jobs/test-job.inp&#39;</span><span class="w"></span>
-<span class="linenos">3</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;test-job1&#39;</span><span class="w"></span>
-<span class="linenos">4</span><span class="n">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;test&#39;</span><span class="p">,</span><span class="s">&#39;1elem&#39;</span><span class="p">]</span><span class="w"></span>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">[[job]]</span>
+<span class="linenos">2</span><span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;jobs/test-job.inp&#39;</span>
+<span class="linenos">3</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;test-job1&#39;</span>
+<span class="linenos">4</span><span class="n">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;test&#39;</span><span class="p">,</span><span class="s">&#39;1elem&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 <p><strong>Explanation:</strong></p>
@@ -337,15 +337,15 @@ following lines:</p>
 configuration file.</p>
 <details>
 <summary>See example</summary>
-<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[[job]]</span><span class="w"></span>
-<span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;jobs/test-job-1.inp&#39;</span><span class="w"></span>
-<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;job2&#39;</span><span class="w"></span>
-<span class="n">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;test&#39;</span><span class="p">,</span><span class="s">&#39;1elem&#39;</span><span class="p">]</span><span class="w"></span>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[[job]]</span>
+<span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;jobs/test-job-1.inp&#39;</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;job2&#39;</span>
+<span class="n">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;test&#39;</span><span class="p">,</span><span class="s">&#39;1elem&#39;</span><span class="p">]</span>
 
-<span class="k">[[job]]</span><span class="w"></span>
-<span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;jobs/test-job-2.inp&#39;</span><span class="w"></span>
-<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;job2&#39;</span><span class="w"></span>
-<span class="n">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;test&#39;</span><span class="p">,</span><span class="s">&#39;1elem&#39;</span><span class="p">]</span><span class="w"></span>
+<span class="k">[[job]]</span>
+<span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;jobs/test-job-2.inp&#39;</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;job2&#39;</span>
+<span class="n">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;test&#39;</span><span class="p">,</span><span class="s">&#39;1elem&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -356,15 +356,15 @@ configuration file.</p>
 <p>Once our jobs have been added to our configuration file, we can run them
 using the <a class="reference internal" href="../reference/cli.html#abaci-run"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">run</span></code></span></a> command.</p>
 <p><strong>Example:</strong> <em>run the job named ‘test-job1’</em></p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>  abaci run test-job1
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="w">  </span>abaci<span class="w"> </span>run<span class="w"> </span>test-job1
 </pre></div>
 </div>
 <p><strong>Example:</strong> <em>run all jobs with the ‘test’ tag concurrently</em></p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>  abaci run <span class="nb">test</span> -j
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="w">  </span>abaci<span class="w"> </span>run<span class="w"> </span><span class="nb">test</span><span class="w"> </span>-j
 </pre></div>
 </div>
 <p><strong>Example:</strong> <em>run all jobs with the ‘default’ tag and view Abaqus output</em></p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>  abaci run -s
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="w">  </span>abaci<span class="w"> </span>run<span class="w"> </span>-s
 </pre></div>
 </div>
 <p>In these examples, Abaci will:</p>
@@ -434,9 +434,7 @@ configuration option.</p>
             
           </div>
           <div class="right-details">
-            <div class="icons">
-              
-            </div>
+            
           </div>
         </div>
         

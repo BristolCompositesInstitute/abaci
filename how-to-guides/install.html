@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Getting Started with Abaci in your Project" href="getting-started-with-abaci.html" /><link rel="prev" title="How-to guides" href="index.html" />
 
-    <link rel="shortcut icon" href="../_static/abaci.ico"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
+    <link rel="shortcut icon" href="../_static/abaci.ico"/><!-- Generated with Sphinx 5.3.0 and Furo 2022.12.07 -->
         <title>How to Install Abaci - Abaci Documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     
     
@@ -152,7 +152,7 @@
   <span class="sidebar-brand-text">Abaci Documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
-  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
 </form>
@@ -230,8 +230,8 @@ script from your Intel compiler installation.</p></li>
 <h3>Check Environment<a class="headerlink" href="#check-environment" title="Permalink to this heading">#</a></h3>
 <p>You can check that all prerequisites are available by running the following
 commands in your terminal:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>  abaqus <span class="nv">information</span><span class="o">=</span>version
-  ifort --version
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="w">  </span>abaqus<span class="w"> </span><span class="nv">information</span><span class="o">=</span>version
+<span class="w">  </span>ifort<span class="w"> </span>--version
 </pre></div>
 </div>
 <p>which should output information about the current Abaqus and Intel Fortran compiler versions.
@@ -258,16 +258,16 @@ and run the installer.</p>
 <h3>On Linux<a class="headerlink" href="#on-linux" title="Permalink to this heading">#</a></h3>
 <p>Download the <code class="docutils literal notranslate"><span class="pre">abaci-installer.sh</span></code> script from the <a class="reference external" href="https://github.com/BristolCompositesInstitute/abaci/releases/latest">latest release page</a>
 and then enable execution with:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>  chmod u+x abaci-installer.sh
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="w">  </span>chmod<span class="w"> </span>u+x<span class="w"> </span>abaci-installer.sh
 </pre></div>
 </div>
 <p>Then execute with:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>  ./abaci-installer.sh
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="w">  </span>./abaci-installer.sh
 </pre></div>
 </div>
 <p>The Linux installer will install abaci to <code class="docutils literal notranslate"><span class="pre">$HOME/.local/bin</span></code>, so you should ensure that this folder is on your path if not already;
 you can do this by adding the following line to the end of your <code class="docutils literal notranslate"><span class="pre">$HOME/.bash_profile</span></code> file:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$HOME</span>/.local/bin
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$HOME</span>/.local/bin
 </pre></div>
 </div>
 </section>
@@ -275,7 +275,7 @@ you can do this by adding the following line to the end of your <code class="doc
 <section id="option-2-clone-the-repository">
 <h2>Option 2: Clone the Repository<a class="headerlink" href="#option-2-clone-the-repository" title="Permalink to this heading">#</a></h2>
 <p>First clone the repository with git:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>  git clone git@github.com:BristolCompositesInstitute/abaci.git
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="w">  </span>git<span class="w"> </span>clone<span class="w"> </span>git@github.com:BristolCompositesInstitute/abaci.git
 </pre></div>
 </div>
 <p>Then run one of the installation scripts in the <code class="docutils literal notranslate"><span class="pre">scripts</span></code> subfolder:</p>
@@ -289,7 +289,7 @@ you can do this by adding the following line to the end of your <code class="doc
 <h2>Check Your Installation<a class="headerlink" href="#check-your-installation" title="Permalink to this heading">#</a></h2>
 <p>After following the installations instruction above, you can verify your abaci installation
 by opening a command window and running:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>  abaci --version
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="w">  </span>abaci<span class="w"> </span>--version
 </pre></div>
 </div>
 <p>which should output version information for abaci.</p>
@@ -342,9 +342,7 @@ the launcher script in <code class="docutils literal notranslate"><span class="p
             
           </div>
           <div class="right-details">
-            <div class="icons">
-              
-            </div>
+            
           </div>
         </div>
         
