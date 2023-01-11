@@ -20,7 +20,7 @@ def parse_cli():
     # Top-level options
 
     parser.add_argument('-V','--version',help='show abaci version',
-                        action='version', version="%(prog)s v0.5.1")
+                        action='version', version="%(prog)s v0.5.2")
 
     parser.add_argument('--update',help='update abaci from upstream', nargs='?',
                         metavar='[REPO:]GITREF', default=None, action=UpdateAction)
