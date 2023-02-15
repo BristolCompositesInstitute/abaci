@@ -425,19 +425,29 @@ If the file does not exist, then it is created using the current run.</p>
 <p class="admonition-title">Note</p>
 <p>It is recommended to include <code class="docutils literal notranslate"><span class="pre">{NCPU}</span></code> in <strong>check.reference</strong> when performing
 regression checks on multicore jobs due to unavoidable variations that occur
-between results produced with different numbers of CPUs
-``</p>
-<p class="rubric">check.steps</p>
+between results produced with different numbers of CPUs</p>
+</div>
+</section>
+<section id="check-steps">
+<h4>check.steps<a class="headerlink" href="#check-steps" title="Permalink to this heading">#</a></h4>
 <p><strong><em>[string,…], mandatory</em></strong></p>
 <p>List of strings specifying Abaqus job steps for which to check output.</p>
-<p class="rubric">check.fields</p>
+</section>
+<section id="check-fields">
+<h4>check.fields<a class="headerlink" href="#check-fields" title="Permalink to this heading">#</a></h4>
 <p><strong><em>[string,…], mandatory</em></strong></p>
 <p>List of strings specifying Abaqus output field variables to check.</p>
-<p class="rubric">check.frames</p>
+</section>
+<section id="check-frames">
+<h4>check.frames<a class="headerlink" href="#check-frames" title="Permalink to this heading">#</a></h4>
 <p><strong><em>strings or [int,…], optional</em></strong></p>
 <p>Either a list of frame indices for which to perform checks or <code class="docutils literal notranslate"><span class="pre">'all'</span></code> or <code class="docutils literal notranslate"><span class="pre">'last'</span></code>.</p>
 <p>If not specified, then <code class="docutils literal notranslate"><span class="pre">'last'</span></code> is the default.</p>
-<p class="rubric">Compile section</p>
+</section>
+</section>
+</section>
+<section id="compile-section">
+<h2>Compile section<a class="headerlink" href="#compile-section" title="Permalink to this heading">#</a></h2>
 <p><strong><em>subsection, optional</em></strong></p>
 <p>An optional subsection that details compilation settings.</p>
 <p><strong>Example:</strong></p>
@@ -453,9 +463,6 @@ between results produced with different numbers of CPUs
 <span class="n">sources</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;cpp_functions.cpp&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
-</div>
-</section>
-</section>
 <section id="fflags-windows-fflags-linux">
 <h3>fflags.windows / fflags.linux<a class="headerlink" href="#fflags-windows-fflags-linux" title="Permalink to this heading">#</a></h3>
 <p><strong><em>string or [string,…], optional</em></strong></p>
@@ -714,8 +721,14 @@ abaci will fetch the latest changes from the branch everytime it is run.</p>
 <li><a class="reference internal" href="#post-process">post-process</a></li>
 <li><a class="reference internal" href="#check">check.</a><ul>
 <li><a class="reference internal" href="#check-reference">check.reference</a></li>
+<li><a class="reference internal" href="#check-steps">check.steps</a></li>
+<li><a class="reference internal" href="#check-fields">check.fields</a></li>
+<li><a class="reference internal" href="#check-frames">check.frames</a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li><a class="reference internal" href="#compile-section">Compile section</a><ul>
 <li><a class="reference internal" href="#fflags-windows-fflags-linux">fflags.windows / fflags.linux</a></li>
 <li><a class="reference internal" href="#cflags-windows-cflags-linux">cflags.windows / cflags.linux</a></li>
 <li><a class="reference internal" href="#lflags-windows-lflags-linux">lflags.windows / lflags.linux</a></li>

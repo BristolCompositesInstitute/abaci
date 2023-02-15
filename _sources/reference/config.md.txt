@@ -242,7 +242,7 @@ The following special variables can be used in this field:
 It is recommended to include `{NCPU}` in __check.reference__ when performing
 regression checks on multicore jobs due to unavoidable variations that occur
 between results produced with different numbers of CPUs
-``
+```
 
 #### check.steps
 
