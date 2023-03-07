@@ -41,7 +41,7 @@ Once you have established that Abaqus, Intel Fortran and abaci are setup correct
 you can clone the abaci source repository and navigate to the `example` subdirectory:
 
 ```shell
-  git clone git@github.com:BristolCompositesInstitute/abaci.git
+  git clone https://github.com/BristolCompositesInstitute/abaci.git
   cd abaci/example
 ```
 
