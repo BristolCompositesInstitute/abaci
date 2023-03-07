@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="prev" title="Command Line Interface Reference" href="cli.html" />
 
-    <link rel="shortcut icon" href="../_static/abaci.ico"/><!-- Generated with Sphinx 5.3.0 and Furo 2022.12.07 -->
+    <link rel="shortcut icon" href="../_static/abaci.ico"/><meta name="generator" content="sphinx-6.1.3, furo 2022.04.07"/>
         <title>Configuration Reference - Abaci Documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=68f4518137b9aefe99b631505a2064c3c42c9852" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     
     
@@ -143,7 +143,7 @@
   <aside class="sidebar-drawer">
     <div class="sidebar-container">
       
-      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="../index.html">
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
   
   <div class="sidebar-logo-container">
     <img class="sidebar-logo" src="../_static/abaci.png" alt="Logo"/>
@@ -152,7 +152,7 @@
   <span class="sidebar-brand-text">Abaci Documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
-  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
 </form>
@@ -191,9 +191,7 @@
           </svg>
           <span>Back to top</span>
         </a>
-        <div class="content-icon-container">
-          
-<div class="theme-toggle-container theme-toggle-content">
+        <div class="content-icon-container"><div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle">
               <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
               <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
@@ -212,7 +210,7 @@
 <p>The abaci configuration file stores information about the project such as user subroutine and abaqus job file locations. There is typically one configuration file per user-subroutine per project.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>By default, abaci will look for a configuration file named <code class="docutils literal notranslate"><span class="pre">abaci.toml</span></code> in the current directory. Use the <code class="docutils literal notranslate"><span class="pre">--config</span></code> argument to specify an alternative, see <a class="reference internal" href="cli.html#common-flags"><span class="std std-doc">Common Flags</span></a>.</p>
+<p>By default, abaci will look for a configuration file named <code class="docutils literal notranslate"><span class="pre">abaci.toml</span></code> in the current directory. Use the <code class="docutils literal notranslate"><span class="pre">--config</span></code> argument to specify an alternative, see <a class="reference internal" href="cli.html#common-flags"><span class="std std-ref">Common Flags</span></a>.</p>
 </div>
 <section id="configuration-file-format">
 <h2>Configuration File Format<a class="headerlink" href="#configuration-file-format" title="Permalink to this heading">#</a></h2>
@@ -238,10 +236,10 @@
 <section id="top-level-fields">
 <h2>Top-level fields<a class="headerlink" href="#top-level-fields" title="Permalink to this heading">#</a></h2>
 <p><strong>Example:</strong></p>
-<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;project-name&#39;</span>
-<span class="n">user-sub-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;usersub.f90&#39;</span>
-<span class="n">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;scratch&#39;</span>
-<span class="n">test-mod-dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;test&#39;</span>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'project-name'</span>
+<span class="n">user-sub-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'usersub.f90'</span>
+<span class="n">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'scratch'</span>
+<span class="n">test-mod-dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'test'</span>
 </pre></div>
 </div>
 <section id="name">
@@ -288,10 +286,10 @@ it can be omitted.</p>
 </ul>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p>See the <a class="reference internal" href="../how-to-guides/unit-testing.html"><span class="doc std std-doc">unit tests guide</span></a> for how to
+<p>See the <a class="reference internal" href="../how-to-guides/unit-testing.html"><span class="std std-doc">unit tests guide</span></a> for how to
 structure and write unit tests for your Abaqus user subroutine.</p>
 </div>
-<p>Use the <a class="reference internal" href="cli.html#abaci-test"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">test</span></code></span></a> subcommand to compile and run these
+<p>Use the <a class="reference internal" href="cli.html#abaci-test"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">test</span></code></span></a> subcommand to compile and run these
 test subroutines.</p>
 </section>
 <section id="abq-flags">
@@ -309,15 +307,15 @@ in the specification of the job</p></li>
 <p>Array of optional subsections that predefine specific abaqus jobs to run.</p>
 <p><strong>Example:</strong></p>
 <div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[[job]]</span>
-<span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;my-abaqus-job.inp&#39;</span>
-<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;job1&#39;</span>
-<span class="n">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;test&#39;</span><span class="p">,</span><span class="s">&#39;three_elem&#39;</span><span class="p">]</span>
-<span class="n">abq-flags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;domains&#39;</span>
-<span class="n">include</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;job1_extra_inputs.inp&#39;</span><span class="p">]</span>
-<span class="n">mp-mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;threads&#39;</span>
-<span class="n">post-process</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;{PY} {ROOT}/scripts/postprocess.py {ODB}&#39;</span>
-<span class="n">cluster</span><span class="p">.</span><span class="n">mem-per-cpu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;8000M&#39;</span>
-<span class="n">cluster</span><span class="p">.</span><span class="n">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;1-00:00:00&#39;</span>
+<span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'my-abaqus-job.inp'</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'job1'</span>
+<span class="n">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">'test'</span><span class="p">,</span><span class="s">'three_elem'</span><span class="p">]</span>
+<span class="n">abq-flags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'domains'</span>
+<span class="n">include</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">'job1_extra_inputs.inp'</span><span class="p">]</span>
+<span class="n">mp-mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'threads'</span>
+<span class="n">post-process</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'{PY} {ROOT}/scripts/postprocess.py {ODB}'</span>
+<span class="n">cluster</span><span class="p">.</span><span class="n">mem-per-cpu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'8000M'</span>
+<span class="n">cluster</span><span class="p">.</span><span class="n">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'1-00:00:00'</span>
 </pre></div>
 </div>
 <section id="job-file">
@@ -370,7 +368,7 @@ other files that also need to be copied to the job folder for running the job.</
 <h3>cluster.<a class="headerlink" href="#cluster" title="Permalink to this heading">#</a></h3>
 <p><strong><em>subsection, optional</em></strong></p>
 <p>Override the default options for submitting this job to a cluster via SLURM.</p>
-<p>See <a class="reference internal" href="#cluster-section"><span class="std std-doc">cluster options</span></a> below for more information on the cluster option fields.</p>
+<p>See <a class="reference internal" href="#cluster-section">cluster options</a> below for more information on the cluster option fields.</p>
 </section>
 <section id="post-process">
 <h3>post-process<a class="headerlink" href="#post-process" title="Permalink to this heading">#</a></h3>
@@ -384,17 +382,17 @@ other files that also need to be copied to the job folder for running the job.</
 <li><p><code class="docutils literal notranslate"><span class="pre">{ODB}</span></code> will be substituted with the path to the output database (<code class="docutils literal notranslate"><span class="pre">.odb</span></code>) file for this job</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">{DIR}</span></code> will be substituted with the path to the output directory for this job</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">{JOB}</span></code> will be substituted with the name of the job (without any extensions or paths)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">{REF}</span></code> will be substituted with the path to the <a class="reference internal" href="#check-reference"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">check.reference</span></code></span></a> file</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">{NAME}</span></code> will be substituted with the job <a class="reference internal" href="#id1"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">name</span></code></span></a> file</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{REF}</span></code> will be substituted with the path to the <a class="reference internal" href="#check-reference"><code class="docutils literal notranslate"><span class="pre">check.reference</span></code></a> file</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{NAME}</span></code> will be substituted with the job <a class="reference internal" href="#id1"><code class="docutils literal notranslate"><span class="pre">name</span></code></a> file</p></li>
 </ul>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p>See the <a class="reference internal" href="../how-to-guides/post-processing.html"><span class="doc std std-doc">Post-processing Guide</span></a> for more information on how to set up
+<p>See the <a class="reference internal" href="../how-to-guides/post-processing.html"><span class="std std-doc">Post-processing Guide</span></a> for more information on how to set up
 post-processing commands.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>You can run and rerun post-processing commands for completed jobs using the command <a class="reference internal" href="cli.html#abaci-post"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">post</span> <span class="pre">&lt;job-dir&gt;</span></code></span></a> where <code class="docutils literal notranslate"><span class="pre">&lt;job-dir&gt;</span></code> is the output directory for the abaci job that has completed.</p>
+<p>You can run and rerun post-processing commands for completed jobs using the command <a class="reference internal" href="cli.html#abaci-post"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">post</span> <span class="pre">&lt;job-dir&gt;</span></code></span></a> where <code class="docutils literal notranslate"><span class="pre">&lt;job-dir&gt;</span></code> is the output directory for the abaci job that has completed.</p>
 </div>
 </section>
 <section id="check">
@@ -403,12 +401,12 @@ post-processing commands.</p>
 <p>An optional group for detailing regression checks.</p>
 <p><strong>Example:</strong></p>
 <div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[[job]]</span>
-<span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;job.inp&#39;</span>
-<span class="n">check</span><span class="p">.</span><span class="n">reference</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;reference-output.pkl&#39;</span>
-<span class="n">check</span><span class="p">.</span><span class="n">steps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;Step-1&#39;</span><span class="p">]</span>
-<span class="n">check</span><span class="p">.</span><span class="n">fields</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;SDV1&#39;</span><span class="p">,</span><span class="s">&#39;SDV2&#39;</span><span class="p">]</span>
-<span class="n">check</span><span class="p">.</span><span class="n">frames</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;last&#39;</span>
-<span class="n">check</span><span class="p">.</span><span class="n">elements</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;all&#39;</span>
+<span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'job.inp'</span>
+<span class="n">check</span><span class="p">.</span><span class="n">reference</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'reference-output.pkl'</span>
+<span class="n">check</span><span class="p">.</span><span class="n">steps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">'Step-1'</span><span class="p">]</span>
+<span class="n">check</span><span class="p">.</span><span class="n">fields</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">'SDV1'</span><span class="p">,</span><span class="s">'SDV2'</span><span class="p">]</span>
+<span class="n">check</span><span class="p">.</span><span class="n">frames</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'last'</span>
+<span class="n">check</span><span class="p">.</span><span class="n">elements</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'all'</span>
 </pre></div>
 </div>
 <section id="check-reference">
@@ -452,15 +450,15 @@ between results produced with different numbers of CPUs</p>
 <p>An optional subsection that details compilation settings.</p>
 <p><strong>Example:</strong></p>
 <div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[compile]</span>
-<span class="n">fflags</span><span class="p">.</span><span class="n">windows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;&#39;</span>
-<span class="n">fflags</span><span class="p">.</span><span class="n">linux</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;&#39;</span>
-<span class="n">cflags</span><span class="p">.</span><span class="n">windows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;&#39;</span>
-<span class="n">cflags</span><span class="p">.</span><span class="n">linux</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;&#39;</span>
-<span class="n">lflags</span><span class="p">.</span><span class="n">windows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;&#39;</span>
-<span class="n">lflags</span><span class="p">.</span><span class="n">linux</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="n">fflags</span><span class="p">.</span><span class="n">windows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">''</span>
+<span class="n">fflags</span><span class="p">.</span><span class="n">linux</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">''</span>
+<span class="n">cflags</span><span class="p">.</span><span class="n">windows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">''</span>
+<span class="n">cflags</span><span class="p">.</span><span class="n">linux</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">''</span>
+<span class="n">lflags</span><span class="p">.</span><span class="n">windows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">''</span>
+<span class="n">lflags</span><span class="p">.</span><span class="n">linux</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">''</span>
 <span class="n">compiletime-checks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span>
-<span class="n">include</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;extra-source.f90&#39;</span><span class="p">]</span>
-<span class="n">sources</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;cpp_functions.cpp&#39;</span><span class="p">]</span>
+<span class="n">include</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">'extra-source.f90'</span><span class="p">]</span>
+<span class="n">sources</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">'cpp_functions.cpp'</span><span class="p">]</span>
 </pre></div>
 </div>
 <section id="fflags-windows-fflags-linux">
@@ -537,16 +535,16 @@ interactively (<code class="docutils literal notranslate"><span class="pre">--in
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The multiprocessing mode (<code class="docutils literal notranslate"><span class="pre">mp_mode</span></code>) is specified separately on a
-per-job basis using the <a class="reference internal" href="#mp-mode"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">mp-mode</span></code> job field</span></a>.</p>
+per-job basis using the <a class="reference internal" href="#mp-mode"><code class="docutils literal notranslate"><span class="pre">mp-mode</span></code> job field</a>.</p>
 </div>
 <p><strong>Example:</strong></p>
 <div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[cluster]</span>
-<span class="n">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;0-01:00:00&#39;</span>
+<span class="n">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'0-01:00:00'</span>
 <span class="n">nodes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
 <span class="n">tasks-per-node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">14</span>
 <span class="n">cpus-per-task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
-<span class="n">mem-per-cpu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;4000m&#39;</span>
-<span class="n">email</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;ab12345@bristol.ac.uk&#39;</span>
+<span class="n">mem-per-cpu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'4000m'</span>
+<span class="n">email</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'ab12345@bristol.ac.uk'</span>
 </pre></div>
 </div>
 <section id="time">
@@ -565,7 +563,7 @@ per-job basis using the <a class="reference internal" href="#mp-mode"><span clas
 <h3>nodes<a class="headerlink" href="#nodes" title="Permalink to this heading">#</a></h3>
 <p><strong><em>integer, optional</em></strong></p>
 <p>Specifies the number of nodes to request for the job.
-This option is only valid if <a class="reference internal" href="#mp-mode"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">mp-mode</span></code></span></a> is <code class="docutils literal notranslate"><span class="pre">'mpi'</span></code>,
+This option is only valid if <a class="reference internal" href="#mp-mode"><code class="docutils literal notranslate"><span class="pre">mp-mode</span></code></a> is <code class="docutils literal notranslate"><span class="pre">'mpi'</span></code>,
 otherwise it is ignored and set to <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
 <p>If not specified, default is <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
 </section>
@@ -573,7 +571,7 @@ otherwise it is ignored and set to <code class="docutils literal notranslate"><s
 <h3>tasks-per-node<a class="headerlink" href="#tasks-per-node" title="Permalink to this heading">#</a></h3>
 <p><strong><em>integer, optional</em></strong></p>
 <p>Specifies the number of separate tasks to allocate per node for the job.</p>
-<p>This option is only valid if <a class="reference internal" href="#mp-mode"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">mp-mode</span></code></span></a> is <code class="docutils literal notranslate"><span class="pre">'mpi'</span></code>,
+<p>This option is only valid if <a class="reference internal" href="#mp-mode"><code class="docutils literal notranslate"><span class="pre">mp-mode</span></code></a> is <code class="docutils literal notranslate"><span class="pre">'mpi'</span></code>,
 otherwise it is ignored and set to <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
 <p>If not specified, default is <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
 </section>
@@ -581,7 +579,7 @@ otherwise it is ignored and set to <code class="docutils literal notranslate"><s
 <h3>cpus-per-task<a class="headerlink" href="#cpus-per-task" title="Permalink to this heading">#</a></h3>
 <p><strong><em>integer, optional</em></strong></p>
 <p>Specifies the number of processors to allocate per task for the job.</p>
-<p>This option is only valid if <a class="reference internal" href="#mp-mode"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">mp-mode</span></code></span></a> is <code class="docutils literal notranslate"><span class="pre">'threads'</span></code>,
+<p>This option is only valid if <a class="reference internal" href="#mp-mode"><code class="docutils literal notranslate"><span class="pre">mp-mode</span></code></a> is <code class="docutils literal notranslate"><span class="pre">'threads'</span></code>,
 otherwise it is ignored and set to <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
 </section>
 <section id="mem-per-cpu">
@@ -604,9 +602,9 @@ otherwise it is ignored and set to <code class="docutils literal notranslate"><s
 which to include additional source files.</p>
 <p><strong>Example:</strong></p>
 <div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[[dependency]]</span>
-<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;demo-dependency&#39;</span>
-<span class="n">git</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;git@github.com:BristolCompositesInstitute/demo-dep.git&#39;</span>
-<span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;&lt;commit|tag&gt;&#39;</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'demo-dependency'</span>
+<span class="n">git</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'git@github.com:BristolCompositesInstitute/demo-dep.git'</span>
+<span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'&lt;commit|tag&gt;'</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -624,7 +622,7 @@ which to include additional source files.</p>
 </div>
 <p>To include source files from a dependency into your Fortran source, prefix the source file path
 with the dependency name, <em>e.g.</em>:</p>
-<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="cp">#include &#39;&lt;dependency-name&gt;/source-file.f&#39;</span>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="cp">#include '&lt;dependency-name&gt;/source-file.f'</span>
 </pre></div>
 </div>
 <div class="admonition hint">
@@ -660,7 +658,7 @@ abaci will fetch the latest changes from the branch everytime it is run.</p>
         <div class="related-pages">
           
           <a class="prev-page" href="cli.html">
-              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <svg><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
@@ -682,7 +680,9 @@ abaci will fetch the latest changes from the branch everytime it is run.</p>
             
           </div>
           <div class="right-details">
-            
+            <div class="icons">
+              
+            </div>
           </div>
         </div>
         
@@ -694,7 +694,7 @@ abaci will fetch the latest changes from the branch everytime it is run.</p>
       <div class="toc-sticky toc-scroll">
         <div class="toc-title-container">
           <span class="toc-title">
-            On this page
+            Contents
           </span>
         </div>
         <div class="toc-tree-container">
@@ -766,9 +766,6 @@ abaci will fetch the latest changes from the branch everytime it is run.</p>
     </aside>
   </div>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/scripts/furo.js"></script>

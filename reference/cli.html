@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Configuration Reference" href="config.html" /><link rel="prev" title="Reference" href="index.html" />
 
-    <link rel="shortcut icon" href="../_static/abaci.ico"/><!-- Generated with Sphinx 5.3.0 and Furo 2022.12.07 -->
+    <link rel="shortcut icon" href="../_static/abaci.ico"/><meta name="generator" content="sphinx-6.1.3, furo 2022.04.07"/>
         <title>Command Line Interface Reference - Abaci Documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=68f4518137b9aefe99b631505a2064c3c42c9852" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     
     
@@ -143,7 +143,7 @@
   <aside class="sidebar-drawer">
     <div class="sidebar-container">
       
-      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="../index.html">
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
   
   <div class="sidebar-logo-container">
     <img class="sidebar-logo" src="../_static/abaci.png" alt="Logo"/>
@@ -152,7 +152,7 @@
   <span class="sidebar-brand-text">Abaci Documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
-  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
 </form>
@@ -191,9 +191,7 @@
           </svg>
           <span>Back to top</span>
         </a>
-        <div class="content-icon-container">
-          
-<div class="theme-toggle-container theme-toggle-content">
+        <div class="content-icon-container"><div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle">
               <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
               <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
@@ -303,7 +301,7 @@ optional arguments:
   -v, --verbose         output more information from abaci
   -q, --quiet           output less information from abaci
   --config CONFIG       specify a different config file to default
-                        (&quot;abaci.toml&quot;)
+                        ("abaci.toml")
   -e, --extra           output extra config options
   -f, --force           force overwrite of existing config file
   -b, --bare            exclude explanatory comments from config
@@ -353,7 +351,7 @@ optional arguments:
   -h, --help       show this help message and exit
   -v, --verbose    output more information from abaci
   -q, --quiet      output less information from abaci
-  --config CONFIG  specify a different config file to default (&quot;abaci.toml&quot;)
+  --config CONFIG  specify a different config file to default ("abaci.toml")
   -t, --codecov    compile subroutines for code coverage analysis
   -d, --debug      enable run-time debugging checks
   -c, --check      enable strict compile-time checks
@@ -391,7 +389,7 @@ this is stored in <code class="docutils literal notranslate"><span class="pre">&
 <section id="abaci-run">
 <h2><code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">run</span></code><a class="headerlink" href="#abaci-run" title="Permalink to this heading">#</a></h2>
 <p>Compiles user subroutine sources and then run one or Abaqus job files.</p>
-<p>Compiler-related options behave the same as with <a class="reference internal" href="#abaci-compile"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">compile</span></code></span></a>.</p>
+<p>Compiler-related options behave the same as with <a class="reference internal" href="#abaci-compile"><code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">compile</span></code></a>.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>usage: abaci run [-h] [-v | -q] [--config CONFIG] [-t] [-d] [-c] [-0] [-g]
                  [-s] [-b] [-n NPROC] [-j [NJOB]]
                  [job-spec]
@@ -408,7 +406,7 @@ optional arguments:
   -v, --verbose         output more information from abaci
   -q, --quiet           output less information from abaci
   --config CONFIG       specify a different config file to default
-                        (&quot;abaci.toml&quot;)
+                        ("abaci.toml")
   -t, --codecov         compile subroutines for code coverage analysis
   -d, --debug           enable run-time debugging checks
   -c, --check           enable strict compile-time checks
@@ -479,8 +477,8 @@ you should specify the <code class="docutils literal notranslate"><span class="p
 <h2><code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">submit</span></code><a class="headerlink" href="#abaci-submit" title="Permalink to this heading">#</a></h2>
 <p>Compiles user subroutine sources, prepare a SLURM job-script and optionally submit
 to SLURM with <code class="docutils literal notranslate"><span class="pre">sbatch</span></code>.</p>
-<p>Compiler-related options behave the same as with <a class="reference internal" href="#abaci-compile"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">compile</span></code></span></a>.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">job-spec</span></code> parameter is interpreted in the same way as for <a class="reference internal" href="#abaci-run"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">run</span></code></span></a>.</p>
+<p>Compiler-related options behave the same as with <a class="reference internal" href="#abaci-compile"><code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">compile</span></code></a>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">job-spec</span></code> parameter is interpreted in the same way as for <a class="reference internal" href="#abaci-run"><code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">run</span></code></a>.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>usage: abaci submit [-h] [-v | -q] [--config CONFIG] [-t] [-d] [-c] [-0] [-g]
                     [-s] [-i] [-n]
                     [job-spec]
@@ -496,7 +494,7 @@ optional arguments:
   -h, --help         show this help message and exit
   -v, --verbose      output more information from abaci
   -q, --quiet        output less information from abaci
-  --config CONFIG    specify a different config file to default (&quot;abaci.toml&quot;)
+  --config CONFIG    specify a different config file to default ("abaci.toml")
   -t, --codecov      compile subroutines for code coverage analysis
   -d, --debug        enable run-time debugging checks
   -c, --check        enable strict compile-time checks
@@ -505,7 +503,7 @@ optional arguments:
   -s, --screen       echo Abaqus output to the screen while running
   -i, --interactive  interactively override job setting defaults before
                      submitting
-  -n, --no-submit    prepare job files, but don&#39;t submit the batch job
+  -n, --no-submit    prepare job files, but don't submit the batch job
 </pre></div>
 </div>
 <div class="admonition important">
@@ -542,7 +540,7 @@ optional arguments:
   -h, --help       show this help message and exit
   -v, --verbose    output more information from abaci
   -q, --quiet      output less information from abaci
-  --config CONFIG  specify a different config file to default (&quot;abaci.toml&quot;)
+  --config CONFIG  specify a different config file to default ("abaci.toml")
 </pre></div>
 </div>
 <div class="admonition important">
@@ -560,7 +558,7 @@ abaci lacks the information required to post-process jobs not run via abaci.</p>
 <section id="abaci-test">
 <h2><code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">test</span></code><a class="headerlink" href="#abaci-test" title="Permalink to this heading">#</a></h2>
 <p>Compile and run unit tests.</p>
-<p>Compiler-related options behave the same as with <a class="reference internal" href="#abaci-compile"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">compile</span></code></span></a>.</p>
+<p>Compiler-related options behave the same as with <a class="reference internal" href="#abaci-compile"><code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">compile</span></code></a>.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>usage: abaci test [-h] [-v | -q] [--config CONFIG] [-t] [-d] [-c] [-0] [-g]
                   [-s]
 
@@ -570,7 +568,7 @@ optional arguments:
   -h, --help       show this help message and exit
   -v, --verbose    output more information from abaci
   -q, --quiet      output less information from abaci
-  --config CONFIG  specify a different config file to default (&quot;abaci.toml&quot;)
+  --config CONFIG  specify a different config file to default ("abaci.toml")
   -t, --codecov    compile subroutines for code coverage analysis
   -d, --debug      enable run-time debugging checks
   -c, --check      enable strict compile-time checks
@@ -581,7 +579,7 @@ optional arguments:
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p>See the <a class="reference internal" href="../how-to-guides/unit-testing.html"><span class="doc std std-doc">unit tests guide</span></a> for how to
+<p>See the <a class="reference internal" href="../how-to-guides/unit-testing.html"><span class="std std-doc">unit tests guide</span></a> for how to
 structure and write unit tests for your Abaqus user subroutine.</p>
 </div>
 <p><strong>Example:</strong> <em>compile and run unit tests</em></p>
@@ -613,7 +611,7 @@ optional arguments:
   -h, --help       show this help message and exit
   -v, --verbose    output more information from abaci
   -q, --quiet      output less information from abaci
-  --config CONFIG  specify a different config file to default (&quot;abaci.toml&quot;)
+  --config CONFIG  specify a different config file to default ("abaci.toml")
 </pre></div>
 </div>
 <p><strong>Example:</strong> <em>show the internal representation of the configuration</em></p>
@@ -651,10 +649,10 @@ optional arguments:
                 </div>
                 <div class="title">Configuration Reference</div>
               </div>
-              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <svg><use href="#svg-arrow-right"></use></svg>
             </a>
           <a class="prev-page" href="index.html">
-              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <svg><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
@@ -676,7 +674,9 @@ optional arguments:
             
           </div>
           <div class="right-details">
-            
+            <div class="icons">
+              
+            </div>
           </div>
         </div>
         
@@ -688,7 +688,7 @@ optional arguments:
       <div class="toc-sticky toc-scroll">
         <div class="toc-title-container">
           <span class="toc-title">
-            On this page
+            Contents
           </span>
         </div>
         <div class="toc-tree-container">
@@ -719,9 +719,6 @@ optional arguments:
     </aside>
   </div>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/scripts/furo.js"></script>

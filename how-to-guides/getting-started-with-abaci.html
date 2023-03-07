@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="How to Setup Regression Checks" href="regression-checks.html" /><link rel="prev" title="How to Install Abaci" href="install.html" />
 
-    <link rel="shortcut icon" href="../_static/abaci.ico"/><!-- Generated with Sphinx 5.3.0 and Furo 2022.12.07 -->
+    <link rel="shortcut icon" href="../_static/abaci.ico"/><meta name="generator" content="sphinx-6.1.3, furo 2022.04.07"/>
         <title>Getting Started with Abaci in your Project - Abaci Documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=68f4518137b9aefe99b631505a2064c3c42c9852" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     
     
@@ -143,7 +143,7 @@
   <aside class="sidebar-drawer">
     <div class="sidebar-container">
       
-      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="../index.html">
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
   
   <div class="sidebar-logo-container">
     <img class="sidebar-logo" src="../_static/abaci.png" alt="Logo"/>
@@ -152,7 +152,7 @@
   <span class="sidebar-brand-text">Abaci Documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
-  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
 </form>
@@ -191,9 +191,7 @@
           </svg>
           <span>Back to top</span>
         </a>
-        <div class="content-icon-container">
-          
-<div class="theme-toggle-container theme-toggle-content">
+        <div class="content-icon-container"><div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle">
               <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
               <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
@@ -243,7 +241,7 @@ that it is the main user subroutine for Abaqus</p></li>
 <h2>Initialisation<a class="headerlink" href="#initialisation" title="Permalink to this heading">#</a></h2>
 <p>Abaci requires a configuration file to exist in the top-level project directory
 to store useful information about the project. We can automatically generate
-one using the <a class="reference internal" href="../reference/cli.html#abaci-init"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">init</span></code></span></a> command.</p>
+one using the <a class="reference internal" href="../reference/cli.html#abaci-init"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">init</span></code></span></a> command.</p>
 <p>Using the example project shown above, we can initialise a configuration file
 and specify the path to the top-level user subroutine source file:</p>
 <p><strong>Example:</strong> <em>initialise config file with path to main user subroutine file</em></p>
@@ -258,7 +256,7 @@ directory.</p>
 <li><p>Add the <code class="docutils literal notranslate"><span class="pre">-b</span></code> flag to the <code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">init</span></code> command to remove explanatory comments</p></li>
 <li><p>Add the <code class="docutils literal notranslate"><span class="pre">-e</span></code> flag to the <code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">init</span></code> command to include extra useful config options</p></li>
 </ul>
-<p>See <a class="reference internal" href="../reference/cli.html#abaci-init"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">init</span></code></span></a> for more information.</p>
+<p>See <a class="reference internal" href="../reference/cli.html#abaci-init"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">init</span></code></span></a> for more information.</p>
 </div>
 <section id="multiple-source-files">
 <h3>Multiple Source Files<a class="headerlink" href="#multiple-source-files" title="Permalink to this heading">#</a></h3>
@@ -266,13 +264,13 @@ directory.</p>
 will automatically detect other Fortran source files <strong>in the same directory as
 your top-level user subroutine file</strong>.</p>
 <p>If you include source files from other folders, then you will need to specify
-them in your configuration file using the <a class="reference internal" href="../reference/config.html#id3"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">include</span></code></span></a>
+them in your configuration file using the <a class="reference internal" href="../reference/config.html#id3"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">include</span></code></span></a>
 field in the <code class="docutils literal notranslate"><span class="pre">[compile]</span></code> section.</p>
 <p><strong>Example:</strong> <em>source files in a different folder to main user subroutine</em></p>
-<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="n">user-sub-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;src/usub.f&#39;</span>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="n">user-sub-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'src/usub.f'</span>
 
 <span class="k">[compile]</span>
-<span class="n">include</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;utils/*.f90&#39;</span><span class="p">]</span>
+<span class="n">include</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">'utils/*.f90'</span><span class="p">]</span>
 </pre></div>
 </div>
 <div class="admonition seealso">
@@ -285,16 +283,16 @@ interfaces.</p>
 <section id="c-c-source-files">
 <h3>C/C++ Source Files<a class="headerlink" href="#c-c-source-files" title="Permalink to this heading">#</a></h3>
 <p>If your project has C or C++ source files, these can specified using the
-<a class="reference internal" href="../reference/config.html#sources"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">sources</span></code></span></a> field in the <code class="docutils literal notranslate"><span class="pre">[compile]</span></code> section.</p>
+<a class="reference internal" href="../reference/config.html#sources"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">sources</span></code></span></a> field in the <code class="docutils literal notranslate"><span class="pre">[compile]</span></code> section.</p>
 <p><strong>Example:</strong> <em>specify C++ source files to compile separately</em></p>
-<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="n">user-sub-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;src/usub.f&#39;</span>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="n">user-sub-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'src/usub.f'</span>
 
 <span class="k">[compile]</span>
-<span class="n">sources</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;src/utils.cpp&#39;</span><span class="p">]</span>
+<span class="n">sources</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">'src/utils.cpp'</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>You can specify compiler flags for C/C++ source compilation with the
-<a class="reference internal" href="../reference/config.html#cflags-windows-cflags-linux"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">cflags</span></code></span></a> fields
+<a class="reference internal" href="../reference/config.html#cflags-windows-cflags-linux"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">cflags</span></code></span></a> fields
 in the <code class="docutils literal notranslate"><span class="pre">[compile]</span></code> section.</p>
 </section>
 </section>
@@ -308,23 +306,23 @@ job(s) to it so that we can easily run them and test the user subroutine code.</
 configuratin file by opening it up in any text or code editor and adding the
 following lines:</p>
 <div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">[[job]]</span>
-<span class="linenos">2</span><span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;jobs/test-job.inp&#39;</span>
-<span class="linenos">3</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;test-job1&#39;</span>
-<span class="linenos">4</span><span class="n">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;test&#39;</span><span class="p">,</span><span class="s">&#39;1elem&#39;</span><span class="p">]</span>
+<span class="linenos">2</span><span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'jobs/test-job.inp'</span>
+<span class="linenos">3</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'test-job1'</span>
+<span class="linenos">4</span><span class="n">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">'test'</span><span class="p">,</span><span class="s">'1elem'</span><span class="p">]</span>
 </pre></div>
 </div>
 <p><strong>Explanation:</strong></p>
 <ul class="simple">
-<li><p>Line <code class="docutils literal notranslate"><span class="pre">1</span></code>: <a class="reference internal" href="../reference/config.html#jobs-list"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">[[job]]</span></code></span></a> indicates the start of a job entry</p></li>
-<li><p>Line <code class="docutils literal notranslate"><span class="pre">2</span></code>: <a class="reference internal" href="../reference/config.html#job-file"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">job-file</span></code></span></a> indicates the path to the Abaqus job file (<code class="docutils literal notranslate"><span class="pre">.inp</span></code>)</p></li>
+<li><p>Line <code class="docutils literal notranslate"><span class="pre">1</span></code>: <a class="reference internal" href="../reference/config.html#jobs-list"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">[[job]]</span></code></span></a> indicates the start of a job entry</p></li>
+<li><p>Line <code class="docutils literal notranslate"><span class="pre">2</span></code>: <a class="reference internal" href="../reference/config.html#job-file"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">job-file</span></code></span></a> indicates the path to the Abaqus job file (<code class="docutils literal notranslate"><span class="pre">.inp</span></code>)</p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The filepath is specified relative to the location of the configuration file</p>
 </div>
 <ul class="simple">
-<li><p>Line <code class="docutils literal notranslate"><span class="pre">3</span></code>: <a class="reference internal" href="../reference/config.html#id1"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">name</span></code></span></a> indicates a unique name to refer to this job</p></li>
-<li><p>Line <code class="docutils literal notranslate"><span class="pre">4</span></code>: <a class="reference internal" href="../reference/config.html#tags"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">tags</span></code></span></a> are a list of non-unique categories to group similar jobs together</p></li>
+<li><p>Line <code class="docutils literal notranslate"><span class="pre">3</span></code>: <a class="reference internal" href="../reference/config.html#id1"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">name</span></code></span></a> indicates a unique name to refer to this job</p></li>
+<li><p>Line <code class="docutils literal notranslate"><span class="pre">4</span></code>: <a class="reference internal" href="../reference/config.html#tags"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">tags</span></code></span></a> are a list of non-unique categories to group similar jobs together</p></li>
 </ul>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
@@ -338,23 +336,23 @@ configuration file.</p>
 <details>
 <summary>See example</summary>
 <div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[[job]]</span>
-<span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;jobs/test-job-1.inp&#39;</span>
-<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;job2&#39;</span>
-<span class="n">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;test&#39;</span><span class="p">,</span><span class="s">&#39;1elem&#39;</span><span class="p">]</span>
+<span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'jobs/test-job-1.inp'</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'job2'</span>
+<span class="n">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">'test'</span><span class="p">,</span><span class="s">'1elem'</span><span class="p">]</span>
 
 <span class="k">[[job]]</span>
-<span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;jobs/test-job-2.inp&#39;</span>
-<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;job2&#39;</span>
-<span class="n">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;test&#39;</span><span class="p">,</span><span class="s">&#39;1elem&#39;</span><span class="p">]</span>
+<span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'jobs/test-job-2.inp'</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'job2'</span>
+<span class="n">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">'test'</span><span class="p">,</span><span class="s">'1elem'</span><span class="p">]</span>
 </pre></div>
 </div>
-</div>
-</details>
+</details></div>
+
 </section>
 <section id="run-jobs">
 <h3>Run Jobs<a class="headerlink" href="#run-jobs" title="Permalink to this heading">#</a></h3>
 <p>Once our jobs have been added to our configuration file, we can run them
-using the <a class="reference internal" href="../reference/cli.html#abaci-run"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">run</span></code></span></a> command.</p>
+using the <a class="reference internal" href="../reference/cli.html#abaci-run"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">run</span></code></span></a> command.</p>
 <p><strong>Example:</strong> <em>run the job named ‘test-job1’</em></p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="w">  </span>abaci<span class="w"> </span>run<span class="w"> </span>test-job1
 </pre></div>
@@ -377,19 +375,19 @@ using the <a class="reference internal" href="../reference/cli.html#abaci-run"><
 <li><p>Create a new job folder in the <code class="docutils literal notranslate"><span class="pre">&lt;output&gt;</span></code> directory for each job</p></li>
 <li><p>Copy job files and the user-subroutine library to each job folder</p></li>
 <li><p>Launch each job with Abaqus and wait for the jobs to complete</p></li>
-<li><p>Run any <a class="reference internal" href="regression-checks.html"><span class="doc std std-doc">regression checks</span></a> or
-<a class="reference internal" href="post-processing.html"><span class="doc std std-doc">post-processing commands</span></a> if specified</p></li>
+<li><p>Run any <a class="reference internal" href="regression-checks.html"><span class="std std-doc">regression checks</span></a> or
+<a class="reference internal" href="post-processing.html"><span class="std std-doc">post-processing commands</span></a> if specified</p></li>
 </ol>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>By default, the <code class="docutils literal notranslate"><span class="pre">&lt;output&gt;</span></code> folder is called <code class="docutils literal notranslate"><span class="pre">scratch</span></code> in the current directory.
-You can change the <code class="docutils literal notranslate"><span class="pre">&lt;output&gt;</span></code> folder using the <a class="reference internal" href="../reference/config.html#output"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">output</span></code></span></a>
+You can change the <code class="docutils literal notranslate"><span class="pre">&lt;output&gt;</span></code> folder using the <a class="reference internal" href="../reference/config.html#output"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">output</span></code></span></a>
 configuration option.</p>
 </div>
-<hr class="footnotes docutils" />
+<hr class="footnotes docutils"/>
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="fortran-modules" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a href="#id1" role="doc-backlink">1</a><span class="fn-bracket">]</span></span>
 <p><a class="reference external" href="https://bristolcompositesinstitute.github.io/RSE-Guide/abaqus-user-subroutines/using-fortran-modules.html">https://bristolcompositesinstitute.github.io/RSE-Guide/abaqus-user-subroutines/using-fortran-modules.html</a></p>
 </aside>
 </aside>
@@ -409,10 +407,10 @@ configuration option.</p>
                 </div>
                 <div class="title">How to Setup Regression Checks</div>
               </div>
-              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <svg><use href="#svg-arrow-right"></use></svg>
             </a>
           <a class="prev-page" href="install.html">
-              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <svg><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
@@ -434,7 +432,9 @@ configuration option.</p>
             
           </div>
           <div class="right-details">
-            
+            <div class="icons">
+              
+            </div>
           </div>
         </div>
         
@@ -446,7 +446,7 @@ configuration option.</p>
       <div class="toc-sticky toc-scroll">
         <div class="toc-title-container">
           <span class="toc-title">
-            On this page
+            Contents
           </span>
         </div>
         <div class="toc-tree-container">
@@ -476,9 +476,6 @@ configuration option.</p>
     </aside>
   </div>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/scripts/furo.js"></script>
