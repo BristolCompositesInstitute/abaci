@@ -79,7 +79,7 @@ export PATH=$PATH:$HOME/.local/bin
 First clone the repository with git:
 
 ```shell
-  git clone git@github.com:BristolCompositesInstitute/abaci.git
+  git clone https://github.com/BristolCompositesInstitute/abaci.git
 ```
 
 Then run one of the installation scripts in the `scripts` subfolder:
