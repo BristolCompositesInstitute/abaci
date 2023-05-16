@@ -7,7 +7,7 @@ from redist import toml
 from redist.schema import Schema, And, Optional, Use, Or#
 from abaci.utils import relpathshort
 
-def load_config(config_file,echo):
+def load_config(config_file,action,echo):
     """Top-level routine to read, parse, validate and sanitize config file"""
 
     log = logging.getLogger('abaci')
@@ -26,7 +26,7 @@ def load_config(config_file,echo):
 
     config = sanitize_config(config, config_dir)
 
-    check_config(config)
+    check_config(config,action)
 
     return config, config_dir
 
@@ -289,12 +289,14 @@ def sanitize_config(config, config_dir):
     return config
 
 
-def check_config(config):
+def check_config(config,action):
     """Check config to raise any errors before continuing"""
 
     if config['user-sub-file'] and not exists(config['user-sub-file']):
         raise Exception('The user subroutine file "{file}" cannot be found'.format(file=config['user-sub-file']))
 
+    if action == 'test' and not exists(config['test-mod-dir']):
+        raise Exception('Unable to find test module directory "{dir}". Create this directory or change config value of test-mod-dir'.format(dir=config['test-mod-dir']))
 
     for j in config['job']:
 

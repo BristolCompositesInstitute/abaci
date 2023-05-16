@@ -31,7 +31,7 @@ def main():
                                     overwrite=args.overwrite_config)
         exit()
 
-    config, config_dir = load_config(args.config,False)
+    config, config_dir = load_config(args.config,args.action,False)
          
     dep_list = fetch_dependencies(config, config_dir, args.verbose)
 
