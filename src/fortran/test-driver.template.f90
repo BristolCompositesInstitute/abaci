@@ -1,3 +1,21 @@
+subroutine getoutdir(outdir, lenoutdir)
+  character*256, intent(out) :: outdir
+  integer, intent(out) :: lenoutdir
+
+  outdir = "{OUTPUT_DIR}"
+
+  lenoutdir = len_trim(outdir)
+
+end subroutine getoutdir
+
+subroutine vgetoutdir(outdir, lenoutdir)
+  character*256, intent(out) :: outdir
+  integer, intent(out) :: lenoutdir
+  
+  call getoutdir(outdir, lenoutdir)
+
+end subroutine vgetoutdir
+
 program forttest_driver
   {USE_MODULES}
   use naturalFRUIT

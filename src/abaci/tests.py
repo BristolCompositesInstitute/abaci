@@ -60,9 +60,8 @@ def stage_test_source_files(libdir, test_mod_sources):
 
     install_location = realpath(join(dirname(realpath(__file__)), pardir))
 
-    test_framework = join(install_location,'fortran','naturalfruit.f90')
-
-    test_sources = [test_framework]
+    test_sources = [join(install_location,'fortran','naturalfruit.f90')]
+    test_sources.append(join(install_location,'fortran','dummy_abaqus_routines.f90'))
     test_sources.extend(test_mod_sources)
 
     test_files = []
@@ -177,7 +176,7 @@ def run_tests(test_driver,libdir,verbose):
 
 
 
-def gen_test_driver(testsuites, libdir):
+def gen_test_driver(testsuites, libdir, test_mod_dir):
     """Generate the main test driver program (fortran)"""
 
     log = logging.getLogger('abaci')
@@ -193,7 +192,8 @@ def gen_test_driver(testsuites, libdir):
         template = f.read()
 
     test_driver = template.format(TEST_ARRAY=serialise_tests(testsuites),
-                                  USE_MODULES=serialise_modules(testsuites))
+                                  USE_MODULES=serialise_modules(testsuites),
+                                  OUTPUT_DIR=test_mod_dir)
 
     test_driver_file = join(libdir,'test-driver.f90')
 
