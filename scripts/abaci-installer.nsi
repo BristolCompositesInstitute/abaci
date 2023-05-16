@@ -64,6 +64,7 @@ Section "-Abaci" SecCore
   File "..\src\abaci_main.py"
   File /r "..\src\abaci"
   File /r "..\src\redist"
+  File /r "..\src\fortran"
 
   CreateDirectory "$INSTDIR\scripts"
   SetOutPath "$INSTDIR\scripts"
