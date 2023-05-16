@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="How to Setup Post-Processing Commands" href="post-processing.html" /><link rel="prev" title="Getting Started with Abaci in your Project" href="getting-started-with-abaci.html" />
 
-    <link rel="shortcut icon" href="../_static/abaci.ico"/><meta name="generator" content="sphinx-6.1.3, furo 2022.04.07"/>
+    <link rel="shortcut icon" href="../_static/abaci.ico"/><!-- Generated with Sphinx 6.2.1 and Furo 2023.03.27 -->
         <title>How to Setup Regression Checks - Abaci Documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=68f4518137b9aefe99b631505a2064c3c42c9852" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=fad236701ea90a88636c2a8c73b44ae642ed2a53" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     
     
@@ -152,7 +152,7 @@
   <span class="sidebar-brand-text">Abaci Documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
-  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
 </form>
@@ -191,7 +191,9 @@
           </svg>
           <span>Back to top</span>
         </a>
-        <div class="content-icon-container"><div class="theme-toggle-container theme-toggle-content">
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle">
               <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
               <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
@@ -227,9 +229,9 @@ jobs.</p>
 specified in the configuration file.</p>
 <p><strong>Example:</strong></p>
 <div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[[job]]</span>
-<span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'jobs/my-abaqus-job.inp'</span>
-<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'job1'</span>
-<span class="n">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">'test'</span><span class="p">,</span><span class="s">'1elem'</span><span class="p">]</span>
+<span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;jobs/my-abaqus-job.inp&#39;</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;job1&#39;</span>
+<span class="n">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;test&#39;</span><span class="p">,</span><span class="s">&#39;1elem&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>Regression checks are enabled for a job by adding the following three
@@ -241,12 +243,12 @@ fields to your job entry in the configuration file:</p>
 </ul>
 <p><strong>Example:</strong> <em>adding regression check options</em></p>
 <div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[[job]]</span>
-<span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'jobs/my-abaqus-job.inp'</span>
-<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'job1'</span>
-<span class="n">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">'test'</span><span class="p">,</span><span class="s">'1elem'</span><span class="p">]</span>
-<span class="n">check</span><span class="p">.</span><span class="n">reference</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'jobs/my-abaqus-job-ref.pkl'</span>
-<span class="n">check</span><span class="p">.</span><span class="n">steps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">'Step-1'</span><span class="p">]</span>
-<span class="n">check</span><span class="p">.</span><span class="n">fields</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">'SDV1'</span><span class="p">,</span><span class="s">'SDV2'</span><span class="p">]</span>
+<span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;jobs/my-abaqus-job.inp&#39;</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;job1&#39;</span>
+<span class="n">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;test&#39;</span><span class="p">,</span><span class="s">&#39;1elem&#39;</span><span class="p">]</span>
+<span class="n">check</span><span class="p">.</span><span class="n">reference</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;jobs/my-abaqus-job-ref.pkl&#39;</span>
+<span class="n">check</span><span class="p">.</span><span class="n">steps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;Step-1&#39;</span><span class="p">]</span>
+<span class="n">check</span><span class="p">.</span><span class="n">fields</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;SDV1&#39;</span><span class="p">,</span><span class="s">&#39;SDV2&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>In this example, we will store the reference result in a file called
@@ -267,7 +269,7 @@ so that other users can run regression checks against your results.</p></li>
 </div>
 <p>By default, Abaci will only check values in the <strong>last frame</strong>. To check
 values in all frames in the step, you can specify:</p>
-<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="n">check</span><span class="p">.</span><span class="n">frames</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'all'</span>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="n">check</span><span class="p">.</span><span class="n">frames</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;all&#39;</span>
 </pre></div>
 </div>
 <p>Alternatively, to check specific frames within a step, you can specify
@@ -309,10 +311,10 @@ checks can be rerun with:</p>
                 </div>
                 <div class="title">How to Setup Post-Processing Commands</div>
               </div>
-              <svg><use href="#svg-arrow-right"></use></svg>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
           <a class="prev-page" href="getting-started-with-abaci.html">
-              <svg><use href="#svg-arrow-right"></use></svg>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
@@ -334,9 +336,7 @@ checks can be rerun with:</p>
             
           </div>
           <div class="right-details">
-            <div class="icons">
-              
-            </div>
+            
           </div>
         </div>
         
@@ -348,7 +348,7 @@ checks can be rerun with:</p>
       <div class="toc-sticky toc-scroll">
         <div class="toc-title-container">
           <span class="toc-title">
-            Contents
+            On this page
           </span>
         </div>
         <div class="toc-tree-container">

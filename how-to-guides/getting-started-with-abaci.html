@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="How to Setup Regression Checks" href="regression-checks.html" /><link rel="prev" title="How to Install Abaci" href="install.html" />
 
-    <link rel="shortcut icon" href="../_static/abaci.ico"/><meta name="generator" content="sphinx-6.1.3, furo 2022.04.07"/>
+    <link rel="shortcut icon" href="../_static/abaci.ico"/><!-- Generated with Sphinx 6.2.1 and Furo 2023.03.27 -->
         <title>Getting Started with Abaci in your Project - Abaci Documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=68f4518137b9aefe99b631505a2064c3c42c9852" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=fad236701ea90a88636c2a8c73b44ae642ed2a53" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     
     
@@ -152,7 +152,7 @@
   <span class="sidebar-brand-text">Abaci Documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
-  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
 </form>
@@ -191,7 +191,9 @@
           </svg>
           <span>Back to top</span>
         </a>
-        <div class="content-icon-container"><div class="theme-toggle-container theme-toggle-content">
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle">
               <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
               <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
@@ -267,10 +269,10 @@ your top-level user subroutine file</strong>.</p>
 them in your configuration file using the <a class="reference internal" href="../reference/config.html#id3"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">include</span></code></span></a>
 field in the <code class="docutils literal notranslate"><span class="pre">[compile]</span></code> section.</p>
 <p><strong>Example:</strong> <em>source files in a different folder to main user subroutine</em></p>
-<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="n">user-sub-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'src/usub.f'</span>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="n">user-sub-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;src/usub.f&#39;</span>
 
 <span class="k">[compile]</span>
-<span class="n">include</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">'utils/*.f90'</span><span class="p">]</span>
+<span class="n">include</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;utils/*.f90&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 <div class="admonition seealso">
@@ -285,10 +287,10 @@ interfaces.</p>
 <p>If your project has C or C++ source files, these can specified using the
 <a class="reference internal" href="../reference/config.html#sources"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">sources</span></code></span></a> field in the <code class="docutils literal notranslate"><span class="pre">[compile]</span></code> section.</p>
 <p><strong>Example:</strong> <em>specify C++ source files to compile separately</em></p>
-<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="n">user-sub-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'src/usub.f'</span>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="n">user-sub-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;src/usub.f&#39;</span>
 
 <span class="k">[compile]</span>
-<span class="n">sources</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">'src/utils.cpp'</span><span class="p">]</span>
+<span class="n">sources</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;src/utils.cpp&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>You can specify compiler flags for C/C++ source compilation with the
@@ -306,9 +308,9 @@ job(s) to it so that we can easily run them and test the user subroutine code.</
 configuratin file by opening it up in any text or code editor and adding the
 following lines:</p>
 <div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">[[job]]</span>
-<span class="linenos">2</span><span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'jobs/test-job.inp'</span>
-<span class="linenos">3</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'test-job1'</span>
-<span class="linenos">4</span><span class="n">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">'test'</span><span class="p">,</span><span class="s">'1elem'</span><span class="p">]</span>
+<span class="linenos">2</span><span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;jobs/test-job.inp&#39;</span>
+<span class="linenos">3</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;test-job1&#39;</span>
+<span class="linenos">4</span><span class="n">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;test&#39;</span><span class="p">,</span><span class="s">&#39;1elem&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 <p><strong>Explanation:</strong></p>
@@ -336,18 +338,18 @@ configuration file.</p>
 <details>
 <summary>See example</summary>
 <div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[[job]]</span>
-<span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'jobs/test-job-1.inp'</span>
-<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'job2'</span>
-<span class="n">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">'test'</span><span class="p">,</span><span class="s">'1elem'</span><span class="p">]</span>
+<span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;jobs/test-job-1.inp&#39;</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;job2&#39;</span>
+<span class="n">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;test&#39;</span><span class="p">,</span><span class="s">&#39;1elem&#39;</span><span class="p">]</span>
 
 <span class="k">[[job]]</span>
-<span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'jobs/test-job-2.inp'</span>
-<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'job2'</span>
-<span class="n">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">'test'</span><span class="p">,</span><span class="s">'1elem'</span><span class="p">]</span>
+<span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;jobs/test-job-2.inp&#39;</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;job2&#39;</span>
+<span class="n">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;test&#39;</span><span class="p">,</span><span class="s">&#39;1elem&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
-</details></div>
-
+</div>
+</details>
 </section>
 <section id="run-jobs">
 <h3>Run Jobs<a class="headerlink" href="#run-jobs" title="Permalink to this heading">#</a></h3>
@@ -384,10 +386,10 @@ using the <a class="reference internal" href="../reference/cli.html#abaci-run"><
 You can change the <code class="docutils literal notranslate"><span class="pre">&lt;output&gt;</span></code> folder using the <a class="reference internal" href="../reference/config.html#output"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">output</span></code></span></a>
 configuration option.</p>
 </div>
-<hr class="footnotes docutils"/>
+<hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="fortran-modules" role="note">
-<span class="label"><span class="fn-bracket">[</span><a href="#id1" role="doc-backlink">1</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
 <p><a class="reference external" href="https://bristolcompositesinstitute.github.io/RSE-Guide/abaqus-user-subroutines/using-fortran-modules.html">https://bristolcompositesinstitute.github.io/RSE-Guide/abaqus-user-subroutines/using-fortran-modules.html</a></p>
 </aside>
 </aside>
@@ -407,10 +409,10 @@ configuration option.</p>
                 </div>
                 <div class="title">How to Setup Regression Checks</div>
               </div>
-              <svg><use href="#svg-arrow-right"></use></svg>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
           <a class="prev-page" href="install.html">
-              <svg><use href="#svg-arrow-right"></use></svg>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
@@ -432,9 +434,7 @@ configuration option.</p>
             
           </div>
           <div class="right-details">
-            <div class="icons">
-              
-            </div>
+            
           </div>
         </div>
         
@@ -446,7 +446,7 @@ configuration option.</p>
       <div class="toc-sticky toc-scroll">
         <div class="toc-title-container">
           <span class="toc-title">
-            Contents
+            On this page
           </span>
         </div>
         <div class="toc-tree-container">

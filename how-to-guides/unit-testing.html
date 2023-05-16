@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Reference" href="../reference/index.html" /><link rel="prev" title="How to Setup Post-Processing Commands" href="post-processing.html" />
 
-    <link rel="shortcut icon" href="../_static/abaci.ico"/><meta name="generator" content="sphinx-6.1.3, furo 2022.04.07"/>
+    <link rel="shortcut icon" href="../_static/abaci.ico"/><!-- Generated with Sphinx 6.2.1 and Furo 2023.03.27 -->
         <title>How-to Write Unit Tests with Abaci - Abaci Documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=68f4518137b9aefe99b631505a2064c3c42c9852" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=fad236701ea90a88636c2a8c73b44ae642ed2a53" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     
     
@@ -152,7 +152,7 @@
   <span class="sidebar-brand-text">Abaci Documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
-  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
 </form>
@@ -191,7 +191,9 @@
           </svg>
           <span>Back to top</span>
         </a>
-        <div class="content-icon-container"><div class="theme-toggle-container theme-toggle-content">
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle">
               <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
               <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
@@ -319,10 +321,10 @@ statement to the top of our test module.</p>
 <span class="k">  subroutine </span><span class="n">test_parameters</span><span class="p">()</span>
 
 <span class="w">    </span><span class="c">! Check that the value of a is one</span>
-<span class="w">    </span><span class="k">call </span><span class="n">assert_equal</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">message</span><span class="o">=</span><span class="s2">"parameter 'a' has an incorrect value"</span><span class="p">)</span>
+<span class="w">    </span><span class="k">call </span><span class="n">assert_equal</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">message</span><span class="o">=</span><span class="s2">&quot;parameter &#39;a&#39; has an incorrect value&quot;</span><span class="p">)</span>
 
 <span class="w">    </span><span class="c">! Check that the value of pi is correct to 4 decimal places</span>
-<span class="w">    </span><span class="k">call </span><span class="n">assert_equal</span><span class="p">(</span><span class="n">pi</span><span class="p">,</span><span class="w"> </span><span class="mf">3.141593</span><span class="p">,</span><span class="w"> </span><span class="n">tol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1e-4</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="o">=</span><span class="s2">"parameter 'pi' is incorrect"</span><span class="p">)</span>
+<span class="w">    </span><span class="k">call </span><span class="n">assert_equal</span><span class="p">(</span><span class="n">pi</span><span class="p">,</span><span class="w"> </span><span class="mf">3.141593</span><span class="p">,</span><span class="w"> </span><span class="n">tol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1e-4</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="o">=</span><span class="s2">&quot;parameter &#39;pi&#39; is incorrect&quot;</span><span class="p">)</span>
 
 <span class="w">  </span><span class="k">end subroutine </span><span class="n">test_parameters</span>
 
@@ -409,11 +411,11 @@ array.</p>
 <span class="w">    </span><span class="n">props</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_properties</span><span class="p">(</span><span class="n">props_array</span><span class="p">)</span>
 
 <span class="w">    </span><span class="k">call </span><span class="n">assert_equal</span><span class="p">(</span><span class="n">props_array</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">props</span><span class="p">%</span><span class="n">e</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
-<span class="w">                      </span><span class="n">message</span><span class="o">=</span><span class="s2">"props%e does not match input array"</span><span class="p">)</span>
+<span class="w">                      </span><span class="n">message</span><span class="o">=</span><span class="s2">&quot;props%e does not match input array&quot;</span><span class="p">)</span>
 
 
 <span class="w">    </span><span class="k">call </span><span class="n">assert_equal</span><span class="p">(</span><span class="n">props_array</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="n">props</span><span class="p">%</span><span class="n">xnu</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
-<span class="w">                      </span><span class="n">message</span><span class="o">=</span><span class="s2">"props%xnu does not match input array"</span><span class="p">)</span>
+<span class="w">                      </span><span class="n">message</span><span class="o">=</span><span class="s2">&quot;props%xnu does not match input array&quot;</span><span class="p">)</span>
 
 <span class="w">  </span><span class="k">end subroutine </span><span class="n">test_get_props</span>
 
@@ -422,7 +424,7 @@ array.</p>
 </div>
 <p>We can run the unit test at the command line:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>c:\Temp\abaqus-modern-fortran&gt; abaci test
-  Log file for this session is "scratch\abaci-64.log"
+  Log file for this session is &quot;scratch\abaci-64.log&quot;
   Running abaqus make
   Compiling tests
   Running tests
@@ -450,11 +452,11 @@ array.</p>
 </div>
 <p>Here we can see that all of our assertions passed and we get a summary of all
 the tests.</p>
-<hr class="docutils"/>
+<hr class="docutils" />
 <p>Now let’s see what happens if we purposefully swap the <code class="docutils literal notranslate"><span class="pre">props_array</span></code> indices
 so that the assertions fail:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>c:\Temp\abaqus-modern-fortran&gt; abaci test
-  Log file for this session is "scratch\abaci-65.log"
+  Log file for this session is &quot;scratch\abaci-65.log&quot;
   Running abaqus make
   Compiling tests
   Running tests
@@ -504,10 +506,10 @@ messages which describe the failed assertions.</p>
                 </div>
                 <div class="title">Reference</div>
               </div>
-              <svg><use href="#svg-arrow-right"></use></svg>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
           <a class="prev-page" href="post-processing.html">
-              <svg><use href="#svg-arrow-right"></use></svg>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
@@ -529,9 +531,7 @@ messages which describe the failed assertions.</p>
             
           </div>
           <div class="right-details">
-            <div class="icons">
-              
-            </div>
+            
           </div>
         </div>
         
@@ -543,7 +543,7 @@ messages which describe the failed assertions.</p>
       <div class="toc-sticky toc-scroll">
         <div class="toc-title-container">
           <span class="toc-title">
-            Contents
+            On this page
           </span>
         </div>
         <div class="toc-tree-container">
