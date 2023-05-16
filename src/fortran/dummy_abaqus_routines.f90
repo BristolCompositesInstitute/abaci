@@ -30,3 +30,10 @@ subroutine vgetnumcpus(n)
   n = 1
 end subroutine vgetnumcpus
 
+subroutine xit()
+  write(*,*) '(!) Execution terminated from within subroutine with call to xit()'
+end subroutine
+
+subroutine xplb_exit()
+  write(*,*) '(!) Execution terminated from within subroutine with call to xplb_exit()'
+end subroutine xplb_exit
