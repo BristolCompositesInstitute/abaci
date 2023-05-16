@@ -4,7 +4,7 @@ Notable changes to this project are logged here according to release version and
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [Unreleased]
+## [v0.5.3](https://github.com/BristolCompositesInstitute/abaci/releases/tag/v0.5.3) - 16/05/23
 
 - Fix #3 (raise error if test-mod-dir does not exist)
 - Fix #4 (include test driver template in Windows installer deployment)
