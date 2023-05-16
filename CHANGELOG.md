@@ -4,6 +4,13 @@ Notable changes to this project are logged here according to release version and
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [Unreleased]
+
+- Fix #3 (raise error if test-mod-dir does not exist)
+- Fix #4 (include test driver template in Windows installer deployment)
+- Fix #5 (don't link test driver to duplicate objects)
+- Add dummy abaqus routines to test driver
+
 ## [v0.5.2](https://github.com/BristolCompositesInstitute/abaci/releases/tag/v0.5.2) - 11/01/23
 
 - Minor fix: to allow launching different python versions in post-processing commands
