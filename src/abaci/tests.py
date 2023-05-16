@@ -75,20 +75,37 @@ def stage_test_source_files(libdir, test_mod_sources):
     return test_files
 
 
-def compile_tests(args, fflags, libdir, test_driver_source, test_mod_sources):
+def get_object_ext(libdir, usub_file):
+    """Detect the correct object file extension for Abaqus standard/explicit/explicitDP"""
+    
+    usub_name = os.path.splitext(os.path.basename(usub_file))[0]
+
+    if os.name == 'nt':
+        obj = '.obj'
+    else:
+        obj = '.o'
+
+    options = ['-std'+obj,'-xpl'+obj,'-xplD'+obj]
+
+    # Detect extension based on output of 'Abaqus make'
+    for ext in options:
+
+        if os.path.exists(os.path.join(libdir,usub_name+ext)):
+            return ext
+
+    raise Exception('Unable to determine correct object extension (-std,-xpl,-xplD).')
+
+
+def compile_tests(args, usub_file, fflags, libdir, test_driver_source, test_mod_sources):
     """Compile Fortran test modules and test driver"""
 
     log = logging.getLogger('abaci')
 
     log.info('Compiling tests')
 
-    if os.name == 'nt':
+    ext = get_object_ext(libdir, usub_file)
 
-        link_objects = glob.glob(join(libdir,'*.obj'))
-
-    else:
-
-        link_objects = glob.glob(join(libdir,'*.o'))
+    link_objects = glob.glob(join(libdir,'*'+ext))
 
     test_files = stage_test_source_files(libdir, test_mod_sources)
 

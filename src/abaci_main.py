@@ -63,7 +63,7 @@ def main():
             
         test_driver_file = gen_test_driver(testsuites, compile_dir)
 
-        test_driver = compile_tests(args, fflags, compile_dir, test_driver_file, test_sources)
+        test_driver = compile_tests(args, config['user-sub-file'], fflags, compile_dir, test_driver_file, test_sources)
 
         stat = run_tests(test_driver, compile_dir, args.verbose)
 
