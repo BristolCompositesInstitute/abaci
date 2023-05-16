@@ -75,7 +75,7 @@ class TestDependencies(AbaciUnitTestSuite):
 
         project_manifest = join(project_path,'abaci.toml')
 
-        config, config_dir = load_config(project_manifest, echo=False)
+        config, config_dir = load_config(project_manifest, action=None, echo=False)
 
         return project_path, config, config_dir
         

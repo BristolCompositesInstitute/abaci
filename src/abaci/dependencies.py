@@ -38,7 +38,7 @@ def fetch_dependencies(config, config_dir, verbosity):
                 
             dep_config_file = os.path.join(dep_path,'abaci.toml')
 
-            dep_config, dep_config_dir = load_config(dep_config_file, echo=False)
+            dep_config, dep_config_dir = load_config(dep_config_file, action='None', echo=False)
 
             # Check specified name matches that in package config
             if dep['name'] != dep_config['name']:
