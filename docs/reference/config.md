@@ -300,6 +300,12 @@ __*string or [string,...], optional*__
 
 Extra compilation flags to pass to the c/c++ compiler (auxilliary sources only).
 
+```{seealso}
+See the [how-to guide](../how-to-guides/cpp-sources.md) for more information on how
+to include C and C++ source files with your Abaqus user subroutines.
+```
+
+
 ### lflags.windows / lflags.linux
 
 __*string or [string,...], optional*__
@@ -353,6 +359,10 @@ String or list of strings specifying additional c/c++ source files that are to b
 - File globbing is supported, _e.g._: `sources = 'src/*.cpp'`
 - Sources specified here are automatically compiled with other projects that use your project as an Abaci dependency
 
+```{seealso}
+See the [how-to guide](../how-to-guides/cpp-sources.md) for more information on how
+to include C and C++ source files with your Abaqus user subroutines.
+```
 
 ## Cluster section
 
