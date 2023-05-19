@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Getting Started with Abaci in your Project" href="getting-started-with-abaci.html" /><link rel="prev" title="How-to guides" href="index.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Reference" href="../reference/index.html" /><link rel="prev" title="How-to Write Unit Tests with Abaci" href="unit-testing.html" />
 
     <link rel="shortcut icon" href="../_static/abaci.ico"/><!-- Generated with Sphinx 6.2.1 and Furo 2023.03.27 -->
-        <title>How to Install/Update Abaci - Abaci Documentation</title>
+        <title>How to Include C/C++ Sources - Abaci Documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=fad236701ea90a88636c2a8c73b44ae642ed2a53" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
@@ -161,12 +161,12 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../quickstart-tutorial.html">Quickstart Tutorial</a></li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">How-to guides</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">How to Install/Update Abaci</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html">How to Install/Update Abaci</a></li>
 <li class="toctree-l2"><a class="reference internal" href="getting-started-with-abaci.html">Getting Started with Abaci in your Project</a></li>
 <li class="toctree-l2"><a class="reference internal" href="regression-checks.html">How to Setup Regression Checks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="post-processing.html">How to Setup Post-Processing Commands</a></li>
 <li class="toctree-l2"><a class="reference internal" href="unit-testing.html">How-to Write Unit Tests with Abaci</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cpp-sources.html">How to Include C/C++ Sources</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">How to Include C/C++ Sources</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -208,129 +208,51 @@
           </label>
         </div>
         <article role="main">
-          <section id="how-to-install-update-abaci">
-<h1>How to Install/Update Abaci<a class="headerlink" href="#how-to-install-update-abaci" title="Permalink to this heading">#</a></h1>
-<section id="prerequisites">
-<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this heading">#</a></h2>
-<p>The following software is required to use abaci:</p>
-<ol class="arabic simple">
-<li><p>Abaqus</p></li>
-<li><p>Intel Fortran Compiler</p></li>
-</ol>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>To use abaci, Abaqus and the Intel Fortran compiler need to be available within
-your command line environment.</p>
-<ul class="simple">
-<li><p>On Windows you can use the ‘Abaqus Command + iFort’ link from the start menu</p></li>
-<li><p>On Linux, you can add the appropriate environment module or source the setvars
-script from your Intel compiler installation.</p></li>
-</ul>
-</div>
-<section id="check-environment">
-<h3>Check Environment<a class="headerlink" href="#check-environment" title="Permalink to this heading">#</a></h3>
-<p>You can check that all prerequisites are available by running the following
-commands in your terminal:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="w">  </span>abaqus<span class="w"> </span><span class="nv">information</span><span class="o">=</span>version
-<span class="w">  </span>ifort<span class="w"> </span>--version
+          <section id="how-to-include-c-c-sources">
+<h1>How to Include C/C++ Sources<a class="headerlink" href="#how-to-include-c-c-sources" title="Permalink to this heading">#</a></h1>
+<p>Abaci makes it easier to use C and C++ source files in combination with your Abaqus user subroutine code.
+Given a user subroutine file <code class="docutils literal notranslate"><span class="pre">usub.f</span></code>, we can easily compile and link a C or C++ source file
+and call that from our user subroutine code.</p>
+<p><strong>Prerequisites:</strong> in order to compile C and C++ source files, you will need an appropriate compiler, either:
+Microsoft C/C++ compiler (Windows only), the Intel C Compiler or the GNU compiler suite (GCC).</p>
+<section id="source-files">
+<h2>Source Files<a class="headerlink" href="#source-files" title="Permalink to this heading">#</a></h2>
+<p>Given a C++ source file <code class="docutils literal notranslate"><span class="pre">lib_functions.cpp</span></code> in the <code class="docutils literal notranslate"><span class="pre">src</span></code> folder, we
+can tell Abaci about this by adding the following to our configuration file (<code class="docutils literal notranslate"><span class="pre">abaci.toml</span></code>):</p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[compile]</span>
+<span class="n">sources</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;src/lib_functions.cpp&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>which should output information about the current Abaqus and Intel Fortran compiler versions.
-If either of these commands fails, then you should first check your environment is setup correctly.</p>
-</section>
-</section>
-<section id="option-1-recommended-installers">
-<h2>Option 1 (Recommended): Installers<a class="headerlink" href="#option-1-recommended-installers" title="Permalink to this heading">#</a></h2>
-<p>Self-contained installers are available to download for Windows and Linux from the <a class="reference external" href="https://github.com/BristolCompositesInstitute/abaci/releases/latest">latest release page</a>.</p>
+<p>Abaci will add a separate compilation step to compile any source files specified in this way.
+When the main user subroutine file is subsequently compiled with <code class="docutils literal notranslate"><span class="pre">abaqus</span> <span class="pre">make</span></code>, the compiled
+C/C++ source files are linked in with this.</p>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
-<p>You <strong>do not need to be an administrator</strong> to use the Abaci installers, since they will install for the local user only.</p>
+<p>You can specify multiple C/C++ source files with globbing: <code class="docutils literal notranslate"><span class="pre">sources=['src/*.c','src/*.cpp']</span></code></p>
 </div>
-<section id="windows">
-<h3>Windows<a class="headerlink" href="#windows" title="Permalink to this heading">#</a></h3>
-<p>Simply download the <code class="docutils literal notranslate"><span class="pre">abaci-installer.exe</span></code> executable from the <a class="reference external" href="https://github.com/BristolCompositesInstitute/abaci/releases/latest">latest release page</a>
-and run the installer.</p>
-<ul class="simple">
-<li><p>It is recommended to leave the default destination folder unchanged</p></li>
-</ul>
-<p><img alt="image" src="../_images/windows-installer.png" /></p>
 </section>
-<section id="on-linux">
-<h3>On Linux<a class="headerlink" href="#on-linux" title="Permalink to this heading">#</a></h3>
-<p>Download the <code class="docutils literal notranslate"><span class="pre">abaci-installer.sh</span></code> script from the <a class="reference external" href="https://github.com/BristolCompositesInstitute/abaci/releases/latest">latest release page</a>
-and then enable execution with:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="w">  </span>chmod<span class="w"> </span>u+x<span class="w"> </span>abaci-installer.sh
+<section id="compiler">
+<h2>Compiler<a class="headerlink" href="#compiler" title="Permalink to this heading">#</a></h2>
+<p><strong>On Windows</strong>, C and C++ source files are compiled by default with the Microsoft C/C++ Optimizing Compiler (<code class="docutils literal notranslate"><span class="pre">cl</span></code>).</p>
+<p><strong>On Linux</strong>, C and C++ source files are compiled by default with the Intel C compiler (<code class="docutils literal notranslate"><span class="pre">icc</span></code>).</p>
+<p><strong>To use GCC</strong> for compiling C and C++ source files, on either Windows or Linux, add the <a class="reference internal" href="../reference/cli.html#abaci-compile"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">--gcc</span></code></span></a>
+command line flag.</p>
+<p><strong>Example:</strong></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="w">  </span>abaci<span class="w"> </span>run<span class="w"> </span>--gcc
 </pre></div>
 </div>
-<p>Then execute with:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="w">  </span>./abaci-installer.sh
-</pre></div>
-</div>
-<p>The Linux installer will install abaci to <code class="docutils literal notranslate"><span class="pre">$HOME/.local/bin</span></code>, so you should ensure that this folder is on your path if not already;
-you can do this by adding the following line to the end of your <code class="docutils literal notranslate"><span class="pre">$HOME/.bash_profile</span></code> file:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$HOME</span>/.local/bin
+<section id="compiler-flags">
+<h3>Compiler Flags<a class="headerlink" href="#compiler-flags" title="Permalink to this heading">#</a></h3>
+<p>To customise the C/C++ compiler flags, you can specify <a class="reference internal" href="../reference/config.html#cflags-windows-cflags-linux"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">cflags</span></code></span></a>
+in the configuration file:</p>
+<p><strong>Example:</strong></p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[compile]</span>
+<span class="n">cflags</span><span class="p">.</span><span class="n">windows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;/fp:fast&#39;</span><span class="p">]</span>
+<span class="n">cflags</span><span class="p">.</span><span class="n">linux</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;-fp-model&#39;</span><span class="w"> </span><span class="s">&#39;fast&#39;</span><span class="p">]</span>
+<span class="n">cflags</span><span class="p">.</span><span class="n">gcc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;-funsafe-math-optimizations&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </section>
-</section>
-<section id="option-2-clone-the-repository">
-<h2>Option 2: Clone the Repository<a class="headerlink" href="#option-2-clone-the-repository" title="Permalink to this heading">#</a></h2>
-<p>First clone the repository with git:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="w">  </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/BristolCompositesInstitute/abaci.git
-</pre></div>
-</div>
-<p>Then run one of the installation scripts in the <code class="docutils literal notranslate"><span class="pre">scripts</span></code> subfolder:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">./scripts/install</span></code> on Linux</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">./scripts/install-windows.cmd</span></code> on Windows</p></li>
-</ul>
-<p>The Linux installer will install abaci to <code class="docutils literal notranslate"><span class="pre">$HOME/.local/bin</span></code>, so you should ensure that this folder is on your path if not already.</p>
-</section>
-<section id="check-your-installation">
-<h2>Check Your Installation<a class="headerlink" href="#check-your-installation" title="Permalink to this heading">#</a></h2>
-<p>After following the installations instruction above, you can verify your abaci installation
-by opening a command window and running:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="w">  </span>abaci<span class="w"> </span>--version
-</pre></div>
-</div>
-<p>which should output version information for abaci.</p>
-</section>
-<section id="update-your-abaci-installation">
-<h2>Update your Abaci Installation<a class="headerlink" href="#update-your-abaci-installation" title="Permalink to this heading">#</a></h2>
-<section id="option-1-command-line-requires-git">
-<h3>Option 1: Command Line (Requires git)<a class="headerlink" href="#option-1-command-line-requires-git" title="Permalink to this heading">#</a></h3>
-<p>If you have git installed, then you can easily update Abaci from the command line with the following command:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="w">  </span>abaci<span class="w"> </span>--update
-</pre></div>
-</div>
-<p>As with installing abaci, this command does not require administrator rights.</p>
-<p>You may update from a specific release version or GitHub branch with:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="w">  </span>abaci<span class="w"> </span>--update<span class="w"> </span>&lt;ref&gt;
-</pre></div>
-</div>
-<p>where <code class="docutils literal notranslate"><span class="pre">&lt;ref&gt;</span></code> is either a git commit, tag or upstream branch.
-See the <a class="reference internal" href="../reference/cli.html"><span class="doc std std-doc">command line reference</span></a> for more information.</p>
-<p>After following the installations instruction above, you can verify your abaci installation
-by opening a command window and running:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="w">  </span>abaci<span class="w"> </span>--version
-</pre></div>
-</div>
-<p>which should output version information for abaci.</p>
-</section>
-<section id="option-2-reinstall-git-not-required">
-<h3>Option 2: Reinstall (Git not required)<a class="headerlink" href="#option-2-reinstall-git-not-required" title="Permalink to this heading">#</a></h3>
-<p>Download the latest installer from <a class="reference external" href="https://github.com/BristolCompositesInstitute/abaci/releases/latest">latest release page</a>
-and rerun - this will overwrite and update any existing Abaci installation.</p>
-</section>
-</section>
-<section id="install-locations">
-<h2>Install Locations<a class="headerlink" href="#install-locations" title="Permalink to this heading">#</a></h2>
-<p>The self-contained Windows installer will install Abaci files to
-<code class="docutils literal notranslate"><span class="pre">c:\Users\&lt;username&gt;\AppData\BCI\abaci</span></code> by default.</p>
-<p>The Windows installer script (<code class="docutils literal notranslate"><span class="pre">install-windows.cmd</span></code>) and will place
-the launcher script in <code class="docutils literal notranslate"><span class="pre">c:\SIMULIA\Commands</span></code> (with the abaqus launcher).</p>
-<p>The Linux installer script will install Abaci files to <code class="docutils literal notranslate"><span class="pre">$HOME/.local/lib/abaci</span></code> and will place
-the launcher script in <code class="docutils literal notranslate"><span class="pre">$HOME/.local/bin</span></code>.</p>
 </section>
 </section>
 
@@ -339,23 +261,23 @@ the launcher script in <code class="docutils literal notranslate"><span class="p
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="getting-started-with-abaci.html">
+          <a class="next-page" href="../reference/index.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Getting Started with Abaci in your Project</div>
+                <div class="title">Reference</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="index.html">
+          <a class="prev-page" href="unit-testing.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">How-to guides</div>
+                <div class="title">How-to Write Unit Tests with Abaci</div>
                 
               </div>
             </a>
@@ -389,24 +311,12 @@ the launcher script in <code class="docutils literal notranslate"><span class="p
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">How to Install/Update Abaci</a><ul>
-<li><a class="reference internal" href="#prerequisites">Prerequisites</a><ul>
-<li><a class="reference internal" href="#check-environment">Check Environment</a></li>
+<li><a class="reference internal" href="#">How to Include C/C++ Sources</a><ul>
+<li><a class="reference internal" href="#source-files">Source Files</a></li>
+<li><a class="reference internal" href="#compiler">Compiler</a><ul>
+<li><a class="reference internal" href="#compiler-flags">Compiler Flags</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#option-1-recommended-installers">Option 1 (Recommended): Installers</a><ul>
-<li><a class="reference internal" href="#windows">Windows</a></li>
-<li><a class="reference internal" href="#on-linux">On Linux</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#option-2-clone-the-repository">Option 2: Clone the Repository</a></li>
-<li><a class="reference internal" href="#check-your-installation">Check Your Installation</a></li>
-<li><a class="reference internal" href="#update-your-abaci-installation">Update your Abaci Installation</a><ul>
-<li><a class="reference internal" href="#option-1-command-line-requires-git">Option 1: Command Line (Requires git)</a></li>
-<li><a class="reference internal" href="#option-2-reinstall-git-not-required">Option 2: Reinstall (Git not required)</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#install-locations">Install Locations</a></li>
 </ul>
 </li>
 </ul>

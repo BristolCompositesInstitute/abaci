@@ -1,5 +1,5 @@
 ---
-title: "How to Install Abaci"
+title: "How to Install/Update Abaci"
 ---
 
 
@@ -101,6 +101,46 @@ by opening a command window and running:
 
 which should output version information for abaci.
 
+
+
+## Update your Abaci Installation
+
+
+### Option 1: Command Line (Requires git)
+
+If you have git installed, then you can easily update Abaci from the command line with the following command:
+
+```shell
+  abaci --update
+```
+
+As with installing abaci, this command does not require administrator rights.
+
+You may update from a specific release version or GitHub branch with:
+
+```shell
+  abaci --update <ref>
+```
+
+where `<ref>` is either a git commit, tag or upstream branch.
+See the [command line reference](../reference/cli) for more information.
+
+
+After following the installations instruction above, you can verify your abaci installation
+by opening a command window and running:
+
+```shell
+  abaci --version
+```
+
+which should output version information for abaci.
+
+
+
+### Option 2: Reinstall (Git not required)
+
+Download the latest installer from [latest release page](https://github.com/BristolCompositesInstitute/abaci/releases/latest)
+and rerun - this will overwrite and update any existing Abaci installation.
 
 
 ## Install Locations

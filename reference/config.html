@@ -161,11 +161,12 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../quickstart-tutorial.html">Quickstart Tutorial</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../how-to-guides/index.html">How-to guides</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../how-to-guides/install.html">How to Install Abaci</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how-to-guides/install.html">How to Install/Update Abaci</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how-to-guides/getting-started-with-abaci.html">Getting Started with Abaci in your Project</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how-to-guides/regression-checks.html">How to Setup Regression Checks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how-to-guides/post-processing.html">How to Setup Post-Processing Commands</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how-to-guides/unit-testing.html">How-to Write Unit Tests with Abaci</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how-to-guides/cpp-sources.html">How to Include C/C++ Sources</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
@@ -475,6 +476,11 @@ between results produced with different numbers of CPUs</p>
 <h3>cflags.windows / cflags.linux<a class="headerlink" href="#cflags-windows-cflags-linux" title="Permalink to this heading">#</a></h3>
 <p><strong><em>string or [string,…], optional</em></strong></p>
 <p>Extra compilation flags to pass to the c/c++ compiler (auxilliary sources only).</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>See the <a class="reference internal" href="../how-to-guides/cpp-sources.html"><span class="std std-doc">how-to guide</span></a> for more information on how
+to include C and C++ source files with your Abaqus user subroutines.</p>
+</div>
 </section>
 <section id="lflags-windows-lflags-linux">
 <h3>lflags.windows / lflags.linux<a class="headerlink" href="#lflags-windows-lflags-linux" title="Permalink to this heading">#</a></h3>
@@ -524,6 +530,11 @@ to how Abaqus vendors fixed versions of Intel shared libraries</p>
 <li><p>File globbing is supported, <em>e.g.</em>: <code class="docutils literal notranslate"><span class="pre">sources</span> <span class="pre">=</span> <span class="pre">'src/*.cpp'</span></code></p></li>
 <li><p>Sources specified here are automatically compiled with other projects that use your project as an Abaci dependency</p></li>
 </ul>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>See the <a class="reference internal" href="../how-to-guides/cpp-sources.html"><span class="std std-doc">how-to guide</span></a> for more information on how
+to include C and C++ source files with your Abaqus user subroutines.</p>
+</div>
 </section>
 </section>
 <section id="cluster-section">
