@@ -9,7 +9,7 @@ and testing of Abaqus user subroutines.__
 
 __Author:__ Laurence Kedward
 
-__Maintainer:__ laurence.kedward@bristol.ac.uk
+__Maintainer contact:__ bci-rse@bristol.ac.uk
 
 __Status:__ v0.5.4
 
@@ -31,6 +31,7 @@ __Supported Platforms:__ Windows, Linux
   - Perform regression checks on output database results
   - Automatically run post-processing commands for each job
 - Easily submit Abaqus jobs to a HPC cluster using SLURM
+- Easily write and run unit tests for your Fortran subroutines
 - Reuse code from other abaci projects as 'dependencies' via git
 
 
@@ -54,7 +55,7 @@ Abaci is free to use and open source under the MIT license.
 
 __If you find Abaci useful in your own work, please consider giving it a 'star' on Github to let us know.__
 
-You can also email us with any feedback or questions at <bci-github@bristol.ac.uk>.
+You can also email us with any feedback or questions at <bci-rse@bristol.ac.uk>.
 
 If you encounter an issue with Abaci that is not explained in the
 [online documentation](https://bristolcompositesinstitute.github.io/abaci/),
