@@ -76,6 +76,13 @@ def submit_job(working_dir,script_path,args):
         p =  subprocess.Popen(cmd,stdout=subprocess.PIPE)
 
         stdout, stderr = p.communicate()
+        
+        if p.returncode !=0:
+
+            print stdout
+            print stderr
+
+            raise Exception('(!) Job submission failed')
 
         job_id = stdout.split()[-1]
 
