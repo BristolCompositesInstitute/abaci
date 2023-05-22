@@ -1,0 +1,453 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Reference" href="../reference/index.html" /><link rel="prev" title="How to Include C/C++ Sources" href="cpp-sources.html" />
+
+    <link rel="shortcut icon" href="../_static/abaci.ico"/><!-- Generated with Sphinx 6.2.1 and Furo 2023.03.27 -->
+        <title>How to Submit Abaci Jobs to a SLURM Cluster - Abaci Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=fad236701ea90a88636c2a8c73b44ae642ed2a53" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Abaci Documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../_static/abaci.png" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">Abaci Documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../quickstart-tutorial.html">Quickstart Tutorial</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">How-to guides</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="install.html">How to Install/Update Abaci</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting-started-with-abaci.html">Getting Started with Abaci in your Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regression-checks.html">How to Setup Regression Checks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="post-processing.html">How to Setup Post-Processing Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="unit-testing.html">How-to Write Unit Tests with Abaci</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cpp-sources.html">How to Include C/C++ Sources</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">How to Submit Abaci Jobs to a SLURM Cluster</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/cli.html">Command Line Interface Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/config.html">Configuration Reference</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="how-to-submit-abaci-jobs-to-a-slurm-cluster">
+<h1>How to Submit Abaci Jobs to a SLURM Cluster<a class="headerlink" href="#how-to-submit-abaci-jobs-to-a-slurm-cluster" title="Permalink to this heading">#</a></h1>
+<p>If your project is already setup to run jobs with Abaci, then submitting jobs to a HPC
+cluster is easily achieved using the
+<a class="reference internal" href="../reference/cli.html#abaci-submit"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">submit</span></code></span></a> command.</p>
+<p><strong>Prerequisites:</strong> this guide will assume you <a class="reference internal" href="install.html"><span class="std std-doc">have installed abaci</span></a>
+(does not require administrator rights) in your home folder on a <strong>SLURM</strong>-based
+<strong>Linux</strong> HPC cluster and have added the relevant module files for Abaqus and the Intel
+Fortran compiler.</p>
+<section id="quick-submit-interactive">
+<h2>Quick Submit (Interactive)<a class="headerlink" href="#quick-submit-interactive" title="Permalink to this heading">#</a></h2>
+<p>If your project is already <a class="reference internal" href="getting-started-with-abaci.html"><span class="std std-doc">setup</span></a> to use abaci
+to run jobs, then you may simply submit a job to the SLURM cluster with the
+follow command:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="w">  </span>abaci<span class="w"> </span>submit<span class="w"> </span>-i<span class="w"> </span>&lt;job&gt;
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">&lt;job&gt;</span></code> is the path to an Abaqus <code class="docutils literal notranslate"><span class="pre">inp</span></code> file or the name/tag of a job specified
+in your configuration file <code class="docutils literal notranslate"><span class="pre">abaci.toml</span></code>.</p>
+<p>The <a class="reference internal" href="../reference/cli.html#abaci-submit"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">-i</span></code>/<code class="docutils literal notranslate"><span class="pre">--interactive</span></code></span></a> flag will tell Abaci
+to prompt you interactively for various SLURM settings:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="w">  </span>mp_mode:<span class="w"> </span>mpi
+<span class="w">  </span>mem-per-cpu:<span class="w"> </span>4000m
+<span class="w">  </span>account:<span class="w"> </span>aero000001
+<span class="w">  </span>partition:<span class="w"> </span>compute
+<span class="w">  </span>tasks-per-node:<span class="w"> </span><span class="m">12</span>
+<span class="w">  </span>time:<span class="w"> </span><span class="m">01</span>:00:00
+<span class="w">  </span>nodes:<span class="w"> </span><span class="m">1</span>
+<span class="w">  </span>email:
+</pre></div>
+</div>
+<p>Without the <a class="reference internal" href="../reference/cli.html#abaci-submit"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">-i</span></code>/<code class="docutils literal notranslate"><span class="pre">--interactive</span></code></span></a> flag, Abaci
+will use default values specified in the configuration file (see next section).</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You can use any of the <a class="reference internal" href="../reference/cli.html#abaci-compile"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">compile</span></code> command line flags</span></a>
+with <code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">submit</span></code> to control the compilation process.</p>
+</div>
+</section>
+<section id="cluster-configuration-defaults">
+<h2>Cluster Configuration Defaults<a class="headerlink" href="#cluster-configuration-defaults" title="Permalink to this heading">#</a></h2>
+<p>Default values for the various SLURM configuration settings can be specified in
+the configuration file (<code class="docutils literal notranslate"><span class="pre">abaci.toml</span></code>) for all jobs and on a per-job basis.</p>
+<p>To set defaults for all jobs, add the <code class="docutils literal notranslate"><span class="pre">[cluster]</span></code> section to your configuration file
+(<strong>before any <code class="docutils literal notranslate"><span class="pre">[[job]]</span></code> entries</strong>).</p>
+<p><strong>Example:</strong> <em>global cluster defaults</em></p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[cluster]</span>
+<span class="n">account</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;aero01234&#39;</span>
+<span class="n">partition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;compute&#39;</span>
+<span class="n">email</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;ab12345@bristol.ac.uk&#39;</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>See the <a class="reference internal" href="../reference/config.html#cluster-section"><span class="std std-ref">cluster configuration reference</span></a>
+for more information about each SLURM setting field (behaviour and defaults).</p>
+</div>
+<p>To override defaults on a per-job basis, add fields to each <code class="docutils literal notranslate"><span class="pre">[[job]]</span></code> entry
+prefixed with <code class="docutils literal notranslate"><span class="pre">cluster.</span></code></p>
+<p><strong>Example:</strong> <em>per-job cluster settings</em></p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[[job]]</span>
+<span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;my-abaqus-job.inp&#39;</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;job1&#39;</span>
+<span class="n">mp-mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;threads&#39;</span>
+
+<span class="n">cluster</span><span class="p">.</span><span class="n">mem-per-cpu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;8000M&#39;</span>
+<span class="n">cluster</span><span class="p">.</span><span class="n">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;1-00:00:00&#39;</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>All jobs inherit defaults from the global <code class="docutils literal notranslate"><span class="pre">[cluster]</span></code> settings unless they
+are overridden in the <code class="docutils literal notranslate"><span class="pre">[[job]]</span></code> entry.</p>
+</div>
+</section>
+<section id="mpi-vs-threads">
+<h2>MPI vs Threads<a class="headerlink" href="#mpi-vs-threads" title="Permalink to this heading">#</a></h2>
+<p>Abaci will formulate your SLURM submission script differently depending on whether
+you specify <code class="docutils literal notranslate"><span class="pre">mp_mode=threads</span></code> or <code class="docutils literal notranslate"><span class="pre">mp_mode=mpi</span></code> for your job.</p>
+<section id="threads-single-node">
+<h3>Threads (single-node)<a class="headerlink" href="#threads-single-node" title="Permalink to this heading">#</a></h3>
+<p>If <code class="docutils literal notranslate"><span class="pre">mp_mode=threads</span></code>, then the SLURM submission script will be formulated for a
+single node job with multiple threads.</p>
+<p>In this case, the number of threads is controlled by the
+<a class="reference internal" href="../reference/config.html#cpus-per-task"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">cpus-per-task</span></code></span></a> configuration field only.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When <code class="docutils literal notranslate"><span class="pre">mp_mode=threads</span></code>, then the <code class="docutils literal notranslate"><span class="pre">nodes</span></code> and <code class="docutils literal notranslate"><span class="pre">tasks-per-node</span></code> fields are ignored
+and set to <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
+</div>
+<p><strong>Example:</strong> <em>job configuration for a single-node job</em></p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[[job]]</span>
+<span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;my-abaqus-job.inp&#39;</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;job1&#39;</span>
+<span class="n">mp-mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;threads&#39;</span>
+
+<span class="n">cluster</span><span class="p">.</span><span class="n">cpus-per-task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">16</span>
+<span class="n">cluster</span><span class="p">.</span><span class="n">mem-per-cpu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;8000M&#39;</span>
+<span class="n">cluster</span><span class="p">.</span><span class="n">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;1-00:00:00&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="mpi-single-or-multi-node">
+<h3>MPI (single- or multi-node)<a class="headerlink" href="#mpi-single-or-multi-node" title="Permalink to this heading">#</a></h3>
+<p>If <code class="docutils literal notranslate"><span class="pre">mp_mode=mpi</span></code>, then the SLURM submission script will be formulated for a
+multitask MPI job.</p>
+<p>In this case, the number of MPI tasks is the product of both:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../reference/config.html#nodes"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">nodes</span></code></span></a> and;</p></li>
+<li><p><a class="reference internal" href="../reference/config.html#tasks-per-node"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">tasks-per-node</span></code></span></a></p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When <code class="docutils literal notranslate"><span class="pre">mp_mode=mpi</span></code>, then the <code class="docutils literal notranslate"><span class="pre">cpus-per-task</span></code> field is ignored
+and set to <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
+</div>
+<p><strong>Example:</strong> <em>job configuration for a multi-node job</em></p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[[job]]</span>
+<span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;my-abaqus-job.inp&#39;</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;job1&#39;</span>
+<span class="n">mp-mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;threads&#39;</span>
+
+<span class="n">cluster</span><span class="p">.</span><span class="n">nodes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span>
+<span class="n">cluster</span><span class="p">.</span><span class="n">tasks-per-node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">16</span>
+<span class="n">cluster</span><span class="p">.</span><span class="n">mem-per-cpu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;8000M&#39;</span>
+<span class="n">cluster</span><span class="p">.</span><span class="n">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;1-00:00:00&#39;</span>
+</pre></div>
+</div>
+<p>In this example, the total number of MPI tasks is <code class="docutils literal notranslate"><span class="pre">64</span></code> (<code class="docutils literal notranslate"><span class="pre">4x16</span></code>).</p>
+</section>
+</section>
+<section id="prepare-job-submission-script-only">
+<h2>Prepare Job Submission Script Only<a class="headerlink" href="#prepare-job-submission-script-only" title="Permalink to this heading">#</a></h2>
+<p>If you wish to prepare a SLURM job for submission but not submit it to
+SLURM straightaway, you can add the <a class="reference internal" href="../reference/cli.html#abaci-submit"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">-n</span></code>/<code class="docutils literal notranslate"><span class="pre">--no-submit</span></code></span></a>
+flag.</p>
+<p>In this case, abaci will do everything to prepare the job folder and
+submission script, but will not submit the job to SLURM.</p>
+<p>This allows you to inspect and modify the job submission script if necessary.
+The SLURM job script is called <code class="docutils literal notranslate"><span class="pre">sljob</span></code> located in the job folder.</p>
+<p><strong>Example:</strong> <em>prepare SLURM job only</em></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="w">  </span>abaci<span class="w"> </span>submit<span class="w"> </span>--no-submit<span class="w"> </span>&lt;job&gt;
+</pre></div>
+</div>
+</section>
+<section id="environment-modules">
+<h2>Environment Modules<a class="headerlink" href="#environment-modules" title="Permalink to this heading">#</a></h2>
+<p>When the <code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">submit</span></code> command is executed, abaci will take a snapshot
+of any environment modules that are currently loaded, and add those
+to the job SLURM submission script.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>You should ensure you have all required environment modules loaded for your
+job before running <code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">submit</span></code></p>
+</div>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="../reference/index.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Reference</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="cpp-sources.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">How to Include C/C++ Sources</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; University of Bristol 2022
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">How to Submit Abaci Jobs to a SLURM Cluster</a><ul>
+<li><a class="reference internal" href="#quick-submit-interactive">Quick Submit (Interactive)</a></li>
+<li><a class="reference internal" href="#cluster-configuration-defaults">Cluster Configuration Defaults</a></li>
+<li><a class="reference internal" href="#mpi-vs-threads">MPI vs Threads</a><ul>
+<li><a class="reference internal" href="#threads-single-node">Threads (single-node)</a></li>
+<li><a class="reference internal" href="#mpi-single-or-multi-node">MPI (single- or multi-node)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#prepare-job-submission-script-only">Prepare Job Submission Script Only</a></li>
+<li><a class="reference internal" href="#environment-modules">Environment Modules</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/scripts/furo.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-TFZ8YW7MNE"></script>
+    <script src="../_static/ga-init.js"></script>
+    </body>
+</html>

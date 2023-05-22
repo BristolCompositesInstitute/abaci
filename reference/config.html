@@ -167,6 +167,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../how-to-guides/post-processing.html">How to Setup Post-Processing Commands</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how-to-guides/unit-testing.html">How-to Write Unit Tests with Abaci</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how-to-guides/cpp-sources.html">How to Include C/C++ Sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how-to-guides/hpc-job-submission.html">How to Submit Abaci Jobs to a SLURM Cluster</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
@@ -372,6 +373,11 @@ other files that also need to be copied to the job folder for running the job.</
 <p><strong><em>subsection, optional</em></strong></p>
 <p>Override the default options for submitting this job to a cluster via SLURM.</p>
 <p>See <a class="reference internal" href="#cluster-section">cluster options</a> below for more information on the cluster option fields.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>See the <a class="reference internal" href="../how-to-guides/hpc-job-submission.html"><span class="std std-doc">How-to guide</span></a> for more information on how to
+setup and submit jobs to a SLURM cluster.</p>
+</div>
 </section>
 <section id="post-process">
 <h3>post-process<a class="headerlink" href="#post-process" title="Permalink to this heading">#</a></h3>
@@ -552,6 +558,7 @@ per-job basis using the <a class="reference internal" href="#mp-mode"><code clas
 </div>
 <p><strong>Example:</strong></p>
 <div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[cluster]</span>
+<span class="n">account</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;aero01234&#39;</span>
 <span class="n">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;0-01:00:00&#39;</span>
 <span class="n">nodes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
 <span class="n">tasks-per-node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">14</span>
@@ -560,6 +567,17 @@ per-job basis using the <a class="reference internal" href="#mp-mode"><code clas
 <span class="n">email</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;ab12345@bristol.ac.uk&#39;</span>
 </pre></div>
 </div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>See the <a class="reference internal" href="../how-to-guides/hpc-job-submission.html"><span class="std std-doc">How-to guide</span></a> for more information on how to
+setup and submit jobs to a SLURM cluster.</p>
+</div>
+<section id="account">
+<h3>account<a class="headerlink" href="#account" title="Permalink to this heading">#</a></h3>
+<p><strong><em>string, optional</em></strong></p>
+<p>Specifies the project account code under which to submit the job.</p>
+<p>If not specified, no account code is supplied to SLURM.</p>
+</section>
 <section id="time">
 <h3>time<a class="headerlink" href="#time" title="Permalink to this heading">#</a></h3>
 <p><strong><em>string, optional</em></strong></p>
@@ -750,6 +768,7 @@ abaci will fetch the latest changes from the branch everytime it is run.</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#cluster-section">Cluster section</a><ul>
+<li><a class="reference internal" href="#account">account</a></li>
 <li><a class="reference internal" href="#time">time</a></li>
 <li><a class="reference internal" href="#partition">partition</a></li>
 <li><a class="reference internal" href="#nodes">nodes</a></li>

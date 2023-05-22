@@ -385,6 +385,11 @@ __Example:__ *prepare job files and SLURM submission script, but don't submit to
   abaci submit big-job -n
 ```
 
+```{seealso}
+See the [How-to guide](../how-to-guides/hpc-job-submission.md) for more information on how to
+setup and submit jobs to a SLURM cluster.
+```
+
 
 ## `abaci post`
 
