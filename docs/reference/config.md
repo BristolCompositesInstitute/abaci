@@ -180,6 +180,11 @@ Override the default options for submitting this job to a cluster via SLURM.
 
 See [cluster options](#cluster-section) below for more information on the cluster option fields.
 
+```{seealso}
+See the [How-to guide](../how-to-guides/hpc-job-submission.md) for more information on how to
+setup and submit jobs to a SLURM cluster.
+```
+
 
 ### post-process
 
@@ -391,6 +396,11 @@ tasks-per-node = 14
 cpus-per-task = 1
 mem-per-cpu = '4000m'
 email = 'ab12345@bristol.ac.uk'
+```
+
+```{seealso}
+See the [How-to guide](../how-to-guides/hpc-job-submission.md) for more information on how to
+setup and submit jobs to a SLURM cluster.
 ```
 
 ### account
