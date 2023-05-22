@@ -20,7 +20,7 @@ def have_slurm():
 
 
 def spool_job_script(script_path,modules,cmds,job_name,time,nodes=None,partition=None,
-    tasks_per_node=None,cpus_per_task=None,mem_per_cpu=None,email=None):
+    tasks_per_node=None,cpus_per_task=None,mem_per_cpu=None,email=None,account=None):
     """Write out a SLURM job script"""
 
     with open(script_path,'w') as f:
@@ -49,6 +49,9 @@ def spool_job_script(script_path,modules,cmds,job_name,time,nodes=None,partition
         if email:
             f.write('#SBATCH --mail-type=FAIL,END\n')
             f.write('#SBATCH --mail-user={email}\n'.format(email=email))
+
+        if account:
+            f.write('#SBATCH --account={account}\n'.format(account=account))
 
         f.write('')
 

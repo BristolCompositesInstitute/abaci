@@ -65,7 +65,8 @@ def get_default_cluster_schema():
                            Optional('tasks-per-node',default=1): int,
                            Optional('cpus-per-task',default=1): int,
                            Optional('mem-per-cpu',default='4000m'): unicode,
-                           Optional('email',default=None): unicode
+                           Optional('email',default=None): unicode,
+                           Optional('account',default=None): unicode
                            })
 
     schema_defaults = schema.validate({})
@@ -84,7 +85,8 @@ def config_schema():
                            Optional('tasks-per-node',default=None): int,
                            Optional('cpus-per-task',default=None): int,
                            Optional('mem-per-cpu',default=None): unicode,
-                           Optional('email',default=None): unicode
+                           Optional('email',default=None): unicode,
+                           Optional('account',default=None): unicode
                            })
 
     check_schema = Schema({'fields': [unicode],

@@ -273,7 +273,8 @@ class AbaqusJob:
                                tasks_per_node=self.cluster['tasks-per-node'],
                                cpus_per_task=self.cluster['cpus-per-task'],
                                mem_per_cpu=self.cluster['mem-per-cpu'],
-                               email=self.cluster['email']
+                               email=self.cluster['email'],
+                               account=self.cluster['account']
                                )
 
 

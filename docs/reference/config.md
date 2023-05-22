@@ -384,6 +384,7 @@ __Example:__
 
 ```toml
 [cluster]
+account = 'aero01234'
 time = '0-01:00:00'
 nodes = 1
 tasks-per-node = 14
@@ -391,6 +392,15 @@ cpus-per-task = 1
 mem-per-cpu = '4000m'
 email = 'ab12345@bristol.ac.uk'
 ```
+
+### account
+
+__*string, optional*__
+
+Specifies the project account code under which to submit the job.
+
+If not specified, no account code is supplied to SLURM.
+
 
 ### time
 
