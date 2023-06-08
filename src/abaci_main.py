@@ -50,7 +50,10 @@ def main():
     stat, compile_dir, fflags = compile_user_subroutine(args, config['output'], 
                         config['user-sub-file'], config['compile'], dep_list)
 
-    if args.action == 'compile' or stat != 0:
+    if stat != 0:
+        sys.exit(stat)
+
+    elif args.action == 'compile':
         return
 
     elif args.action == 'test':

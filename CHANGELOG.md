@@ -4,6 +4,10 @@ Notable changes to this project are logged here according to release version and
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [v0.5.5](https://github.com/BristolCompositesInstitute/abaci/releases/tag/v0.5.5) (08/06/23)
+
+- Fix: exit with non-zero status if compilation fails (needed for CI)
+
 ## [v0.5.4](https://github.com/BristolCompositesInstitute/abaci/releases/tag/v0.5.4) (22/05/23)
 
 - Add `cluster.account` field for SLURM job submissions
