@@ -208,7 +208,9 @@ def sanitize_config(config, config_dir):
         for ext in ['.f', '.for', '.f90']:
             auto_include = os.path.join(usub_dir,'*'+ext)
             config['compile']['include'].extend(glob.glob(auto_include))
-        config['compile']['include'].remove(config['user-sub-file'])
+            
+        if config['user-sub-file'] in config['compile']['include']:
+            config['compile']['include'].remove(config['user-sub-file'])
 
     # User subroutine include paths are relative to the config file
     #  and expand globbing
