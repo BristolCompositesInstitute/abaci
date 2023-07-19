@@ -4,7 +4,7 @@ import signal
 from contextlib import contextmanager
 import subprocess
 from unicodedata import normalize
-
+from hashlib import sha1
 def relpathshort(path):
     """
         Returns the shorter of path and relpath
@@ -75,6 +75,36 @@ def copydir(source,dest):
     
     log.debug('Copying directory "%s" to "%s"',relpathshort(source), relpathshort(dest))
     copy_tree(source,dest)
+
+
+def hashfile(file):
+    """Helper to return the hash of a file"""
+    
+    m = sha1()
+
+    if not os.path.isfile(file):
+        m.update(file)
+        return m.hexdigest()
+
+    with open(file,'rb',0) as f:
+        chunk = 0
+        while chunk != b'':
+            chunk = f.read(1024)
+            m.update(chunk)
+
+    return m.hexdigest()
+
+
+def hashfiles(files):
+    """Helper to return hash of multiple files"""
+
+    m = sha1()
+
+    for file in files:
+        
+        m.update(hashfile(file))
+    
+    return m.hexdigest()
 
 
 def system_cmd(cmd,output=None):

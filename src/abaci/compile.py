@@ -1,9 +1,12 @@
 import logging
 import os
 import abaqus as abq
-from utils import cwd, mkdir, copyfile, copydir, system_cmd, system_cmd_wait, relpathshort, to_ascii
+from utils import cwd, mkdir, copyfile, copydir, system_cmd, system_cmd_wait, relpathshort, to_ascii, hashfiles
 from shutil import rmtree
 from getpass import getuser
+from hashlib import sha1
+import json
+import cPickle as pkl
 
 fortran_suffixes = ('.f','.f90','.for','.F90')
 
@@ -21,8 +24,6 @@ def compile_user_subroutine(args, output_dir, user_file, compile_conf, dep_list)
 
     aux_sources = compile_conf['sources']
 
-    aux_source_list = stage_files(compile_dir, user_file, compile_file, includes, aux_sources, dep_list)
-
     fflags = get_flags(compile_dir=compile_dir,
                       fortran_flags = compile_conf['fflags'],
                       debug_symbols = args.debug,
@@ -32,6 +33,12 @@ def compile_user_subroutine(args, output_dir, user_file, compile_conf, dep_list)
                       opt_host = compile_conf['opt-host'],
                       noopt = args.noopt)
     
+    if not need_recompile(user_file,includes,aux_sources,compile_conf,output_dir,compile_dir):
+        log.info('Skipping compilation (source files unchanged)')
+        return 0, compile_dir, fflags
+
+    aux_source_list = stage_files(compile_dir, user_file, compile_file, includes, aux_sources, dep_list)
+
     compile_auxillary_sources(compile_dir,compile_conf,args,aux_source_list,fflags)
 
     log.debug('Flags = %s',fflags)
@@ -48,6 +55,36 @@ def compile_user_subroutine(args, output_dir, user_file, compile_conf, dep_list)
     stat = abq.make(dir=compile_dir, lib_file=compile_file, verbosity=(args.verbose + 2*args.screen_output))
     
     return stat, compile_dir, fflags
+
+
+def need_recompile(compile_file,includes,aux_sources,compile_conf,output_dir,compile_dir):
+    """Check if we can skip recompilation because nothing has changed"""
+
+    log = logging.getLogger('abaci')
+
+    files = [compile_file]+includes+aux_sources
+
+    digest_cache = os.path.join(output_dir,'digest.pkl')
+    if not os.path.isfile(digest_cache) or not os.path.isdir(compile_dir):
+        old_digest = '0'
+        
+    else:
+        with open(digest_cache,'r') as f:
+            old_digest = pkl.load(f)
+
+    src_digest = hashfiles(files)
+    m = sha1()
+    m.update(json.dumps(compile_conf,sort_keys=True))
+    m.update(src_digest)
+    digest = m.hexdigest()
+
+    with open(digest_cache,'w') as f:
+        pkl.dump(digest,f)
+
+    log.debug('Compilation digest: %s',digest)
+    log.debug('Previous digest: %s',old_digest)
+
+    return old_digest != digest
 
 
 def get_mod_dir(compile_dir):
