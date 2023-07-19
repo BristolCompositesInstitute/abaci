@@ -11,7 +11,7 @@ __Author:__ Laurence Kedward
 
 __Maintainer contact:__ bci-rse@bristol.ac.uk
 
-__Status:__ v0.5.5
+__Status:__ v0.6.0
 
 __Documentation:__
 [bristolcompositesinstitute.github.io/abaci](https://bristolcompositesinstitute.github.io/abaci/)

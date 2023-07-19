@@ -4,6 +4,10 @@ Notable changes to this project are logged here according to release version and
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [v0.6.0](https://github.com/BristolCompositesInstitute/abaci/releases/tag/v0.6.0) (19/07/23)
+
+- Update: skip main compilation if code and settings are unchanged
+
 ## [v0.5.5](https://github.com/BristolCompositesInstitute/abaci/releases/tag/v0.5.5) (08/06/23)
 
 - Fix: exit with non-zero status if compilation fails (needed for CI)
