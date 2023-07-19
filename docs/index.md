@@ -54,4 +54,5 @@ caption: "Contents:"
 quickstart-tutorial.md
 how-to-guides/index
 reference/index
+developer-notes
 ```
