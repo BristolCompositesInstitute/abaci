@@ -117,11 +117,11 @@ def system_cmd(cmd,output=None):
     if output:
 
         ofile = '{stem}.stdout'.format(stem=output)
-        fo = open(ofile,'a')
+        fo = open(ofile,'w')
         log.debug('Command stdout redirected to "%s"',relpathshort(ofile))
 
         efile = '{stem}.stderr'.format(stem=output)
-        fe = open(efile,'a')
+        fe = open(efile,'w')
         log.debug('Command stderr redirected to "%s"',relpathshort(efile))
 
     else:
