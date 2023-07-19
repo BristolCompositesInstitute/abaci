@@ -211,24 +211,22 @@
         <article role="main">
           <section id="abaci-user-documentation">
 <h1>Abaci User Documentation<a class="headerlink" href="#abaci-user-documentation" title="Permalink to this heading">#</a></h1>
-<section id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
 <p><strong>Abaci is a command line tool for streamlining the development, debugging
 and testing of Abaqus user subroutines.</strong></p>
-<p><strong>Key features:</strong></p>
+<section id="why-use-abaci">
+<h2>Why use Abaci?<a class="headerlink" href="#why-use-abaci" title="Permalink to this heading">#</a></h2>
+<p>The primary advantage of using Abaci to develop Abaqus user subroutines, is the built-in
+<strong><a class="reference internal" href="quickstart-tutorial.html#running-a-job-in-debug-mode"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">debug</span></code> mode</span></a></strong> which compiles your code with extra compile-time and runtime checks enabled.
+These checks will <strong>identify memory errors and undefined behaviour that would otherwise go unnoticed</strong>.</p>
+<p>Abaci also automates and streamlines many processes involved in code development, including:</p>
 <ul class="simple">
-<li><p>Pre-compile user subroutines using <code class="docutils literal notranslate"><span class="pre">abaqus</span> <span class="pre">make</span></code></p></li>
-<li><p>Enable ‘debug’ mode for catching common code errors</p></li>
-<li><p>Supports compilation and linking of C/C++ source files</p></li>
-<li><p>Customise compiler flags using a portable configuration file</p></li>
-<li><p>Run test case Abaqus models with compiled user subroutine code</p>
-<ul>
-<li><p>Perform regression checks on output database results</p></li>
-<li><p>Automatically run post-processing commands for each job</p></li>
-</ul>
-</li>
-<li><p>Easily submit Abaqus jobs to a HPC cluster using SLURM</p></li>
-<li><p>Reuse code from other abaci projects as ‘dependencies’ via git</p></li>
+<li><p><a class="reference internal" href="reference/config.html#compile-section"><span class="std std-ref">Code compilation under different compiler flags and on different platforms</span></a></p></li>
+<li><p><a class="reference internal" href="quickstart-tutorial.html#running-an-abaqus-job"><span class="std std-ref">Setup and organisation of job file directories</span></a></p></li>
+<li><p><a class="reference internal" href="how-to-guides/unit-testing.html"><span class="std std-doc">Writing and running Fortran unit tests</span></a></p></li>
+<li><p><a class="reference internal" href="how-to-guides/regression-checks.html"><span class="std std-doc">Running regression checks on output databases</span></a></p></li>
+<li><p><a class="reference internal" href="how-to-guides/post-processing.html"><span class="std std-doc">Running post-processing scripts after jobs have finished</span></a></p></li>
+<li><p><a class="reference internal" href="how-to-guides/cpp-sources.html"><span class="std std-doc">Compilation and linking of C and C++ source files</span></a></p></li>
+<li><p><a class="reference internal" href="how-to-guides/hpc-job-submission.html"><span class="std std-doc">Preparation and submission of SLURM cluster job scripts</span></a></p></li>
 </ul>
 </section>
 <section id="getting-started">
@@ -328,7 +326,7 @@ in the Github repository.</p>
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Abaci User Documentation</a><ul>
-<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#why-use-abaci">Why use Abaci?</a></li>
 <li><a class="reference internal" href="#getting-started">Getting Started</a></li>
 <li><a class="reference internal" href="#documentation-and-support">Documentation and Support</a></li>
 </ul>
