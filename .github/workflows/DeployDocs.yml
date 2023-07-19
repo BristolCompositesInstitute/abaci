@@ -50,7 +50,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Install Ubuntu Dependencies
-        run: sudo apt install ${{ env.APT_DEPS }}
+        run: sudo apt update && sudo apt install ${{ env.APT_DEPS }}
 
       - name: Create Conda environment
         working-directory: docs
