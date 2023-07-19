@@ -2,10 +2,12 @@
 <html class="no-js" lang="en">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="#" /><link rel="search" title="Search" href="search.html" />
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="prev" title="Configuration Reference" href="reference/config.html" />
 
-    <link rel="shortcut icon" href="_static/abaci.ico"/><!-- Generated with Sphinx 6.2.1 and Furo 2023.05.20 --><title>Index - Abaci Documentation</title>
-<link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="shortcut icon" href="_static/abaci.ico"/><!-- Generated with Sphinx 6.2.1 and Furo 2023.05.20 -->
+        <title>Developer Notes - Abaci Documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     
@@ -132,7 +134,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -156,7 +158,7 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="quickstart-tutorial.html">Quickstart Tutorial</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="how-to-guides/index.html">How-to guides</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of How-to guides</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="how-to-guides/install.html">How to Install/Update Abaci</a></li>
@@ -173,7 +175,7 @@
 <li class="toctree-l2"><a class="reference internal" href="reference/config.html">Configuration Reference</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="developer-notes.html">Developer Notes</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Developer Notes</a></li>
 </ul>
 
 </div>
@@ -193,7 +195,8 @@
           <span>Back to top</span>
         </a>
         <div class="content-icon-container">
-          <div class="theme-toggle-container theme-toggle-content">
+          
+<div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle">
               <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
               <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
@@ -201,16 +204,73 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main">
-          
-<section class="genindex-section">
-  <h1 id="index">Index</h1>
-  <div class="genindex-jumpbox"></div>
+          <section id="developer-notes">
+<h1>Developer Notes<a class="headerlink" href="#developer-notes" title="Permalink to this heading">#</a></h1>
+<p><strong>This page contains useful under-the-hood information about abaci for new contributors and developers</strong></p>
+<section id="implementation-language">
+<h2>Implementation Language<a class="headerlink" href="#implementation-language" title="Permalink to this heading">#</a></h2>
+<p>Abaci is implemented in Python and designed to be run using an existing <strong>Abaqus Python</strong> installation:</p>
+<ul class="simple">
+<li><p>To avoid needing to install or redistribute Python for Abaci</p></li>
+<li><p>To allow using Abaqus Python libraries for reading ODB files</p></li>
+</ul>
+<p><strong>Abaqus Python is 2.7, hence Abaci is implemented using Python 2.7</strong></p>
+<p><em>It is also for this reason, that any Python dependencies that Abaci uses</em>
+<em>are bundled and redistributed (under their respective licenses) with Abaci.</em></p>
+</section>
+<section id="repository-structure">
+<h2>Repository Structure<a class="headerlink" href="#repository-structure" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/BristolCompositesInstitute/abaci/tree/main/.github/workflows"><code class="docutils literal notranslate"><span class="pre">.github/workflows</span></code></a>: <em>GitHub actions (CI) workflow files</em></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">DeployDocs.yml</span></code>: <em>builds this documentation site (using Sphinx) and deploy to GitHub pages</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MakeInstaller.yml</span></code>: <em>builds installers for Windows and Linux and attach to new GitHub releases</em></p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="https://github.com/BristolCompositesInstitute/abaci/tree/main/docs"><code class="docutils literal notranslate"><span class="pre">docs/</span></code></a>: <em>all source files for this documentation site (written in Markdown using Sphinx)</em></p></li>
+<li><p><a class="reference external" href="https://github.com/BristolCompositesInstitute/abaci/tree/main/example"><code class="docutils literal notranslate"><span class="pre">example/</span></code></a>: <em>a self-contained example project for using abaci</em></p></li>
+<li><p><a class="reference external" href="https://github.com/BristolCompositesInstitute/abaci/tree/main/media"><code class="docutils literal notranslate"><span class="pre">media/</span></code></a>: <em>icon files and images used for documentation</em></p></li>
+<li><p><a class="reference external" href="https://github.com/BristolCompositesInstitute/abaci/tree/main/scripts"><code class="docutils literal notranslate"><span class="pre">scripts/</span></code></a>: <em>abaci launch scripts and installer files</em></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">abaci</span></code>: <em>abaci launch script for Linux</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">abaci-installer.nsi</span></code>: <em>script file to generate the Windows installer using the <a class="reference external" href="https://nsis.sourceforge.io/">Nullsoft Scriptable Install System</a></em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">abaci.cmd</span></code>: <em>abaci launch script for Windows</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install</span></code>: <em>Linux installer shell script</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install-windows</span></code>: <em>alternative command line install script for Windows</em></p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="https://github.com/BristolCompositesInstitute/abaci/tree/main/src"><code class="docutils literal notranslate"><span class="pre">src/</span></code></a>: <em>main abaci source files</em></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">abaci/</span></code>: <em>Python source code for Abaci program</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fortran/</span></code>: <em>Fortran code for <a class="reference internal" href="how-to-guides/unit-testing.html"><span class="std std-doc">generating tests</span></a></em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">redist/</span></code>: <em>redistributed (bundled) library dependencies for Abaci</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">abaci_main.py</span></code>: <em>main Python entry point for Abaci program</em></p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="https://github.com/BristolCompositesInstitute/abaci/tree/main/test"><code class="docutils literal notranslate"><span class="pre">test</span></code></a>: <em>unit testsuites for abaci</em></p></li>
+</ul>
+</section>
+<section id="creating-a-new-release">
+<h2>Creating a new release<a class="headerlink" href="#creating-a-new-release" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Update the version number in <code class="docutils literal notranslate"><span class="pre">src/abaci/cli.py</span></code> (line 23)</p></li>
+<li><p>Update the version number in <code class="docutils literal notranslate"><span class="pre">README.md</span></code></p></li>
+<li><p>Update the <code class="docutils literal notranslate"><span class="pre">CHANGELOG.md</span></code> file with new release version and changes summary</p></li>
+<li><p><a class="reference external" href="https://github.com/BristolCompositesInstitute/abaci/releases/new">Create a new release</a>
+on GitHub with tag set to the new version number (prefixed with <code class="docutils literal notranslate"><span class="pre">v</span></code>)</p>
+<ul class="simple">
+<li><p>This will trigger a GitHub actions workflow to generate the Windows and Linux installer
+files, and attach them to the new release</p></li>
+</ul>
+</li>
+</ol>
+</section>
 </section>
 
         </article>
@@ -219,7 +279,17 @@
         
         <div class="related-pages">
           
-          
+          <a class="prev-page" href="reference/config.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Configuration Reference</div>
+                
+              </div>
+            </a>
         </div>
         <div class="bottom-of-page">
           <div class="left-details">
@@ -238,8 +308,29 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Developer Notes</a><ul>
+<li><a class="reference internal" href="#implementation-language">Implementation Language</a></li>
+<li><a class="reference internal" href="#repository-structure">Repository Structure</a></li>
+<li><a class="reference internal" href="#creating-a-new-release">Creating a new release</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
