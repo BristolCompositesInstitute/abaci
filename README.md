@@ -21,18 +21,22 @@ __Prequisites:__ Abaqus, Intel Fortran Compiler
 __Supported Platforms:__ Windows, Linux
 
 
-### Key Features:
+### Why use Abaci?
 
-- Pre-compile user subroutines using `abaqus make`
-- Enable 'debug' mode for catching common code errors
-- Supports compilation and linking of C/C++ source files
-- Customise compiler flags using a portable configuration file
-- Run test case Abaqus models with compiled user subroutine code
-  - Perform regression checks on output database results
-  - Automatically run post-processing commands for each job
-- Easily submit Abaqus jobs to a HPC cluster using SLURM
-- Easily write and run unit tests for your Fortran subroutines
-- Reuse code from other abaci projects as 'dependencies' via git
+The primary advantage of using Abaci to develop Abaqus user subroutines, is the built-in
+__[`debug` mode](https://bristolcompositesinstitute.github.io/abaci/quickstart-tutorial.html#running-a-job-in-debug-mode)__
+which compiles your code with extra compile-time and runtime checks enabled.
+These checks will __identify memory errors and undefined behaviour that would otherwise go unnoticed__.
+
+Abaci also automates and streamlines many processes involved in code development, including:
+- Code compilation under different compiler flags and on different platforms
+- Setup and organisation of job file directories
+- Writing and running Fortran unit tests
+- Running regression checks on output databases
+- Running post-processing scripts after jobs have finished
+- Compilation and linking of C and C++ source files
+- Preparation and submission of SLURM cluster job scripts
+
 
 
 ## Getting Started
