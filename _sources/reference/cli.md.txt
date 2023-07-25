@@ -187,6 +187,7 @@ optional arguments:
   -0, --noopt      compile without any optimisations
   -g, --gcc        use gnu compilers for auxillary source files
   -s, --screen     echo Abaqus output to the screen while running
+  --release DIR    prepare a pre-compiled binary release directory
 ```
 
 - Compiler output files are placed in `<output>/lib` where `<output>` is the
@@ -194,6 +195,8 @@ optional arguments:
 
 - Abaci will always request a compiler optimisation report from the Intel Compiler;
   this is stored in `<output>/lib/optrpt`
+
+- The `--release` flag is not shared by any other subcommand (`run`,`submit`)
 
 ```{note}
 By default, abaci will not display compiler output unless there is an error during compilation or linking. You can force the display of compiler output by adding the
@@ -211,6 +214,12 @@ __Example:__ *Strict compilation checks and show output*
 ```text
   abaci compile --check --screen
   abaci compile -cs
+```
+
+__Example:__ *Prepare a precompiled binary release in folder 'v1.0'*
+
+```text
+  abaci compile --release v1.0
 ```
 
 __Example:__ *Use `gcc` for any auxiliary C/C++ sources*

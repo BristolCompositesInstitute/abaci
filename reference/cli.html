@@ -166,6 +166,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../how-to-guides/regression-checks.html">How to Setup Regression Checks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how-to-guides/post-processing.html">How to Setup Post-Processing Commands</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how-to-guides/unit-testing.html">How-to Write Unit Tests with Abaci</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how-to-guides/binary-releases.html">How to Generate Precompiled Binary Releases</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how-to-guides/cpp-sources.html">How to Include C/C++ Sources</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how-to-guides/hpc-job-submission.html">How to Submit Abaci Jobs to a SLURM Cluster</a></li>
 </ul>
@@ -363,6 +364,7 @@ optional arguments:
   -0, --noopt      compile without any optimisations
   -g, --gcc        use gnu compilers for auxillary source files
   -s, --screen     echo Abaqus output to the screen while running
+  --release DIR    prepare a pre-compiled binary release directory
 </pre></div>
 </div>
 <ul class="simple">
@@ -370,6 +372,7 @@ optional arguments:
 output directory specified in the configuration file.</p></li>
 <li><p>Abaci will always request a compiler optimisation report from the Intel Compiler;
 this is stored in <code class="docutils literal notranslate"><span class="pre">&lt;output&gt;/lib/optrpt</span></code></p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">--release</span></code> flag is not shared by any other subcommand (<code class="docutils literal notranslate"><span class="pre">run</span></code>,<code class="docutils literal notranslate"><span class="pre">submit</span></code>)</p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -383,6 +386,10 @@ this is stored in <code class="docutils literal notranslate"><span class="pre">&
 <p><strong>Example:</strong> <em>Strict compilation checks and show output</em></p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  abaci compile --check --screen
   abaci compile -cs
+</pre></div>
+</div>
+<p><strong>Example:</strong> <em>Prepare a precompiled binary release in folder ‘v1.0’</em></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  abaci compile --release v1.0
 </pre></div>
 </div>
 <p><strong>Example:</strong> <em>Use <code class="docutils literal notranslate"><span class="pre">gcc</span></code> for any auxiliary C/C++ sources</em></p>

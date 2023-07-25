@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="How to Install/Update Abaci" href="install.html" /><link rel="prev" title="Quickstart Tutorial" href="../quickstart-tutorial.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="How to Include C/C++ Sources" href="cpp-sources.html" /><link rel="prev" title="How-to Write Unit Tests with Abaci" href="unit-testing.html" />
 
     <link rel="shortcut icon" href="../_static/abaci.ico"/><!-- Generated with Sphinx 6.2.1 and Furo 2023.05.20 -->
-        <title>How-to guides - Abaci Documentation</title>
+        <title>How to Generate Precompiled Binary Releases - Abaci Documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
@@ -134,7 +134,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -160,13 +160,13 @@
   <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../quickstart-tutorial.html">Quickstart Tutorial</a></li>
-<li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#">How-to guides</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of How-to guides</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">How-to guides</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of How-to guides</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="install.html">How to Install/Update Abaci</a></li>
 <li class="toctree-l2"><a class="reference internal" href="getting-started-with-abaci.html">Getting Started with Abaci in your Project</a></li>
 <li class="toctree-l2"><a class="reference internal" href="regression-checks.html">How to Setup Regression Checks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="post-processing.html">How to Setup Post-Processing Commands</a></li>
 <li class="toctree-l2"><a class="reference internal" href="unit-testing.html">How-to Write Unit Tests with Abaci</a></li>
-<li class="toctree-l2"><a class="reference internal" href="binary-releases.html">How to Generate Precompiled Binary Releases</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">How to Generate Precompiled Binary Releases</a></li>
 <li class="toctree-l2"><a class="reference internal" href="cpp-sources.html">How to Include C/C++ Sources</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hpc-job-submission.html">How to Submit Abaci Jobs to a SLURM Cluster</a></li>
 </ul>
@@ -205,27 +205,72 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main">
-          <section id="how-to-guides">
-<h1>How-to guides<a class="headerlink" href="#how-to-guides" title="Permalink to this heading">#</a></h1>
-<div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="install.html">How to Install/Update Abaci</a></li>
-<li class="toctree-l1"><a class="reference internal" href="getting-started-with-abaci.html">Getting Started with Abaci in your Project</a></li>
-<li class="toctree-l1"><a class="reference internal" href="regression-checks.html">How to Setup Regression Checks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="post-processing.html">How to Setup Post-Processing Commands</a></li>
-<li class="toctree-l1"><a class="reference internal" href="unit-testing.html">How-to Write Unit Tests with Abaci</a></li>
-<li class="toctree-l1"><a class="reference internal" href="binary-releases.html">How to Generate Precompiled Binary Releases</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cpp-sources.html">How to Include C/C++ Sources</a></li>
-<li class="toctree-l1"><a class="reference internal" href="hpc-job-submission.html">How to Submit Abaci Jobs to a SLURM Cluster</a></li>
+          <section id="how-to-generate-precompiled-binary-releases">
+<h1>How to Generate Precompiled Binary Releases<a class="headerlink" href="#how-to-generate-precompiled-binary-releases" title="Permalink to this heading">#</a></h1>
+<p>It is sometimes useful to generate precompiled binary files for distribution.
+This can be easily achieved with abaci using the <a class="reference internal" href="../reference/cli.html#abaci-compile"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">--release</span></code></span></a>
+flag.</p>
+<p>To generate a binary release, simply run the following command in your abaci project:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  abaci compile --release &lt;release_dir&gt;
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">&lt;release_dir&gt;</span></code> is the name of a directory in which to place the binary release.
+If this directory doesn’t exist, abaci will create it for you. You may want to include
+the release version in the directory name, <em>e.g.</em> <code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">compile</span> <span class="pre">--release</span> <span class="pre">v1.0</span></code>.</p>
+<p>Abaci will:</p>
+<ol class="arabic simple">
+<li><p>Compile you user subroutine source code</p></li>
+<li><p>Copy the compiled binary libraries into your release directory</p></li>
+<li><p>Generate an <code class="docutils literal notranslate"><span class="pre">abaqus_v6.env</span></code> file in the release directory</p>
+<ul class="simple">
+<li><p>This file tells abaqus where the precompiled subroutine library is</p></li>
+</ul>
+</li>
+</ol>
+<section id="cross-platform-release">
+<h2>Cross-platform Release<a class="headerlink" href="#cross-platform-release" title="Permalink to this heading">#</a></h2>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>You can only generate precompiled binaries for the platform on which you run abaci.</p>
+<ul class="simple">
+<li><p>Binaries generated on Windows won’t work on Linux and <em>vice versa.</em></p></li>
 </ul>
 </div>
+<p>Abaci keeps binaries from different platforms in different folders, so you can create
+a cross-platform release simply by running abaci on both platforms.</p>
+<p>To generate a cross-platform release:</p>
+<ol class="arabic simple">
+<li><p>Run the <code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">compile</span> <span class="pre">--release</span> <span class="pre">&lt;dir&gt;</span></code> on one platform (<em>e.g.</em> Windows)</p></li>
+<li><p>Copy your project folder, including the release directory, to the other platform (<em>e.g.</em> Linux)</p></li>
+<li><p>Rerun the <code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">compile</span> <span class="pre">--release</span> <span class="pre">&lt;dir&gt;</span></code> command on the other platform, using
+the same name for <code class="docutils literal notranslate"><span class="pre">&lt;dir&gt;</span></code></p></li>
+</ol>
+<p>Now the release directory <code class="docutils literal notranslate"><span class="pre">&lt;dir&gt;</span></code> will contain binaries for both Windows and Linux,
+and can be distributed to users.</p>
+</section>
+<section id="running-jobs-with-precompiled-binaries">
+<h2>Running Jobs with Precompiled Binaries<a class="headerlink" href="#running-jobs-with-precompiled-binaries" title="Permalink to this heading">#</a></h2>
+<p>To run an Abaqus job using a precompiled binary release, users should copy the contents
+of the release directory into their job directory (folder containing their abaqus job file),
+then invoke abaqus as normal.</p>
+<p><strong>Example:</strong> <em>Contents of job directory after copying release directory contents</em></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">linux64</span><span class="o">/</span>
+<span class="n">win64</span><span class="o">/</span>
+<span class="n">abaqus_v6</span><span class="o">.</span><span class="n">env</span>
+<span class="n">myjob</span><span class="o">.</span><span class="n">inp</span>
+</pre></div>
+</div>
+<p><strong>Launch abaqus job:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="n">abaqus</span> <span class="n">job</span><span class="o">=</span><span class="n">myjob</span> <span class="n">double</span><span class="o">=</span><span class="n">both</span> <span class="n">interactive</span>
+</pre></div>
+</div>
+</section>
 </section>
 
         </article>
@@ -233,23 +278,23 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="install.html">
+          <a class="next-page" href="cpp-sources.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">How to Install/Update Abaci</div>
+                <div class="title">How to Include C/C++ Sources</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="../quickstart-tutorial.html">
+          <a class="prev-page" href="unit-testing.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Quickstart Tutorial</div>
+                <div class="title">How-to Write Unit Tests with Abaci</div>
                 
               </div>
             </a>
@@ -271,8 +316,28 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">How to Generate Precompiled Binary Releases</a><ul>
+<li><a class="reference internal" href="#cross-platform-release">Cross-platform Release</a></li>
+<li><a class="reference internal" href="#running-jobs-with-precompiled-binaries">Running Jobs with Precompiled Binaries</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>

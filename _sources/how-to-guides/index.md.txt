@@ -13,6 +13,7 @@ getting-started-with-abaci
 regression-checks
 post-processing
 unit-testing
+binary-releases
 cpp-sources
 hpc-job-submission
 ```
