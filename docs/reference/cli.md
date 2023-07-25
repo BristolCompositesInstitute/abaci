@@ -196,7 +196,7 @@ optional arguments:
 - Abaci will always request a compiler optimisation report from the Intel Compiler;
   this is stored in `<output>/lib/optrpt`
 
-- The `--release` flag is not shared by any other subcommand (`build`,`submit`)
+- The `--release` flag is not shared by any other subcommand (`run`,`submit`)
 
 ```{note}
 By default, abaci will not display compiler output unless there is an error during compilation or linking. You can force the display of compiler output by adding the
