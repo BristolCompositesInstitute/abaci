@@ -132,7 +132,13 @@ def compile_tests(args, usub_file, fflags, libdir, test_driver_source, test_mod_
         cmd.extend(['/link'])
         cmd.extend('/NODEFAULTLIB:LIBC.LIB /NODEFAULTLIB:LIBCMT.LIB /DEFAULTLIB:OLDNAMES.LIB /DEFAULTLIB:LIBIFCOREMD.LIB /DEFAULTLIB:LIBIFPORTMD.LIB /DEFAULTLIB:LIBMMD.LIB /DEFAULTLIB:kernel32.lib /DEFAULTLIB:user32.lib /DEFAULTLIB:advapi32.lib'.split())
         cmd.extend('oldnames.lib user32.lib ws2_32.lib netapi32.lib advapi32.lib msvcrt.lib vcruntime.lib ucrt.lib'.split())
-    
+
+        mpi_dir = r'C:\Program Files (x86)\Microsoft SDKs\MPI\Lib\x64'
+        if os.path.isdir(mpi_dir):
+            cmd.append('/LIBPATH:'+mpi_dir)
+            cmd.append('msmpi.lib')
+            cmd.append('msmpifmc.lib')
+
     else:
 
         cmd.extend(["-o",out_file])
