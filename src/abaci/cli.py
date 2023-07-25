@@ -130,6 +130,9 @@ def parse_cli():
                                          help='Compile user subroutines only',
                                          description="Compile user subroutines and exit")
 
+    compile_command.add_argument('--release',type=str,help='prepare a pre-compiled binary release directory',
+                                 dest='release_dir',action='store',default=None)
+
     # TEST subcommand
     test_command = subparsers.add_parser('test', parents=[common_group,build_group],
                                          help='Compile user subroutines only and run unit tests',

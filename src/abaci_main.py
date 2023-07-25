@@ -1,7 +1,7 @@
 import sys
 from abaci.cli import parse_cli, init_logger, init_logger_file
 from abaci.config import load_config, init_new_config
-from abaci.compile import compile_user_subroutine, collect_cov_report
+from abaci.compile import compile_user_subroutine, prepare_release, collect_cov_report
 from abaci.jobs import get_jobs, run_jobs, submit_jobs, post_process
 from abaci.utils import mkdir, daemonize
 from abaci.dependencies import fetch_dependencies
@@ -54,6 +54,10 @@ def main():
         sys.exit(stat)
 
     elif args.action == 'compile':
+
+        if args.release_dir:
+            prepare_release(compile_dir,args.release_dir)
+
         return
 
     elif args.action == 'test':
