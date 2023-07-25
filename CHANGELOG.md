@@ -4,6 +4,13 @@ Notable changes to this project are logged here according to release version and
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [v0.6.1](https://github.com/BristolCompositesInstitute/abaci/releases/tag/v0.6.1) (25/07/23)
+
+- Fix: to get tests compiling on Windows with MPI linking
+- Fix: to recompile if compile_dir exists but contains no library files
+- Add: new `--release` flag to compile subcommand to prepare a pre-compiled
+  binary release directory with Abaqus environment file
+
 ## [v0.6.0](https://github.com/BristolCompositesInstitute/abaci/releases/tag/v0.6.0) (19/07/23)
 
 - Update: skip main compilation if code and settings are unchanged
