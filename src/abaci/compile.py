@@ -7,6 +7,7 @@ from getpass import getuser
 from hashlib import sha1
 import json
 import cPickle as pkl
+import glob
 
 fortran_suffixes = ('.f','.f90','.for','.F90')
 
@@ -64,26 +65,41 @@ def need_recompile(compile_file,includes,aux_sources,compile_conf,output_dir,com
 
     files = [compile_file]+includes+aux_sources
 
+    # Check for existing lib files
+    if os.name == 'nt':
+        ext = '.dll'
+    else:
+        ext = '.so'
+    libfiles = glob.glob(os.path.join(compile_dir,'*'+ext))
+
+    # Need to recompile if there are no library files
+    if not libfiles:
+        return True
+
+    # Read previous compilation hash
     digest_cache = os.path.join(output_dir,'digest.pkl')
-    if not os.path.isfile(digest_cache) or not os.path.isdir(compile_dir):
+    if not os.path.isfile(digest_cache):
         old_digest = '0'
         
     else:
         with open(digest_cache,'r') as f:
             old_digest = pkl.load(f)
 
+    # Calculate new compilation hash
     src_digest = hashfiles(files)
     m = sha1()
     m.update(json.dumps(compile_conf,sort_keys=True))
     m.update(src_digest)
     digest = m.hexdigest()
 
+    # Cache new compilation hash
     with open(digest_cache,'w') as f:
         pkl.dump(digest,f)
 
     log.debug('Compilation digest: %s',digest)
     log.debug('Previous digest: %s',old_digest)
 
+    # Recompile if hashes don't match
     return old_digest != digest
 
 
