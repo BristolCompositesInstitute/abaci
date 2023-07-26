@@ -4,6 +4,10 @@ Notable changes to this project are logged here according to release version and
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [v0.6.2](https://github.com/BristolCompositesInstitute/abaci/releases/tag/v0.6.2) (26/07/23)
+
+- Fix: issue where recompilation doesn't happen for different command line compiler arguments
+
 ## [v0.6.1](https://github.com/BristolCompositesInstitute/abaci/releases/tag/v0.6.1) (25/07/23)
 
 - Fix: to get tests compiling on Windows with MPI linking
