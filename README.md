@@ -1,7 +1,6 @@
 # Abaci
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Test](https://github.com/BristolCompositesInstitute/abaci/actions/workflows/Test.yml/badge.svg)](https://github.com/BristolCompositesInstitute/abaci/actions/workflows/Test.yml)
 [![Docs Deployed](https://github.com/BristolCompositesInstitute/abaci/actions/workflows/DeployDocs.yml/badge.svg)](https://github.com/BristolCompositesInstitute/abaci/actions/workflows/DeployDocs.yml)
 
 __Abaci is a command line tool for streamlining the development, debugging
