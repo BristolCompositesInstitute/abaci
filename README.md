@@ -35,6 +35,7 @@ Abaci also automates and streamlines many processes involved in code development
 - Running post-processing scripts after jobs have finished
 - Compilation and linking of C and C++ source files
 - Preparation and submission of SLURM cluster job scripts
+- Reuse common code from other Abaci projects as dependencies
 
 
 
