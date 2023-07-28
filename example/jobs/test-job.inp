@@ -43,7 +43,7 @@
  1,
 ** Section: Section-1
 ** THE LINE BELOW WAS EDITED TO ASSIGN THE USER MATERIAL
-*Solid Section, elset=_PickedSet2, material=usermat_elastic
+*Solid Section, elset=_PickedSet2, material=umat_elastic
 1.,
 *hourglass stiffness
 0.1
@@ -66,7 +66,7 @@
 ** MATERIALS
 **
 **  THE LINES BELOW WERE EDITED TO DEFINE THE USER MATERIAL 
-*Material, name=usermat_elastic
+*Material, name=umat_elastic
 *user material, constants=2, type=mechanical
  1000.0, 0.3
 ** This defines the number of state variables (none in this case)
