@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="How to Include C/C++ Sources" href="cpp-sources.html" /><link rel="prev" title="How-to Write Unit Tests with Abaci" href="unit-testing.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Reference" href="../reference/index.html" /><link rel="prev" title="How to Submit Abaci Jobs to a SLURM Cluster" href="hpc-job-submission.html" />
 
     <link rel="shortcut icon" href="../_static/abaci.ico"/><!-- Generated with Sphinx 7.0.1 and Furo 2023.07.26 -->
-        <title>How to Generate Precompiled Binary Releases - Abaci Documentation</title>
+        <title>How to Reuse Code from other Abaci Projects - Abaci Documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=369552022d0b975c8e74270ce6eabe0fb7978f24" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
@@ -166,10 +166,10 @@
 <li class="toctree-l2"><a class="reference internal" href="regression-checks.html">How to Setup Regression Checks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="post-processing.html">How to Setup Post-Processing Commands</a></li>
 <li class="toctree-l2"><a class="reference internal" href="unit-testing.html">How-to Write Unit Tests with Abaci</a></li>
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">How to Generate Precompiled Binary Releases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="binary-releases.html">How to Generate Precompiled Binary Releases</a></li>
 <li class="toctree-l2"><a class="reference internal" href="cpp-sources.html">How to Include C/C++ Sources</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hpc-job-submission.html">How to Submit Abaci Jobs to a SLURM Cluster</a></li>
-<li class="toctree-l2"><a class="reference internal" href="abaci-dependencies.html">How to Reuse Code from other Abaci Projects</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">How to Reuse Code from other Abaci Projects</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -212,65 +212,106 @@
           </label>
         </div>
         <article role="main">
-          <section id="how-to-generate-precompiled-binary-releases">
-<h1>How to Generate Precompiled Binary Releases<a class="headerlink" href="#how-to-generate-precompiled-binary-releases" title="Permalink to this heading">#</a></h1>
-<p>It is sometimes useful to generate precompiled binary files for distribution.
-This can be easily achieved with abaci using the <a class="reference internal" href="../reference/cli.html#abaci-compile"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">--release</span></code></span></a>
-flag.</p>
-<p>To generate a binary release, simply run the following command in your abaci project:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  abaci compile --release &lt;release_dir&gt;
-</pre></div>
-</div>
-<p>where <code class="docutils literal notranslate"><span class="pre">&lt;release_dir&gt;</span></code> is the name of a directory in which to place the binary release.
-If this directory doesn’t exist, abaci will create it for you. You may want to include
-the release version in the directory name, <em>e.g.</em> <code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">compile</span> <span class="pre">--release</span> <span class="pre">v1.0</span></code>.</p>
-<p>Abaci will:</p>
+          <section id="how-to-reuse-code-from-other-abaci-projects">
+<h1>How to Reuse Code from other Abaci Projects<a class="headerlink" href="#how-to-reuse-code-from-other-abaci-projects" title="Permalink to this heading">#</a></h1>
+<p>Abaci makes it easy to reuse code from other Abaci compatible repositories.</p>
+<p>This is useful for keeping common code centralised in separate repositories and
+therfore avoid code-duplication across multiple projects.</p>
+<p>Using abaci dependencies to centralise common code also makes it easier to push
+updates to multiple projects that depend on the same common code.</p>
+<p><strong>Prerequisites:</strong> you must have Git installed and available at the command line</p>
+<section id="setup-a-project-for-reuse">
+<h2>Setup a Project for Reuse<a class="headerlink" href="#setup-a-project-for-reuse" title="Permalink to this heading">#</a></h2>
+<p>If you would like to reuse code from a <em>source project</em>, that project must
+first satisfy the following criteria:</p>
 <ol class="arabic simple">
-<li><p>Compile you user subroutine source code</p></li>
-<li><p>Copy the compiled binary libraries into your release directory</p></li>
-<li><p>Generate an <code class="docutils literal notranslate"><span class="pre">abaqus_v6.env</span></code> file in the release directory</p>
+<li><p>Be accessible via a git remote repository (<em>e.g.</em> GitHub/GitLab)</p></li>
+<li><p>Have an <code class="docutils literal notranslate"><span class="pre">abaci.toml</span></code> configuration file in the repository root folder that contains:</p>
 <ul class="simple">
-<li><p>This file tells abaqus where the precompiled subroutine library is</p></li>
+<li><p>a <code class="docutils literal notranslate"><span class="pre">name</span></code> field in the <code class="docutils literal notranslate"><span class="pre">abaci.toml</span></code> AND;</p></li>
+<li><p>source files specified in the <code class="docutils literal notranslate"><span class="pre">include</span></code> or <code class="docutils literal notranslate"><span class="pre">sources</span></code> fields</p></li>
 </ul>
 </li>
 </ol>
-<section id="cross-platform-release">
-<h2>Cross-platform Release<a class="headerlink" href="#cross-platform-release" title="Permalink to this heading">#</a></h2>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>You can only generate precompiled binaries for the platform on which you run abaci.</p>
+<p>You cannot use code from the top-level user subroutine of a <em>source project</em>,
+only from source files that it specifies in the <code class="docutils literal notranslate"><span class="pre">include</span></code> and <code class="docutils literal notranslate"><span class="pre">sources</span></code> section
+of the configuration file.</p>
 <ul class="simple">
-<li><p>Binaries generated on Windows won’t work on Linux and <em>vice versa.</em></p></li>
+<li><p>This is to avoid multiple definition of the main user subroutine interface
+(<em>i.e.</em> <code class="docutils literal notranslate"><span class="pre">vumat</span></code>,<code class="docutils literal notranslate"><span class="pre">vdisp</span></code>,<code class="docutils literal notranslate"><span class="pre">vexternaldb</span></code>)</p></li>
+<li><p>If you have a top-level user subroutine file, you should modularise your
+code so that reusable functions and subroutines are in separate module files.
+See <a class="reference external" href="https://bristolcompositesinstitute.github.io/RSE-Guide/abaqus-user-subroutines/using-fortran-modules.html">Using Fortran Modules</a>.</p></li>
 </ul>
 </div>
-<p>Abaci keeps binaries from different platforms in different folders, so you can create
-a cross-platform release simply by running abaci on both platforms.</p>
-<p>To generate a cross-platform release:</p>
-<ol class="arabic simple">
-<li><p>Run the <code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">compile</span> <span class="pre">--release</span> <span class="pre">&lt;dir&gt;</span></code> on one platform (<em>e.g.</em> Windows)</p></li>
-<li><p>Copy your project folder, including the release directory, to the other platform (<em>e.g.</em> Linux)</p></li>
-<li><p>Rerun the <code class="docutils literal notranslate"><span class="pre">abaci</span> <span class="pre">compile</span> <span class="pre">--release</span> <span class="pre">&lt;dir&gt;</span></code> command on the other platform, using
-the same name for <code class="docutils literal notranslate"><span class="pre">&lt;dir&gt;</span></code></p></li>
-</ol>
-<p>Now the release directory <code class="docutils literal notranslate"><span class="pre">&lt;dir&gt;</span></code> will contain binaries for both Windows and Linux,
-and can be distributed to users.</p>
 </section>
-<section id="running-jobs-with-precompiled-binaries">
-<h2>Running Jobs with Precompiled Binaries<a class="headerlink" href="#running-jobs-with-precompiled-binaries" title="Permalink to this heading">#</a></h2>
-<p>To run an Abaqus job using a precompiled binary release, users should copy the contents
-of the release directory into their job directory (folder containing their abaqus job file),
-then invoke abaqus as normal.</p>
-<p><strong>Example:</strong> <em>Contents of job directory after copying release directory contents</em></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">linux64</span><span class="o">/</span>
-<span class="n">win64</span><span class="o">/</span>
-<span class="n">abaqus_v6</span><span class="o">.</span><span class="n">env</span>
-<span class="n">myjob</span><span class="o">.</span><span class="n">inp</span>
+<section id="using-a-remote-dependency">
+<h2>Using a Remote Dependency<a class="headerlink" href="#using-a-remote-dependency" title="Permalink to this heading">#</a></h2>
+<p>Once you have a <em>source project</em> setup as described above, you can specify it
+as a remote dependency in the configuration file <code class="docutils literal notranslate"><span class="pre">abaci.toml</span></code> as follows:</p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[[dependency]]</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&lt;name&gt;&quot;</span>
+<span class="n">git</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&lt;git-url&gt;&quot;</span>
+<span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&lt;tag|commit&gt;&quot;</span>
 </pre></div>
 </div>
-<p><strong>Launch abaqus job:</strong></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="n">abaqus</span> <span class="n">job</span><span class="o">=</span><span class="n">myjob</span> <span class="n">double</span><span class="o">=</span><span class="n">both</span> <span class="n">interactive</span>
+<p>Where:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;name&gt;</span></code> matches the <code class="docutils literal notranslate"><span class="pre">name</span></code> field in the <em>source project</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;git-url&gt;</span></code> is the url address for the <em>source project</em> remote repository on GitHub or GitLab</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;tag|commit&gt;</span></code> is either a version tag or git commit hash from the remote repository</p></li>
+</ul>
+<p><strong>Example:</strong></p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[[dependency]]</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;matrix-utils&#39;</span>
+<span class="n">git</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;git@github.com:BristolCompositesInstitute/matrix-utils-library.git&#39;</span>
+<span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;001a415b2e587ee545b1cd69169699f9eed77a65&#39;</span>
 </pre></div>
 </div>
+<p>Once you have updated your <code class="docutils literal notranslate"><span class="pre">abaci.toml</span></code> configuration file, you can verify that
+the dependency has been specified correctly by running the command:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  abaci show sources
+</pre></div>
+</div>
+<p>to show a list of source files available. You should see a list of source files
+in the current project as well as source files provided by the <em>source project</em>
+dependency.</p>
+<p><strong>Example:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  abaci show sources
+   [user-sub] usub.f
+   [included] CDM_functions.f90
+   [included] matrix-utils/matrix_lib.f90
+</pre></div>
+</div>
+<p><strong>Note:</strong> files from the <em>source project</em> will be in a subfolder named after
+the <em>source project</em> <code class="docutils literal notranslate"><span class="pre">name</span></code></p>
+<p>Once you have checked that dependency source files are available, you should <code class="docutils literal notranslate"><span class="pre">include</span></code> them
+into your top-level user subroutine file - <strong>don’t forget to prefix the filenames</strong>
+<strong>with the <em>source project</em> name and a forward-slash</strong>:</p>
+<p><strong>Example:</strong></p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;matrix-utils/matrix_lib.f90&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="notes-on-using-dependencies">
+<h2>Notes on using Dependencies<a class="headerlink" href="#notes-on-using-dependencies" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>If the <code class="docutils literal notranslate"><span class="pre">version</span></code> field for the dependency changes, then abaci will automatically
+fetch the updated version, unless you have modified the dependency source files</p></li>
+<li><p>Source files for the dependencies are downloaded into a <code class="docutils literal notranslate"><span class="pre">dependencies</span></code> folder</p>
+<ul>
+<li><p>You may modify source files for dependencies to get it working with your code,
+however you should always push these changes to the original <em>source project</em>
+repository so that they can be accessed by other users</p></li>
+</ul>
+</li>
+<li><p>If your dependency requires a username and password to access, consider using
+SSH to specify the dependency URL instead of HTTPs, see
+<a class="reference external" href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/about-ssh">here</a>
+for more information.</p></li>
+</ul>
 </section>
 </section>
 
@@ -279,23 +320,23 @@ then invoke abaqus as normal.</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="cpp-sources.html">
+          <a class="next-page" href="../reference/index.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">How to Include C/C++ Sources</div>
+                <div class="title">Reference</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="unit-testing.html">
+          <a class="prev-page" href="hpc-job-submission.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">How-to Write Unit Tests with Abaci</div>
+                <div class="title">How to Submit Abaci Jobs to a SLURM Cluster</div>
                 
               </div>
             </a>
@@ -329,9 +370,10 @@ then invoke abaqus as normal.</p>
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">How to Generate Precompiled Binary Releases</a><ul>
-<li><a class="reference internal" href="#cross-platform-release">Cross-platform Release</a></li>
-<li><a class="reference internal" href="#running-jobs-with-precompiled-binaries">Running Jobs with Precompiled Binaries</a></li>
+<li><a class="reference internal" href="#">How to Reuse Code from other Abaci Projects</a><ul>
+<li><a class="reference internal" href="#setup-a-project-for-reuse">Setup a Project for Reuse</a></li>
+<li><a class="reference internal" href="#using-a-remote-dependency">Using a Remote Dependency</a></li>
+<li><a class="reference internal" href="#notes-on-using-dependencies">Notes on using Dependencies</a></li>
 </ul>
 </li>
 </ul>

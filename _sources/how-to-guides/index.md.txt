@@ -16,4 +16,5 @@ unit-testing
 binary-releases
 cpp-sources
 hpc-job-submission
+abaci-dependencies
 ```
