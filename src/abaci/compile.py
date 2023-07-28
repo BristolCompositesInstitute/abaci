@@ -8,6 +8,7 @@ from hashlib import sha1
 import json
 import cPickle as pkl
 import glob
+import itertools
 
 fortran_suffixes = ('.f','.f90','.for','.F90')
 
@@ -34,7 +35,7 @@ def compile_user_subroutine(args, output_dir, user_file, compile_conf, dep_list)
                       opt_host = compile_conf['opt-host'],
                       noopt = args.noopt)
     
-    if not need_recompile(user_file,includes,aux_sources,compile_conf,args,output_dir,compile_dir):
+    if not need_recompile(user_file,includes,aux_sources,dep_list,compile_conf,args,output_dir,compile_dir):
         log.info('Skipping compilation (source files unchanged)')
         return 0, compile_dir, fflags
 
@@ -58,12 +59,15 @@ def compile_user_subroutine(args, output_dir, user_file, compile_conf, dep_list)
     return stat, compile_dir, fflags
 
 
-def need_recompile(compile_file,includes,aux_sources,compile_conf,args,output_dir,compile_dir):
+def need_recompile(compile_file,includes,aux_sources,dep_list,compile_conf,args,output_dir,compile_dir):
     """Check if we can skip recompilation because nothing has changed"""
 
     log = logging.getLogger('abaci')
 
-    files = [compile_file]+includes+aux_sources
+    dep_includes = list(itertools.chain.from_iterable(dep['includes'] for n,dep in dep_list.items()))
+    dep_sources = list(itertools.chain.from_iterable(dep['sources'] for n,dep in dep_list.items()))
+
+    files = [compile_file]+includes+aux_sources+dep_includes+dep_sources
 
     # Check for existing lib files
     if os.name == 'nt':
