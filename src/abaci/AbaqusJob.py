@@ -1,12 +1,18 @@
+# Backport to Python 2.7
+from __future__ import print_function, division, absolute_import
+import sys
+if sys.version_info[:2] < (3,):
+    from exceptions import ValueError
+    import cPickle as pkl
+else:
+    import pickle as pkl
 import logging
 import os
 from os.path import basename, join, splitext, isdir, exists, dirname
-from utils import cwd, copyfile, system_cmd, system_cmd_wait, copydir, mkdir, relpathshort, prompt_input_default
+from abaci.utils import copyfile, system_cmd, system_cmd_wait, copydir, mkdir, relpathshort, prompt_input_default
 import abaci.abaqus as abq
 from abaci.config import get_default_cluster_schema
 from datetime import datetime
-from exceptions import ValueError
-import cPickle as pkl
 import abaci.slurm as slurm
 import glob
 
@@ -132,7 +138,7 @@ class AbaqusJob:
 
                     if line:
 
-                        print line.strip()
+                        print(line.strip())
 
                     else:
 
@@ -300,7 +306,7 @@ class AbaqusJob:
         self.spool_env_file(local_lib_dir)
 
         # Cache full job info to file for post-processing subcommand
-        with open(self.cache_file,'w') as f:
+        with open(self.cache_file,'wb') as f:
             pkl.dump(self,f)
 
 

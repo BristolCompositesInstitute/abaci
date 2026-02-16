@@ -1,3 +1,4 @@
+from __future__ import print_function, division, absolute_import
 import argparse
 import logging
 import os
@@ -20,7 +21,7 @@ def parse_cli():
     # Top-level options
 
     parser.add_argument('-V','--version',help='show abaci version',
-                        action='version', version="%(prog)s v0.6.3")
+                        action='version', version="%(prog)s v0.7.0")
 
     parser.add_argument('--update',help='update abaci from upstream', nargs='?',
                         metavar='[REPO:]GITREF', default=None, action=UpdateAction)

@@ -1,6 +1,12 @@
+# Backport to Python 2.7
+from __future__ import print_function, division, absolute_import
+import sys
+if sys.version_info[:2] < (3,):
+    import cPickle as pkl
+else:
+    import pickle as pkl
 import os
 import subprocess
-import cPickle as pkl
 from tempfile import gettempdir
 import logging
 import re
@@ -73,7 +79,7 @@ def start_ssh_agent():
     
     agent_data = parse_agent_variables.parse(stdout)
     
-    with open(ssh_agent_cache_file,'w') as f:
+    with open(ssh_agent_cache_file,'wb') as f:
         pkl.dump(agent_data,f,)
 
     return agent_data

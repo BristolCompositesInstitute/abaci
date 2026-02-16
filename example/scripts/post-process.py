@@ -1,3 +1,4 @@
+from __future__ import print_function, division, absolute_import
 import sys
 from odbAccess import openOdb
 import numpy as np
@@ -15,15 +16,15 @@ def main():
     odb_file = sys.argv[1]
     output_dir = sys.argv[2]
 
-    print '  ODB file "{f}"'.format(f=odb_file)
-    print '  Output directory: "{d}"'.format(d=output_dir)
+    print('  ODB file "{f}"'.format(f=odb_file))
+    print('  Output directory: "{d}"'.format(d=output_dir))
 
     odb = openOdb(odb_file,readOnly=True)
 
     # Iterate over job steps
     for step in odb.steps.keys():
 
-        print '  '+step
+        print('  '+step)
 
         # Iterate over saved frames
         for frame in odb.steps[step].frames:
@@ -32,11 +33,11 @@ def main():
 
             max_dis = np.max(displacement)
 
-            print '    frame {f}, time {t}, max displacement = {d}'.format(
+            print('    frame {f}, time {t}, max displacement = {d}'.format(
                 f = frame.frameId,
                 t = frame.frameValue,
                 d = max_dis
-            )
+            ))
 
 
 if __name__ == '__main__':

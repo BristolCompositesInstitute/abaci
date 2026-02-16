@@ -1,3 +1,4 @@
+from __future__ import print_function, division, absolute_import
 import os
 import subprocess
 from abaci.utils import cwd
@@ -112,10 +113,15 @@ def get_tag(git_path):
         git_cmd = ['git', 'describe', '--tags', 'HEAD']
         
         try:
-            return subprocess.check_output(git_cmd,stderr=devnull).strip()
-        except(subprocess.CalledProcessError):
-            return None
+            out = subprocess.check_output(git_cmd, stderr=devnull).strip()
 
+            if not isinstance(out, str):
+                out = out.decode('utf-8')
+
+            return out
+
+        except subprocess.CalledProcessError:
+            return None
 
 def init_bare(path):
     """Initialise a bare git repo at the local path"""

@@ -1,3 +1,4 @@
+from __future__ import print_function, division, absolute_import
 import logging
 import os
 import signal
@@ -168,7 +169,7 @@ def system_cmd_wait(p,verbosity,ofile=None,efile=None):
 
                 o = fo.readlines()
 
-            print ''.join(o)
+            print(''.join(o))
         
         if efile:
 
@@ -176,7 +177,7 @@ def system_cmd_wait(p,verbosity,ofile=None,efile=None):
 
                 e = fe.readlines()
 
-            print ''.join(e)
+            print(''.join(e))
 
     return p.returncode
 

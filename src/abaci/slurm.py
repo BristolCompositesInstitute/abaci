@@ -1,3 +1,4 @@
+from __future__ import print_function, division, absolute_import
 import os
 import subprocess
 from abaci.utils import cwd
@@ -79,8 +80,8 @@ def submit_job(working_dir,script_path,args):
         
         if p.returncode !=0:
 
-            print stdout
-            print stderr
+            print(stdout)
+            print(stderr)
 
             raise Exception('(!) Job submission failed')
 

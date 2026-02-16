@@ -1,9 +1,15 @@
+# Backport to Python 2.7
+from __future__ import print_function, division, absolute_import
+import sys
+if sys.version_info[:2] < (3,):
+    import cPickle as pkl
+else:
+    import pickle as pkl
+
 import logging
 from odbAccess import openOdb
 import numpy as np
-from utils import to_ascii
-import cPickle
-
+from abaci.utils import to_ascii
 
 def get_step_frames(checks,odb_out,job_name,step):
     """Get integer array of frames to check in step"""
@@ -93,7 +99,7 @@ def dump_ref(ref_file,odb_file,job_name,checks):
                     job_name, ref_file)
 
     with open(ref_file,'wb') as f:
-        cPickle.dump(odb_ref_dict,f,cPickle.HIGHEST_PROTOCOL)
+        pkl.dump(odb_ref_dict,f,pkl.HIGHEST_PROTOCOL)
 
 
 def check_odb_structure(ref_file,odb_out_file,job_name,checks):
@@ -104,7 +110,7 @@ def check_odb_structure(ref_file,odb_out_file,job_name,checks):
     odb_out = openOdb(to_ascii(odb_out_file))
 
     with open(ref_file,'rb') as f:
-        ref_dict = cPickle.load(f)
+        ref_dict = pkl.load(f)
 
     for step in checks['steps']:
             
@@ -171,7 +177,7 @@ def compare_odb(ref_file,odb_out_file,job_name,checks):
     odb_out = openOdb(to_ascii(odb_out_file))
     
     with open(ref_file,'rb') as f:
-        ref_dict = cPickle.load(f)
+        ref_dict = pkl.load(f)
 
     for step in checks['steps']:
             

@@ -1,12 +1,18 @@
+# Backport to Python 2.7
+from __future__ import print_function, division, absolute_import
+import sys
+if sys.version_info[:2] < (3,):
+    import cPickle as pkl
+else:
+    import pickle as pkl
 import logging
 import os
 import abaqus as abq
-from utils import cwd, mkdir, copyfile, copydir, system_cmd, system_cmd_wait, relpathshort, to_ascii, hashfiles
+from abaci.utils import cwd, mkdir, copyfile, copydir, system_cmd, system_cmd_wait, relpathshort, to_ascii, hashfiles
 from shutil import rmtree
 from getpass import getuser
 from hashlib import sha1
 import json
-import cPickle as pkl
 import glob
 import itertools
 

@@ -1,3 +1,4 @@
+from __future__ import print_function, division, absolute_import
 import unittest
 import tempfile
 import os
@@ -78,18 +79,17 @@ class TestAbaqusJob(AbaciUnitTestSuite):
         """
 
         from abaci.AbaqusJob import AbaqusJob
-        import exceptions
             
         job_config, job_base_name = self.get_dummy_job()
 
         # Check constructor fails if both job config and job_file given
-        with self.assertRaises(exceptions.ValueError):
+        with self.assertRaises(ValueError):
 
             job = AbaqusJob(self.output_dir,job_file=job_base_name+'.inp',
                                 job=job_config)
 
         # Check constructor fails if neither job config or job_file given
-        with self.assertRaises(exceptions.ValueError):
+        with self.assertRaises(ValueError):
 
             job = AbaqusJob(self.output_dir)
     
@@ -109,7 +109,7 @@ class TestAbaqusJob(AbaciUnitTestSuite):
             job_dir = job.get_new_job_dir(self.output_dir)
 
             expecting = os.path.join(self.output_dir,'myjob_{i}'.format(i=i))
-            self.assertEquals(job_dir, expecting)
+            self.assertEqual(job_dir, expecting)
 
             os.mkdir(job_dir)
 

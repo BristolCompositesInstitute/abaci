@@ -1,4 +1,4 @@
-import unittest
+from __future__ import print_function, division, absolute_import
 import tempfile
 import os
 
@@ -66,7 +66,7 @@ class TestFortranParsing(AbaciUnitTestSuite):
 
         mods = parse_fortran_file(fort_file)
 
-        print mods
+        print(mods)
         
         self.assertIn('test_mod',mods)
         self.assertIn('subroutines',mods['test_mod'])

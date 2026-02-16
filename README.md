@@ -6,11 +6,11 @@
 __Abaci is a command line tool for streamlining the development, debugging
 and testing of Abaqus user subroutines.__
 
-__Author:__ Laurence Kedward
+__Authors:__ Laurence Kedward, Alyn D. N. James
 
 __Maintainer contact:__ bci-rse@bristol.ac.uk
 
-__Status:__ v0.6.3
+__Status:__ v0.7.0
 
 __Documentation:__
 [bristolcompositesinstitute.github.io/abaci](https://bristolcompositesinstitute.github.io/abaci/)

@@ -1,5 +1,5 @@
+from __future__ import print_function, division, absolute_import
 import sys
-import logging
 from odbAccess import openOdb
 import numpy as np
 # from abaci.utils import to_ascii
@@ -21,8 +21,8 @@ def compare_frames(odb_ref,odb_out,step,frame):
 
         if field not in odb_out.steps[step].frames[frame].fieldOutputs.keys():
 
-            print 'Step "{step}", Frame {frame}, field {field} from $1 not found in $2'.format(
-                step = step, frame=frame, field=field)
+            print('Step "{step}", Frame {frame}, field {field} from $1 not found in $2'.format(
+                step = step, frame=frame, field=field))
 
             continue
 
@@ -32,8 +32,8 @@ def compare_frames(odb_ref,odb_out,step,frame):
 
         if field not in odb_ref.steps[step].frames[frame].fieldOutputs.keys():
 
-            print 'Step "{step}", Frame {frame}, field {field} from $1 not found in $2'.format(
-                step = step, frame=frame, field=field)
+            print('Step "{step}", Frame {frame}, field {field} from $1 not found in $2'.format(
+                step = step, frame=frame, field=field))
 
             continue
 
@@ -42,8 +42,8 @@ def compare_frames(odb_ref,odb_out,step,frame):
 
     rms_diff = np.sqrt( rms_diff/n )
     
-    print 'Step "{step}", Frame {frame}, rms diff = {diff}'.format(
-                step = step, frame=frame, diff=rms_diff)
+    print('Step "{step}", Frame {frame}, rms diff = {diff}'.format(
+                step = step, frame=frame, diff=rms_diff))
 
 
 def compare_steps(odb_ref,odb_out,step):
@@ -54,24 +54,24 @@ def compare_steps(odb_ref,odb_out,step):
 
     if nref == nout:
 
-        print 'Step "{step}": number of frames ({n}) matches'.format(
-               step=step, n=nref)
+        print('Step "{step}": number of frames ({n}) matches'.format(
+               step=step, n=nref))
 
         frames = range(0,nref)
 
     else:
 
-        print 'Step "{step}": frame number mismatch'.format(step=step)
-        print '               n1 = {n}'.format(n=nref)
-        print '               n2 = {n}'.format(n=nout)
+        print('Step "{step}": frame number mismatch'.format(step=step))
+        print('               n1 = {n}'.format(n=nref))
+        print('               n2 = {n}'.format(n=nout))
         
         if min(nref,nout) > 0:
-            print '   (Comparing last frame only)'
+            print('   (Comparing last frame only)')
 
             frames = [-1]
 
         else:
-            print 'Step "{step}": skipping frame comparison'.format(step=step)
+            print('Step "{step}": skipping frame comparison'.format(step=step))
             return
 
     for frame in frames:
@@ -94,7 +94,7 @@ def main():
 
         if step not in odb_out.steps.keys():
 
-            print 'Step "{step}" from $1 not found in $2'.format(step = step)
+            print('Step "{step}" from $1 not found in $2'.format(step = step))
 
             continue
             
@@ -102,7 +102,7 @@ def main():
 
         if step not in odb_ref.steps.keys():
 
-            print 'Step "{step}" from $1 not found in $2'.format(step = step)
+            print('Step "{step}" from $1 not found in $2'.format(step = step))
 
             continue
 

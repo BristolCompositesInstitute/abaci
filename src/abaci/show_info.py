@@ -1,3 +1,4 @@
+from __future__ import print_function, division, absolute_import
 from redist import toml
 import os
 from abaci.utils import recurse_files, relpathshort
@@ -135,22 +136,22 @@ def show_config_jobs(config,verbose):
 def show_tests(test_dir):
     """Print a list of test modules and test subroutines"""
 
-    print ' Looking for tests in "{d}"'.format(d=test_dir)
+    print(' Looking for tests in "{d}"'.format(d=test_dir))
     
     test_sources, testsuites = discover_tests(test_dir)
     
     for suite in testsuites:
 
-        print '  module {s}'.format(s=suite["name"])
+        print('  module {s}'.format(s=suite["name"]))
         if not suite["tests"]:
             
-            print '    No test subroutines found'
+            print('    No test subroutines found')
         
         else:
             
             for test in suite['tests']:
 
-                print '    subroutine {t}()'.format(t=test)
+                print('    subroutine {t}()'.format(t=test))
 
         
     

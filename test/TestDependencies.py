@@ -1,3 +1,4 @@
+from __future__ import print_function, division, absolute_import
 import tempfile
 import os
 from os.path import join, isdir, exists
@@ -5,7 +6,7 @@ from os.path import join, isdir, exists
 from AbaciUnitTestSuite import AbaciUnitTestSuite, verbose
 
 from abaci.config import load_config
-from abaci.utils import cwd, copydir, mkdir
+from abaci.utils import cwd, mkdir
 from abaci.dependencies import fetch_dependencies
 from abaci import git_utils as git
 
@@ -120,9 +121,9 @@ class TestDependencies(AbaciUnitTestSuite):
             self.assertTrue(exists(join('dependencies','dep3','abaci.toml')))
 
             # Check correct versions of dependencies were checked-out
-            self.assertEquals(git.get_tag(join('dependencies','dep1')), 'v1')
-            self.assertEquals(git.get_tag(join('dependencies','dep2')), 'v2')
-            self.assertEquals(git.get_tag(join('dependencies','dep3')), 'v3')
+            self.assertEqual(git.get_tag(join('dependencies','dep1')), 'v1')
+            self.assertEqual(git.get_tag(join('dependencies','dep2')), 'v2')
+            self.assertEqual(git.get_tag(join('dependencies','dep3')), 'v3')
 
 
     def test_circular_dependencies(self):
@@ -211,7 +212,7 @@ class TestDependencies(AbaciUnitTestSuite):
             self.assertTrue(isdir(join('dependencies','dep3')))
 
             # Check correct version of dep3 has been fetched
-            self.assertEquals(git.get_tag(join('dependencies','dep3')), 'v1')
+            self.assertEqual(git.get_tag(join('dependencies','dep3')), 'v1')
 
 
     def test_dependency_update(self):
@@ -241,7 +242,7 @@ class TestDependencies(AbaciUnitTestSuite):
             # Check dependency was fetched
             self.assertTrue(isdir('dependencies'))
             self.assertTrue(isdir(join('dependencies','dep1')))
-            self.assertEquals(git.get_tag(join('dependencies','dep1')), 'v1')
+            self.assertEqual(git.get_tag(join('dependencies','dep1')), 'v1')
 
         # Push a new tag to the upstream
         self.new_temp_project(name="dep1",version="v2",deps=None)
@@ -254,7 +255,7 @@ class TestDependencies(AbaciUnitTestSuite):
             fetch_dependencies(config, config_dir, verbosity)
 
             # Check dependency was updated
-            self.assertEquals(git.get_tag(join('dependencies','dep1')), 'v2')
+            self.assertEqual(git.get_tag(join('dependencies','dep1')), 'v2')
 
 
     def test_dependency_update_branch(self):
@@ -284,7 +285,7 @@ class TestDependencies(AbaciUnitTestSuite):
             # Check dependency was fetched
             self.assertTrue(isdir('dependencies'))
             self.assertTrue(isdir(join('dependencies','dep1')))
-            self.assertEquals(git.get_tag(join('dependencies','dep1')), 'v1')
+            self.assertEqual(git.get_tag(join('dependencies','dep1')), 'v1')
 
         # Push a new tag to the upstream
         self.new_temp_project(name="dep1",version="v2",deps=None)
@@ -294,7 +295,7 @@ class TestDependencies(AbaciUnitTestSuite):
             fetch_dependencies(config, config_dir, verbosity)
 
             # Check dependency was updated
-            self.assertEquals(git.get_tag(join('dependencies','dep1')), 'v2')
+            self.assertEqual(git.get_tag(join('dependencies','dep1')), 'v2')
 
 
     def test_invalid_dependency(self):

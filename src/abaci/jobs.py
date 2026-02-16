@@ -1,3 +1,10 @@
+# Backport to Python 2.7
+from __future__ import print_function, division, absolute_import
+import sys
+if sys.version_info[:2] < (3,):
+    import cPickle as pkl
+else:
+    import pickle as pkl
 import logging
 import os
 import signal
@@ -5,7 +12,6 @@ import time
 from abaci.AbaqusJob import AbaqusJob
 from abaci.utils import get_current_env_modules
 
-import cPickle as pkl
 
 def get_jobs(args,config):
     """Get list of jobs to run"""
