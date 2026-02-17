@@ -1,4 +1,5 @@
 from __future__ import print_function, division, absolute_import
+import sys
 import logging
 import os
 import signal
@@ -149,7 +150,7 @@ def system_cmd(cmd,output=None):
 
     signal.signal(signal.SIGINT, handle_interrupt)
 
-    return p, ofile, efile
+    return p, ofile, efile, fo, fe
 
 
 def system_cmd_wait(p,verbosity,ofile=None,efile=None):
@@ -180,6 +181,58 @@ def system_cmd_wait(p,verbosity,ofile=None,efile=None):
             print(''.join(e))
 
     return p.returncode
+
+
+def system_cmd_close_handles(ofile_handle=None,efile_handle=None):
+
+    if ofile_handle:
+        
+        ofile_handle.close()
+
+    if efile_handle:
+        
+        efile_handle.close()
+
+
+def subprocess_timeout(p,log):
+    """ Python 2 and 3 compatible timeout for subprocess
+        p   - subprocess object
+        log - logging.getLogger object       
+    """
+    
+    try:
+        TimeoutExpired = subprocess.TimeoutExpired
+    except AttributeError:
+        class TimeoutExpired(Exception):
+            pass
+
+    def wait_with_timeout(p, timeout):
+
+        import time
+        start = time.time()
+
+        while p.poll() is None:
+
+            if timeout and (time.time() - start > timeout):
+        
+                raise TimeoutExpired()
+        
+            time.sleep(0.1)        
+
+    try:
+        
+        if sys.version_info[:2] > (3,3):
+
+            p.wait(timeout=15)
+        
+        else:
+            wait_with_timeout(p, 15)
+    
+    except subprocess.TimeoutExpired:
+
+        log.warning("Process did not terminate, killing")
+        p.kill()
+        p.wait()
 
 
 def to_ascii(ustring):

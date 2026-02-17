@@ -100,6 +100,8 @@ def main():
 
                 job.post_process(args.verbose)
 
+                job.clean_up()
+
             else:
 
                 exitstat = 1

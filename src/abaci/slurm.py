@@ -5,19 +5,19 @@ from abaci.utils import cwd
 
 def have_slurm():
 
-    devnull = open(os.devnull,'w')
+    with open(os.devnull, 'w') as devnull:
 
-    cmd = ['sinfo','--version']
-    
-    try:
+        cmd = ['sinfo','--version']
+        
+        try:
 
-        stat =  subprocess.call(cmd,stdout=devnull,stderr=devnull)
+            stat =  subprocess.call(cmd,stdout=devnull,stderr=devnull)
 
-    except:
+        except:
 
-        stat = -1
+            stat = -1
 
-    return stat == 0
+        return stat == 0
 
 
 def spool_job_script(script_path,modules,cmds,job_name,time,nodes=None,partition=None,

@@ -31,7 +31,7 @@ class AbaciUnitTestSuite(unittest.TestCase):
     def abaqus_available():
         """Test if abaqus command is available for tests"""
 
-        from abaci.utils import system_cmd, system_cmd_wait
+        from abaci.utils import system_cmd, system_cmd_wait, system_cmd_close_handles
 
         global fast_mode
         global abaqus_checked

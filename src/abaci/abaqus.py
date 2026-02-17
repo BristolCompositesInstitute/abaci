@@ -2,7 +2,7 @@ from __future__ import print_function, division, absolute_import
 import os
 from os.path import join
 import subprocess
-from abaci.utils import cwd, system_cmd, system_cmd_wait
+from abaci.utils import cwd, system_cmd, system_cmd_wait, system_cmd_close_handles
 
 def check_for_abaqus():
     """Check for Abaqus and raise Exception if not found"""
@@ -15,19 +15,19 @@ def check_for_abaqus():
 def have_abaqus():
     """Check if abaqus is available in current environment"""
 
-    devnull = open(os.devnull,'w')
+    with open(os.devnull, 'w') as devnull:
 
-    cmd = abaqus_cmd(['information=version'])
-    
-    try:
+        cmd = abaqus_cmd(['information=version'])
+        
+        try:
 
-        stat =  subprocess.call(cmd,stdout=devnull,stderr=devnull)
+            stat =  subprocess.call(cmd,stdout=devnull,stderr=devnull)
 
-    except:
+        except:
 
-        stat = -1
+            stat = -1
 
-    return stat == 0
+        return stat == 0
 
 
 def run(dir,job_name,abq_flags,mp_mode,nproc):
@@ -37,9 +37,9 @@ def run(dir,job_name,abq_flags,mp_mode,nproc):
 
     with cwd(dir):
 
-        p, ofile, efile = system_cmd(cmd,output=join(dir,'abaqus'))
+        p, ofile, efile, fo, fe = system_cmd(cmd,output=join(dir,'abaqus'))
 
-    return p, ofile, efile
+    return p, ofile, efile, fo, fe
 
 
 def get_mpi_job_allocation_cmd():
@@ -85,9 +85,9 @@ def terminate(dir, job_name):
 
     with cwd(dir):
 
-        p, ofile, efile = system_cmd(cmd,output=join(dir,'abaqus-terminate'))
+        p, ofile, efile, fo, fe = system_cmd(cmd,output=join(dir,'abaqus-terminate'))
 
-    return p, ofile, efile
+    return p, ofile, efile, fo, fe
 
 
 def make(dir, lib_file, verbosity):
@@ -106,9 +106,11 @@ def make(dir, lib_file, verbosity):
 
     with cwd(dir):
 
-        p,ofile,efile = system_cmd(cmd, output=os.path.join(dir,'abaqus-make'))
+        p,ofile,efile,fo,fe = system_cmd(cmd, output=os.path.join(dir,'abaqus-make'))
 
         stat = system_cmd_wait(p,verbosity,ofile,efile)
+
+        system_cmd_close_handles(fo,fe)
 
     return stat
 

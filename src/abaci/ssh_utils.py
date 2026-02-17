@@ -56,13 +56,13 @@ def setup_ssh_agent():
 def is_identity_added():
     """Check if the default ssh identity has been added to the ssh-agent"""
 
-    devnull = open(os.devnull,'w')
+    with open(os.devnull, 'w') as devnull:
     
-    cmd = [get_ssh_cmd('ssh-add'), '-l']
-                
-    stat =  subprocess.call(cmd,stdout=devnull,stderr=devnull)
-    
-    return stat == 0
+        cmd = [get_ssh_cmd('ssh-add'), '-l']
+                    
+        stat =  subprocess.call(cmd,stdout=devnull,stderr=devnull)
+        
+        return stat == 0
 
 
 def start_ssh_agent():

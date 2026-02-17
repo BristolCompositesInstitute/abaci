@@ -330,7 +330,7 @@ def init_new_config(file_path,user_sub_file=None,output=None,full=None,bare=None
 
         else:
 
-            log.warn('Overwriting file %s with new configuration',file_path)
+            log.warning('Overwriting file %s with new configuration',file_path)
 
 
     user_sub_file = user_sub_file or "user.f"

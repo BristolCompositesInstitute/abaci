@@ -7,8 +7,8 @@ else:
     import pickle as pkl
 import logging
 import os
-import abaqus as abq
-from abaci.utils import cwd, mkdir, copyfile, copydir, system_cmd, system_cmd_wait, relpathshort, to_ascii, hashfiles
+import abaci.abaqus as abq
+from abaci.utils import cwd, mkdir, copyfile, copydir, system_cmd, system_cmd_wait, system_cmd_close_handles, relpathshort, to_ascii, hashfiles
 from shutil import rmtree
 from getpass import getuser
 from hashlib import sha1
@@ -368,7 +368,7 @@ def compile_cpp(use_gcc, cflags, source_file, verbose):
 
         cmd.extend(["-o",obj_file])
 
-    p, ofile, efile = system_cmd(cmd,output=obj_file+'.log')
+    p, ofile, efile, fo, fe = system_cmd(cmd,output=obj_file+'.log')
 
     stat = system_cmd_wait(p,verbose,ofile,efile)
 
@@ -380,6 +380,8 @@ def compile_cpp(use_gcc, cflags, source_file, verbose):
 
     copyfile(obj_file,obj_file.replace('-std','-xpl'))
     copyfile(obj_file,obj_file.replace('-std','-xplD'))
+
+    system_cmd_close_handles(fo,fe)
 
 
 def compile_fortran(use_gcc, fflags, source_file, verbose):
@@ -411,7 +413,7 @@ def compile_fortran(use_gcc, fflags, source_file, verbose):
 
         cmd.extend(["-o",obj_file])
 
-    p, ofile, efile = system_cmd(cmd,output=obj_file+'.log')
+    p, ofile, efile, fo, fe = system_cmd(cmd,output=obj_file+'.log')
 
     stat = system_cmd_wait(p,verbose,ofile,efile)
 
@@ -424,6 +426,7 @@ def compile_fortran(use_gcc, fflags, source_file, verbose):
     copyfile(obj_file,obj_file.replace('-std','-xpl'))
     copyfile(obj_file,obj_file.replace('-std','-xplD'))
 
+    system_cmd_close_handles(fo,fe)
 
 
 def compile_auxillary_sources(compile_dir,compile_conf,args,aux_source_list,fflags):

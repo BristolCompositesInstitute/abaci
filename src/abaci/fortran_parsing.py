@@ -83,4 +83,8 @@ def parse_fortran_file(file):
             sub_name = matches[0].lower()
             modules[mod_name]['subroutines'].append(sub_name)
 
+    if isinstance(file,str) or isinstance(file,unicode):
+
+        fh.close()            
+
     return modules

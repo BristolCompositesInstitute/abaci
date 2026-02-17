@@ -66,7 +66,7 @@ class TestFortranParsing(AbaciUnitTestSuite):
 
         mods = parse_fortran_file(fort_file)
 
-        print(mods)
+        #print(mods)
         
         self.assertIn('test_mod',mods)
         self.assertIn('subroutines',mods['test_mod'])

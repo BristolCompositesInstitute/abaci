@@ -53,6 +53,7 @@ class TestAbaqusJob(AbaciUnitTestSuite):
         self.assertEqual(job.job_file,job_config['job-file'])
         self.assertEqual(job.mp_mode,job_config['mp-mode'])
         self.assertEqual(job.local_job_name,job_base_name)
+        job.clean_up()
 
 
     def test_job_constructor_file(self):
@@ -71,6 +72,7 @@ class TestAbaqusJob(AbaciUnitTestSuite):
         self.assertEqual(job.job_file,job_name+'.inp')
         self.assertEqual(job.mp_mode,'threads')
         self.assertEqual(job.local_job_name,job_name)
+        job.clean_up()
 
 
     def test_job_constructor_invalid(self):
@@ -88,10 +90,14 @@ class TestAbaqusJob(AbaciUnitTestSuite):
             job = AbaqusJob(self.output_dir,job_file=job_base_name+'.inp',
                                 job=job_config)
 
+            job.clean_up()
+
         # Check constructor fails if neither job config or job_file given
         with self.assertRaises(ValueError):
 
             job = AbaqusJob(self.output_dir)
+
+            job.clean_up()
     
 
     def test_new_job_dir(self):
@@ -112,6 +118,8 @@ class TestAbaqusJob(AbaciUnitTestSuite):
             self.assertEqual(job_dir, expecting)
 
             os.mkdir(job_dir)
+        
+        job.clean_up()
 
 
     def test_prepare_job(self):
@@ -161,6 +169,8 @@ class TestAbaqusJob(AbaciUnitTestSuite):
         expecting = 'usub_lib_dir = r"{dir}"'.format(dir=local_lib_dir)
         self.assertIn(expecting,contents[0])
 
+        job.clean_up()
+
 
     @unittest.skipUnless(AbaciUnitTestSuite.abaqus_available(),"not running abaqus")
     def test_launch_job(self):
@@ -183,6 +193,8 @@ class TestAbaqusJob(AbaciUnitTestSuite):
 
         # Wait for job and check completed successfully
         self.assertTrue(job.wait(verbose=-1) == 0)
+
+        job.clean_up()
 
 
     @unittest.skipUnless(AbaciUnitTestSuite.abaqus_available(),"not running abaqus")
@@ -212,4 +224,6 @@ class TestAbaqusJob(AbaciUnitTestSuite):
 
         # Send termination signal
         job.terminate_job(verbose=-1)
+
+        job.clean_up()
         

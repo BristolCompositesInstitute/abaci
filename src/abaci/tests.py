@@ -7,7 +7,7 @@ from os.path import isfile, join, realpath, dirname, pardir, relpath, basename
 
 from abaci.fortran_parsing import parse_fortran_file
 from abaci.compile import fortran_suffixes, compile_fortran
-from abaci.utils import system_cmd, system_cmd_wait, copyfile, cwd
+from abaci.utils import system_cmd, system_cmd_wait, system_cmd_close_handles, copyfile, cwd
 
 def discover_tests(test_dir):
     """Find Fortran files in test_dir and parse contents for test subroutines"""
@@ -51,7 +51,7 @@ def discover_tests(test_dir):
 
     if not testsuites:
 
-        log.warn('(!) No tests found in directory "%s"',test_dir)
+        log.warning('(!) No tests found in directory "%s"',test_dir)
 
     return test_sources, testsuites
 
@@ -148,9 +148,11 @@ def compile_tests(args, usub_file, fflags, libdir, test_driver_source, test_mod_
 
     with cwd(libdir):
 
-        p, ofile, efile = system_cmd(cmd,output=out_file+'.log')
+        p, ofile, efile, fo, fe = system_cmd(cmd,output=out_file+'.log')
 
         stat = system_cmd_wait(p,args.verbose,ofile,efile)
+
+        system_cmd_close_handles(fo,fe)
 
     if stat != 0:
 
@@ -171,9 +173,11 @@ def run_tests(test_driver,libdir,verbose):
 
     cmd = [test_driver]
 
-    p, ofile, efile = system_cmd(cmd,output=join(libdir,'tests'+'.log'))
+    p, ofile, efile, fo, fe = system_cmd(cmd,output=join(libdir,'tests'+'.log'))
 
     stat = system_cmd_wait(p,2*verbose + 2,ofile,efile)
+
+    system_cmd_close_handles(fo,fe)
 
     if stat != 0:
 

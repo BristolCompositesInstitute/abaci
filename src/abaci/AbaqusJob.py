@@ -9,7 +9,7 @@ else:
 import logging
 import os
 from os.path import basename, join, splitext, isdir, exists, dirname
-from abaci.utils import copyfile, system_cmd, system_cmd_wait, copydir, mkdir, relpathshort, prompt_input_default
+from abaci.utils import copyfile, system_cmd, system_cmd_wait, system_cmd_close_handles, copydir, mkdir, relpathshort, prompt_input_default, subprocess_timeout
 import abaci.abaqus as abq
 from abaci.config import get_default_cluster_schema
 from datetime import datetime
@@ -69,6 +69,8 @@ class AbaqusJob:
         self.start_time = None
         self.end_time = None
         self.job_script = None
+        self.run_ofile_handle = None
+        self.run_efile_handle = None
         self.ofile_handle = None
         self.efile_handle = None
         self.nproc = None
@@ -99,7 +101,10 @@ class AbaqusJob:
 
         self.start_time = datetime.now()
 
-        self.p, self.ofile, self.efile = abq.run(dir=self.job_dir,
+        (
+        self.p, self.ofile, self.efile, 
+        self.run_ofile_handle, self.run_efile_handle 
+        )                               = abq.run(dir=self.job_dir,
                                           job_name=self.local_job_name,
                                           abq_flags=self.abq_flags,
                                           mp_mode=self.mp_mode,
@@ -185,13 +190,17 @@ class AbaqusJob:
 
         self.p.terminate()
 
+        subprocess_timeout(self.p,log)
+
         log.info('Cancelling abaqus job "%s"',self.name)
 
-        p, ofile, efile = abq.terminate(dir=self.job_dir,job_name=self.local_job_name)
+        p, ofile, efile, fo, fe = abq.terminate(dir=self.job_dir,job_name=self.local_job_name)
 
         if os.name != 'nt':
                 
             system_cmd_wait(p,verbose)
+
+        system_cmd_close_handles(fo,fe)
 
 
     def cluster_config_interactive_override(self):
@@ -328,7 +337,7 @@ class AbaqusJob:
     def run_checks(self):
         """Run reference checks"""
         
-        from odb_check import compare_odb, dump_ref
+        from abaci.odb_check import compare_odb, dump_ref
 
         log = logging.getLogger('abaci')
 
@@ -342,7 +351,7 @@ class AbaqusJob:
 
         if not exists(odb_out_file):
             
-            log.warn('Unable to find odb file (%s) for job "%s"',odb_out_file,self.name)
+            log.warning('Unable to find odb file (%s) for job "%s"',odb_out_file,self.name)
 
             return
 
@@ -390,12 +399,21 @@ class AbaqusJob:
 
             log.info('Running post-processing script for job "%s"', self.name)
 
-            p, ofile, efile = system_cmd(post_cmd.split())
+            p, ofile, efile, fo, fe = system_cmd(post_cmd.split())
 
             stat = system_cmd_wait(p, verbosity, ofile, efile)
 
             if stat != 0:
 
-                log.warn('Post-processing script exited with non-zero status')
+                log.warning('Post-processing script exited with non-zero status')
+
+            system_cmd_close_handles(fo,fe)    
 
         return
+
+
+    def clean_up(self):
+        """ Clean up any floating attributes such as file handles. """
+
+        system_cmd_close_handles(self.run_ofile_handle,self.run_efile_handle)    
+        system_cmd_close_handles(self.ofile_handle,self.efile_handle)    

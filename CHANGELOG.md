@@ -4,10 +4,16 @@ Notable changes to this project are logged here according to release version and
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [v0.7.0](https://github.com/BristolCompositesInstitute/abaci/releases/tag/v0.6.3) (28/07/23)
+## [v0.7.0](https://github.com/BristolCompositesInstitute/abaci/releases/tag/v0.7.0) (17/02/26)
 
-- Update: Python scripts are compatible with both 2.7 and 3.10.
+- Update: Abaci Python scripts are compatible with both 2.7 and 3.10. Thus Abaci is compatible with Abaqus 2024+.
 - Update: Docs.
+- Fix: remove warning causes which are outputted within the test suite, this includes: 
+  - Updated the functions to close all floating file handles (which print warnings in Python 3).
+  - Remove unnecessary print statements.
+  - Added NullHandler of abaci logging object in `__init__.py`.
+  - Added subprocess timeout function.
+  - updated logging's deprecated .warn() to .warning() throughout.
 
 ## [v0.6.3](https://github.com/BristolCompositesInstitute/abaci/releases/tag/v0.6.3) (28/07/23)
 
