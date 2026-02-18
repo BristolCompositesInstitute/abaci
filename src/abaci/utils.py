@@ -71,7 +71,10 @@ def copyfile(source,dest):
 
 def copydir(source,dest):
     """Helper to copy directory"""
-    from distutils.dir_util import copy_tree
+    if sys.version_info[:2] < (3,10):
+        from distutils.dir_util import copy_tree
+    else:
+        from shutil import copytree as copy_tree
 
     log = logging.getLogger('abaci')
     
@@ -85,8 +88,8 @@ def hashfile(file):
     m = sha1()
 
     if not os.path.isfile(file):
-        m.update(file)
-        return m.hexdigest()
+        m.update(file.encode('utf-8'))
+        return m.digest()
 
     with open(file,'rb',0) as f:
         chunk = 0
@@ -94,7 +97,7 @@ def hashfile(file):
             chunk = f.read(1024)
             m.update(chunk)
 
-    return m.hexdigest()
+    return m.digest()
 
 
 def hashfiles(files):
@@ -106,7 +109,7 @@ def hashfiles(files):
         
         m.update(hashfile(file))
     
-    return m.hexdigest()
+    return m.digest()
 
 
 def system_cmd(cmd,output=None):

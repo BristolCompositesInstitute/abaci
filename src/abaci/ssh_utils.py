@@ -121,8 +121,11 @@ def get_existing_agent():
 
     elif os.path.exists(ssh_agent_cache_file):
 
-        with open(ssh_agent_cache_file,'r') as f:
-            agent_data = pkl.load(f)
+        with open(ssh_agent_cache_file,'rb') as f:
+            if sys.version_info[:2] > (3,):
+                agent_data = pkl.load(f, encoding='latin1')   # Python 3 safe
+            else:
+                agent_data = pkl.load(f)  
         
         if check_agent(agent_data['SSH_AGENT_PID']):
 

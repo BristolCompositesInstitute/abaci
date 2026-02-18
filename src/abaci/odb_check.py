@@ -110,7 +110,10 @@ def check_odb_structure(ref_file,odb_out_file,job_name,checks):
     odb_out = openOdb(to_ascii(odb_out_file))
 
     with open(ref_file,'rb') as f:
-        ref_dict = pkl.load(f)
+        if sys.version_info[:2] > (3,):
+            ref_dict = pkl.load(f, encoding='latin1')   # Python 3 safe
+        else:
+            ref_dict = pkl.load(f)  
 
     for step in checks['steps']:
             
@@ -177,7 +180,10 @@ def compare_odb(ref_file,odb_out_file,job_name,checks):
     odb_out = openOdb(to_ascii(odb_out_file))
     
     with open(ref_file,'rb') as f:
-        ref_dict = pkl.load(f)
+        if sys.version_info[:2] > (3,):
+            ref_dict = pkl.load(f, encoding='latin1')   # Python 3 safe
+        else:
+            ref_dict = pkl.load(f)  
 
     for step in checks['steps']:
             

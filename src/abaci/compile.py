@@ -92,21 +92,27 @@ def need_recompile(compile_file,includes,aux_sources,dep_list,compile_conf,args,
         old_digest = '0'
         
     else:
-        with open(digest_cache,'r') as f:
-            old_digest = pkl.load(f)
+        with open(digest_cache,'rb') as f:
+            if sys.version_info[:2] > (3,):
+                old_digest = pkl.load(f, encoding='latin1')   # Python 3 safe
+            else:
+                try:
+                    old_digest = pkl.load(f) 
+                except ValueError:
+                    old_digest = '0' # if Python 2 can't load .pkl, assume it was generated in Python 3 (need recompiling)
 
     compile_args = [args.check, args.debug, args.gcc, args.noopt, args.codecov]
 
     # Calculate new compilation hash
     src_digest = hashfiles(files)
     m = sha1()
-    m.update(json.dumps(compile_conf,sort_keys=True))
-    m.update(json.dumps(compile_args,sort_keys=True))
+    m.update(json.dumps(compile_conf,sort_keys=True).encode('utf-8'))
+    m.update(json.dumps(compile_args,sort_keys=True).encode('utf-8'))
     m.update(src_digest)
     digest = m.hexdigest()
 
     # Cache new compilation hash
-    with open(digest_cache,'w') as f:
+    with open(digest_cache,'wb') as f:
         pkl.dump(digest,f)
 
     log.debug('Compilation digest: %s',digest)
@@ -465,8 +471,8 @@ def spool_env_file(compile_dir,fflags,lflags):
 
     env_file = os.path.join(compile_dir,'abaqus_v6.env')
 
-    fflags = map(to_ascii,fflags)
-    lflags = map(to_ascii,lflags)
+    fflags = list(map(to_ascii,fflags))
+    lflags = list(map(to_ascii,lflags))
 
     with open(env_file,'w') as f:
 

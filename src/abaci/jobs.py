@@ -146,8 +146,11 @@ def post_process(job_dir,verbose):
 
     else:
 
-        with open(cache_file,'r') as f:
-            job = pkl.load(f)
+        with open(cache_file,'rb') as f:
+            if sys.version_info[:2] > (3,):
+                job = pkl.load(f, encoding='latin1')   # Python 3 safe
+            else:
+                job = pkl.load(f)  
 
         job.run_checks()
 
