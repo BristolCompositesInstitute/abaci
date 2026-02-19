@@ -11,7 +11,7 @@ Abaci is implemented in Python and designed to be run using an existing __Abaqus
 - To avoid needing to install or redistribute Python for Abaci
 - To allow using Abaqus Python libraries for reading ODB files
 
-__Abaqus Python is 2.7, hence Abaci is implemented using Python 2.7__
+__Abaqus Python version is 2.7 up to Abaqus 2023, but 3.10 in Abaqus 2024+. Abaci has been implemented to be compatible with both versions__
 
 *It is also for this reason, that any Python dependencies that Abaci uses*
 *are bundled and redistributed (under their respective licenses) with Abaci.*

@@ -1,23 +1,24 @@
 <!doctype html>
-<html class="no-js" lang="en">
-  <head><meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Developer Notes" href="../developer-notes.html" /><link rel="prev" title="Command Line Interface Reference" href="cli.html" />
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Developer Notes" href="../developer-notes.html"><link rel="prev" title="Command Line Interface Reference" href="cli.html">
+        <link rel="prefetch" href="../_static/abaci.png" as="image">
 
-    <link rel="shortcut icon" href="../_static/abaci.ico"/><!-- Generated with Sphinx 7.0.1 and Furo 2023.07.26 -->
+    <link rel="shortcut icon" href="../_static/abaci.ico"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
         <title>Configuration Reference - Abaci Documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=369552022d0b975c8e74270ce6eabe0fb7978f24" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
     
     
 
 
 <style>
   body {
-    --color-code-background: #f8f8f8;
-  --color-code-foreground: black;
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
   
   }
   @media not print {
@@ -68,7 +69,7 @@
   <symbol id="svg-sun" viewBox="0 0 24 24">
     <title>Light mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
       <circle cx="12" cy="12" r="5"></circle>
       <line x1="12" y1="1" x2="12" y2="3"></line>
       <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -83,34 +84,73 @@
   <symbol id="svg-moon" viewBox="0 0 24 24">
     <title>Dark mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
     </svg>
   </symbol>
-  <symbol id="svg-sun-half" viewBox="0 0 24 24">
-    <title>Auto light/dark mode</title>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
-      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-      <circle cx="12" cy="12" r="9" />
-      <path d="M13 12h5" />
-      <path d="M13 15h4" />
-      <path d="M13 18h1" />
-      <path d="M13 9h4" />
-      <path d="M13 6h1" />
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
     </svg>
   </symbol>
 </svg>
 
-<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
-<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
-<label class="overlay sidebar-overlay" for="__navigation">
-  <div class="visually-hidden">Hide navigation sidebar</div>
-</label>
-<label class="overlay toc-overlay" for="__toc">
-  <div class="visually-hidden">Hide table of contents sidebar</div>
-</label>
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -118,8 +158,7 @@
   <header class="mobile-header">
     <div class="header-left">
       <label class="nav-overlay-icon" for="__navigation">
-        <div class="visually-hidden">Toggle site navigation sidebar</div>
-        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
       </label>
     </div>
     <div class="header-center">
@@ -127,16 +166,15 @@
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
-        <button class="theme-toggle">
-          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
-          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
           <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
       <label class="toc-overlay-icon toc-header-icon" for="__toc">
-        <div class="visually-hidden">Toggle table of contents sidebar</div>
-        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
       </label>
     </div>
   </header>
@@ -144,7 +182,6 @@
     <div class="sidebar-container">
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
-  
   <div class="sidebar-logo-container">
     <img class="sidebar-logo" src="../_static/abaci.png" alt="Logo"/>
   </div>
@@ -160,7 +197,7 @@
   <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../quickstart-tutorial.html">Quickstart Tutorial</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../how-to-guides/index.html">How-to guides</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of How-to guides</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../how-to-guides/index.html">How-to guides</a><input aria-label="Toggle navigation of How-to guides" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../how-to-guides/install.html">How to Install/Update Abaci</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how-to-guides/getting-started-with-abaci.html">Getting Started with Abaci in your Project</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how-to-guides/regression-checks.html">How to Setup Regression Checks</a></li>
@@ -172,7 +209,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../how-to-guides/abaci-dependencies.html">How to Reuse Code from other Abaci Projects</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Reference</a><input aria-label="Toggle navigation of Reference" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="cli.html">Command Line Interface Reference</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Configuration Reference</a></li>
 </ul>
@@ -197,30 +234,34 @@
           <span>Back to top</span>
         </a>
         <div class="content-icon-container">
-          
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/reference/config.md.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
 <div class="theme-toggle-container theme-toggle-content">
-            <button class="theme-toggle">
-              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
-              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
               <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
           <label class="toc-overlay-icon toc-content-icon" for="__toc">
-            <div class="visually-hidden">Toggle table of contents sidebar</div>
-            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="configuration-reference">
-<h1>Configuration Reference<a class="headerlink" href="#configuration-reference" title="Permalink to this heading">#</a></h1>
+<h1>Configuration Reference<a class="headerlink" href="#configuration-reference" title="Link to this heading">¶</a></h1>
 <p>The abaci configuration file stores information about the project such as user subroutine and abaqus job file locations. There is typically one configuration file per user-subroutine per project.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>By default, abaci will look for a configuration file named <code class="docutils literal notranslate"><span class="pre">abaci.toml</span></code> in the current directory. Use the <code class="docutils literal notranslate"><span class="pre">--config</span></code> argument to specify an alternative, see <a class="reference internal" href="cli.html#common-flags"><span class="std std-ref">Common Flags</span></a>.</p>
 </div>
 <section id="configuration-file-format">
-<h2>Configuration File Format<a class="headerlink" href="#configuration-file-format" title="Permalink to this heading">#</a></h2>
+<h2>Configuration File Format<a class="headerlink" href="#configuration-file-format" title="Link to this heading">¶</a></h2>
 <p>The abaci configuration file uses the human-readable TOML format:</p>
 <ul class="simple">
 <li><p>Lines beginning with an octothorp <code class="docutils literal notranslate"><span class="pre">#</span></code> are ignored</p></li>
@@ -241,16 +282,16 @@
 </div>
 </section>
 <section id="top-level-fields">
-<h2>Top-level fields<a class="headerlink" href="#top-level-fields" title="Permalink to this heading">#</a></h2>
+<h2>Top-level fields<a class="headerlink" href="#top-level-fields" title="Link to this heading">¶</a></h2>
 <p><strong>Example:</strong></p>
-<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;project-name&#39;</span>
-<span class="n">user-sub-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;usersub.f90&#39;</span>
-<span class="n">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;scratch&#39;</span>
-<span class="n">test-mod-dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;test&#39;</span>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;project-name&#39;</span>
+<span class="n">user-sub-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;usersub.f90&#39;</span>
+<span class="n">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;scratch&#39;</span>
+<span class="n">test-mod-dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;test&#39;</span>
 </pre></div>
 </div>
 <section id="name">
-<h3>name<a class="headerlink" href="#name" title="Permalink to this heading">#</a></h3>
+<h3>name<a class="headerlink" href="#name" title="Link to this heading">¶</a></h3>
 <p><strong><em>string, optional</em></strong></p>
 <p>Specifies the name of the project to uniquely identify it when used as a dependency for
 another abaci project.</p>
@@ -261,7 +302,7 @@ it can be omitted.</p>
 </div>
 </section>
 <section id="user-sub-file">
-<h3>user-sub-file<a class="headerlink" href="#user-sub-file" title="Permalink to this heading">#</a></h3>
+<h3>user-sub-file<a class="headerlink" href="#user-sub-file" title="Link to this heading">¶</a></h3>
 <p><strong><em>string, mandatory</em></strong></p>
 <p>Specifies the filename of the abaqus user subroutine to compile.</p>
 <ul class="simple">
@@ -269,7 +310,7 @@ it can be omitted.</p>
 </ul>
 </section>
 <section id="output">
-<h3>output<a class="headerlink" href="#output" title="Permalink to this heading">#</a></h3>
+<h3>output<a class="headerlink" href="#output" title="Link to this heading">¶</a></h3>
 <p><strong><em>string, optional</em></strong></p>
 <p>Specifies the name of the directory into which compilation and job folders will be placed.</p>
 <ul class="simple">
@@ -284,7 +325,7 @@ it can be omitted.</p>
 </ul>
 </section>
 <section id="test-mod-dir">
-<h3>test-mod-dir<a class="headerlink" href="#test-mod-dir" title="Permalink to this heading">#</a></h3>
+<h3>test-mod-dir<a class="headerlink" href="#test-mod-dir" title="Link to this heading">¶</a></h3>
 <p><strong><em>string, optional</em></strong></p>
 <p>Specifies the name of the directory in which test module files are stored.</p>
 <ul class="simple">
@@ -300,7 +341,7 @@ structure and write unit tests for your Abaqus user subroutine.</p>
 test subroutines.</p>
 </section>
 <section id="abq-flags">
-<h3>abq-flags<a class="headerlink" href="#abq-flags" title="Permalink to this heading">#</a></h3>
+<h3>abq-flags<a class="headerlink" href="#abq-flags" title="Link to this heading">¶</a></h3>
 <p><strong><em>string or [string,…], optional</em></strong></p>
 <p>String or list of strings specifying additional flags to pass to Abaqus when launching a job.</p>
 <ul class="simple">
@@ -310,23 +351,23 @@ in the specification of the job</p></li>
 </section>
 </section>
 <section id="jobs-list">
-<h2>Jobs list<a class="headerlink" href="#jobs-list" title="Permalink to this heading">#</a></h2>
+<h2>Jobs list<a class="headerlink" href="#jobs-list" title="Link to this heading">¶</a></h2>
 <p>Array of optional subsections that predefine specific abaqus jobs to run.</p>
 <p><strong>Example:</strong></p>
 <div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[[job]]</span>
-<span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;my-abaqus-job.inp&#39;</span>
-<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;job1&#39;</span>
-<span class="n">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;test&#39;</span><span class="p">,</span><span class="s">&#39;three_elem&#39;</span><span class="p">]</span>
-<span class="n">abq-flags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;domains&#39;</span>
-<span class="n">include</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;job1_extra_inputs.inp&#39;</span><span class="p">]</span>
-<span class="n">mp-mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;threads&#39;</span>
-<span class="n">post-process</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;{PY} {ROOT}/scripts/postprocess.py {ODB}&#39;</span>
-<span class="n">cluster</span><span class="p">.</span><span class="n">mem-per-cpu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;8000M&#39;</span>
-<span class="n">cluster</span><span class="p">.</span><span class="n">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;1-00:00:00&#39;</span>
+<span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;my-abaqus-job.inp&#39;</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;job1&#39;</span>
+<span class="n">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">,</span><span class="s1">&#39;three_elem&#39;</span><span class="p">]</span>
+<span class="n">abq-flags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;domains&#39;</span>
+<span class="n">include</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;job1_extra_inputs.inp&#39;</span><span class="p">]</span>
+<span class="n">mp-mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;threads&#39;</span>
+<span class="n">post-process</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;{PY} {ROOT}/scripts/postprocess.py {ODB}&#39;</span>
+<span class="n">cluster</span><span class="p">.</span><span class="n">mem-per-cpu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;8000M&#39;</span>
+<span class="n">cluster</span><span class="p">.</span><span class="n">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;1-00:00:00&#39;</span>
 </pre></div>
 </div>
 <section id="job-file">
-<h3>job-file<a class="headerlink" href="#job-file" title="Permalink to this heading">#</a></h3>
+<h3>job-file<a class="headerlink" href="#job-file" title="Link to this heading">¶</a></h3>
 <p><strong><em>string, mandatory</em></strong></p>
 <p>Specifies the path to the abaqus job file (<code class="docutils literal notranslate"><span class="pre">*.inp</span></code>).</p>
 <ul class="simple">
@@ -334,17 +375,17 @@ in the specification of the job</p></li>
 </ul>
 </section>
 <section id="id1">
-<h3>name<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<h3>name<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
 <p><strong><em>string, optional</em></strong></p>
 <p>An unique name to reference this job in the <em>job-spec</em> at the command line.</p>
 </section>
 <section id="tags">
-<h3>tags<a class="headerlink" href="#tags" title="Permalink to this heading">#</a></h3>
+<h3>tags<a class="headerlink" href="#tags" title="Link to this heading">¶</a></h3>
 <p><strong><em>string or [string,…], optional</em></strong></p>
 <p>An list of non-unique tags to reference groups of jobs in the <em>job-spec</em> at the command line.</p>
 </section>
 <section id="id2">
-<h3>abq-flags<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
+<h3>abq-flags<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
 <p><strong><em>string or [string,…], optional</em></strong></p>
 <p>String or list of strings specifying additional flags to pass to Abaqus when launching a job.</p>
 <ul class="simple">
@@ -353,7 +394,7 @@ in the specification of the job</p></li>
 </ul>
 </section>
 <section id="include">
-<h3>include<a class="headerlink" href="#include" title="Permalink to this heading">#</a></h3>
+<h3>include<a class="headerlink" href="#include" title="Link to this heading">¶</a></h3>
 <p><strong><em>string or [string,…], optional</em></strong></p>
 <p>An list of additional files to copy to the job folder before launching the job.</p>
 <ul class="simple">
@@ -366,13 +407,13 @@ other files that also need to be copied to the job folder for running the job.</
 </div>
 </section>
 <section id="mp-mode">
-<h3>mp-mode<a class="headerlink" href="#mp-mode" title="Permalink to this heading">#</a></h3>
+<h3>mp-mode<a class="headerlink" href="#mp-mode" title="Link to this heading">¶</a></h3>
 <p><strong><em>string, optional</em></strong></p>
 <p>An optional field taking the value of either <code class="docutils literal notranslate"><span class="pre">'threads'</span></code> (default), <code class="docutils literal notranslate"><span class="pre">'mpi'</span></code> or <code class="docutils literal notranslate"><span class="pre">'disable'</span></code> to indicate the parallel mode to execute in abaqus (corresponds to the <code class="docutils literal notranslate"><span class="pre">-mp_mode</span></code> command line flag).</p>
 <p>If <code class="docutils literal notranslate"><span class="pre">mp-mode</span></code> is <code class="docutils literal notranslate"><span class="pre">'disable'</span></code>, then the abaci command line option for multiple processors will be ignored for this job, it will always run in serial.</p>
 </section>
 <section id="cluster">
-<h3>cluster.<a class="headerlink" href="#cluster" title="Permalink to this heading">#</a></h3>
+<h3>cluster.<a class="headerlink" href="#cluster" title="Link to this heading">¶</a></h3>
 <p><strong><em>subsection, optional</em></strong></p>
 <p>Override the default options for submitting this job to a cluster via SLURM.</p>
 <p>See <a class="reference internal" href="#cluster-section">cluster options</a> below for more information on the cluster option fields.</p>
@@ -383,7 +424,7 @@ setup and submit jobs to a SLURM cluster.</p>
 </div>
 </section>
 <section id="post-process">
-<h3>post-process<a class="headerlink" href="#post-process" title="Permalink to this heading">#</a></h3>
+<h3>post-process<a class="headerlink" href="#post-process" title="Link to this heading">¶</a></h3>
 <p><strong><em>string or [string,…], optional</em></strong></p>
 <p>An optional field specifying one or more post-processing commands to run once the job has completed.</p>
 <p>Specify multiple commands as a list ( <em>e.g.</em> <code class="docutils literal notranslate"><span class="pre">['command_1.sh',</span> <span class="pre">'command_2.sh']</span></code>) where each command is run sequentially in order.</p>
@@ -408,21 +449,21 @@ post-processing commands.</p>
 </div>
 </section>
 <section id="check">
-<h3>check.<a class="headerlink" href="#check" title="Permalink to this heading">#</a></h3>
+<h3>check.<a class="headerlink" href="#check" title="Link to this heading">¶</a></h3>
 <p><strong><em>subsection, optional</em></strong></p>
 <p>An optional group for detailing regression checks.</p>
 <p><strong>Example:</strong></p>
 <div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[[job]]</span>
-<span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;job.inp&#39;</span>
-<span class="n">check</span><span class="p">.</span><span class="n">reference</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;reference-output.pkl&#39;</span>
-<span class="n">check</span><span class="p">.</span><span class="n">steps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;Step-1&#39;</span><span class="p">]</span>
-<span class="n">check</span><span class="p">.</span><span class="n">fields</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;SDV1&#39;</span><span class="p">,</span><span class="s">&#39;SDV2&#39;</span><span class="p">]</span>
-<span class="n">check</span><span class="p">.</span><span class="n">frames</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;last&#39;</span>
-<span class="n">check</span><span class="p">.</span><span class="n">elements</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;all&#39;</span>
+<span class="n">job-file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;job.inp&#39;</span>
+<span class="n">check</span><span class="p">.</span><span class="n">reference</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;reference-output.pkl&#39;</span>
+<span class="n">check</span><span class="p">.</span><span class="n">steps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;Step-1&#39;</span><span class="p">]</span>
+<span class="n">check</span><span class="p">.</span><span class="n">fields</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;SDV1&#39;</span><span class="p">,</span><span class="s1">&#39;SDV2&#39;</span><span class="p">]</span>
+<span class="n">check</span><span class="p">.</span><span class="n">frames</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;last&#39;</span>
+<span class="n">check</span><span class="p">.</span><span class="n">elements</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;all&#39;</span>
 </pre></div>
 </div>
 <section id="check-reference">
-<h4>check.reference<a class="headerlink" href="#check-reference" title="Permalink to this heading">#</a></h4>
+<h4>check.reference<a class="headerlink" href="#check-reference" title="Link to this heading">¶</a></h4>
 <p><strong><em>string, mandatory</em></strong></p>
 <p>Specifies the reference file to compare output against. This is a binary Python pickle file
 that contains data from a previous reference run.
@@ -439,17 +480,17 @@ between results produced with different numbers of CPUs</p>
 </div>
 </section>
 <section id="check-steps">
-<h4>check.steps<a class="headerlink" href="#check-steps" title="Permalink to this heading">#</a></h4>
+<h4>check.steps<a class="headerlink" href="#check-steps" title="Link to this heading">¶</a></h4>
 <p><strong><em>[string,…], mandatory</em></strong></p>
 <p>List of strings specifying Abaqus job steps for which to check output.</p>
 </section>
 <section id="check-fields">
-<h4>check.fields<a class="headerlink" href="#check-fields" title="Permalink to this heading">#</a></h4>
+<h4>check.fields<a class="headerlink" href="#check-fields" title="Link to this heading">¶</a></h4>
 <p><strong><em>[string,…], mandatory</em></strong></p>
 <p>List of strings specifying Abaqus output field variables to check.</p>
 </section>
 <section id="check-frames">
-<h4>check.frames<a class="headerlink" href="#check-frames" title="Permalink to this heading">#</a></h4>
+<h4>check.frames<a class="headerlink" href="#check-frames" title="Link to this heading">¶</a></h4>
 <p><strong><em>strings or [int,…], optional</em></strong></p>
 <p>Either a list of frame indices for which to perform checks or <code class="docutils literal notranslate"><span class="pre">'all'</span></code> or <code class="docutils literal notranslate"><span class="pre">'last'</span></code>.</p>
 <p>If not specified, then <code class="docutils literal notranslate"><span class="pre">'last'</span></code> is the default.</p>
@@ -457,24 +498,24 @@ between results produced with different numbers of CPUs</p>
 </section>
 </section>
 <section id="compile-section">
-<h2>Compile section<a class="headerlink" href="#compile-section" title="Permalink to this heading">#</a></h2>
+<h2>Compile section<a class="headerlink" href="#compile-section" title="Link to this heading">¶</a></h2>
 <p><strong><em>subsection, optional</em></strong></p>
 <p>An optional subsection that details compilation settings.</p>
 <p><strong>Example:</strong></p>
 <div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[compile]</span>
-<span class="n">fflags</span><span class="p">.</span><span class="n">windows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;&#39;</span>
-<span class="n">fflags</span><span class="p">.</span><span class="n">linux</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;&#39;</span>
-<span class="n">cflags</span><span class="p">.</span><span class="n">windows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;&#39;</span>
-<span class="n">cflags</span><span class="p">.</span><span class="n">linux</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;&#39;</span>
-<span class="n">lflags</span><span class="p">.</span><span class="n">windows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;&#39;</span>
-<span class="n">lflags</span><span class="p">.</span><span class="n">linux</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="n">fflags</span><span class="p">.</span><span class="n">windows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&#39;</span>
+<span class="n">fflags</span><span class="p">.</span><span class="n">linux</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&#39;</span>
+<span class="n">cflags</span><span class="p">.</span><span class="n">windows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&#39;</span>
+<span class="n">cflags</span><span class="p">.</span><span class="n">linux</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&#39;</span>
+<span class="n">lflags</span><span class="p">.</span><span class="n">windows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&#39;</span>
+<span class="n">lflags</span><span class="p">.</span><span class="n">linux</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&#39;</span>
 <span class="n">compiletime-checks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span>
-<span class="n">include</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;extra-source.f90&#39;</span><span class="p">]</span>
-<span class="n">sources</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;cpp_functions.cpp&#39;</span><span class="p">]</span>
+<span class="n">include</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;extra-source.f90&#39;</span><span class="p">]</span>
+<span class="n">sources</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;cpp_functions.cpp&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 <section id="fflags-windows-fflags-linux">
-<h3>fflags.windows / fflags.linux<a class="headerlink" href="#fflags-windows-fflags-linux" title="Permalink to this heading">#</a></h3>
+<h3>fflags.windows / fflags.linux<a class="headerlink" href="#fflags-windows-fflags-linux" title="Link to this heading">¶</a></h3>
 <p><strong><em>string or [string,…], optional</em></strong></p>
 <p>Extra compilation flags to pass to the fortran compiler.</p>
 <ul class="simple">
@@ -482,7 +523,7 @@ between results produced with different numbers of CPUs</p>
 </ul>
 </section>
 <section id="cflags-windows-cflags-linux">
-<h3>cflags.windows / cflags.linux<a class="headerlink" href="#cflags-windows-cflags-linux" title="Permalink to this heading">#</a></h3>
+<h3>cflags.windows / cflags.linux<a class="headerlink" href="#cflags-windows-cflags-linux" title="Link to this heading">¶</a></h3>
 <p><strong><em>string or [string,…], optional</em></strong></p>
 <p>Extra compilation flags to pass to the c/c++ compiler (auxilliary sources only).</p>
 <div class="admonition seealso">
@@ -492,7 +533,7 @@ to include C and C++ source files with your Abaqus user subroutines.</p>
 </div>
 </section>
 <section id="lflags-windows-lflags-linux">
-<h3>lflags.windows / lflags.linux<a class="headerlink" href="#lflags-windows-lflags-linux" title="Permalink to this heading">#</a></h3>
+<h3>lflags.windows / lflags.linux<a class="headerlink" href="#lflags-windows-lflags-linux" title="Link to this heading">¶</a></h3>
 <p><strong><em>string or [string,…], optional</em></strong></p>
 <p>Extra link flags to pass to the shared library linker.</p>
 <ul class="simple">
@@ -500,7 +541,7 @@ to include C and C++ source files with your Abaqus user subroutines.</p>
 </ul>
 </section>
 <section id="opt-host">
-<h3>opt-host<a class="headerlink" href="#opt-host" title="Permalink to this heading">#</a></h3>
+<h3>opt-host<a class="headerlink" href="#opt-host" title="Link to this heading">¶</a></h3>
 <p><strong><em>boolean, optional</em></strong></p>
 <p>Whether to compile with host-specific optimisations (<strong>default: <code class="docutils literal notranslate"><span class="pre">false</span></code></strong>). Disable if distributable binaries are required.</p>
 <div class="admonition note">
@@ -511,13 +552,13 @@ to how Abaqus vendors fixed versions of Intel shared libraries</p>
 <p>See <a class="reference external" href="https://www.intel.com/content/www/us/en/develop/documentation/fortran-compiler-oneapi-dev-guide-and-reference/top/compiler-reference/compiler-options/code-generation-options/xhost-qxhost.html">Intel Compiler Developer Guide: xHost</a> for more information.</p>
 </section>
 <section id="compiletime-checks">
-<h3>compiletime-checks<a class="headerlink" href="#compiletime-checks" title="Permalink to this heading">#</a></h3>
+<h3>compiletime-checks<a class="headerlink" href="#compiletime-checks" title="Link to this heading">¶</a></h3>
 <p><strong><em>boolean, optional</em></strong></p>
 <p>Whether to always perform strict compile-time checks.</p>
 <p>See <a class="reference external" href="https://www.intel.com/content/www/us/en/develop/documentation/fortran-compiler-oneapi-dev-guide-and-reference/top/compiler-reference/compiler-options/compiler-diagnostic-options/warn.html">Intel Fortran Compiler Developer Guide: warn</a> for more information on compile-time checks.</p>
 </section>
 <section id="id3">
-<h3>include<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
+<h3>include<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
 <p><strong><em>string or [string,…], optional</em></strong></p>
 <p>String or list of strings specifying additional files that are included (with <code class="docutils literal notranslate"><span class="pre">#include</span></code>) in the user subroutine file.</p>
 <div class="admonition note">
@@ -531,7 +572,7 @@ to how Abaqus vendors fixed versions of Intel shared libraries</p>
 </ul>
 </section>
 <section id="sources">
-<h3>sources<a class="headerlink" href="#sources" title="Permalink to this heading">#</a></h3>
+<h3>sources<a class="headerlink" href="#sources" title="Link to this heading">¶</a></h3>
 <p><strong><em>string or [string,…], optional</em></strong></p>
 <p>String or list of strings specifying additional c/c++ source files that are to be compiled and linked with the main user subroutine file.</p>
 <ul class="simple">
@@ -547,7 +588,7 @@ to include C and C++ source files with your Abaqus user subroutines.</p>
 </section>
 </section>
 <section id="cluster-section">
-<h2>Cluster section<a class="headerlink" href="#cluster-section" title="Permalink to this heading">#</a></h2>
+<h2>Cluster section<a class="headerlink" href="#cluster-section" title="Link to this heading">¶</a></h2>
 <p><strong><em>subsection, optional</em></strong></p>
 <p>An optional subsection that details default values for submitting jobs
 to a cluster via SLURM.</p>
@@ -561,13 +602,13 @@ per-job basis using the <a class="reference internal" href="#mp-mode"><code clas
 </div>
 <p><strong>Example:</strong></p>
 <div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[cluster]</span>
-<span class="n">account</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;aero01234&#39;</span>
-<span class="n">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;0-01:00:00&#39;</span>
+<span class="n">account</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;aero01234&#39;</span>
+<span class="n">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;0-01:00:00&#39;</span>
 <span class="n">nodes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
 <span class="n">tasks-per-node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">14</span>
 <span class="n">cpus-per-task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
-<span class="n">mem-per-cpu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;4000m&#39;</span>
-<span class="n">email</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;ab12345@bristol.ac.uk&#39;</span>
+<span class="n">mem-per-cpu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;4000m&#39;</span>
+<span class="n">email</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;ab12345@bristol.ac.uk&#39;</span>
 </pre></div>
 </div>
 <div class="admonition seealso">
@@ -576,25 +617,25 @@ per-job basis using the <a class="reference internal" href="#mp-mode"><code clas
 setup and submit jobs to a SLURM cluster.</p>
 </div>
 <section id="account">
-<h3>account<a class="headerlink" href="#account" title="Permalink to this heading">#</a></h3>
+<h3>account<a class="headerlink" href="#account" title="Link to this heading">¶</a></h3>
 <p><strong><em>string, optional</em></strong></p>
 <p>Specifies the project account code under which to submit the job.</p>
 <p>If not specified, no account code is supplied to SLURM.</p>
 </section>
 <section id="time">
-<h3>time<a class="headerlink" href="#time" title="Permalink to this heading">#</a></h3>
+<h3>time<a class="headerlink" href="#time" title="Link to this heading">¶</a></h3>
 <p><strong><em>string, optional</em></strong></p>
 <p>Specifies the maximum time limit to request for the job. Format: <code class="docutils literal notranslate"><span class="pre">days-hours:minutes:seconds</span></code>.</p>
 <p>If not specified, default is 1 hour if not specified.</p>
 </section>
 <section id="partition">
-<h3>partition<a class="headerlink" href="#partition" title="Permalink to this heading">#</a></h3>
+<h3>partition<a class="headerlink" href="#partition" title="Link to this heading">¶</a></h3>
 <p><strong><em>string, optional</em></strong></p>
 <p>Specifies the cluster partitiion to which to submit the job.</p>
 <p>If not specified, default is to let SLURM choose the most appropriate partitiion.</p>
 </section>
 <section id="nodes">
-<h3>nodes<a class="headerlink" href="#nodes" title="Permalink to this heading">#</a></h3>
+<h3>nodes<a class="headerlink" href="#nodes" title="Link to this heading">¶</a></h3>
 <p><strong><em>integer, optional</em></strong></p>
 <p>Specifies the number of nodes to request for the job.
 This option is only valid if <a class="reference internal" href="#mp-mode"><code class="docutils literal notranslate"><span class="pre">mp-mode</span></code></a> is <code class="docutils literal notranslate"><span class="pre">'mpi'</span></code>,
@@ -602,7 +643,7 @@ otherwise it is ignored and set to <code class="docutils literal notranslate"><s
 <p>If not specified, default is <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
 </section>
 <section id="tasks-per-node">
-<h3>tasks-per-node<a class="headerlink" href="#tasks-per-node" title="Permalink to this heading">#</a></h3>
+<h3>tasks-per-node<a class="headerlink" href="#tasks-per-node" title="Link to this heading">¶</a></h3>
 <p><strong><em>integer, optional</em></strong></p>
 <p>Specifies the number of separate tasks to allocate per node for the job.</p>
 <p>This option is only valid if <a class="reference internal" href="#mp-mode"><code class="docutils literal notranslate"><span class="pre">mp-mode</span></code></a> is <code class="docutils literal notranslate"><span class="pre">'mpi'</span></code>,
@@ -610,35 +651,35 @@ otherwise it is ignored and set to <code class="docutils literal notranslate"><s
 <p>If not specified, default is <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
 </section>
 <section id="cpus-per-task">
-<h3>cpus-per-task<a class="headerlink" href="#cpus-per-task" title="Permalink to this heading">#</a></h3>
+<h3>cpus-per-task<a class="headerlink" href="#cpus-per-task" title="Link to this heading">¶</a></h3>
 <p><strong><em>integer, optional</em></strong></p>
 <p>Specifies the number of processors to allocate per task for the job.</p>
 <p>This option is only valid if <a class="reference internal" href="#mp-mode"><code class="docutils literal notranslate"><span class="pre">mp-mode</span></code></a> is <code class="docutils literal notranslate"><span class="pre">'threads'</span></code>,
 otherwise it is ignored and set to <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
 </section>
 <section id="mem-per-cpu">
-<h3>mem-per-cpu<a class="headerlink" href="#mem-per-cpu" title="Permalink to this heading">#</a></h3>
+<h3>mem-per-cpu<a class="headerlink" href="#mem-per-cpu" title="Link to this heading">¶</a></h3>
 <p><strong><em>string, optional</em></strong></p>
 <p>Specifies the amount of memory to request per CPU/task for theh job.</p>
 <p>If not specified, default is <code class="docutils literal notranslate"><span class="pre">'4000M'</span></code> (4000 MB).</p>
 </section>
 <section id="email">
-<h3>email<a class="headerlink" href="#email" title="Permalink to this heading">#</a></h3>
+<h3>email<a class="headerlink" href="#email" title="Link to this heading">¶</a></h3>
 <p><strong><em>string, optional</em></strong></p>
 <p>Specifies an email address to which to send job termination notifications.</p>
 <p>If not specified, default is for no email notifications.</p>
 </section>
 </section>
 <section id="dependency-list">
-<h2>Dependency list<a class="headerlink" href="#dependency-list" title="Permalink to this heading">#</a></h2>
+<h2>Dependency list<a class="headerlink" href="#dependency-list" title="Link to this heading">¶</a></h2>
 <p><strong><em>subsection, optional</em></strong></p>
 <p>Array of optional subsections that specify third-party repositories from
 which to include additional source files.</p>
 <p><strong>Example:</strong></p>
 <div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[[dependency]]</span>
-<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;demo-dependency&#39;</span>
-<span class="n">git</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;git@github.com:BristolCompositesInstitute/demo-dep.git&#39;</span>
-<span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;&lt;commit|tag&gt;&#39;</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;demo-dependency&#39;</span>
+<span class="n">git</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;git@github.com:BristolCompositesInstitute/demo-dep.git&#39;</span>
+<span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&lt;commit|tag&gt;&#39;</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -647,7 +688,7 @@ which to include additional source files.</p>
 <code class="docutils literal notranslate"><span class="pre">name</span></code> and the <code class="docutils literal notranslate"><span class="pre">include</span></code> field in the <code class="docutils literal notranslate"><span class="pre">[compile]</span></code> subsection.</p>
 </div>
 <section id="id4">
-<h3>name<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
+<h3>name<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
 <p><strong><em>string, mandatory</em></strong></p>
 <p>The name of the dependency used to uniquely identify it and organise its source files.</p>
 <div class="admonition caution">
@@ -665,12 +706,12 @@ with the dependency name, <em>e.g.</em>:</p>
 </div>
 </section>
 <section id="git">
-<h3>git<a class="headerlink" href="#git" title="Permalink to this heading">#</a></h3>
+<h3>git<a class="headerlink" href="#git" title="Link to this heading">¶</a></h3>
 <p><strong><em>string, mandatory</em></strong></p>
 <p>The remote url to the upstream git repository from which to fetch the dependency.</p>
 </section>
 <section id="version">
-<h3>version<a class="headerlink" href="#version" title="Permalink to this heading">#</a></h3>
+<h3>version<a class="headerlink" href="#version" title="Link to this heading">¶</a></h3>
 <p><strong><em>string, mandatory</em></strong></p>
 <p>A commit hash or tag specifying the exact version to fetch from the upstream repository.</p>
 <p><strong>Note:</strong> Abaci will automatically refetch the dependency if this field changes.</p>
@@ -806,11 +847,11 @@ abaci will fetch the latest changes from the branch everytime it is run.</p>
       
     </aside>
   </div>
-</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/sphinx_highlight.js"></script>
-    <script src="../_static/scripts/furo.js"></script>
+</div><script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
     <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-TFZ8YW7MNE"></script>
-    <script src="../_static/ga-init.js"></script>
+    <script src="../_static/ga-init.js?v=6057ead2"></script>
     </body>
 </html>
