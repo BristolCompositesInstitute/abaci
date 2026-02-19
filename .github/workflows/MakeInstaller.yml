@@ -12,10 +12,10 @@ env:
 
 jobs:
   make_installer_win:
-    runs-on: windows-2022
+    runs-on: windows-2025
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v6
 
     - name: Fetch EnVar Plugin for NSIS
       working-directory: scripts
@@ -29,14 +29,14 @@ jobs:
       run: makensis abaci-installer.nsi
 
     - name: Upload artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v6
       with:
         name: abaci-installer
         path: scripts/abaci-installer.exe
 
     - name: Upload to release
       if: ${{ github.event_name == 'release' }}
-      uses: svenstaro/upload-release-action@v2
+      uses: svenstaro/upload-release-action@v6
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: scripts/abaci-installer.exe
@@ -58,10 +58,10 @@ jobs:
 
 
   make_installer_nix:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v6
     
     - name: Fetch and install makeself
       run: |
@@ -75,14 +75,14 @@ jobs:
       run: makeself-2.4.5/makeself.sh `pwd` abaci-installer.sh abaci ./scripts/install
 
     - name: Upload artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v6
       with:
         name: abaci-installer-nix
         path: abaci-installer.sh
 
     - name: Upload to release
       if: ${{ github.event_name == 'release' }}
-      uses: svenstaro/upload-release-action@v2
+      uses: svenstaro/upload-release-action@v6
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: abaci-installer.sh
