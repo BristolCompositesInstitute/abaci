@@ -17,6 +17,9 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v6
 
+    - name: Install NSIS
+      run: choco install nsis -y
+
     - name: Fetch EnVar Plugin for NSIS
       working-directory: scripts
       run: |
