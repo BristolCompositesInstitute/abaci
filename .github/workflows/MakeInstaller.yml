@@ -20,6 +20,9 @@ jobs:
     - name: Install NSIS
       run: choco install nsis -y
 
+    - name: Add NSIS to PATH
+      run: echo "C:\Program Files (x86)\NSIS" >> $env:GITHUB_PATH      
+
     - name: Fetch EnVar Plugin for NSIS
       working-directory: scripts
       run: |
