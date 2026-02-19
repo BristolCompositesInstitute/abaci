@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
   - Added subprocess timeout function.
   - updated logging's deprecated .warn() to .warning() throughout.
   - Made pickle file handling compatible for both Python 2 and 3 Abaqus versions. Only return bytes (.digest()) from `hashfile` and `hashfiles` functions. (Note Python 2 cannot open Python 3 generated .pkl files.)
+  - Updated the GitHub workflows to be compatible with more recent GitHub actions.
 
 ## [v0.6.3](https://github.com/BristolCompositesInstitute/abaci/releases/tag/v0.6.3) (28/07/23)
 
